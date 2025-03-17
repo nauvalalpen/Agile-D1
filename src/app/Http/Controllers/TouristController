@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Tourist;
+use Illuminate\Http\Request;
+
+class TouristController extends Controller
+{
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
+            'id_card' => 'required|unique:tourists',
+            'phone' => 'required',
+            'entry_date' => 'required|date'
+        ]);
+
+        Tourist::create($validated);
+        return redirect()->route('tourists.index');
+    }
+}
+
+
+?>
