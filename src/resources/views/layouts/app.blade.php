@@ -52,7 +52,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('guides') ? 'active' : '' }}"
-                            href="{{ route('guides') }}">Tour Guides</a>
+                            href="{{ route('tourguides.index') }}">Tour Guides</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('honey') ? 'active' : '' }}"

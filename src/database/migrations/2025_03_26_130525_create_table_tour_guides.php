@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('tourGuides', function (Blueprint $table) {
+            //
             $table->id();
+            $table->string('nama');
+            $table->string('nohp');
+            $table->string('deskripsi');
+            $table->string('alamat');
+            $table->string('foto');
             $table->timestamps();
         });
     }
@@ -22,6 +28,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions');
+        Schema::table('tourGuides', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -115,7 +115,7 @@
                                 <i class="fas fa-user-tie card-icon"></i>
                                 <h5 class="card-title">Tour Guides</h5>
                                 <p class="card-text">Explore with our experienced local guides.</p>
-                                <a href="{{ route('guides') }}" class="btn btn-primary">View Guides</a>
+                                <a href="{{ route('tourguides.index') }}" class="btn btn-primary">View Guides</a>
                             </div>
                         </div>
                     </div>

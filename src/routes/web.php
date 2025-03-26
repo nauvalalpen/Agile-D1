@@ -9,6 +9,7 @@ use App\Http\Controllers\TouristController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\CheckpointController;
+use App\Http\Controllers\TourGuideController;
 
 Route::get('/index', function () {
     return view('index');
@@ -77,6 +78,17 @@ Route::post('/contact/submit', [App\Http\Controllers\ContactController::class, '
 Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->name('map');
 Route::get('/weather', [App\Http\Controllers\WeatherController::class, 'index'])->name('weather');
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile')->middleware('auth');
+
+//Tour Guides
+Route::get('tourguides', [TourGuideController::class, 'index'])->name('tourguides.index');
+Route::get('tourguides/create', [TourGuideController::class, 'create'])->name('tourguides.create');
+Route::post('tourguides', [TourGuideController::class, 'store'])->name('tourguides.store');
+Route::get('tourguides/{id}/edit', [TourGuideController::class, 'edit'])->name('tourguides.edit');
+Route::put('tourguides/{id}', [TourGuideController::class, 'update'])->name('tourguides.update');
+Route::delete('tourguides/{id}', [TourGuideController::class, 'destroy'])->name('tourguides.destroy');
+Route::get('/tourguides/{id}/order', [TourGuideController::class, 'order'])->name('tourguides.order');
+Route::post('/tourguides/{id}/order', [TourGuideController::class, 'orderSubmit'])->name('tourguides.orderSubmit');
+
 
 
 // Route::get('/weather', function () {
