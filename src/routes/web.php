@@ -10,6 +10,9 @@ use App\Http\Controllers\GuideController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\CheckpointController;
 use App\Http\Controllers\TourGuideController;
+use App\Http\Controllers\OrderHistoryController;
+use App\Http\Controllers\AdminOrderController;
+
 
 Route::get('/index', function () {
     return view('index');
@@ -89,6 +92,19 @@ Route::delete('tourguides/{id}', [TourGuideController::class, 'destroy'])->name(
 Route::get('/tourguides/{id}/order', [TourGuideController::class, 'order'])->name('tourguides.order');
 Route::post('/tourguides/{id}/order', [TourGuideController::class, 'orderSubmit'])->name('tourguides.orderSubmit');
 
+// User Order History Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/order-history', [OrderHistoryController::class, 'index'])->name('order-history.index');
+    Route::get('/order-history/{id}', [OrderHistoryController::class, 'show'])->name('order-history.show');
+});
+
+// Admin Order Management Routes
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/orders/{id}/edit', [AdminOrderController::class, 'edit'])->name('admin.orders.edit');
+    Route::put('/orders/{id}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
+});
+
 
 
 // Route::get('/weather', function () {
@@ -102,3 +118,6 @@ Route::post('/tourguides/{id}/order', [TourGuideController::class, 'orderSubmit'
         // Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
     // });
 // });
+
+// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+

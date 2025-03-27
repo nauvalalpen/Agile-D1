@@ -1,139 +1,188 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'oneVision')</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+    <!-- Scripts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Additional Styles -->
+    @yield('styles')
+
     <style>
-        .hero-section {
-            background-image: url('/images/hero-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 100px 0;
-            margin-bottom: 30px;
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 50%;
+            font-size: 0.75rem;
         }
 
-        .feature-card {
-            transition: transform 0.3s;
-            margin-bottom: 20px;
-            height: 100%;
+        .notification-icon {
+            position: relative;
+            padding-right: 0.5rem;
         }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #4e73df;
-        }
-
-        @yield('styles')
     </style>
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">oneVision</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('guides') ? 'active' : '' }}"
-                            href="{{ route('tourguides.index') }}">Tour Guides</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('honey') ? 'active' : '' }}"
-                            href="{{ route('honey') }}">Honey Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('umkm') ? 'active' : '' }}"
-                            href="{{ route('umkm') }}">UMKM Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('gallery') ? 'active' : '' }}"
-                            href="{{ route('gallery') }}">Gallery</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('news') ? 'active' : '' }}"
-                            href="{{ route('news') }}">News</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('facilities') ? 'active' : '' }}"
-                            href="{{ route('facilities') }}">Facilities</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}"
-                            href="{{ route('contact') }}">Contact</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    @auth
-                        <a href="{{ route('profile') }}" class="btn btn-outline-light me-2">Profile</a>
-                        <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Logout</button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="btn btn-outline-light me-2">Login</a>
-                        <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
-                    @endauth
-                </div>
-            </div>
-        </div>
-    </nav>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-    <!-- Main Content -->
-    @yield('content')
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav me-auto">
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('tourguides.index') }}">{{ __('Tour Guides') }}</a>
+                            </li>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>oneVision</h5>
-                    <p>Discover the beauty of nature and local products with us.</p>
-                </div>
-                <div class="col-md-3">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('guides') }}" class="text-white">Tour Guides</a></li>
-                        <li><a href="{{ route('honey') }}" class="text-white">Honey Products</a></li>
-                        <li><a href="{{ route('umkm') }}" class="text-white">UMKM Products</a></li>
-                        <li><a href="{{ route('gallery') }}" class="text-white">Gallery</a></li>
+                            @if (Auth::user()->role === 'admin')
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                        href="{{ route('admin.orders.index') }}">{{ __('Manage Orders') }}</a>
+                                </li>
+                            @endif
+                        @endauth
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
+
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <!-- Notification Icon -->
+                            @php
+                                $unreadNotifications = DB::table('order_tour_guides')
+                                    ->where('user_id', Auth::id())
+                                    ->whereIn('status', ['accepted', 'rejected'])
+                                    ->where('is_read', false)
+                                    ->count();
+                            @endphp
+
+                            <li class="nav-item dropdown">
+                                <a id="notificationDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="notification-icon">
+                                        <i class="fas fa-bell"></i>
+                                        @if ($unreadNotifications > 0)
+                                            <span class="notification-badge bg-danger">{{ $unreadNotifications }}</span>
+                                        @endif
+                                    </span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                                    <h6 class="dropdown-header">Notifications</h6>
+
+                                    @php
+                                        $notifications = DB::table('order_tour_guides')
+                                            ->join('tourguides', 'order_tour_guides.tourguide_id', '=', 'tourguides.id')
+                                            ->select('order_tour_guides.*', 'tourguides.nama as tourguide_name')
+                                            ->where('order_tour_guides.user_id', Auth::id())
+                                            ->whereIn('order_tour_guides.status', ['accepted', 'rejected'])
+                                            ->orderBy('order_tour_guides.updated_at', 'desc')
+                                            ->limit(5)
+                                            ->get();
+                                    @endphp
+
+                                    @if (count($notifications) > 0)
+                                        @foreach ($notifications as $notification)
+                                            <a class="dropdown-item {{ $notification->is_read ? '' : 'fw-bold' }}"
+                                                href="{{ route('order-history.show', $notification->id) }}">
+                                                Your order with {{ $notification->tourguide_name }} has been
+                                                @if ($notification->status == 'accepted')
+                                                    <span class="text-success">accepted</span>
+                                                @elseif($notification->status == 'rejected')
+                                                    <span class="text-danger">rejected</span>
+                                                @endif
+                                                <div class="small text-muted">
+                                                    {{ \Carbon\Carbon::parse($notification->updated_at)->diffForHumans() }}
+                                                </div>
+                                            </a>
+                                        @endforeach
+                                        <div class="dropdown-divider"></div>
+                                    @else
+                                        <div class="dropdown-item">No notifications</div>
+                                        <div class="dropdown-divider"></div>
+                                    @endif
+
+                                    <a class="dropdown-item text-center" href="{{ route('order-history.index') }}">
+                                        View All
+                                    </a>
+                                </div>
+                            </li>
+
+                            <!-- Order History Link -->
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                    href="{{ route('order-history.index') }}">{{ __('Order History') }}</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    style="z-index: 1050;" v-pre>
+                                    {{ Auth::user()->name }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"
+                                    style="z-index: 1051;">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
                     </ul>
                 </div>
-                <div class="col-md-3">
-                    <h5>Contact</h5>
-                    <address class="mb-0">
-                        <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> Jl. Example Street No. 123</p>
-                        <p class="mb-1"><i class="fas fa-phone me-2"></i> +62 123 4567 890</p>
-                        <p class="mb-1"><i class="fas fa-envelope me-2"></i> info@agile-d1.com</p>
-                    </address>
-                </div>
             </div>
-            <hr>
-            <div class="text-center">
-                <p>&copy; {{ date('Y') }} Agile-D1. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        </nav>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    @yield('scripts')
+        <main class="py-4">
+            @yield('content')
+        </main>
+    </div>
 </body>
 
 </html>

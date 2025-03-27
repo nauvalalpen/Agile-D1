@@ -27,9 +27,11 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Active Guides</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ 0 }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    {{ \App\Models\OrderTourGuide::where('status', 'success')->count() }}</div>
+
                             </div>
-                            <a href="" class="btn btn-success">Manage Guides</a>
+                            <a href="{{ route('admin.orders.index') }}" class="btn btn-success">Manage Guides</a>
                         </div>
                     </div>
                 </div>
