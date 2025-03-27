@@ -53,9 +53,15 @@
                                             </table>
                                         </div>
                                         <div class="card-footer">
-                                            <a href="{{ route('tourguides.order', $tourguide->id) }}"
-                                                class="btn btn-success btn-block">Order Tour Guide</a>
+                                            @auth
+                                                <a href="{{ route('tourguides.order', $tourguide->id) }}"
+                                                    class="btn btn-success btn-block">Order Tour Guide</a>
+                                            @else
+                                                <div class="alert alert-warning mb-2">Please log in to order a tour guide</div>
+                                                <a href="{{ route('login') }}" class="btn btn-primary btn-block">Login</a>
+                                            @endauth
                                         </div>
+
                                     </div>
                                 </div>
                             @empty

@@ -17,11 +17,13 @@ class TourGuideController extends Controller
         //
         // dd(Auth::user());
         $tourguides = DB::table('tourguides')->get();
-        if (Auth::user()->role !== 'admin') {
-            return view('tourguides/indexUser', compact('tourguides'));
-        }
-        return view('tourguides/index', compact('tourguides'));
         
+        
+        if (!Auth::user() || Auth::user()->role === 'user' || Auth::user()->role === null) {
+            return view('tourguides/indexUser', compact('tourguides'));
+        } else if (Auth::user()->role === 'admin') {
+            return view('tourguides/index', compact('tourguides'));
+        }
     }
 
     /**
