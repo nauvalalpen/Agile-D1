@@ -36,55 +36,6 @@
 </head>
 
 <body>
-    <!-- Navigation -->
-    {{-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">OneVision</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('guides') }}">Tour Guides</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('honey') }}">Honey Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('umkm') }}">UMKM Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('gallery') }}">Gallery</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('news') }}">News</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('facilities') }}">Facilities</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('contact') }}">Contact</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    @auth
-                        <a href="{{ route('profile') }}" class="btn btn-outline-light me-2">Profile</a>
-                        <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Logout</button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="btn btn-outline-light me-2">Login</a>
-                        <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
-                    @endauth
-                </div>
-            </div>
-        </div>
-    </nav> --}}
     @extends('layouts.app')
 
     @section('title', 'Contact Us - oneVision')
@@ -97,7 +48,7 @@
                 <h1 class="display-4">Welcome to Agile-D1</h1>
                 <p class="lead">Discover the beauty of nature and local products</p>
                 <div class="mt-4">
-                    <a href="{{ route('guides') }}" class="btn btn-primary btn-lg me-2">Find a Guide</a>
+                    <a href="{{ route('tourguides.index') }}" class="btn btn-primary btn-lg me-2">Find a Guide</a>
                     <a href="{{ route('contact') }}" class="btn btn-outline-light btn-lg">Contact Us</a>
                 </div>
             </div>

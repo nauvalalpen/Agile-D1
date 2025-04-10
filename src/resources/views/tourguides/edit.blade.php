@@ -10,7 +10,8 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('tourguides.update', $tourguides->id) }}">
+                        <form method="POST" action="{{ route('tourguides.update', $tourguides->id) }}"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -42,6 +43,16 @@
                             </div>
 
                             <div class="mb-3">
+                                <label for="pricerange" class="form-label">Price Range</label>
+                                <input type="text" class="form-control @error('pricerange') is-invalid @enderror"
+                                    id="pricerange" name="pricerange"
+                                    value="{{ old('pricerange', $tourguides->price_range) }}" required>
+                                @error('pricerange')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="deskripsi" class="form-label">Deskripsi</label>
                                 <textarea class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi" rows="3"
                                     required>{{ old('deskripsi', $tourguides->deskripsi) }}</textarea>
@@ -50,21 +61,22 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
-                                <label for="foto" class="form-label">URL Foto</label>
-                                <input type="text" class="form-control @error('foto') is-invalid @enderror"
-                                    id="foto" name="foto" value="{{ old('foto', $tourguides->foto) }}" required>
+                            <div class="form-group mb-3">
+                                <label for="foto">Photo</label>
+                                @if ($tourguides->foto)
+                                    <div class="mb-2">
+                                        <img src="{{ asset('storage/' . $tourguides->foto) }}" alt="Current Photo"
+                                            style="max-height: 100px;">
+                                    </div>
+                                @endif
+                                <input type="file" class="form-control @error('foto') is-invalid @enderror"
+                                    id="foto" name="foto">
+                                <small class="form-text text-muted">Leave empty to keep the current photo</small>
                                 @error('foto')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Current Photo</label>
-                                <div>
-                                    <img src="{{ $tourguides->foto }}" alt="{{ $tourguides->nama }}" width="200"
-                                        class="img-thumbnail">
-                                </div>
                             </div>
 
                             <div class="d-flex justify-content-between">

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Storage;
 
 class TourGuideController extends Controller
 {
@@ -40,27 +40,38 @@ class TourGuideController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $request->validate([
             'nama' => 'required|string|max:255',
             'nohp' => 'required|string|max:255',
             'deskripsi' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
-            'foto' => 'required|string|max:255',
+            'pricerange' => 'required|string|max:255', // Make sure this matches your form field name
+            'foto' => 'required|image|max:2048',
         ]);
-
+    
+        // Handle file upload
+        $fotoPath = '';
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $fotoPath = 'tourguides/' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('storage/tourguides'), $fotoPath);
+        }
+    
+        // Insert into database - make sure the column name matches exactly
         DB::table('tourguides')->insert([
             'nama' => $request->nama,
             'nohp' => $request->nohp,
             'deskripsi' => $request->deskripsi,
             'alamat' => $request->alamat,
-            'foto' => $request->foto,
+            'price_range' => $request->pricerange, // This is the key line - make sure it matches your DB column
+            'foto' => $fotoPath,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
-
+    
         return redirect()->route('tourguides.index')->with('success', 'Tour guide created successfully.');
     }
-
-
+    
     /**
      * Display the specified resource.
      */
@@ -84,21 +95,37 @@ class TourGuideController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
         $request->validate([
             'nama' => 'required|string|max:255',
             'nohp' => 'required|string|max:255',
             'deskripsi' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
-            'foto' => 'required|string|max:255',
+            'pricerange' => 'required|string|max:255', // Make sure this matches your form field name
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        $tourguide = DB::table('tourguides')->where('id', $id)->first();
+        $fotoPath = $tourguide->foto;
+
+        // Handle file upload if a new photo is provided
+        if ($request->hasFile('foto')) {
+            // Delete old photo if exists
+            if ($tourguide->foto && Storage::disk('public')->exists($tourguide->foto)) {
+                Storage::disk('public')->delete($tourguide->foto);
+            }
+            
+            $file = $request->file('foto');
+            $fotoPath = 'tourguides/' . time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('storage/tourguides'), $fotoPath);
+        }
 
         DB::table('tourguides')->where('id', $id)->update([
             'nama' => $request->nama,
             'nohp' => $request->nohp,
             'deskripsi' => $request->deskripsi,
             'alamat' => $request->alamat,
-            'foto' => $request->foto,
+            'price_range' => $request->pricerange, // Make sure this matches your form field name
+            'foto' => $fotoPath,
             'updated_at' => now(),
         ]);
         
@@ -115,38 +142,37 @@ class TourGuideController extends Controller
         return view('tourguides.order', compact('tourguide'));
     }
 
-/**
- * Store a new order for a tour guide.
- */
-public function orderSubmit(Request $request, string $id)
-{
-    $request->validate([
-        'tanggal_order' => 'required|date|after_or_equal:today',
-        'jumlah_orang' => 'required|integer|min:1',
-        'price_range' => 'required|string|max:255',
-        'notes' => 'nullable|string|max:500',
-    ]);
-    
-    $tourguide = DB::table('tourguides')->where('id', $id)->first();
-    
-    if (!$tourguide) {
-        return redirect()->route('tourguides.index')->with('error', 'Tour guide not found.');
+    /**
+     * Store a new order for a tour guide.
+     */
+    public function orderSubmit(Request $request, string $id)
+    {
+        $request->validate([
+            'tanggal_order' => 'required|date|after_or_equal:today',
+            'jumlah_orang' => 'required|integer|min:1',
+            'price_range' => 'required|string|max:255',
+            'notes' => 'nullable|string|max:500',
+        ]);
+        
+        $tourguide = DB::table('tourguides')->where('id', $id)->first();
+        
+        if (!$tourguide) {
+            return redirect()->route('tourguides.index')->with('error', 'Tour guide not found.');
+        }
+        
+        // Insert the order into the database
+        DB::table('order_tour_guides')->insert([
+            'user_id' => Auth::id(),
+            'tourguide_id' => $id,
+            'tanggal_order' => $request->tanggal_order,
+            'jumlah_orang' => $request->jumlah_orang,
+            'price_range' => $request->price_range,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        
+        return redirect()->route('tourguides.index')->with('success', 'Tour guide ordered successfully.');
     }
-    
-    // Insert the order into the database
-    DB::table('order_tour_guides')->insert([
-        'user_id' => Auth::id(),
-        'tourguide_id' => $id,
-        'tanggal_order' => $request->tanggal_order,
-        'jumlah_orang' => $request->jumlah_orang,
-        'price_range' => $request->price_range,
-        'created_at' => now(),
-        'updated_at' => now(),
-    ]);
-    
-    return redirect()->route('tourguides.index')->with('success', 'Tour guide ordered successfully.');
-}
-
 
     /**
      * Remove the specified resource from storage.

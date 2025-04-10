@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $title ?? 'oneVision' }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -46,8 +46,54 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ $title ?? 'oneVision' }}
                 </a>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link mx-1" href="{{ url('tourguides/') }}">
+                            Map
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link mx-1" href="{{ url('tourguides/') }}">
+                            Weather
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link mx-1" href="{{ url('tourguides/') }}">
+                            Facility
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link mx-1" href="{{ url('tourguides/') }}">
+                            Gallery
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link mx-1" href="{{ url('tourguides/') }}">
+                            News
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link mx-1" href="{{ url('tourguides/') }}">
+                            Contact Us
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Our Service
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url('tourguides/') }}">Tour Guide</a>
+                            <a class="dropdown-item" href="#">Honey Product</a>
+                            {{-- <div class="dropdown-divider"></div> --}}
+                            <a class="dropdown-item" href="#">UMKM Product</a>
+                        </div>
+                    </li>
+                </ul>
+
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -56,7 +102,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+                    {{-- <ul class="navbar-nav me-auto">
                         @auth
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('tourguides.index') }}">{{ __('Tour Guides') }}</a>
@@ -69,7 +115,7 @@
                                 </li>
                             @endif
                         @endauth
-                    </ul>
+                    </ul> --}}
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -183,6 +229,14 @@
             @yield('content')
         </main>
     </div>
+    <!-- Bootstrap 5 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap 4 JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

@@ -46,6 +46,10 @@
                                                         <td>{{ $tourguide->alamat }}</td>
                                                     </tr>
                                                     <tr>
+                                                        <th>Price Range</th>
+                                                        <td>{{ $tourguide->price_range }}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <th>Deskripsi</th>
                                                         <td>{{ $tourguide->deskripsi }}</td>
                                                     </tr>
@@ -61,7 +65,6 @@
                                                 <a href="{{ route('login') }}" class="btn btn-primary btn-block">Login</a>
                                             @endauth
                                         </div>
-
                                     </div>
                                 </div>
                             @empty

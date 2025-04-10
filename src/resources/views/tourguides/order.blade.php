@@ -40,6 +40,10 @@
                                             <th>Deskripsi</th>
                                             <td>{{ $tourguide->deskripsi }}</td>
                                         </tr>
+                                        <tr>
+                                            <th>Price Range</th>
+                                            <td>{{ $tourguide->price_range }}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -71,33 +75,6 @@
                                         class="form-control @error('jumlah_orang') is-invalid @enderror" name="jumlah_orang"
                                         value="{{ old('jumlah_orang', 1) }}" required>
                                     @error('jumlah_orang')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-3">
-                                <label for="price_range"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Price Range') }}</label>
-                                <div class="col-md-6">
-                                    <select id="price_range" class="form-control @error('price_range') is-invalid @enderror"
-                                        name="price_range" required>
-                                        <option value="">Select Price Range</option>
-                                        <option value="100k-200k"
-                                            {{ old('price_range') == '100k-200k' ? 'selected' : '' }}>Rp 100.000 - Rp
-                                            200.000</option>
-                                        <option value="200k-300k"
-                                            {{ old('price_range') == '200k-300k' ? 'selected' : '' }}>Rp 200.000 - Rp
-                                            300.000</option>
-                                        <option value="300k-500k"
-                                            {{ old('price_range') == '300k-500k' ? 'selected' : '' }}>Rp 300.000 - Rp
-                                            500.000</option>
-                                        <option value="500k+" {{ old('price_range') == '500k+' ? 'selected' : '' }}>Rp
-                                            500.000+</option>
-                                    </select>
-                                    @error('price_range')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

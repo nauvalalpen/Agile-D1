@@ -25,6 +25,7 @@
                                         <th>Nama</th>
                                         <th>No HP</th>
                                         <th>Alamat</th>
+                                        <th>Price Range</th>
                                         <th>Foto</th>
                                         <th>Actions</th>
                                     </tr>
@@ -36,9 +37,15 @@
                                             <td>{{ $tourguide->nama }}</td>
                                             <td>{{ $tourguide->nohp }}</td>
                                             <td>{{ $tourguide->alamat }}</td>
+                                            <td>{{ $tourguide->price_range }}</td>
                                             <td>
-                                                <img src="{{ $tourguide->foto }}" alt="{{ $tourguide->nama }}"
-                                                    width="100">
+                                                @if ($tourguide->foto)
+                                                    <img src="{{ asset('storage/' . $tourguide->foto) }}"
+                                                        class="img-thumbnail" alt="{{ $tourguide->nama }}"
+                                                        style="max-height: 100px;">
+                                                @else
+                                                    <span class="text-muted">No image</span>
+                                                @endif
                                             </td>
                                             <td>
                                                 <div class="d-flex">
@@ -56,7 +63,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="6" class="text-center">No tour guides found.</td>
+                                            <td colspan="7" class="text-center">No tour guides found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

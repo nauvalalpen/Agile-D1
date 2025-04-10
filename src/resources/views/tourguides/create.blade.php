@@ -10,7 +10,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('tourguides.store') }}">
+                        <form method="POST" action="{{ route('tourguides.store') }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="mb-3">
@@ -41,6 +41,15 @@
                             </div>
 
                             <div class="mb-3">
+                                <label for="pricerange" class="form-label">Price Range</label>
+                                <input type="text" class="form-control @error('pricerange') is-invalid @enderror"
+                                    id="pricerange" name="pricerange" value="{{ old('pricerange') }}" required>
+                                @error('pricerange')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="deskripsi" class="form-label">Deskripsi</label>
                                 <textarea class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi" rows="3"
                                     required>{{ old('deskripsi') }}</textarea>
@@ -49,12 +58,15 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
-                                <label for="foto" class="form-label">URL Foto</label>
-                                <input type="text" class="form-control @error('foto') is-invalid @enderror"
-                                    id="foto" name="foto" value="{{ old('foto') }}" required>
+                            {{-- photo --}}
+                            <div class="form-group mb-3">
+                                <label for="foto">Photo</label>
+                                <input type="file" class="form-control @error('foto') is-invalid @enderror"
+                                    id="foto" name="foto">
                                 @error('foto')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
 
