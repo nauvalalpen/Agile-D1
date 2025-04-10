@@ -150,7 +150,6 @@ class TourGuideController extends Controller
         $request->validate([
             'tanggal_order' => 'required|date|after_or_equal:today',
             'jumlah_orang' => 'required|integer|min:1',
-            'price_range' => 'required|string|max:255',
             'notes' => 'nullable|string|max:500',
         ]);
         
@@ -166,13 +165,17 @@ class TourGuideController extends Controller
             'tourguide_id' => $id,
             'tanggal_order' => $request->tanggal_order,
             'jumlah_orang' => $request->jumlah_orang,
-            'price_range' => $request->price_range,
+            'price_range' => $tourguide->price_range, // Get price range from the tourguide
+            'notes' => $request->notes,
+            'status' => 'pending', // Set initial status
+            'is_read' => 0, // Set as unread
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         
         return redirect()->route('tourguides.index')->with('success', 'Tour guide ordered successfully.');
     }
+    
 
     /**
      * Remove the specified resource from storage.

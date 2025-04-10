@@ -86,10 +86,16 @@
                                 <label for="notes"
                                     class="col-md-4 col-form-label text-md-right">{{ __('Additional Notes') }}</label>
                                 <div class="col-md-6">
-                                    <textarea id="notes" class="form-control" name="notes" rows="4"
+                                    <textarea id="notes" class="form-control @error('notes') is-invalid @enderror" name="notes" rows="4"
                                         placeholder="Any special requests or information for the tour guide">{{ old('notes') }}</textarea>
+                                    @error('notes')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
+
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4 d-flex gap-2">

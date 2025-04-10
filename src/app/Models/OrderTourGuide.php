@@ -16,6 +16,7 @@ class OrderTourGuide extends Model
         'status',
         'final_price',
         'admin_notes',
+        'notes',
         'is_read'
         
     ];
