@@ -457,8 +457,8 @@
                         <div class="row g-4">
                             <div class="col-md-4">
                                 <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-                                    <img src="{{ asset('images/delicious_restaurant.jpg') }}" class="card-img-top"
-                                        alt="News 1" style="height: 200px; object-fit: cover;">
+                                    <img src="{{ asset('images/mushalla.jpg') }}" class="card-img-top" alt="News 1"
+                                        style="height: 200px; object-fit: cover;">
                                     <div class="card-body d-flex flex-column">
                                         <p class="text-muted small mb-1"><i class="far fa-calendar-alt me-1"></i> February
                                             20, 2024</p>
@@ -472,8 +472,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-                                    <img src="{{ asset('images/top_10_most_beautiful.jpg') }}" class="card-img-top"
-                                        alt="News 2" style="height: 200px; object-fit: cover;">
+                                    <img src="{{ asset('images/pos1.jpeg') }}" class="card-img-top" alt="News 2"
+                                        style="height: 200px; object-fit: cover;">
                                     <div class="card-body d-flex flex-column">
                                         <p class="text-muted small mb-1"><i class="far fa-calendar-alt me-1"></i> February
                                             20, 2024</p>
@@ -487,8 +487,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-                                    <img src="{{ asset('images/top_5_newest_services.jpg') }}" class="card-img-top"
-                                        alt="News 3" style="height: 200px; object-fit: cover;">
+                                    <img src="{{ asset('images/toilet.jpg') }}" class="card-img-top" alt="News 3"
+                                        style="height: 200px; object-fit: cover;">
                                     <div class="card-body d-flex flex-column">
                                         <p class="text-muted small mb-1"><i class="far fa-calendar-alt me-1"></i> February
                                             20, 2024</p>
