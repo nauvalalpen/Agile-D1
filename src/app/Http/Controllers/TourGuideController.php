@@ -12,10 +12,28 @@ class TourGuideController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     /**
+ * Get tour guides for homepage display.
+ */
+/**
+ * Display tour guides on the homepage.
+ */
+    public function homepage()
+    {
+        // Fetch tour guides ordered by ID ascending
+        $tourGuides = DB::table('tourguides')
+                        ->orderBy('id', 'asc')
+                        ->limit(3)
+                        ->get();
+        
+        // Pass the data to the view
+        return view('index', compact('tourGuides'));
+    }
+
+
     public function index()
     {
-        //
-        // dd(Auth::user());
         $tourguides = DB::table('tourguides')->get();
         
         

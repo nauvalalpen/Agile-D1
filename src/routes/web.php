@@ -91,6 +91,7 @@ Route::put('tourguides/{id}', [TourGuideController::class, 'update'])->name('tou
 Route::delete('tourguides/{id}', [TourGuideController::class, 'destroy'])->name('tourguides.destroy');
 Route::get('/tourguides/{id}/order', [TourGuideController::class, 'order'])->name('tourguides.order');
 Route::post('/tourguides/{id}/order', [TourGuideController::class, 'orderSubmit'])->name('tourguides.orderSubmit');
+Route::get('/', [App\Http\Controllers\TourGuideController::class, 'homepage']);
 
 // User Order History Routes
 Route::middleware(['auth'])->group(function () {
