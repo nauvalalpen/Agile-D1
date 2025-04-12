@@ -8,34 +8,148 @@
 @section('content')
 
     <style>
-        /* Custom CSS untuk Hero Section */
+        /* --- START: Updated Hero Section Styles --- */
+
+        /* Reset dasar untuk memastikan tidak ada margin/padding tak terduga */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+            /* Mencegah scroll horizontal jika ada yg sedikit keluar */
+        }
+
         .hero-section-onevision {
             background-image: url('{{ asset('images/waterfall.jpg') }}');
-            /* Ganti dengan gambar hero utama */
+            /* Pastikan path gambar benar */
             background-size: cover;
-            background-position: center;
-            padding-top: 5rem;
-            /* Sesuaikan padding */
-            padding-bottom: 12rem;
-            /* Beri ruang untuk box di bawah */
+            background-position: center center;
+            /* Gunakan height atau min-height. 100vh = setinggi layar awal */
+            height: 90vh;
+            /* Coba ganti dari min-height ke height, sesuaikan % */
+            /* min-height: 80vh; */
+            /* Alternatif jika height terasa terlalu fix */
+            width: 100%;
+            /* Pastikan section mengambil lebar penuh */
             position: relative;
-            color: white;
-            /* Warna teks default jika diperlukan */
+            /* Diperlukan untuk positioning absolut child */
+            /* Tambah padding bawah LEBIH BESAR untuk mengakomodasi box yg overlap */
+            padding-bottom: 150px;
+            /* Coba nilai lebih besar */
         }
 
         .hero-content-box {
             position: absolute;
-            bottom: -60px;
-            /* Sesuaikan agar box menjorok ke bawah */
+            bottom: -70px;
+            /* Sesuaikan nilai negatif ini untuk mengatur overlap */
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 500px;
-            /* Lebar maksimum box */
+            /* Lebar relatif pada layar kecil */
+            /* Tingkatkan max-width agar lebih memanjang */
+            max-width: 800px;
+            /* Coba nilai lebih besar, sesuaikan */
             z-index: 10;
         }
 
-        /* Custom CSS untuk Card dengan gambar latar (Explore Section) */
+        /* Pastikan card di dalam box juga bisa melebar */
+        .hero-content-box .card {
+            width: 100%;
+            /* Card mengisi lebar .hero-content-box */
+        }
+
+        .hero-content-box .card-title {
+            font-size: 2.4rem;
+            /* Mungkin perlu sedikit lebih besar */
+            line-height: 1.3;
+            color: #0ea5e9;
+            /* Pastikan warna biru diterapkan */
+        }
+
+        /* Tombol Login disesuaikan agar mirip screenshot */
+        .hero-content-box .btn {
+            border-color: #dee2e6;
+            /* Border abu-abu muda */
+            color: #495057;
+            /* Warna teks sedikit gelap */
+            background-color: #ffffff;
+            /* Background putih */
+        }
+
+        .hero-content-box .btn:hover {
+            background-color: #f8f9fa;
+            /* Sedikit highlight saat hover */
+            color: #495057;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .hero-content-box {
+                max-width: 700px;
+                /* Sedikit lebih kecil di layar tablet */
+            }
+
+            .hero-content-box .card-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section-onevision {
+                height: 75vh;
+                /* Kurangi tinggi di layar medium */
+                /* min-height: 70vh; */
+                padding-bottom: 120px;
+            }
+
+            .hero-content-box {
+                max-width: 600px;
+                bottom: -60px;
+                /* Kurangi overlap */
+            }
+
+            .hero-content-box .card-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section-onevision {
+                height: 60vh;
+                /* Lebih pendek lagi di mobile */
+                /* min-height: 55vh; */
+                padding-bottom: 100px;
+            }
+
+            .hero-content-box {
+                max-width: 90%;
+                /* Gunakan persentase lagi */
+                bottom: -50px;
+            }
+
+            .hero-content-box .card {
+                padding: 1.5rem !important;
+                /* Kurangi padding card */
+            }
+
+            .hero-content-box .card-title {
+                font-size: 1.6rem;
+                /* Ukuran font judul lebih kecil */
+            }
+
+            .hero-content-box .fs-5 {
+                /* Target subtitle */
+                font-size: 0.95rem !important;
+                /* Ukuran font subtitle lebih kecil */
+            }
+        }
+
+        /* --- END: Updated Hero Section Styles --- */
+
+
+        /* Custom CSS untuk Card dengan gambar latar (Explore Section) - (Ini tetap sama) */
         .explore-bg-section {
             background-image: url('{{ asset('images/explore-bg.jpg') }}');
             /* Ganti dengan gambar latar explore */
@@ -45,7 +159,7 @@
             color: white;
         }
 
-        /* Overlay gelap agar teks terbaca */
+        /* Overlay gelap agar teks terbaca - (Ini tetap sama) */
         .explore-bg-section::before {
             content: '';
             position: absolute;
@@ -63,7 +177,7 @@
             z-index: 2;
         }
 
-        /* Styling untuk icon facilities */
+        /* Styling untuk icon facilities - (Ini tetap sama) */
         .facility-icon-wrapper {
             width: 60px;
             height: 60px;
@@ -79,11 +193,24 @@
             font-size: 1.5rem;
         }
 
-        /* Styling untuk Testimonial Carousel */
-        .testimonial-card img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
+        /* Styling untuk Testimonial Carousel - (Ini tetap sama) */
+        #testimonialCarousel .carousel-indicators [data-bs-target] {
+            /* Selector dipindah dari bawah */
+            background-color: #adb5bd;
+            /* Warna indikator tidak aktif */
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 5px;
+            border: none;
+            opacity: 0.7;
+        }
+
+        #testimonialCarousel .carousel-indicators .active {
+            /* Selector dipindah dari bawah */
+            background-color: #ffffff;
+            /* Warna indikator aktif */
+            opacity: 1;
         }
 
         /* Styling untuk News Carousel */
@@ -92,7 +219,7 @@
             /* Pastikan kolom ditampilkan */
         }
 
-        /* Customisasi untuk menampilkan 3 item di carousel (mungkin perlu penyesuaian lebih lanjut) */
+        /* Customisasi untuk menampilkan 3 item di carousel (mungkin perlu penyesuaian lebih lanjut) - (Ini tetap sama) */
         @media (min-width: 768px) {
 
             #newsCarousel .carousel-inner .carousel-item-end.active,
@@ -127,7 +254,7 @@
             }
         }
 
-        /* Remove default carousel controls background */
+        /* Remove default carousel controls background - (Ini tetap sama) */
         #newsCarousel .carousel-control-prev,
         #newsCarousel .carousel-control-next,
         #testimonialCarousel .carousel-control-prev,
@@ -137,16 +264,18 @@
             width: auto;
         }
 
+        /* Style panah carousel - (Ini tetap sama, tapi pastikan sesuai keinginan) */
         #newsCarousel .carousel-control-prev-icon,
-        #newsCarousel .carousel-control-next-icon,
-        #testimonialCarousel .carousel-control-prev-icon,
-        #testimonialCarousel .carousel-control-next-icon {
-            filter: invert(1) grayscale(100) brightness(1.5);
-            /* Make arrows black/gray */
+        #newsCarousel .carousel-control-next-icon {
+            filter: brightness(0.5);
+            /* Contoh: Membuat panah News lebih gelap */
         }
 
-        /* Custom Carousel Indicators */
-        .carousel-indicators [data-bs-target] {
+        /* Panah testimonial sudah diatur di HTML nya */
+
+
+        /* Custom Carousel Indicators - News - (Ini tetap sama) */
+        #newsCarousel .carousel-indicators [data-bs-target] {
             background-color: #adb5bd;
             /* Warna indikator tidak aktif */
             width: 10px;
@@ -155,33 +284,36 @@
             margin: 0 5px;
         }
 
-        .carousel-indicators .active {
+        #newsCarousel .carousel-indicators .active {
             background-color: #0ea5e9;
             /* Warna indikator aktif (biru langit) */
         }
     </style>
 
-    <!-- 1. Hero Section -->
-    <section class="hero-section-onevision">
-        <!-- Konten di dalam hero jika ada (misal: tagline di atas), jika tidak, biarkan kosong -->
-        <div class="container text-center" style="padding-top: 2rem; padding-bottom: 2rem;">
-            {{-- Mungkin ada teks atau logo di sini jika desain memerlukannya --}}
-        </div>
+    {{-- Pastikan section ini TIDAK dibungkus oleh .container atau .container-fluid di layout utama --}}
 
-        <!-- Box Konten di Bawah Hero -->
-        <div class="hero-content-box">
+    <!-- 1. Hero Section -->
+    <section class="hero-section-onevision position-relative">
+        {{-- Navbar biasanya ada di layouts/app.blade.php dan di-style agar absolut --}}
+
+        {{-- Konten Box di Bawah Hero --}}
+        <div class="hero-content-box position-absolute start-50 translate-middle-x">
             <div class="card shadow-lg border-0 rounded-4 p-4 p-md-5">
                 <div class="card-body text-center">
                     <h1 class="card-title fw-bold mb-3" style="color: #0ea5e9;">AIR TERJUN LUBUK HITAM</h1>
                     <p class="card-text text-muted mb-4 fs-5">Beautiful Places in Sumatera Barat</p>
-                    {{-- Ganti '#' dengan route login yang sebenarnya --}}
-                    <a href="#" class="btn btn-outline-secondary rounded-pill px-4 py-2">Login</a>
+                    <a href="{{ route('login') }}" class="btn btn-light border rounded-pill px-4 py-2 shadow-sm">Login</a>
+                    {{-- Mengganti style tombol agar mirip screenshot (putih dengan border) --}}
                 </div>
             </div>
         </div>
     </section>
-    <!-- Spacer untuk memberi ruang setelah hero box -->
-    <div style="height: 100px;"></div>
+
+
+
+    {{-- Spacer untuk memberi ruang antara hero box dan section berikutnya --}}
+    {{-- Sesuaikan height jika perlu --}}
+    <div style="height: 120px;"></div>
 
     <!-- 2. Explore Section -->
     <section class="py-5 explore-bg-section">
