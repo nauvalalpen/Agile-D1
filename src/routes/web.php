@@ -55,7 +55,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function() {
-    Route::resource('tourists', TouristController::class);
+    // Route::resource('tourists', TouristController::class);
     Route::resource('guides', GuideController::class);
     // Route::get('weather', [WeatherController::class, 'dashboard']);
     // Route::post('checkout/{tourist}', [CheckpointController::class, 'checkout']);
