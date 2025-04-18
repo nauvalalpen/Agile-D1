@@ -1,79 +1,80 @@
-@extends('layouts.app')
+@extends('admin.layouts.admin')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4>Tour Guides</h4>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#createTourGuideModal">
-                            Add New Tour Guide
-                        </button>
-                    </div>
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Tour Guides Management</h1>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTourGuideModal">
+                <i class="fas fa-plus fa-sm"></i> Add New Tour Guide
+            </button>
+        </div>
 
-                    <div class="card-body">
-                        @if (session('success'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+        <!-- Alert Messages -->
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nama</th>
-                                        <th>No HP</th>
-                                        <th>Alamat</th>
-                                        <th>Price Range</th>
-                                        <th>Foto</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($tourguides as $tourguide)
-                                        <tr>
-                                            <td>{{ $tourguide->id }}</td>
-                                            <td>{{ $tourguide->nama }}</td>
-                                            <td>{{ $tourguide->nohp }}</td>
-                                            <td>{{ $tourguide->alamat }}</td>
-                                            <td>{{ $tourguide->price_range }}</td>
-                                            <td>
-                                                @if ($tourguide->foto)
-                                                    <img src="{{ asset('storage/' . $tourguide->foto) }}"
-                                                        class="img-thumbnail" alt="{{ $tourguide->nama }}"
-                                                        style="max-height: 100px;">
-                                                @else
-                                                    <span class="text-muted">No image</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="d-flex">
-                                                    <button type="button" class="btn btn-sm btn-info me-2"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#editTourGuideModal{{ $tourguide->id }}">
-                                                        Edit
-                                                    </button>
-                                                    <button type="button" class="btn btn-sm btn-danger"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#deleteTourGuideModal{{ $tourguide->id }}">
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="7" class="text-center">No tour guides found.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+        <!-- Tour Guides DataTable -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Tour Guides</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>No HP</th>
+                                <th>Alamat</th>
+                                <th>Price Range</th>
+                                <th>Deskripsi</th>
+                                <th>Foto</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($tourguides as $tourguide)
+                                <tr>
+                                    <td>{{ $tourguide->id }}</td>
+                                    <td>{{ $tourguide->nama }}</td>
+                                    <td>{{ $tourguide->nohp }}</td>
+                                    <td>{{ $tourguide->alamat }}</td>
+                                    <td>{{ $tourguide->price_range }}</td>
+                                    <td>{{ $tourguide->deskripsi }}</td>
+                                    <td>
+                                        @if ($tourguide->foto)
+                                            <img src="{{ asset('storage/' . $tourguide->foto) }}" class="img-thumbnail"
+                                                alt="{{ $tourguide->nama }}" style="max-height: 100px;">
+                                        @else
+                                            <span class="text-muted">No image</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <button type="button" class="btn btn-sm btn-info me-2" data-bs-toggle="modal"
+                                                data-bs-target="#editTourGuideModal{{ $tourguide->id }}">
+                                                <i class="fas fa-edit fa-sm"></i> Edit
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#deleteTourGuideModal{{ $tourguide->id }}">
+                                                <i class="fas fa-trash fa-sm"></i> Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center">No tour guides found.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -131,8 +132,8 @@
 
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Deskripsi</label>
-                            <textarea class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi" rows="3"
-                                required>{{ old('deskripsi') }}</textarea>
+                            <textarea class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi"
+                                rows="3" required>{{ old('deskripsi') }}</textarea>
                             @error('deskripsi')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -284,35 +285,10 @@
 
 @push('scripts')
     <script>
-        // Show validation errors in modal if they exist
         document.addEventListener('DOMContentLoaded', function() {
-            @if ($errors->any())
-                document.getElementById('createTourGuideModal').classList.add('show');
-                document.getElementById('createTourGuideModal').style.display = 'block';
-                document.getElementById('createTourGuideModal').setAttribute('aria-hidden', 'false');
-                document.body.classList.add('modal-open');
-            @endif
-        });
-    </script>
-@endpush
-
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-
-            // Open create modal if parameter exists
-            if (urlParams.has('openCreateModal')) {
-                const createModal = new bootstrap.Modal(document.getElementById('createTourGuideModal'));
-                createModal.show();
-            }
-
-            // Open edit modal if parameter exists
-            if (urlParams.has('openEditModal')) {
-                const editId = urlParams.get('openEditModal');
-                const editModal = new bootstrap.Modal(document.getElementById('editTourGuideModal' + editId));
-                editModal.show();
+            // Initialize DataTable if it exists
+            if ($.fn.DataTable) {
+                $('#dataTable').DataTable();
             }
 
             // Show validation errors in modal if they exist
@@ -320,6 +296,45 @@
                 const createModal = new bootstrap.Modal(document.getElementById('createTourGuideModal'));
                 createModal.show();
             @endif
+
+            // Check URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // Open create modal if parameter exists
+            if (urlParams.has('openCreateModal')) {
+                const createModal = new bootstrap.Modal(document.getElementById('createTourGuideModal'));
+                createModal.show();
+
+                // Clean up URL to prevent modal reopening on refresh
+                window.history.replaceState({}, document.title, "{{ route('tourguides.index') }}");
+            }
+
+            // Open edit modal if parameter exists
+            if (urlParams.has('openEditModal')) {
+                const editId = urlParams.get('openEditModal');
+                const editModal = new bootstrap.Modal(document.getElementById('editTourGuideModal' + editId));
+                editModal.show();
+
+                // Clean up URL to prevent modal reopening on refresh
+                window.history.replaceState({}, document.title, "{{ route('tourguides.index') }}");
+            }
+
+            // Properly handle modal closing
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.addEventListener('hidden.bs.modal', function() {
+                    // Remove modal backdrop if it exists
+                    const backdrop = document.querySelector('.modal-backdrop');
+                    if (backdrop) {
+                        backdrop.remove();
+                    }
+
+                    // Remove modal-open class from body
+                    document.body.classList.remove('modal-open');
+                    document.body.style.overflow = '';
+                    document.body.style.paddingRight = '';
+                });
+            });
         });
     </script>
 @endpush

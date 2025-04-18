@@ -69,7 +69,7 @@
 
             <!-- Nav Item - Guides -->
             <li class="nav-item">
-                <a class="nav-link" href="tourguides">
+                <a class="nav-link" href="{{ route('tourguides.index') }}">
                     <i class="fas fa-fw fa-user-tie"></i>
                     <span>Guides</span>
                 </a>
@@ -245,7 +245,7 @@
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Active Guides</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                {{ \App\Models\OrderTourGuide::where('status', 'success')->count() }}
+                                                {{ \App\Models\OrderTourGuide::where('status', 'accepted')->count() }}
                                             </div>
                                         </div>
                                         <a href="{{ route('admin.orders.index') }}" class="btn btn-success">Manage
