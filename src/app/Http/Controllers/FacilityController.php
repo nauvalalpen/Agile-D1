@@ -27,11 +27,12 @@ class FacilityController extends Controller
     }
 
     /**
-     * Show the form for creating a new facility.
+     * Return the edit form content for a modal.
      */
-    public function create()
+    public function editModal($id)
     {
-        return view('admin.facility.create');
+        $facility = Facility::findOrFail($id);
+        return view('admin.facility.edit', compact('facility'));
     }
 
     /**
@@ -55,22 +56,6 @@ class FacilityController extends Controller
 
         return redirect()->route('admin.facilities.index')
             ->with('success', 'Facility created successfully.');
-    }
-
-    /**
-     * Display the specified facility.
-     */
-    public function show(Facility $facility)
-    {
-        return view('admin.facility.show', compact('facility'));
-    }
-
-    /**
-     * Show the form for editing the specified facility.
-     */
-    public function edit(Facility $facility)
-    {
-        return view('admin.facility.edit', compact('facility'));
     }
 
     /**

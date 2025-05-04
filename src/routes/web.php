@@ -114,13 +114,18 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 // Public routes
 Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities.index');
 
-// Admin routes
+
+// ... (keep all existing routes)
+
+// Fasilitas : 
+// Public routes
+Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities.index');
+
+// Admin routes for facilities
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'adminIndex'])->name('facilities.index');
-    Route::get('/facilities/create', [App\Http\Controllers\FacilityController::class, 'create'])->name('facilities.create');
+    Route::get('/facilities/{id}/edit-modal', [App\Http\Controllers\FacilityController::class, 'editModal'])->name('facilities.edit-modal');
     Route::post('/facilities', [App\Http\Controllers\FacilityController::class, 'store'])->name('facilities.store');
-    Route::get('/facilities/{facility}', [App\Http\Controllers\FacilityController::class, 'show'])->name('facilities.show');
-    Route::get('/facilities/{facility}/edit', [App\Http\Controllers\FacilityController::class, 'edit'])->name('facilities.edit');
     Route::put('/facilities/{facility}', [App\Http\Controllers\FacilityController::class, 'update'])->name('facilities.update');
     Route::delete('/facilities/{facility}', [App\Http\Controllers\FacilityController::class, 'destroy'])->name('facilities.destroy');
     Route::post('/facilities/{id}/restore', [App\Http\Controllers\FacilityController::class, 'restore'])->name('facilities.restore');
