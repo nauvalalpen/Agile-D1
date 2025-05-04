@@ -114,7 +114,6 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 // Public routes
 Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities.index');
 
-
 // ... (keep all existing routes)
 
 // Fasilitas : 
