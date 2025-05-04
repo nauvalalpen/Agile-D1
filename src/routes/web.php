@@ -151,6 +151,20 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::put('/orders-madu/{id}', [App\Http\Controllers\OrderMaduController::class, 'update'])->name('orders-madu.update');
 });
 
+// User Order History Routes - Unified
+Route::middleware(['auth'])->group(function () {
+    Route::get('/order-history', [OrderHistoryController::class, 'index'])->name('order-history.index');
+    Route::get('/order-history/{id}', [OrderHistoryController::class, 'show'])->name('order-history.show');
+    
+    // Redirect old routes to new unified system
+    Route::get('/order-madu', function() {
+        return redirect()->route('order-history.index', ['tab' => 'honey']);
+    })->name('order-madu.index');
+    
+    Route::get('/order-madu/{id}', function($id) {
+        return redirect()->route('order-history.show', ['id' => $id, 'type' => 'honey']);
+    })->name('order-madu.show');
+});
 
 
 

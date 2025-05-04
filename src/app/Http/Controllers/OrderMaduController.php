@@ -7,6 +7,7 @@ use App\Models\OrderMadu;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderMaduController extends Controller
 {
@@ -19,23 +20,48 @@ class OrderMaduController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         
-        return view('madu.order-history', compact('orders'));
+        return view('order-history.madu', compact('orders'));
     }
 
     /**
      * Display the specified order.
      */
-    public function show($id)
-    {
-        $order = OrderMadu::findOrFail($id);
-        
-        // Check if the order belongs to the authenticated user
-        if ($order->user_id !== Auth::id() && !Auth::user()->is_admin) {
-            abort(403, 'Unauthorized action.');
+
+        public function show($id)
+        {
+            $user = Auth::user();
+            
+            $order = DB::table('order_madus')
+                ->join('madus', 'order_madus.madu_id', '=', 'madus.id')
+                ->join('users', 'order_madus.user_id', '=', 'users.id')
+                ->select(
+                    'order_madus.*',
+                    'madus.nama_madu',
+                    'madus.ukuran',
+                    'madus.harga',
+                    'madus.gambar',
+                    'users.name as user_name',
+                    'users.email as user_email'
+                )
+                ->where('order_madus.id', $id)
+                ->where('order_madus.user_id', $user->id)
+                ->first();
+                
+            if (!$order) {
+                return redirect()->route('order-history.index')->with('error', 'Order not found');
+            }
+            
+            // Mark notification as read if it's unread
+            if (!$order->is_read && in_array($order->status, ['accepted', 'rejected'])) {
+                DB::table('order_madus')
+                    ->where('id', $id)
+                    ->update(['is_read' => true]);
+            }
+            
+            return redirect()->route('order-history.show', ['id' => $id, 'type' => 'honey']);
         }
         
-        return view('madu.order-detail', compact('order'));
-    }
+    
 
     /**
      * Display a listing of all honey orders for admin.

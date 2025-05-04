@@ -137,11 +137,19 @@
                         @else
                             <!-- Notification Icon -->
                             @php
-                                $unreadNotifications = DB::table('order_tour_guides')
+                                $unreadTourGuideNotifications = DB::table('order_tour_guides')
                                     ->where('user_id', Auth::id())
                                     ->whereIn('status', ['accepted', 'rejected'])
                                     ->where('is_read', false)
                                     ->count();
+
+                                $unreadHoneyNotifications = DB::table('order_madus')
+                                    ->where('user_id', Auth::id())
+                                    ->whereIn('status', ['accepted', 'rejected'])
+                                    ->where('is_read', false)
+                                    ->count();
+
+                                $totalUnreadNotifications = $unreadTourGuideNotifications + $unreadHoneyNotifications;
                             @endphp
 
                             <li class="nav-item dropdown">
@@ -149,8 +157,9 @@
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="notification-icon">
                                         <i class="fas fa-bell"></i>
-                                        @if ($unreadNotifications > 0)
-                                            <span class="notification-badge bg-danger">{{ $unreadNotifications }}</span>
+                                        @if ($totalUnreadNotifications > 0)
+                                            <span
+                                                class="notification-badge bg-danger">{{ $totalUnreadNotifications }}</span>
                                         @endif
                                     </span>
                                 </a>
@@ -159,12 +168,35 @@
                                     <h6 class="dropdown-header">Notifications</h6>
 
                                     @php
-                                        $notifications = DB::table('order_tour_guides')
+                                        $tourGuideNotifications = DB::table('order_tour_guides')
                                             ->join('tourguides', 'order_tour_guides.tourguide_id', '=', 'tourguides.id')
-                                            ->select('order_tour_guides.*', 'tourguides.nama as tourguide_name')
+                                            ->select(
+                                                'order_tour_guides.id',
+                                                'order_tour_guides.status',
+                                                'order_tour_guides.is_read',
+                                                'order_tour_guides.updated_at',
+                                                'tourguides.nama as item_name',
+                                                DB::raw("'tour_guide' as order_type"),
+                                            )
                                             ->where('order_tour_guides.user_id', Auth::id())
-                                            ->whereIn('order_tour_guides.status', ['accepted', 'rejected'])
-                                            ->orderBy('order_tour_guides.updated_at', 'desc')
+                                            ->whereIn('order_tour_guides.status', ['accepted', 'rejected']);
+
+                                        $honeyNotifications = DB::table('order_madus')
+                                            ->join('madus', 'order_madus.madu_id', '=', 'madus.id')
+                                            ->select(
+                                                'order_madus.id',
+                                                'order_madus.status',
+                                                'order_madus.is_read',
+                                                'order_madus.updated_at',
+                                                'madus.nama_madu as item_name',
+                                                DB::raw("'honey' as order_type"),
+                                            )
+                                            ->where('order_madus.user_id', Auth::id())
+                                            ->whereIn('order_madus.status', ['accepted', 'rejected']);
+
+                                        $notifications = $tourGuideNotifications
+                                            ->union($honeyNotifications)
+                                            ->orderBy('updated_at', 'desc')
                                             ->limit(5)
                                             ->get();
                                     @endphp
@@ -172,8 +204,13 @@
                                     @if (count($notifications) > 0)
                                         @foreach ($notifications as $notification)
                                             <a class="dropdown-item {{ $notification->is_read ? '' : 'fw-bold' }}"
-                                                href="{{ route('order-history.show', $notification->id) }}">
-                                                Your order with {{ $notification->tourguide_name }} has been
+                                                href="{{ route('order-history.show', ['id' => $notification->id, 'type' => $notification->order_type]) }}">
+                                                @if ($notification->order_type == 'tour_guide')
+                                                    Your tour guide request with {{ $notification->item_name }} has been
+                                                @else
+                                                    Your honey order for {{ $notification->item_name }} has been
+                                                @endif
+
                                                 @if ($notification->status == 'accepted')
                                                     <span class="text-success">accepted</span>
                                                 @elseif($notification->status == 'rejected')
@@ -196,31 +233,6 @@
                                 </div>
                             </li>
 
-                            <!-- Order History Link -->
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                    href="{{ route('order-history.index') }}">{{ __('Order History') }}</a>
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                    style="z-index: 1050;" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"
-                                    style="z-index: 1051;">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
                         @endguest
                     </ul>
                 </div>
