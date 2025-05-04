@@ -73,7 +73,15 @@
                                             -
                                         @endif
                                     </td>
-                                    <td>{{ date('d M Y', strtotime($order->tanggal_order)) }}</td>
+                                    <td>
+                                        @if (isset($order->tanggal))
+                                            {{ date('d M Y', strtotime($order->tanggal)) }}
+                                        @elseif (isset($order->date))
+                                            {{ date('d M Y', strtotime($order->date)) }}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($order->status == 'pending')
                                             <span class="badge bg-warning text-dark">Pending</span>
