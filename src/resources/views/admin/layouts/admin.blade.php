@@ -91,6 +91,14 @@
                 </a>
             </li>
 
+            {{-- Nav Item - Facility --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.facilities.index') }}">
+                    <i class="fas fa-fw fa-user-tie"></i>
+                    <span>Facility</span>
+                </a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 

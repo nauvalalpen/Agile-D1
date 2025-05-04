@@ -57,12 +57,12 @@
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link mx-1" href="{{ url('tourguides/') }}">
+                        <a class="nav-link mx-1" href="{{ url('weather') }}">
                             Weather
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link mx-1" href="{{ url('tourguides/') }}">
+                        <a class="nav-link mx-1" href="{{ url('facilities/') }}">
                             Facility
                         </a>
                     </li>
@@ -77,7 +77,7 @@
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link mx-1" href="{{ url('tourguides/') }}">
+                        <a class="nav-link mx-1" href="{{ url('contact') }}">
                             Contact Us
                         </a>
                     </li>

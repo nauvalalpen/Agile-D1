@@ -85,11 +85,12 @@
 
             <!-- Nav Item - Checkpoints -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-map-marker-alt"></i>
-                    <span>Checkpoints</span>
+                <a class="nav-link" href="{{ route('admin.facilities.index') }}">
+                    <i class="fas fa-fw fa-building"></i>
+                    <span>Facility</span>
                 </a>
             </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider">
