@@ -120,6 +120,7 @@
                     </ul> --}}
 
                     <!-- Right Side Of Navbar -->
+                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
@@ -233,8 +234,44 @@
                                 </div>
                             </li>
 
+                            <!-- Order History Link - Restored -->
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                    href="{{ route('order-history.index') }}">{{ __('Order History') }}</a>
+                            </li>
+
+                            <!-- User Account Dropdown - Restored -->
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    style="z-index: 1050;" v-pre>
+                                    {{ Auth::user()->name }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"
+                                    style="z-index: 1051;">
+                                    <!-- Profile Link -->
+                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                        <i class="fas fa-user fa-fw"></i> {{ __('Profile') }}
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+
+                                    <!-- Logout Link -->
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt fa-fw"></i> {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
                         @endguest
                     </ul>
+
                 </div>
             </div>
         </nav>
@@ -254,6 +291,46 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
     </script>
+
+    <!-- Add this before the closing </body> tag -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle notification links
+            document.querySelectorAll('.dropdown-menu a.dropdown-item').forEach(function(link) {
+                if (link.href.includes('order-history.show')) {
+                    link.addEventListener('click', function() {
+                        // Find the notification badge
+                        const badge = document.querySelector('.notification-badge');
+                        if (badge) {
+                            // Get current count
+                            let count = parseInt(badge.textContent);
+                            // If this is an unread notification (has fw-bold class)
+                            if (this.classList.contains('fw-bold')) {
+                                count--;
+                                // Remove bold formatting
+                                this.classList.remove('fw-bold');
+                                // Update or hide badge
+                                if (count <= 0) {
+                                    badge.style.display = 'none';
+                                } else {
+                                    badge.textContent = count;
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Check for notification_read flash message
+            @if (session('notification_read'))
+                // Force refresh the page to update notification count
+                setTimeout(function() {
+                    window.location.reload();
+                }, 100);
+            @endif
+        });
+    </script>
+
 </body>
 
 </html>

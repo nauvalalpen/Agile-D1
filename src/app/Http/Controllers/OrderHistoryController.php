@@ -80,65 +80,81 @@ class OrderHistoryController extends Controller
         
     
 
-    public function show($id, Request $request)
-    {
-        $user = Auth::user();
-        $orderType = $request->query('type', 'tour_guide'); // Default to tour_guide
-        
-        if ($orderType === 'honey') {
-            $order = DB::table('order_madus')
-                ->join('madus', 'order_madus.madu_id', '=', 'madus.id')
-                ->join('users', 'order_madus.user_id', '=', 'users.id')
-                ->select(
-                    'order_madus.*',
-                    'madus.nama_madu',
-                    'madus.ukuran',
-                    'madus.harga',
-                    'madus.gambar',
-                    'users.name as user_name',
-                    'users.email as user_email',
-                    DB::raw("'honey' as order_type")
-                )
-                ->where('order_madus.id', $id)
-                ->where('order_madus.user_id', $user->id)
-                ->first();
+        public function show($id, Request $request)
+        {
+            $user = Auth::user();
+            $orderType = $request->query('type', 'tour_guide'); // Default to tour_guide
+            
+            if ($orderType === 'honey') {
+                $order = DB::table('order_madus')
+                    ->join('madus', 'order_madus.madu_id', '=', 'madus.id')
+                    ->join('users', 'order_madus.user_id', '=', 'users.id')
+                    ->select(
+                        'order_madus.*',
+                        'madus.nama_madu',
+                        'madus.ukuran',
+                        'madus.harga',
+                        'madus.gambar',
+                        'users.name as user_name',
+                        'users.email as user_email',
+                        DB::raw("'honey' as order_type")
+                    )
+                    ->where('order_madus.id', $id)
+                    ->where('order_madus.user_id', $user->id)
+                    ->first();
+                    
+                if (!$order) {
+                    return redirect()->route('order-history.index')->with('error', 'Order not found');
+                }
                 
-            if (!$order) {
-                return redirect()->route('order-history.index')->with('error', 'Order not found');
-            }
-            
-            return view('order-history.show-honey', compact('order'));
-        } else {
-            $order = DB::table('order_tour_guides')
-                ->join('tourguides', 'order_tour_guides.tourguide_id', '=', 'tourguides.id')
-                ->join('users', 'order_tour_guides.user_id', '=', 'users.id')
-                ->select(
-                    'order_tour_guides.*',
-                    'tourguides.nama as tourguide_name',
-                    'tourguides.nohp as tourguide_nohp',
-                    'tourguides.alamat as tourguide_alamat',
-                    'tourguides.price_range as tourguide_price_range',
-                    'users.name as user_name',
-                    'users.email as user_email',
-                    DB::raw("'tour_guide' as order_type")
-                )
-                ->where('order_tour_guides.id', $id)
-                ->where('order_tour_guides.user_id', $user->id)
-                ->first();
+                // Mark notification as read if it's unread
+                if (!$order->is_read && in_array($order->status, ['accepted', 'rejected'])) {
+                    DB::table('order_madus')
+                        ->where('id', $id)
+                        ->update(['is_read' => true]);
+                        
+                    // Redirect to refresh the page and update the notification count
+                    return redirect()->route('order-history.show', ['id' => $id, 'type' => 'honey'])
+                        ->with('notification_read', true);
+                }
                 
-            if (!$order) {
-                return redirect()->route('order-history.index')->with('error', 'Order not found');
+                return view('order-history.show-honey', compact('order'));
+            } else {
+                $order = DB::table('order_tour_guides')
+                    ->join('tourguides', 'order_tour_guides.tourguide_id', '=', 'tourguides.id')
+                    ->join('users', 'order_tour_guides.user_id', '=', 'users.id')
+                    ->select(
+                        'order_tour_guides.*',
+                        'tourguides.nama as tourguide_name',
+                        'tourguides.nohp as tourguide_nohp',
+                        'tourguides.alamat as tourguide_alamat',
+                        'tourguides.price_range as tourguide_price_range',
+                        'users.name as user_name',
+                        'users.email as user_email',
+                        DB::raw("'tour_guide' as order_type")
+                    )
+                    ->where('order_tour_guides.id', $id)
+                    ->where('order_tour_guides.user_id', $user->id)
+                    ->first();
+                    
+                if (!$order) {
+                    return redirect()->route('order-history.index')->with('error', 'Order not found');
+                }
+                
+                // Mark notification as read if it's unread
+                if (!$order->is_read && in_array($order->status, ['accepted', 'rejected'])) {
+                    DB::table('order_tour_guides')
+                        ->where('id', $id)
+                        ->update(['is_read' => true]);
+                        
+                    // Redirect to refresh the page and update the notification count
+                    return redirect()->route('order-history.show', ['id' => $id, 'type' => 'tour_guide'])
+                        ->with('notification_read', true);
+                }
+                
+                return view('order-history.show-tour-guide', compact('order'));
             }
-            
-            // Mark notification as read if it's unread
-            if (!$order->is_read && in_array($order->status, ['accepted', 'rejected'])) {
-                DB::table('order_tour_guides')
-                    ->where('id', $id)
-                    ->update(['is_read' => true]);
-            }
-            
-            return view('order-history.show-tour-guide', compact('order'));
         }
-    }
+        
 
 }

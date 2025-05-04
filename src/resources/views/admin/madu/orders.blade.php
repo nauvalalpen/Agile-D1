@@ -84,7 +84,8 @@
                                                                 <tr>
                                                                     <th>User</th>
                                                                     <td>{{ $order->user->name ?? 'Unknown' }}
-                                                                        ({{ $order->user->email ?? 'No email' }})</td>
+                                                                        ({{ $order->user->email ?? 'No email' }})
+                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Honey Product</th>
@@ -165,7 +166,7 @@
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Comprehensive fix for modal backdrop issues
@@ -217,4 +218,4 @@
             }, 2000);
         });
     </script>
-@endsection
+@endpush
