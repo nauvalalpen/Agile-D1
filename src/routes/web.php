@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\UserLoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\FacilityController as AdminFacilityController;
 use App\Http\Controllers\TouristController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\WeatherController;
@@ -12,6 +13,8 @@ use App\Http\Controllers\CheckpointController;
 use App\Http\Controllers\TourGuideController;
 use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\FacilityController;
+
 
 
 Route::get('/index', function () {
@@ -105,6 +108,32 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/orders/{id}/edit', [AdminOrderController::class, 'edit'])->name('admin.orders.edit');
     Route::put('/orders/{id}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
 });
+
+
+// Fasilitas : 
+// Public routes
+Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities.index');
+
+// ... (keep all existing routes)
+
+// Fasilitas : 
+// Public routes
+Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities.index');
+
+// Admin routes for facilities
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'adminIndex'])->name('facilities.index');
+    Route::get('/facilities/{id}/edit-modal', [App\Http\Controllers\FacilityController::class, 'editModal'])->name('facilities.edit-modal');
+    Route::post('/facilities', [App\Http\Controllers\FacilityController::class, 'store'])->name('facilities.store');
+    Route::put('/facilities/{facility}', [App\Http\Controllers\FacilityController::class, 'update'])->name('facilities.update');
+    Route::delete('/facilities/{facility}', [App\Http\Controllers\FacilityController::class, 'destroy'])->name('facilities.destroy');
+    Route::post('/facilities/{id}/restore', [App\Http\Controllers\FacilityController::class, 'restore'])->name('facilities.restore');
+    Route::delete('/facilities/{id}/force-delete', [App\Http\Controllers\FacilityController::class, 'forceDelete'])->name('facilities.force-delete');
+});
+
+
+
+
 
 
 
