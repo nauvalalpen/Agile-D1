@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('madus', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_madu');
+            $table->string('ukuran');
+            $table->decimal('harga', 10, 2);
+            $table->text('deskripsi');
+            $table->integer('stock');
+            $table->string('gambar')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

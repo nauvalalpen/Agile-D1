@@ -88,7 +88,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ url('tourguides/') }}">Tour Guide</a>
-                            <a class="dropdown-item" href="#">Honey Product</a>
+                            <a class="dropdown-item" href="{{ route('madu.index') }}">Honey Product</a>
                             {{-- <div class="dropdown-divider"></div> --}}
                             <a class="dropdown-item" href="#">UMKM Product</a>
                         </div>
