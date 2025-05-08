@@ -13,27 +13,21 @@ class TourGuideController extends Controller
      * Display a listing of the resource.
      */
 
-     /**
- * Get tour guides for homepage display.
- */
-/**
- * Display tour guides on the homepage.
- */
-    public function homepage()
-    {
-        // Fetch tour guides ordered by ID ascending
-        $tourGuides = DB::table('tourguides')
-                        ->orderBy('id', 'asc')
-                        ->limit(3)
-                        ->get();
-        
-        // Pass the data to the view
-        return view('index', compact('tourGuides'));
-    }
-
-
+     public function homepage()
+     {
+         // Fetch tour guides ordered by ID ascending
+         $tourGuides = DB::table('tourguides')
+                         ->orderBy('id', 'asc')
+                         ->limit(3)
+                         ->get();
+         
+         // Pass the data to the view
+         return view('index', compact('tourGuides'));
+     }
     public function index()
     {
+        //
+        // dd(Auth::user());
         $tourguides = DB::table('tourguides')->get();
         
         
@@ -147,7 +141,7 @@ class TourGuideController extends Controller
             'updated_at' => now(),
         ]);
         
-        return redirect()->route('tourguides.index')->with('Success', 'Data Tour Guide berhasil diupdate');
+        return redirect()->route('tourguides.index')->with('success', 'Data Tour Guide berhasil diupdate');
     }
 
     public function order(Request $request, $id){
@@ -194,7 +188,6 @@ class TourGuideController extends Controller
         return redirect()->route('tourguides.index')->with('success', 'Tour guide ordered successfully.');
     }
     
-
     /**
      * Remove the specified resource from storage.
      */
@@ -202,6 +195,6 @@ class TourGuideController extends Controller
     {
         //
         DB::table('tourguides')->where('id', $id)->delete();
-        return redirect()->route('tourguides.index')->with('Success', 'Data Tour Guide berhasil dihapus');
+        return redirect()->route('tourguides.index')->with('success', 'Data Tour Guide berhasil dihapus');
     }
 }
