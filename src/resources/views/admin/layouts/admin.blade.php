@@ -61,7 +61,7 @@
 
             <!-- Nav Item - Tourists -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('tourists.index') }}">
+                <a class="nav-link" href="">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Tourists</span>
                 </a>
@@ -69,7 +69,7 @@
 
             <!-- Nav Item - Guides -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('tourguides.index') }}">
                     <i class="fas fa-fw fa-user-tie"></i>
                     <span>Guides</span>
                 </a>
@@ -85,12 +85,19 @@
 
             <!-- Nav Item - Checkpoints -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.facilities.index') }}">
-                    <i class="fas fa-fw fa-building"></i>
-                    <span>Facility</span>
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-map-marker-alt"></i>
+                    <span>Checkpoints</span>
                 </a>
             </li>
 
+            {{-- Nav Item - Facility --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.facilities.index') }}">
+                    <i class="fas fa-fw fa-user-tie"></i>
+                    <span>Facility</span>
+                </a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -133,6 +140,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
+
                     <!-- Topbar Search -->
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -151,15 +159,16 @@
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Alerts -->
+                        <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
                             <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Alerts Center
@@ -180,18 +189,19 @@
                             </div>
                         </li>
 
+
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin User</span>
                                 <img class="img-profile rounded-circle"
                                     src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -202,19 +212,92 @@
                                     Settings
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                    data-target="#logoutModal">
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
                             </div>
                         </li>
+
                     </ul>
                 </nav>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                @yield('content')
+                <div class="container-fluid">
+                    <!-- Dashboard Cards -->
+                    <div class="row">
+                        <!-- Tourist Management Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Tourists Today</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ 0 }}
+                                            </div>
+                                        </div>
+                                        <a href="" class="btn btn-primary">Manage Tourists</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Guide Management Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Active Guides</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                {{ \App\Models\OrderTourGuide::where('status', 'accepted')->count() }}
+                                            </div>
+                                        </div>
+                                        <a href="{{ route('admin.orders.index') }}" class="btn btn-success">Manage
+                                            Guides</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Bookings Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Today's Bookings</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ 0 }}
+                                            </div>
+                                        </div>
+                                        <a href="" class="btn btn-info">View Bookings</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Weather Information Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Current Weather</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ 0 }}°C
+                                            </div>
+                                        </div>
+                                        <a href="" class="btn btn-warning">Weather Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @yield('content')
+                </div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -242,19 +325,16 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-primary">Logout</button>
@@ -273,6 +353,68 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/admin.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize all dropdowns
+            var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+            dropdownElementList.forEach(function(dropdownToggleEl) {
+                new bootstrap.Dropdown(dropdownToggleEl);
+            });
+
+            // Initialize all tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            tooltipTriggerList.forEach(function(tooltipTriggerEl) {
+                new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+
+            // Initialize all popovers
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            popoverTriggerList.forEach(function(popoverTriggerEl) {
+                new bootstrap.Popover(popoverTriggerEl);
+            });
+
+            // Initialize all modals
+            var modalTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="modal"]'))
+            modalTriggerList.forEach(function(modalTriggerEl) {
+                modalTriggerEl.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var targetModal = document.querySelector(this.getAttribute('data-bs-target'));
+                    var modal = new bootstrap.Modal(targetModal);
+                    modal.show();
+                });
+            });
+
+            // Sidebar toggle
+            document.getElementById('sidebarToggle').addEventListener('click', function() {
+                document.body.classList.toggle('sidebar-toggled');
+                document.querySelector('.sidebar').classList.toggle('toggled');
+            });
+
+            // Close sidebar on small screens when clicking outside
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth < 768 && !event.target.closest('.sidebar') &&
+                    !event.target.closest('#sidebarToggleTop')) {
+                    document.querySelector('.sidebar').classList.add('toggled');
+                }
+            });
+        });
+    </script>
+
+    <!-- Page specific scripts -->
+    @stack('scripts')
+
+
+
+    <!-- Page specific scripts -->
+    @stack('scripts')
+
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{ asset('js/admin.js') }}"></script>
+
+    <!-- Page specific scripts -->
+    @stack('scripts')
 </body>
 
 </html>

@@ -18,6 +18,9 @@ class AdminController extends Controller
 
     public function dashboard()
     {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('home')->with('error', 'Unauthorized access.');
+        }
         // dd("masuk");
         return view('admin.dashboard', [
             'title' => 'Admin Dashboard',
