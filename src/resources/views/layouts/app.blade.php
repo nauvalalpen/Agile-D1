@@ -88,7 +88,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ url('tourguides/') }}">Tour Guide</a>
-                            <a class="dropdown-item" href="#">Honey Product</a>
+                            <a class="dropdown-item" href="{{ route('madu.index') }}">Honey Product</a>
                             {{-- <div class="dropdown-divider"></div> --}}
                             <a class="dropdown-item" href="#">UMKM Product</a>
                         </div>
@@ -120,6 +120,7 @@
                     </ul> --}}
 
                     <!-- Right Side Of Navbar -->
+                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
@@ -137,11 +138,19 @@
                         @else
                             <!-- Notification Icon -->
                             @php
-                                $unreadNotifications = DB::table('order_tour_guides')
+                                $unreadTourGuideNotifications = DB::table('order_tour_guides')
                                     ->where('user_id', Auth::id())
                                     ->whereIn('status', ['accepted', 'rejected'])
                                     ->where('is_read', false)
                                     ->count();
+
+                                $unreadHoneyNotifications = DB::table('order_madus')
+                                    ->where('user_id', Auth::id())
+                                    ->whereIn('status', ['accepted', 'rejected'])
+                                    ->where('is_read', false)
+                                    ->count();
+
+                                $totalUnreadNotifications = $unreadTourGuideNotifications + $unreadHoneyNotifications;
                             @endphp
 
                             <li class="nav-item dropdown">
@@ -149,8 +158,9 @@
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="notification-icon">
                                         <i class="fas fa-bell"></i>
-                                        @if ($unreadNotifications > 0)
-                                            <span class="notification-badge bg-danger">{{ $unreadNotifications }}</span>
+                                        @if ($totalUnreadNotifications > 0)
+                                            <span
+                                                class="notification-badge bg-danger">{{ $totalUnreadNotifications }}</span>
                                         @endif
                                     </span>
                                 </a>
@@ -159,12 +169,35 @@
                                     <h6 class="dropdown-header">Notifications</h6>
 
                                     @php
-                                        $notifications = DB::table('order_tour_guides')
+                                        $tourGuideNotifications = DB::table('order_tour_guides')
                                             ->join('tourguides', 'order_tour_guides.tourguide_id', '=', 'tourguides.id')
-                                            ->select('order_tour_guides.*', 'tourguides.nama as tourguide_name')
+                                            ->select(
+                                                'order_tour_guides.id',
+                                                'order_tour_guides.status',
+                                                'order_tour_guides.is_read',
+                                                'order_tour_guides.updated_at',
+                                                'tourguides.nama as item_name',
+                                                DB::raw("'tour_guide' as order_type"),
+                                            )
                                             ->where('order_tour_guides.user_id', Auth::id())
-                                            ->whereIn('order_tour_guides.status', ['accepted', 'rejected'])
-                                            ->orderBy('order_tour_guides.updated_at', 'desc')
+                                            ->whereIn('order_tour_guides.status', ['accepted', 'rejected']);
+
+                                        $honeyNotifications = DB::table('order_madus')
+                                            ->join('madus', 'order_madus.madu_id', '=', 'madus.id')
+                                            ->select(
+                                                'order_madus.id',
+                                                'order_madus.status',
+                                                'order_madus.is_read',
+                                                'order_madus.updated_at',
+                                                'madus.nama_madu as item_name',
+                                                DB::raw("'honey' as order_type"),
+                                            )
+                                            ->where('order_madus.user_id', Auth::id())
+                                            ->whereIn('order_madus.status', ['accepted', 'rejected']);
+
+                                        $notifications = $tourGuideNotifications
+                                            ->union($honeyNotifications)
+                                            ->orderBy('updated_at', 'desc')
                                             ->limit(5)
                                             ->get();
                                     @endphp
@@ -172,8 +205,13 @@
                                     @if (count($notifications) > 0)
                                         @foreach ($notifications as $notification)
                                             <a class="dropdown-item {{ $notification->is_read ? '' : 'fw-bold' }}"
-                                                href="{{ route('order-history.show', $notification->id) }}">
-                                                Your order with {{ $notification->tourguide_name }} has been
+                                                href="{{ route('order-history.show', ['id' => $notification->id, 'type' => $notification->order_type]) }}">
+                                                @if ($notification->order_type == 'tour_guide')
+                                                    Your tour guide request with {{ $notification->item_name }} has been
+                                                @else
+                                                    Your honey order for {{ $notification->item_name }} has been
+                                                @endif
+
                                                 @if ($notification->status == 'accepted')
                                                     <span class="text-success">accepted</span>
                                                 @elseif($notification->status == 'rejected')
@@ -196,12 +234,13 @@
                                 </div>
                             </li>
 
-                            <!-- Order History Link -->
+                            <!-- Order History Link - Restored -->
                             <li class="nav-item">
                                 <a class="nav-link"
                                     href="{{ route('order-history.index') }}">{{ __('Order History') }}</a>
                             </li>
 
+                            <!-- User Account Dropdown - Restored -->
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -211,18 +250,28 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"
                                     style="z-index: 1051;">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                    <!-- Profile Link -->
+                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                        <i class="fas fa-user fa-fw"></i> {{ __('Profile') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                    <div class="dropdown-divider"></div>
+
+                                    <!-- Logout Link -->
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt fa-fw"></i> {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
                                         @csrf
                                     </form>
                                 </div>
                             </li>
                         @endguest
                     </ul>
+
                 </div>
             </div>
         </nav>
@@ -242,6 +291,46 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
     </script>
+
+    <!-- Add this before the closing </body> tag -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle notification links
+            document.querySelectorAll('.dropdown-menu a.dropdown-item').forEach(function(link) {
+                if (link.href.includes('order-history.show')) {
+                    link.addEventListener('click', function() {
+                        // Find the notification badge
+                        const badge = document.querySelector('.notification-badge');
+                        if (badge) {
+                            // Get current count
+                            let count = parseInt(badge.textContent);
+                            // If this is an unread notification (has fw-bold class)
+                            if (this.classList.contains('fw-bold')) {
+                                count--;
+                                // Remove bold formatting
+                                this.classList.remove('fw-bold');
+                                // Update or hide badge
+                                if (count <= 0) {
+                                    badge.style.display = 'none';
+                                } else {
+                                    badge.textContent = count;
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Check for notification_read flash message
+            @if (session('notification_read'))
+                // Force refresh the page to update notification count
+                setTimeout(function() {
+                    window.location.reload();
+                }, 100);
+            @endif
+        });
+    </script>
+
 </body>
 
 </html>
