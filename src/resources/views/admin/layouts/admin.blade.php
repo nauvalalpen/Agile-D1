@@ -91,6 +91,28 @@
                 </a>
             </li>
 
+            {{-- Nav Item - Facility --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.facilities.index') }}">
+                    <i class="fas fa-fw fa-user-tie"></i>
+                    <span>Facility</span>
+                </a>
+            </li>
+
+            {{-- Madu --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.madu.index') }}">
+                    <i class="fas fa-fw fa-flask"></i>
+                    <span>Honey Products</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.orders-madu.index') }}">
+                    <i class="fas fa-fw fa-shopping-cart"></i>
+                    <span>Honey Orders</span>
+                </a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\UserLoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\FacilityController as AdminFacilityController;
 use App\Http\Controllers\TouristController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\WeatherController;
@@ -12,6 +13,8 @@ use App\Http\Controllers\CheckpointController;
 use App\Http\Controllers\TourGuideController;
 use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\FacilityController;
+
 
 
 Route::get('/index', function () {
@@ -105,6 +108,64 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/orders/{id}/edit', [AdminOrderController::class, 'edit'])->name('admin.orders.edit');
     Route::put('/orders/{id}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
 });
+
+// Public routes
+Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities.index');
+
+// Admin routes for facilities
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'adminIndex'])->name('facilities.index');
+    Route::get('/facilities/{id}/edit-modal', [App\Http\Controllers\FacilityController::class, 'editModal'])->name('facilities.edit-modal');
+    Route::post('/facilities', [App\Http\Controllers\FacilityController::class, 'store'])->name('facilities.store');
+    Route::put('/facilities/{facility}', [App\Http\Controllers\FacilityController::class, 'update'])->name('facilities.update');
+    Route::delete('/facilities/{facility}', [App\Http\Controllers\FacilityController::class, 'destroy'])->name('facilities.destroy');
+    Route::post('/facilities/{id}/restore', [App\Http\Controllers\FacilityController::class, 'restore'])->name('facilities.restore');
+    Route::delete('/facilities/{id}/force-delete', [App\Http\Controllers\FacilityController::class, 'forceDelete'])->name('facilities.force-delete');
+});
+
+
+// Madu: 
+
+// Honey Product Routes
+Route::get('/honey', [App\Http\Controllers\MaduController::class, 'index'])->name('madu.index');
+Route::get('/honey/{id}/order', [App\Http\Controllers\MaduController::class, 'order'])->name('madu.order')->middleware('auth');
+Route::post('/honey/{id}/order', [App\Http\Controllers\MaduController::class, 'orderSubmit'])->name('madu.orderSubmit')->middleware('auth');
+
+// User Honey Order History Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/order-madu', [App\Http\Controllers\OrderMaduController::class, 'index'])->name('order-madu.index');
+    Route::get('/order-madu/{id}', [App\Http\Controllers\OrderMaduController::class, 'show'])->name('order-madu.show');
+});
+
+// Admin Honey Management Routes
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    Route::get('/madu', [App\Http\Controllers\MaduController::class, 'adminIndex'])->name('madu.index');
+    Route::post('/madu', [App\Http\Controllers\MaduController::class, 'store'])->name('madu.store');
+    Route::put('/madu/{madu}', [App\Http\Controllers\MaduController::class, 'update'])->name('madu.update');
+    Route::delete('/madu/{madu}', [App\Http\Controllers\MaduController::class, 'destroy'])->name('madu.destroy');
+    Route::post('/madu/{id}/restore', [App\Http\Controllers\MaduController::class, 'restore'])->name('madu.restore');
+    Route::delete('/madu/{id}/force-delete', [App\Http\Controllers\MaduController::class, 'forceDelete'])->name('madu.force-delete');
+    
+    // Admin Honey Order Management
+    Route::get('/orders-madu', [App\Http\Controllers\OrderMaduController::class, 'adminIndex'])->name('orders-madu.index');
+    Route::put('/orders-madu/{id}', [App\Http\Controllers\OrderMaduController::class, 'update'])->name('orders-madu.update');
+});
+
+// User Order History Routes - Unified
+Route::middleware(['auth'])->group(function () {
+    Route::get('/order-history', [OrderHistoryController::class, 'index'])->name('order-history.index');
+    Route::get('/order-history/{id}', [OrderHistoryController::class, 'show'])->name('order-history.show');
+    
+    // Redirect old routes to new unified system
+    Route::get('/order-madu', function() {
+        return redirect()->route('order-history.index', ['tab' => 'honey']);
+    })->name('order-madu.index');
+    
+    Route::get('/order-madu/{id}', function($id) {
+        return redirect()->route('order-history.show', ['id' => $id, 'type' => 'honey']);
+    })->name('order-madu.show');
+});
+
 
 
 
