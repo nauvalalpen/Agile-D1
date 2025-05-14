@@ -18,14 +18,81 @@
             </div>
         @endif
 
-        <!-- Tour Guides DataTable -->
+        <!-- Search, Filter and Sort Controls -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Search & Filter</h6>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('tourguides.index') }}" method="GET" class="mb-0">
+                    <div class="row g-3 align-items-center">
+                        <!-- Search -->
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="search" name="search"
+                                    placeholder="Search by name, address or description" value="{{ request('search') }}">
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Price Range Filter -->
+                        <div class="col-md-3">
+                            <select class="form-select" name="price_filter">
+                                <option value="">All Price Ranges</option>
+                                <option value="100-200" {{ request('price_filter') == '100-200' ? 'selected' : '' }}>Rp
+                                    100.000 - Rp 200.000</option>
+                                <option value="200-300" {{ request('price_filter') == '200-300' ? 'selected' : '' }}>Rp
+                                    200.000 - Rp 300.000</option>
+                                <option value="300-400" {{ request('price_filter') == '300-400' ? 'selected' : '' }}>Rp
+                                    300.000 - Rp 400.000</option>
+                                <option value="400" {{ request('price_filter') == '400' ? 'selected' : '' }}>Above Rp
+                                    400.000</option>
+                            </select>
+                        </div>
+
+                        <!-- Sort By -->
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <select class="form-select" name="sort_by">
+                                    <option value="id" {{ request('sort_by') == 'id' ? 'selected' : '' }}>ID</option>
+                                    <option value="nama" {{ request('sort_by') == 'nama' ? 'selected' : '' }}>Name
+                                    </option>
+                                    <option value="price_range" {{ request('sort_by') == 'price_range' ? 'selected' : '' }}>
+                                        Price Range</option>
+                                    <option value="created_at" {{ request('sort_by') == 'created_at' ? 'selected' : '' }}>
+                                        Date Added</option>
+                                </select>
+                                <select class="form-select" name="sort_direction">
+                                    <option value="asc" {{ request('sort_direction') == 'asc' ? 'selected' : '' }}>
+                                        Ascending</option>
+                                    <option value="desc" {{ request('sort_direction') == 'desc' ? 'selected' : '' }}>
+                                        Descending</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Apply/Reset Buttons -->
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">Apply</button>
+                            <a href="{{ route('tourguides.index') }}" class="btn btn-secondary">Reset</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tour Guides DataTable -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold text-primary">Tour Guides</h6>
+                <span>Showing {{ $tourguides->firstItem() ?? 0 }} to {{ $tourguides->lastItem() ?? 0 }} of
+                    {{ $tourguides->total() }} entries</span>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -46,7 +113,7 @@
                                     <td>{{ $tourguide->nohp }}</td>
                                     <td>{{ $tourguide->alamat }}</td>
                                     <td>{{ $tourguide->price_range }}</td>
-                                    <td>{{ $tourguide->deskripsi }}</td>
+                                    <td>{{ Str::limit($tourguide->deskripsi, 50) }}</td>
                                     <td>
                                         @if ($tourguide->foto)
                                             <img src="{{ asset('storage/' . $tourguide->foto) }}" class="img-thumbnail"
@@ -70,12 +137,59 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center">No tour guides found.</td>
+                                    <td colspan="8" class="text-center">No tour guides found.</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center mt-4">
+                    @if ($tourguides->hasPages())
+                        <nav>
+                            <ul class="pagination">
+                                {{-- Previous Page Link --}}
+                                @if ($tourguides->onFirstPage())
+                                    <li class="page-item disabled">
+                                        <span class="page-link">&laquo;</span>
+                                    </li>
+                                @else
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $tourguides->previousPageUrl() }}"
+                                            rel="prev">&laquo;</a>
+                                    </li>
+                                @endif
+
+                                {{-- Pagination Elements --}}
+                                @foreach ($tourguides->getUrlRange(1, $tourguides->lastPage()) as $page => $url)
+                                    @if ($page == $tourguides->currentPage())
+                                        <li class="page-item active">
+                                            <span class="page-link">{{ $page }}</span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                        </li>
+                                    @endif
+                                @endforeach
+
+                                {{-- Next Page Link --}}
+                                @if ($tourguides->hasMorePages())
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $tourguides->nextPageUrl() }}"
+                                            rel="next">&raquo;</a>
+                                    </li>
+                                @else
+                                    <li class="page-item disabled">
+                                        <span class="page-link">&raquo;</span>
+                                    </li>
+                                @endif
+                            </ul>
+                        </nav>
+                    @endif
+                </div>
+
             </div>
         </div>
     </div>
@@ -114,8 +228,8 @@
 
                         <div class="mb-3">
                             <label for="alamat" class="form-label">Alamat</label>
-                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat"
-                                name="alamat" value="{{ old('alamat') }}" required>
+                            <input type="text" class="form-control @error('alamat') is-invalid @enderror"
+                                id="alamat" name="alamat" value="{{ old('alamat') }}" required>
                             @error('alamat')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -286,11 +400,6 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize DataTable if it exists
-            if ($.fn.DataTable) {
-                $('#dataTable').DataTable();
-            }
-
             // Show validation errors in modal if they exist
             @if ($errors->any())
                 const createModal = new bootstrap.Modal(document.getElementById('createTourGuideModal'));
