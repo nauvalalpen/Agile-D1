@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function() {
     // Route::resource('tourists', TouristController::class);
-    Route::resource('guides', GuideController::class);
+    // Route::resource('guides', GuideController::class);
     // Route::get('weather', [WeatherController::class, 'dashboard']);
     // Route::post('checkout/{tourist}', [CheckpointController::class, 'checkout']);
 });
@@ -73,15 +73,15 @@ Route::get('/weather', [App\Http\Controllers\WeatherController::class, 'index'])
 
 // Main features
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
-Route::get('/guides', [App\Http\Controllers\GuideController::class, 'index'])->name('guides');
-Route::get('/honey', [App\Http\Controllers\HoneyController::class, 'index'])->name('honey');
-Route::get('/umkm', [App\Http\Controllers\UmkmController::class, 'index'])->name('umkm');
+// Route::get('/guides', [App\Http\Controllers\GuideController::class, 'index'])->name('guides');
+// Route::get('/honey', [App\Http\Controllers\HoneyController::class, 'index'])->name('honey');
+// Route::get('/umkm', [App\Http\Controllers\UmkmController::class, 'index'])->name('umkm');
 Route::get('/gallery', [App\Http\Controllers\GalleryController::class, 'index'])->name('gallery');
-Route::get('/news', [App\Http\Controllers\NewsController::class, 'index'])->name('news');
+// Route::get('/news', [App\Http\Controllers\NewsController::class, 'index'])->name('news');
 Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities');
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::post('/contact/submit', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
-Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->name('map');
+// Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->name('map');
 Route::get('/weather', [App\Http\Controllers\WeatherController::class, 'index'])->name('weather');
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile')->middleware('auth');
 
