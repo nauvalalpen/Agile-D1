@@ -69,7 +69,7 @@
                 </div>
             @empty
                 <div class="col-12 text-center py-5">
-                    <h3>No facilities available at the moment.</h3>
+                    <h3>No facilities available at the moment, retry later.</h3>
                     <p>Please check back later for updates.</p>
                 </div>
             @endforelse
