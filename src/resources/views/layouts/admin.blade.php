@@ -59,9 +59,9 @@
                 Management
             </div>
 
-            <!-- Nav Item - Tourists -->
+            <!-- Nav Item - Tiket Masuk -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('tourists.index') }}">
+                <a class="nav-link" href="{{ route('tiketmasuks.index') }}">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Tourists</span>
                 </a>
@@ -72,14 +72,6 @@
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-user-tie"></i>
                     <span>Guides</span>
-                </a>
-            </li>
-
-            <!-- Nav Item - Bookings -->
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-calendar-check"></i>
-                    <span>Bookings</span>
                 </a>
             </li>
 
