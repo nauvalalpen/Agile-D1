@@ -14,6 +14,7 @@ use App\Http\Controllers\TourGuideController;
 use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\FacilityController;
+use App\Http\Controllers\ProdukUMKMController;
 
 
 
@@ -57,12 +58,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [UserLoginController::class, 'logout'])->name('logout');
 });
 
-Route::middleware(['auth', 'admin'])->group(function() {
-    // Route::resource('tourists', TouristController::class);
-    Route::resource('guides', GuideController::class);
-    // Route::get('weather', [WeatherController::class, 'dashboard']);
-    // Route::post('checkout/{tourist}', [CheckpointController::class, 'checkout']);
-});
+// Route::middleware(['auth', 'admin'])->group(function() {
+//     // Route::resource('tourists', TouristController::class);
+//     Route::resource('guides', GuideController::class);
+//     // Route::get('weather', [WeatherController::class, 'dashboard']);
+//     // Route::post('checkout/{tourist}', [CheckpointController::class, 'checkout']);
+// });
 
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -73,15 +74,15 @@ Route::get('/weather', [App\Http\Controllers\WeatherController::class, 'index'])
 
 // Main features
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
-Route::get('/guides', [App\Http\Controllers\GuideController::class, 'index'])->name('guides');
-Route::get('/honey', [App\Http\Controllers\HoneyController::class, 'index'])->name('honey');
-Route::get('/umkm', [App\Http\Controllers\UmkmController::class, 'index'])->name('umkm');
+// Route::get('/guides', [App\Http\Controllers\GuideController::class, 'index'])->name('guides');
+// Route::get('/honey', [App\Http\Controllers\HoneyController::class, 'index'])->name('honey');
+// Route::get('/umkm', [App\Http\Controllers\UmkmController::class, 'index'])->name('umkm');
 Route::get('/gallery', [App\Http\Controllers\GalleryController::class, 'index'])->name('gallery');
-Route::get('/news', [App\Http\Controllers\NewsController::class, 'index'])->name('news');
+// Route::get('/news', [App\Http\Controllers\NewsController::class, 'index'])->name('news');
 Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities');
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::post('/contact/submit', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
-Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->name('map');
+// Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->name('map');
 Route::get('/weather', [App\Http\Controllers\WeatherController::class, 'index'])->name('weather');
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile')->middleware('auth');
 
@@ -167,7 +168,18 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
+// Admin routes for produk UMKM+
+Route::get('/produk-umkm', [App\Http\Controllers\ProdukUMKMController::class, 'index'])->name('produkUMKM.index');
 
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    Route::get('/produkUMKM', [App\Http\Controllers\ProdukUMKMController::class, 'adminIndex'])->name('produkUMKM.index');
+    Route::get('/produkUMKM/{id}/edit-modal', [App\Http\Controllers\ProdukUMKMController::class, 'editModal'])->name('produkUMKM.edit-modal');
+    Route::post('/produkUMKM', [App\Http\Controllers\ProdukUMKMController::class, 'store'])->name('produkUMKM.store');
+    Route::put('/produkUMKM/{produkUMKM}', [App\Http\Controllers\ProdukUMKMController::class, 'update'])->name('produkUMKM.update');
+    Route::delete('/produkUMKM/{produkUMKM}', [App\Http\Controllers\ProdukUMKMController::class, 'destroy'])->name('produkUMKM.destroy');
+    Route::post('/produkUMKM/{id}/restore', [App\Http\Controllers\ProdukUMKMController::class, 'restore'])->name('produkUMKM.restore');
+    Route::delete('/produkUMKM/{id}/force-delete', [App\Http\Controllers\ProdukUMKMController::class, 'forceDelete'])->name('produkUMKM.force-delete');
+});
 
 // Route::get('/weather', function () {
 //     return view('weather');
