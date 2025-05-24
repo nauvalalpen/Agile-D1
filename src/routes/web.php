@@ -14,8 +14,7 @@ use App\Http\Controllers\TourGuideController;
 use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\FacilityController;
-
-
+use App\Http\Controllers\TiketController;
 
 Route::get('/index', function () {
     return view('index');
@@ -83,7 +82,7 @@ Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])
 Route::post('/contact/submit', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
 // Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->name('map');
 Route::get('/weather', [App\Http\Controllers\WeatherController::class, 'index'])->name('weather');
-Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile')->middleware('auth');
+//Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile')->middleware('auth');
 
 //Tour Guides
 Route::get('tourguides', [TourGuideController::class, 'index'])->name('tourguides.index');
@@ -164,6 +163,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order-madu/{id}', function($id) {
         return redirect()->route('order-history.show', ['id' => $id, 'type' => 'honey']);
     })->name('order-madu.show');
+
+    // //tiket masuk route
+    // Route::middleware(['auth', 'admin'])->group(function(){
+    //   Route::resource('tiket-masuk', TiketController::class);
+    // });
+
+    // Admin routes for facilities
+    Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    Route::get('/tiketmasuks', [App\Http\Controllers\TiketController::class, 'adminIndex'])->name('tiketmasuks.index');
+    Route::get('/tiketmasuks/{id}/edit-modal', [App\Http\Controllers\TiketController::class, 'editModal'])->name('tiketmasuks.edit-modal');
+    Route::post('/tiketmasuks', [App\Http\Controllers\TiketController::class, 'store'])->name('tiketmasuks.store');
+    Route::put('/tiketmasuks/{tiket}', [App\Http\Controllers\TiketController::class, 'update'])->name('tiketmasuks.update');
+    Route::post('/tiketmasuks/{id}/restore', [App\Http\Controllers\TiketController::class, 'restore'])->name('tiketmasuks.restore');
+    Route::patch('/tiketmasuks/{id}/status', [App\Http\Controllers\TiketController::class, 'updateStatus'])->name('tiketmasuks.updateStatus');
+});
 });
 
 

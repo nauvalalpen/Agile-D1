@@ -251,7 +251,7 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"
                                     style="z-index: 1051;">
                                     <!-- Profile Link -->
-                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                    <a class="dropdown-item" href="">
                                         <i class="fas fa-user fa-fw"></i> {{ __('Profile') }}
                                     </a>
 
