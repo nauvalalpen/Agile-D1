@@ -99,6 +99,14 @@
                 </a>
             </li>
 
+             {{-- Nav Item - Gallery --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.gallery.index') }}">
+                    <i class="fas fa-fw fa-images"></i>
+                    <span>Gallery</span>
+                </a>
+            </li>
+
             {{-- Madu --}}
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.madu.index') }}">

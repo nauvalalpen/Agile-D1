@@ -59,13 +59,13 @@
                 Management
             </div>
 
-            <!-- Nav Item - Tourists -->
+            {{-- <!-- Nav Item - Tourists -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('tourists.index') }}">
                     <i class="fas fa-fw fa-users"></i>
                     <span>Tourists</span>
                 </a>
-            </li>
+            </li> --}}
 
             <!-- Nav Item - Guides -->
             <li class="nav-item">
