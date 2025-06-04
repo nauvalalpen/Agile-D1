@@ -177,23 +177,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/tiketmasuks/{tiket}', [App\Http\Controllers\TiketController::class, 'update'])->name('tiketmasuks.update');
     Route::post('/tiketmasuks/{id}/restore', [App\Http\Controllers\TiketController::class, 'restore'])->name('tiketmasuks.restore');
     Route::patch('/tiketmasuks/{id}/status', [App\Http\Controllers\TiketController::class, 'updateStatus'])->name('tiketmasuks.updateStatus');
+
+    //Admin routes for Laporan Penjualan
+    Route::get('/laporan-penjualan', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'index'])->name('laporan-penjualan.index');
+    Route::get('/laporan-penjualan/export-pdf', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'exportPdf'])->name('laporan-penjualan.export-pdf');
+    Route::get('/laporan-penjualan/export-excel', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'exportExcel'])->name('laporan-penjualan.export-excel');
 });
 });
 
 
-
-
-// Route::get('/weather', function () {
-//     return view('weather');
-// });
-
-// Admin Dashboard Route (already exists in your admin routes group)
-// Route::prefix('admin')->name('admin.')->group(function () {
-    // Route::middleware(['auth', 'admin'])->group(function () {
-        // Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-        // Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
-    // });
-// });
-
-// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 

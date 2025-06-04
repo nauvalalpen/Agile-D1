@@ -71,7 +71,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('tourguides.index') }}">
                     <i class="fas fa-fw fa-user-tie"></i>
-                    <span>Guides</span>
+                    <span>Tourguide</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                    <i class="fas fa-fw fa-user-tie"></i>
+                    <span>Order Tourguide</span>
                 </a>
             </li>
 
@@ -102,6 +108,14 @@
                 <a class="nav-link" href="{{ route('admin.orders-madu.index') }}">
                     <i class="fas fa-fw fa-shopping-cart"></i>
                     <span>Honey Orders</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Laporan Penjualan -->
+            <li class="nav-item {{ request()->routeIs('admin.laporan-penjualan.*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.laporan-penjualan.index') }}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Laporan Penjualan</span>
                 </a>
             </li>
 
@@ -263,7 +277,7 @@
                                             </div>
                                         </div>
                                         <a href="{{ route('admin.orders.index') }}" class="btn btn-success">Manage
-                                            Guides</a>
+                                            Tourguides</a>
                                     </div>
                                 </div>
                             </div>
