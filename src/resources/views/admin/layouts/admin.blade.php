@@ -99,11 +99,11 @@
                 </a>
             </li>
 
-             {{-- Nav Item - Gallery --}}
+             {{-- Nav Item - Berita --}}
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.gallery.index') }}">
-                    <i class="fas fa-fw fa-images"></i>
-                    <span>Gallery</span>
+                <a class="nav-link" href="{{ route('admin.berita.index') }}">
+                    <i class="fas fa-fw fa-newspaper"></i>
+                    <span>News</span>
                 </a>
             </li>
 

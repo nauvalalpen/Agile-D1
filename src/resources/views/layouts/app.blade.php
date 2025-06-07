@@ -72,7 +72,7 @@
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link mx-1" href="{{ url('tourguides/') }}">
+                        <a class="nav-link mx-1" href="{{ url('beritas/') }}">
                             News
                         </a>
                     </li>

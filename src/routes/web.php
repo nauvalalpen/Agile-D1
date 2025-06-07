@@ -125,6 +125,22 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 });
 
 // Public routes
+Route::get('/beritas', [App\Http\Controllers\BeritaController::class, 'index'])->name('berita.index');
+Route::get('/berita/{id}', [App\Http\Controllers\BeritaController::class, 'detail'])->name('berita.detail');
+
+// Admin routes for berita
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    Route::get('/beritas', [App\Http\Controllers\BeritaController::class, 'adminIndex'])->name('berita.index');
+    Route::get('/beritas/{id}/edit-modal', [App\Http\Controllers\BeritaController::class, 'editModal'])->name('berita.edit-modal');
+    Route::post('/beritas', [App\Http\Controllers\BeritaController::class, 'store'])->name('berita.store');
+    Route::put('/beritas/{berita}', [App\Http\Controllers\BeritaController::class, 'update'])->name('berita.update');
+    Route::delete('/beritas/{berita}', [App\Http\Controllers\BeritaController::class, 'destroy'])->name('berita.destroy');
+    Route::post('/beritas/{id}/restore', [App\Http\Controllers\BeritaController::class, 'restore'])->name('berita.restore');
+    Route::delete('/beritas/{id}/force-delete', [App\Http\Controllers\BeritaController::class, 'forceDelete'])->name('berita.force-delete');
+});
+
+
+// Public routes
 Route::get('/gallery', [GaleriController::class, 'index'])->name('gallery.index');
 // Admin routes for Gallery
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
