@@ -51,11 +51,13 @@
                     {{ $title ?? 'oneVision' }}
                 </a>
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link mx-1" href="{{ url('tourguides/') }}">
-                            Map
+                    <li class="nav-item {{ request()->routeIs('minimap.*') ? 'active' : '' }}">
+                        <a class="nav-link mx-1" href="{{ route('minimap.index') }}">
+                            <i class="fas fa-map"></i> Map
                         </a>
                     </li>
+
+
                     <li class="nav-item active">
                         <a class="nav-link mx-1" href="{{ url('weather') }}">
                             Weather

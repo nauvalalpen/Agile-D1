@@ -186,4 +186,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
+// Minimap Routes (add these lines to your existing web.php)
+Route::get('/minimap', [App\Http\Controllers\MinimapController::class, 'index'])->name('minimap.index');
+Route::get('/minimap/fullscreen', [App\Http\Controllers\MinimapController::class, 'fullscreen'])->name('minimap.fullscreen');
