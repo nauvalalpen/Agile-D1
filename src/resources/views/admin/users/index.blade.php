@@ -10,15 +10,10 @@
     </div>
 
 
-   @if (session('success'))
+    @if (session('success'))
     <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
         <div>
             {{ session('success') }}
-        </div>
-        <div>
-            <a href="{{ route('admin.users.trash') }}" class="btn btn-sm btn-light border ms-3">
-                <i class="fas fa-trash"></i> Lihat Trash
-            </a>
         </div>
         <button type="button" class="btn-close ms-2" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
