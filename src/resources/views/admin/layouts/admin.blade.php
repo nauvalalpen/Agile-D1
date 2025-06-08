@@ -70,7 +70,7 @@
             <!-- Nav Item - Guides -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('tourguides.index') }}">
-                    <i class="fas fa-fw fa-user-tie"></i>
+                    <i class="fas fa-fw fa-hiking"></i>
                     <span>Guides</span>
                 </a>
             </li>
@@ -86,7 +86,7 @@
             {{-- Nav Item - Facility --}}
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.facilities.index') }}">
-                    <i class="fas fa-fw fa-user-tie"></i>
+                    <i class="fas fa-fw fa-hotel"></i>
                     <span>Facility</span>
                 </a>
             </li>
@@ -110,6 +110,14 @@
                 <a class="nav-link" href="{{ route('admin.orders-madu.index') }}">
                     <i class="fas fa-fw fa-shopping-cart"></i>
                     <span>Honey Orders</span>
+                </a>
+            </li>
+
+            {{-- Nav Item - Users --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.users.index') }}">
+                    <i class="fas fa-fw fa-user-tie"></i>
+                    <span>Users</span>
                 </a>
             </li>
 
@@ -208,31 +216,35 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin User</span>
-                                <img class="img-profile rounded-circle"
-                                    src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small me-2">Admin User</span>
+                                @if (Auth::user()->photo)
+                                    <img class="img-profile rounded-circle" src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Foto Profil" style="width: 40px; height: 40px; object-fit: cover;">
+                                @else
+                                    <i class="fas fa-user-circle fa-2x text-gray-600"></i>
+                                @endif
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
                                     Settings
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal"
                                     data-bs-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
                                     Logout
                                 </a>
                             </div>
                         </li>
+
 
                     </ul>
                 </nav>
