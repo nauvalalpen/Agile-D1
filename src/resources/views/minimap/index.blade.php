@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $minimapData['title'] ?? 'Digital Minimap' }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('styles')
     <style>
         .minimap-container {
             position: relative;
@@ -76,15 +71,15 @@
             margin-right: 8px;
         }
     </style>
-</head>
+@endsection
 
-<body>
+@section('content')
     <div class="container mt-4">
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">{{ $minimapData['title'] }}</h4>
+                        <h4 class="mb-0">{{ $minimapData['title'] ?? 'Digital Minimap' }}</h4>
                         <div>
                             <button class="btn btn-outline-primary btn-sm" onclick="resetZoom()">
                                 <i class="fas fa-home"></i> Reset View
@@ -95,7 +90,9 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <p class="text-muted">{{ $minimapData['description'] }}</p>
+                        <p class="text-muted">
+                            {{ $minimapData['description'] ?? 'Use mouse wheel to zoom, click and drag to pan around the map.' }}
+                        </p>
 
                         <div class="minimap-container" id="minimapContainer">
                             <div class="minimap-controls">
@@ -146,8 +143,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
     <script>
         let currentZoom = 1;
         let isDragging = false;
@@ -185,7 +180,7 @@
             updateZoomDisplay();
         }
 
-        // Pan functionality
+        // Enhanced pan functionality
         minimapContainer.addEventListener('mousedown', (e) => {
             isDragging = true;
             minimapContainer.style.cursor = 'grabbing';
@@ -216,7 +211,7 @@
             minimapContainer.scrollTop = scrollTop - walkY;
         });
 
-        // Zoom with mouse wheel
+        // Enhanced zoom with mouse wheel
         minimapContainer.addEventListener('wheel', (e) => {
             e.preventDefault();
             if (e.deltaY < 0) {
@@ -226,9 +221,13 @@
             }
         });
 
+        // Double-click to zoom
+        minimapContainer.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            zoomIn();
+        });
+
         // Initialize
         updateZoomDisplay();
     </script>
-</body>
-
-</html>
+@endsection
