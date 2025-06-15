@@ -47,13 +47,4 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
     ];
-
-    // Add this to the $routeMiddleware array
-    protected $routeMiddleware = [
-        // ... other middleware
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
-    ];
-
-    
-    
 }

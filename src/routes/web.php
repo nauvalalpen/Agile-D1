@@ -34,12 +34,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     });
 
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    // Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
     
-    // Route::middleware(['auth', 'admin'])->group(function () {
-        // Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
-    // });
 });
 
 // User routes
@@ -57,14 +54,6 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
     Route::post('/logout', [UserLoginController::class, 'logout'])->name('logout');
 });
-
-Route::middleware(['auth', 'admin'])->group(function() {
-    // Route::resource('tourists', TouristController::class);
-    // Route::resource('guides', GuideController::class);
-    // Route::get('weather', [WeatherController::class, 'dashboard']);
-    // Route::post('checkout/{tourist}', [CheckpointController::class, 'checkout']);
-});
-
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 Route::get('/weather', [WeatherController::class, 'updateWeatherInfo'])->name('updateWeatherInfo');
@@ -113,45 +102,11 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 // Public routes
 Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities.index');
 
-// Admin routes for facilities
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-    Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'adminIndex'])->name('facilities.index');
-    Route::get('/facilities/{id}/edit-modal', [App\Http\Controllers\FacilityController::class, 'editModal'])->name('facilities.edit-modal');
-    Route::post('/facilities', [App\Http\Controllers\FacilityController::class, 'store'])->name('facilities.store');
-    Route::put('/facilities/{facility}', [App\Http\Controllers\FacilityController::class, 'update'])->name('facilities.update');
-    Route::delete('/facilities/{facility}', [App\Http\Controllers\FacilityController::class, 'destroy'])->name('facilities.destroy');
-    Route::post('/facilities/{id}/restore', [App\Http\Controllers\FacilityController::class, 'restore'])->name('facilities.restore');
-    Route::delete('/facilities/{id}/force-delete', [App\Http\Controllers\FacilityController::class, 'forceDelete'])->name('facilities.force-delete');
-});
-
-// Public routes
 Route::get('/beritas', [App\Http\Controllers\BeritaController::class, 'index'])->name('berita.index');
 Route::get('/berita/{id}', [App\Http\Controllers\BeritaController::class, 'detail'])->name('berita.detail');
 
-// Admin routes for berita
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-    Route::get('/beritas', [App\Http\Controllers\BeritaController::class, 'adminIndex'])->name('berita.index');
-    Route::get('/beritas/{id}/edit-modal', [App\Http\Controllers\BeritaController::class, 'editModal'])->name('berita.edit-modal');
-    Route::post('/beritas', [App\Http\Controllers\BeritaController::class, 'store'])->name('berita.store');
-    Route::put('/beritas/{berita}', [App\Http\Controllers\BeritaController::class, 'update'])->name('berita.update');
-    Route::delete('/beritas/{berita}', [App\Http\Controllers\BeritaController::class, 'destroy'])->name('berita.destroy');
-    Route::post('/beritas/{id}/restore', [App\Http\Controllers\BeritaController::class, 'restore'])->name('berita.restore');
-    Route::delete('/beritas/{id}/force-delete', [App\Http\Controllers\BeritaController::class, 'forceDelete'])->name('berita.force-delete');
-});
-
-
-// Public routes
 Route::get('/gallery', [GaleriController::class, 'index'])->name('gallery.index');
-// Admin routes for Gallery
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
-    Route::get('/gallery', [App\Http\Controllers\GaleriController::class, 'adminIndex'])->name('gallery.index');
-    Route::get('/gallery/{id}/edit-modal', [App\Http\Controllers\GaleriController::class, 'editModal'])->name('gallery.edit-modal');
-    Route::post('/gallery', [App\Http\Controllers\GaleriController::class, 'store'])->name('gallery.store');
-    Route::put('/gallery/{gallery}', [App\Http\Controllers\GaleriController::class, 'update'])->name('gallery.update');
-    Route::delete('/gallery/{gallery}', [App\Http\Controllers\GaleriController::class, 'destroy'])->name('gallery.destroy');
-    Route::post('/gallery/{id}/restore', [App\Http\Controllers\GaleriController::class, 'restore'])->name('gallery.restore');
-    Route::delete('/gallery/{id}/force-delete', [App\Http\Controllers\GaleriController::class, 'forceDelete'])->name('gallery.force-delete');
-});
+
 
 
 // Madu: 
@@ -168,7 +123,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Admin Honey Management Routes
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(
+    ['auth', \App\Http\Middleware\AdminMiddleware::class]
+)->group(function () {
+
+    // Madu Routes
     Route::get('/madu', [App\Http\Controllers\MaduController::class, 'adminIndex'])->name('madu.index');
     Route::post('/madu', [App\Http\Controllers\MaduController::class, 'store'])->name('madu.store');
     Route::put('/madu/{madu}', [App\Http\Controllers\MaduController::class, 'update'])->name('madu.update');
@@ -179,6 +138,59 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     // Admin Honey Order Management
     Route::get('/orders-madu', [App\Http\Controllers\OrderMaduController::class, 'adminIndex'])->name('orders-madu.index');
     Route::put('/orders-madu/{id}', [App\Http\Controllers\OrderMaduController::class, 'update'])->name('orders-madu.update');
+
+
+    // Gallery Routes
+    Route::get('/gallery', [App\Http\Controllers\GaleriController::class, 'adminIndex'])->name('gallery.index');
+    Route::get('/gallery/{id}/edit-modal', [App\Http\Controllers\GaleriController::class, 'editModal'])->name('gallery.edit-modal');
+    Route::post('/gallery', [App\Http\Controllers\GaleriController::class, 'store'])->name('gallery.store');
+    Route::put('/gallery/{gallery}', [App\Http\Controllers\GaleriController::class, 'update'])->name('gallery.update');
+    Route::delete('/gallery/{gallery}', [App\Http\Controllers\GaleriController::class, 'destroy'])->name('gallery.destroy');
+    Route::post('/gallery/{id}/restore', [App\Http\Controllers\GaleriController::class, 'restore'])->name('gallery.restore');
+    Route::delete('/gallery/{id}/force-delete', [App\Http\Controllers\GaleriController::class, 'forceDelete'])->name('gallery.force-delete');
+
+    // Berita Routes
+    Route::get('/beritas', [App\Http\Controllers\BeritaController::class, 'adminIndex'])->name('berita.index');
+    Route::get('/beritas/{id}/edit-modal', [App\Http\Controllers\BeritaController::class, 'editModal'])->name('berita.edit-modal');
+    Route::post('/beritas', [App\Http\Controllers\BeritaController::class, 'store'])->name('berita.store');
+    Route::put('/beritas/{berita}', [App\Http\Controllers\BeritaController::class, 'update'])->name('berita.update');
+    Route::delete('/beritas/{berita}', [App\Http\Controllers\BeritaController::class, 'destroy'])->name('berita.destroy');
+    Route::post('/beritas/{id}/restore', [App\Http\Controllers\BeritaController::class, 'restore'])->name('berita.restore');
+    Route::delete('/beritas/{id}/force-delete', [App\Http\Controllers\BeritaController::class, 'forceDelete'])->name('berita.force-delete');
+
+    // Facility Routes
+    Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'adminIndex'])->name('facilities.index');
+    Route::get('/facilities/{id}/edit-modal', [App\Http\Controllers\FacilityController::class, 'editModal'])->name('facilities.edit-modal');
+    Route::post('/facilities', [App\Http\Controllers\FacilityController::class, 'store'])->name('facilities.store');
+    Route::put('/facilities/{facility}', [App\Http\Controllers\FacilityController::class, 'update'])->name('facilities.update');
+    Route::delete('/facilities/{facility}', [App\Http\Controllers\FacilityController::class, 'destroy'])->name('facilities.destroy');
+    Route::post('/facilities/{id}/restore', [App\Http\Controllers\FacilityController::class, 'restore'])->name('facilities.restore');
+    Route::delete('/facilities/{id}/force-delete', [App\Http\Controllers\FacilityController::class, 'forceDelete'])->name('facilities.force-delete');
+
+    // Tiket Routes
+    Route::get('/tiketmasuks', [App\Http\Controllers\TiketController::class, 'adminIndex'])->name('tiketmasuks.index');
+    Route::get('/tiketmasuks/{id}/edit-modal', [App\Http\Controllers\TiketController::class, 'editModal'])->name('tiketmasuks.edit-modal');
+    Route::post('/tiketmasuks', [App\Http\Controllers\TiketController::class, 'store'])->name('tiketmasuks.store');
+    Route::put('/tiketmasuks/{tiket}', [App\Http\Controllers\TiketController::class, 'update'])->name('tiketmasuks.update');
+    Route::post('/tiketmasuks/{id}/restore', [App\Http\Controllers\TiketController::class, 'restore'])->name('tiketmasuks.restore');
+    Route::patch('/tiketmasuks/{id}/status', [App\Http\Controllers\TiketController::class, 'updateStatus'])->name('tiketmasuks.updateStatus');
+
+    //Admin routes for Laporan Penjualan
+    Route::get('/laporan-penjualan', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'index'])->name('laporan-penjualan.index');
+    Route::get('/laporan-penjualan/export-pdf', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'exportPdf'])->name('laporan-penjualan.export-pdf');
+    Route::get('/laporan-penjualan/export-excel', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'exportExcel'])->name('laporan-penjualan.export-excel');
+
+    // Users Routes
+    Route::resource('users', UsersController::class)->except(['show']);;
+    // Route untuk menampilkan trash (soft deleted users)
+    Route::get('users/trash', [UsersController::class, 'trash'])->name('users.trash');
+    // Route untuk restore user yang dihapus soft delete
+    Route::post('users/{id}/restore', [UsersController::class, 'restore'])->name('users.restore');
+    // Route untuk force delete user (hapus permanen)
+    Route::delete('users/{id}/force-delete', [UsersController::class, 'forceDelete'])->name('users.force-delete');
+
+    // Dashboard Routes
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 });
 
 // User Order History Routes - Unified
@@ -194,40 +206,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order-madu/{id}', function($id) {
         return redirect()->route('order-history.show', ['id' => $id, 'type' => 'honey']);
     })->name('order-madu.show');
-
-    // //tiket masuk route
-    // Route::middleware(['auth', 'admin'])->group(function(){
-    //   Route::resource('tiket-masuk', TiketController::class);
-    // });
-
-    // Admin routes for tiket masuk
-    Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-        Route::get('/tiketmasuks', [App\Http\Controllers\TiketController::class, 'adminIndex'])->name('tiketmasuks.index');
-        Route::get('/tiketmasuks/{id}/edit-modal', [App\Http\Controllers\TiketController::class, 'editModal'])->name('tiketmasuks.edit-modal');
-        Route::post('/tiketmasuks', [App\Http\Controllers\TiketController::class, 'store'])->name('tiketmasuks.store');
-        Route::put('/tiketmasuks/{tiket}', [App\Http\Controllers\TiketController::class, 'update'])->name('tiketmasuks.update');
-        Route::post('/tiketmasuks/{id}/restore', [App\Http\Controllers\TiketController::class, 'restore'])->name('tiketmasuks.restore');
-        Route::patch('/tiketmasuks/{id}/status', [App\Http\Controllers\TiketController::class, 'updateStatus'])->name('tiketmasuks.updateStatus');
-
-        //Admin routes for Laporan Penjualan
-        Route::get('/laporan-penjualan', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'index'])->name('laporan-penjualan.index');
-        Route::get('/laporan-penjualan/export-pdf', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'exportPdf'])->name('laporan-penjualan.export-pdf');
-        Route::get('/laporan-penjualan/export-excel', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'exportExcel'])->name('laporan-penjualan.export-excel');
-    });
-
-    //Admin routes for users
-    Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-        Route::resource('users', UsersController::class)->except(['show']);;
-
-        // Route untuk menampilkan trash (soft deleted users)
-        Route::get('users/trash', [UsersController::class, 'trash'])->name('users.trash');
-
-        // Route untuk restore user yang dihapus soft delete
-        Route::post('users/{id}/restore', [UsersController::class, 'restore'])->name('users.restore');
-
-        // Route untuk force delete user (hapus permanen)
-        Route::delete('users/{id}/force-delete', [UsersController::class, 'forceDelete'])->name('users.force-delete');
-    });
 });
 
 
