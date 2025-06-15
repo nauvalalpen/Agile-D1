@@ -83,6 +83,15 @@
                 </a>
             </li>
 
+            <!-- Nav Item - Berita -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.beritas.index') }}">
+                    <i class="fas fa-fw fa-newspaper"></i>
+                    <span>News</span>
+                </a>
+            </li>
+
+
             {{-- Madu --}}
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.madu.index') }}">
@@ -96,7 +105,6 @@
                     <span>Honey Orders</span>
                 </a>
             </li>
-
 
             <!-- Divider -->
             <hr class="sidebar-divider">

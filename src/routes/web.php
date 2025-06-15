@@ -13,8 +13,10 @@ use App\Http\Controllers\CheckpointController;
 use App\Http\Controllers\TourGuideController;
 use App\Http\Controllers\OrderHistoryController;
 use App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\TiketController;
+use App\Http\Controllers\UsersController;
 
 Route::get('/index', function () {
     return view('index');
@@ -122,6 +124,35 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::delete('/facilities/{id}/force-delete', [App\Http\Controllers\FacilityController::class, 'forceDelete'])->name('facilities.force-delete');
 });
 
+// Public routes
+Route::get('/beritas', [App\Http\Controllers\BeritaController::class, 'index'])->name('berita.index');
+Route::get('/berita/{id}', [App\Http\Controllers\BeritaController::class, 'detail'])->name('berita.detail');
+
+// Admin routes for berita
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    Route::get('/beritas', [App\Http\Controllers\BeritaController::class, 'adminIndex'])->name('berita.index');
+    Route::get('/beritas/{id}/edit-modal', [App\Http\Controllers\BeritaController::class, 'editModal'])->name('berita.edit-modal');
+    Route::post('/beritas', [App\Http\Controllers\BeritaController::class, 'store'])->name('berita.store');
+    Route::put('/beritas/{berita}', [App\Http\Controllers\BeritaController::class, 'update'])->name('berita.update');
+    Route::delete('/beritas/{berita}', [App\Http\Controllers\BeritaController::class, 'destroy'])->name('berita.destroy');
+    Route::post('/beritas/{id}/restore', [App\Http\Controllers\BeritaController::class, 'restore'])->name('berita.restore');
+    Route::delete('/beritas/{id}/force-delete', [App\Http\Controllers\BeritaController::class, 'forceDelete'])->name('berita.force-delete');
+});
+
+
+// Public routes
+Route::get('/gallery', [GaleriController::class, 'index'])->name('gallery.index');
+// Admin routes for Gallery
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::get('/gallery', [App\Http\Controllers\GaleriController::class, 'adminIndex'])->name('gallery.index');
+    Route::get('/gallery/{id}/edit-modal', [App\Http\Controllers\GaleriController::class, 'editModal'])->name('gallery.edit-modal');
+    Route::post('/gallery', [App\Http\Controllers\GaleriController::class, 'store'])->name('gallery.store');
+    Route::put('/gallery/{gallery}', [App\Http\Controllers\GaleriController::class, 'update'])->name('gallery.update');
+    Route::delete('/gallery/{gallery}', [App\Http\Controllers\GaleriController::class, 'destroy'])->name('gallery.destroy');
+    Route::post('/gallery/{id}/restore', [App\Http\Controllers\GaleriController::class, 'restore'])->name('gallery.restore');
+    Route::delete('/gallery/{id}/force-delete', [App\Http\Controllers\GaleriController::class, 'forceDelete'])->name('gallery.force-delete');
+});
+
 
 // Madu: 
 
@@ -169,20 +200,34 @@ Route::middleware(['auth'])->group(function () {
     //   Route::resource('tiket-masuk', TiketController::class);
     // });
 
-    // Admin routes for facilities
+    // Admin routes for tiket masuk
     Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-    Route::get('/tiketmasuks', [App\Http\Controllers\TiketController::class, 'adminIndex'])->name('tiketmasuks.index');
-    Route::get('/tiketmasuks/{id}/edit-modal', [App\Http\Controllers\TiketController::class, 'editModal'])->name('tiketmasuks.edit-modal');
-    Route::post('/tiketmasuks', [App\Http\Controllers\TiketController::class, 'store'])->name('tiketmasuks.store');
-    Route::put('/tiketmasuks/{tiket}', [App\Http\Controllers\TiketController::class, 'update'])->name('tiketmasuks.update');
-    Route::post('/tiketmasuks/{id}/restore', [App\Http\Controllers\TiketController::class, 'restore'])->name('tiketmasuks.restore');
-    Route::patch('/tiketmasuks/{id}/status', [App\Http\Controllers\TiketController::class, 'updateStatus'])->name('tiketmasuks.updateStatus');
+        Route::get('/tiketmasuks', [App\Http\Controllers\TiketController::class, 'adminIndex'])->name('tiketmasuks.index');
+        Route::get('/tiketmasuks/{id}/edit-modal', [App\Http\Controllers\TiketController::class, 'editModal'])->name('tiketmasuks.edit-modal');
+        Route::post('/tiketmasuks', [App\Http\Controllers\TiketController::class, 'store'])->name('tiketmasuks.store');
+        Route::put('/tiketmasuks/{tiket}', [App\Http\Controllers\TiketController::class, 'update'])->name('tiketmasuks.update');
+        Route::post('/tiketmasuks/{id}/restore', [App\Http\Controllers\TiketController::class, 'restore'])->name('tiketmasuks.restore');
+        Route::patch('/tiketmasuks/{id}/status', [App\Http\Controllers\TiketController::class, 'updateStatus'])->name('tiketmasuks.updateStatus');
 
-    //Admin routes for Laporan Penjualan
-    Route::get('/laporan-penjualan', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'index'])->name('laporan-penjualan.index');
-    Route::get('/laporan-penjualan/export-pdf', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'exportPdf'])->name('laporan-penjualan.export-pdf');
-    Route::get('/laporan-penjualan/export-excel', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'exportExcel'])->name('laporan-penjualan.export-excel');
-});
+        //Admin routes for Laporan Penjualan
+        Route::get('/laporan-penjualan', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'index'])->name('laporan-penjualan.index');
+        Route::get('/laporan-penjualan/export-pdf', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'exportPdf'])->name('laporan-penjualan.export-pdf');
+        Route::get('/laporan-penjualan/export-excel', [App\Http\Controllers\Admin\LaporanPenjualanController::class, 'exportExcel'])->name('laporan-penjualan.export-excel');
+    });
+
+    //Admin routes for users
+    Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+        Route::resource('users', UsersController::class)->except(['show']);;
+
+        // Route untuk menampilkan trash (soft deleted users)
+        Route::get('users/trash', [UsersController::class, 'trash'])->name('users.trash');
+
+        // Route untuk restore user yang dihapus soft delete
+        Route::post('users/{id}/restore', [UsersController::class, 'restore'])->name('users.restore');
+
+        // Route untuk force delete user (hapus permanen)
+        Route::delete('users/{id}/force-delete', [UsersController::class, 'forceDelete'])->name('users.force-delete');
+    });
 });
 
 
