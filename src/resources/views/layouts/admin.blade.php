@@ -21,6 +21,7 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+    
 </head>
 
 <body id="page-top">
@@ -296,6 +297,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('js/admin.js') }}"></script>
+    
 </body>
 
 </html>
