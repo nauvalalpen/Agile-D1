@@ -114,4 +114,33 @@ class GaleriController extends Controller
         return redirect()->route('admin.gallery.index')
             ->with('success', 'Gallery berhasil dihapus permanen.');
     }
+
+public function showDetails($id)
+{
+    try {
+        $gallery = Gallery::withTrashed()->findOrFail($id);
+        
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'id' => $gallery->id,
+                'judul' => $gallery->judul,
+                'deskripsi' => $gallery->deskripsi,
+                'foto' => $gallery->foto ? asset('storage/' . $gallery->foto) : null,
+                'created_at' => $gallery->created_at->format('d F Y, H:i'),
+                'updated_at' => $gallery->updated_at->format('d F Y, H:i'),
+                'status' => $gallery->deleted_at ? 'Deleted' : 'Active',
+                'deleted_at' => $gallery->deleted_at ? $gallery->deleted_at->format('d F Y, H:i') : null
+            ]
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Gallery not found'
+        ], 404);
+    }
+}
+
+
+    
 }

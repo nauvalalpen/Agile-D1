@@ -149,14 +149,16 @@ Route::prefix('admin')->name('admin.')->middleware(
     Route::put('/orders-madu/{id}', [App\Http\Controllers\OrderMaduController::class, 'update'])->name('orders-madu.update');
 
 
-    // Gallery Routes
+// Gallery Routes
     Route::get('/gallery', [App\Http\Controllers\GaleriController::class, 'adminIndex'])->name('gallery.index');
+    Route::get('/gallery/{id}/details', [App\Http\Controllers\GaleriController::class, 'showDetails'])->name('gallery.details'); // ADD THIS LINE
     Route::get('/gallery/{gallery}/edit-modal', [App\Http\Controllers\GaleriController::class, 'editModal'])->name('gallery.edit-modal');
     Route::post('/gallery', [App\Http\Controllers\GaleriController::class, 'store'])->name('gallery.store');
     Route::put('/gallery/{gallery}', [App\Http\Controllers\GaleriController::class, 'update'])->name('gallery.update');
     Route::delete('/gallery/{gallery}', [App\Http\Controllers\GaleriController::class, 'destroy'])->name('gallery.destroy');
     Route::post('/gallery/{id}/restore', [App\Http\Controllers\GaleriController::class, 'restore'])->name('gallery.restore');
     Route::delete('/gallery/{id}/force-delete', [App\Http\Controllers\GaleriController::class, 'forceDelete'])->name('gallery.force-delete');
+
 
     // Berita Routes
     Route::get('/beritas', [App\Http\Controllers\BeritaController::class, 'adminIndex'])->name('berita.index');
