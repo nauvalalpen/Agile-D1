@@ -1,6 +1,14 @@
 @extends('layouts.admin')
 
 @section('content')
+    {{-- First Section of page as static --}}
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-title">LIST<br>FASILITAS</div>
+            <div class="hero-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+            <a href="/maps" class="hero-btn">More info</a>
+        </div>
+    </section>
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -73,6 +81,7 @@
         </div>
     </div>
 @endsection
+
 
 @push('scripts')
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
