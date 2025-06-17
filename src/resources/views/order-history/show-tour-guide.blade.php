@@ -45,7 +45,7 @@
                                     </tr>
                                     <tr>
                                         <th>Tour Date</th>
-                                        <td>{{ date('d M Y', strtotime($order->tanggal)) }}</td>
+                                        <td>{{ date('d M Y', strtotime($order->tanggal_order)) }}</td>
                                     </tr>
                                     <tr>
                                         <th>Status</th>
@@ -80,7 +80,8 @@
                             @elseif ($order->status == 'accepted')
                                 <p>Your tour guide request has been accepted!</p>
                                 <p class="mb-0">Your tour is scheduled for
-                                    {{ date('l, d F Y', strtotime($order->tanggal)) }}. Please contact the tour guide at
+                                    {{ date('l, d F Y', strtotime($order->tanggal_order)) }}. Please contact the tour guide
+                                    at
                                     {{ $order->tourguide_nohp }} for any specific arrangements.</p>
                             @elseif ($order->status == 'rejected')
                                 <p>We're sorry, but your tour guide request has been rejected.</p>
