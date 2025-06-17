@@ -75,7 +75,7 @@ class BeritaController extends Controller
             ->with('success', 'Berita berhasil dibuat.');
     }
 
-    /**
+    /***
      * Update berita yang sudah ada
      */
     public function update(Request $request, Berita $berita)
