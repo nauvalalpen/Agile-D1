@@ -92,7 +92,7 @@
                             <a class="dropdown-item" href="{{ url('tourguides/') }}">Tour Guide</a>
                             <a class="dropdown-item" href="{{ route('madu.index') }}">Honey Product</a>
                             {{-- <div class="dropdown-divider"></div> --}}
-                            <a class="dropdown-item" href="#">UMKM Product</a>
+                            <a class="dropdown-item" href="{{ route('produkUMKM.index') }}">UMKM Product</a>
                         </div>
                     </li>
                 </ul>

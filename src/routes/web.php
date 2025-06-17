@@ -17,6 +17,7 @@ use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ProdukUMKMController;
 
 Route::get('/index', function () {
     return view('index');
@@ -54,6 +55,14 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
     Route::post('/logout', [UserLoginController::class, 'logout'])->name('logout');
 });
+
+// Route::middleware(['auth', 'admin'])->group(function() {
+//     // Route::resource('tourists', TouristController::class);
+//     Route::resource('guides', GuideController::class);
+//     // Route::get('weather', [WeatherController::class, 'dashboard']);
+//     // Route::post('checkout/{tourist}', [CheckpointController::class, 'checkout']);
+// });
+
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 Route::get('/weather', [WeatherController::class, 'updateWeatherInfo'])->name('updateWeatherInfo');
@@ -212,3 +221,31 @@ Route::middleware(['auth'])->group(function () {
 // Minimap Routes (add these lines to your existing web.php)
 Route::get('/minimap', [App\Http\Controllers\MinimapController::class, 'index'])->name('minimap.index');
 Route::get('/minimap/fullscreen', [App\Http\Controllers\MinimapController::class, 'fullscreen'])->name('minimap.fullscreen');
+
+// Admin routes for produk UMKM+
+Route::get('/produk-umkm', [App\Http\Controllers\ProdukUMKMController::class, 'index'])->name('produkUMKM.index');
+
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    Route::get('/produkUMKM', [App\Http\Controllers\ProdukUMKMController::class, 'adminIndex'])->name('produkUMKM.index');
+    Route::get('/produkUMKM/{id}/edit-modal', [App\Http\Controllers\ProdukUMKMController::class, 'editModal'])->name('produkUMKM.edit-modal');
+    Route::post('/produkUMKM', [App\Http\Controllers\ProdukUMKMController::class, 'store'])->name('produkUMKM.store');
+    Route::put('/produkUMKM/{produkUMKM}', [App\Http\Controllers\ProdukUMKMController::class, 'update'])->name('produkUMKM.update');
+    Route::delete('/produkUMKM/{produkUMKM}', [App\Http\Controllers\ProdukUMKMController::class, 'destroy'])->name('produkUMKM.destroy');
+    Route::post('/produkUMKM/{id}/restore', [App\Http\Controllers\ProdukUMKMController::class, 'restore'])->name('produkUMKM.restore');
+    Route::delete('/produkUMKM/{id}/force-delete', [App\Http\Controllers\ProdukUMKMController::class, 'forceDelete'])->name('produkUMKM.force-delete');
+});
+
+// Route::get('/weather', function () {
+//     return view('weather');
+// });
+
+// Admin Dashboard Route (already exists in your admin routes group)
+// Route::prefix('admin')->name('admin.')->group(function () {
+    // Route::middleware(['auth', 'admin'])->group(function () {
+        // Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        // Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
+    // });
+// });
+
+// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+

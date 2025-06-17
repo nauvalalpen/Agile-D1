@@ -106,6 +106,16 @@
                 </a>
             </li>
 
+            {{-- Produk UMKM --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.produkUMKM.index') }}">
+                    <i class="fas fa-store"></i>
+                    <span>Produk UMKM</span>
+                </a>
+            </li>
+
+
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
