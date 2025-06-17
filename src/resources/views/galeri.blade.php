@@ -46,7 +46,7 @@
                                 </h6>
                                 <p class="card-text">{{ Str::limit($gallery->deskripsi, 100) }}</p>
                                 <div class="mt-auto">
-                                    <button type="button" class="btn btn-primary w-100"
+                                    <button type="button" class="btn btn-dark-custom w-100"
                                         onclick="showGalleryModal({{ $gallery->id }})">
                                         View Details
                                     </button>
@@ -567,6 +567,42 @@
             flex-grow: 1;
         }
 
+        /* === UNIFIED BUTTON STYLES (View Details & Find a Guide) === */
+        .btn-dark-custom {
+            padding: 12px 35px;
+            background-color: #212529;
+            color: #fff;
+            border: 2px solid #212529;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .btn-dark-custom:hover {
+            background-color: #fff;
+            color: #212529;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-dark-custom:active {
+            background-color: #e9ecef;
+            color: #212529;
+            transform: scale(0.98);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-dark-custom:focus {
+            box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.25);
+            outline: none;
+        }
+
         /* === MODAL STYLES === */
         .modal-content {
             border-radius: 15px;
@@ -668,26 +704,6 @@
             margin-bottom: 1.5rem;
         }
 
-        .btn-dark-custom {
-            padding: 12px 35px;
-            background-color: #212529;
-            color: #fff;
-            border: 2px solid #212529;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-dark-custom:hover {
-            background-color: #fff;
-            color: #212529;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
         /* === 4. SCROLLING GALLERY === */
         .scrolling-gallery-section {
             overflow: hidden;
@@ -787,6 +803,11 @@
                 padding-left: 0;
                 margin-top: 1rem;
             }
+
+            .btn-dark-custom {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -807,40 +828,17 @@
                 width: 200px;
                 height: 260px;
             }
+
+            .btn-dark-custom {
+                padding: 8px 20px;
+                font-size: 0.85rem;
+            }
         }
 
         /* === LOADING SPINNER === */
         .spinner-border {
             width: 3rem;
             height: 3rem;
-        }
-
-        /* === BUTTON HOVER EFFECTS === */
-        .btn-primary {
-            padding: 12px 35px;
-            background-color: #212529;
-            color: #fff;
-            border: 2px solid #212529;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary:hover {
-            background-color: #fff;
-            color: #212529;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-primary:active {
-            background-color: #e9ecef;
-            color: #212529;
-            transform: scale(0.98);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
         }
 
         /* === ACCESSIBILITY IMPROVEMENTS === */
@@ -863,6 +861,19 @@
         .modal-open .modal {
             overflow-x: hidden;
             overflow-y: auto;
+        }
+
+        /* === BUTTON CONSISTENCY === */
+        .btn-secondary {
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
         }
     </style>
 @endsection
