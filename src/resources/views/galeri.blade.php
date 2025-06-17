@@ -1,363 +1,377 @@
 @extends('layouts.app')
 
 @section('content')
+    {{-- Include AOS (Animate on Scroll) Library --}}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    {{-- Recommended: Include Font Awesome if not already in your app.blade.php --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+
+    <!-- 1. HERO SECTION (from your screenshot) -->
     <section class="hero-section">
-        <div class="hero-content">
+        <div class="hero-content" data-aos="fade-up">
             <div class="hero-title">GALLERY<br>WISATA</div>
             <div class="hero-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-            <a href="/gallery" class="hero-btn">More info</a>
+            <a href="#gallery-grid" class="hero-btn">More info</a>
         </div>
     </section>
-    <div class="container py-5">
-        <h1 class="mb-4 text-center">Gallery</h1>
 
-        <div class="row">
-            @forelse ($galleries as $gallery)
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        @if ($gallery->foto)
-                            <img src="{{ asset('storage/' . $gallery->foto) }}" class="card-img-top"
-                                alt="{{ $gallery->judul }}" style="height: 200px; object-fit: cover;">
-                        @else
-                            <div class="bg-light text-center py-5">
-                                <i class="fas fa-image fa-3x text-muted"></i>
+
+    <!-- CONTAINER FOR THE REST OF THE PAGE CONTENT -->
+    <div class="container py-5">
+
+        <!-- 2. MAIN GALLERY GRID (with Modals) -->
+        <div id="gallery-grid" class="gallery-container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-heading">Explore Our Gallery</h2>
+                <p class="section-subheading">Click on any item to view more details and see the full picture.</p>
+            </div>
+
+            <div class="row">
+                @forelse ($galleries as $gallery)
+                    <div class="col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
+                        <div class="gallery-card w-100" data-aos="zoom-in" data-aos-delay="{{ ($loop->index % 3) * 150 }}">
+                            <div class="gallery-card-img-wrapper">
+                                @if ($gallery->foto)
+                                    <img src="{{ asset('storage/' . $gallery->foto) }}" class="gallery-card-img"
+                                        alt="{{ $gallery->judul }}">
+                                @else
+                                    <div class="bg-light d-flex align-items-center justify-content-center h-100">
+                                        <i class="fas fa-image fa-3x text-muted"></i>
+                                    </div>
+                                @endif
                             </div>
-                        @endif
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $gallery->judul }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                {{ \Carbon\Carbon::parse($gallery->tanggal)->format('d M Y') }}</h6>
-                            <p class="card-text">{{ Str::limit($gallery->deskripsi, 150) }}</p>
-                        </div>
-                        <div class="card-footer bg-transparent">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#galleryModal{{ $gallery->id }}">
-                                View Details
-                            </button>
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">{{ $gallery->judul }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {{ \Carbon\Carbon::parse($gallery->tanggal)->format('d M Y') }}
+                                </h6>
+                                <p class="card-text">{{ Str::limit($gallery->deskripsi, 100) }}</p>
+                                <div class="mt-auto">
+                                    <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
+                                        data-bs-target="#galleryModal{{ $gallery->id }}">
+                                        View Details
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Modal for gallery details -->
-                <div class="modal fade" id="galleryModal{{ $gallery->id }}" tabindex="-1"
-                    aria-labelledby="galleryModalLabel{{ $gallery->id }}" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="galleryModalLabel{{ $gallery->id }}">
-                                    {{ $gallery->judul }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        @if ($gallery->foto)
-                                            <img src="{{ asset('storage/' . $gallery->foto) }}" class="img-fluid rounded"
-                                                alt="{{ $gallery->judul }}">
-                                        @else
-                                            <div class="bg-light text-center py-5 rounded">
-                                                <i class="fas fa-image fa-5x text-muted"></i>
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h5>Date</h5>
-                                        <p>{{ \Carbon\Carbon::parse($gallery->tanggal)->format('d M Y') }}</p>
-                                        <h5>Description</h5>
-                                        <p>{{ $gallery->deskripsi }}</p>
+                    <!-- Modal for each gallery item -->
+                    <div class="modal fade" id="galleryModal{{ $gallery->id }}" tabindex="-1"
+                        aria-labelledby="galleryModalLabel{{ $gallery->id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="galleryModalLabel{{ $gallery->id }}">{{ $gallery->judul }}
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            @if ($gallery->foto)
+                                                <img src="{{ asset('storage/' . $gallery->foto) }}"
+                                                    class="img-fluid rounded" alt="{{ $gallery->judul }}">
+                                            @endif
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h5><i class="fas fa-calendar-alt me-2 text-primary"></i>Date</h5>
+                                            <p>{{ \Carbon\Carbon::parse($gallery->tanggal)->format('F j, Y') }}</p>
+                                            <h5 class="mt-3"><i
+                                                    class="fas fa-info-circle me-2 text-primary"></i>Description</h5>
+                                            <p>{{ $gallery->deskripsi }}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
                         </div>
                     </div>
-                </div>
-            @empty
-                <div class="col-12 text-center py-5">
-                    <h3>No gallery items available at the moment</h3>
-                    <small class="form-text text-muted">please check back later.</small>
-                </div>
-            @endforelse
+                @empty
+                    <div class="col-12 text-center py-5" data-aos="fade-up">
+                        <h3>No gallery items available at the moment.</h3>
+                        <p class="text-muted">Please check back later.</p>
+                    </div>
+                @endforelse
+            </div>
         </div>
+
+
+        <!-- 3. HERO TOUR GUIDE SECTION -->
+        <div class="hero-tour-section my-5 py-5" data-aos="fade-up">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+                    <div class="hero-tour-text">
+                        <h3>Experience Adventure with<br>Our Best Tour Guides</h3>
+                        <p>
+                            From painting sessions to outdoor escapades, our experiences promise unforgettable moments of
+                            inspiration and rejuvenation. Venture into nature’s embrace on our thrilling hiking adventures
+                            or chase the thundering roar of cascading waterfalls.
+                        </p>
+                        <a href="{{-- route('tourguides.index') --}}" class="btn btn-dark-custom">Find a Guide</a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                    <div class="hero-tour-img">
+                        <img src="{{ asset('images/explore-bg.jpg') }}" alt="Tour Guide">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 4. SCROLLABLE GALLERY -->
+        <div class="scrolling-gallery-section" data-aos="fade-up">
+            <div class="text-center mb-5">
+                <h2 class="section-heading">More Visuals</h2>
+                <p class="section-subheading">A glimpse into the stunning scenery awaiting you.</p>
+            </div>
+            <div class="scroll-gallery">
+                <div class="scroll-track">
+                    @foreach ($galleries->concat($galleries) as $gallery)
+                        {{-- Double the items for a seamless loop --}}
+                        <div class="scroll-card">
+                            <img src="{{ asset('storage/' . $gallery->foto) }}" alt="{{ $gallery->judul }}">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
     </div>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50,
+        });
+    </script>
+
+    @include('layouts.footer')
+@endsection
+
+@section('styles')
     <style>
-        /* Fonts */
-        h2.section-title,
-        h3.section-title,
-        h4.hot-topic-title,
-        h6.news-title {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            letter-spacing: 0.02em;
-        }
-
-        p.hot-topic-desc,
-        small,
-        a.read-more-link {
+        body {
             font-family: 'Poppins', sans-serif;
+            /* A modern, clean font */
+            background-color: #f8f9fa;
         }
 
-        /* HOT TOPIC */
-        .hot-topic-img-wrapper {
-            height: 500px;
-            /* diperbesar dari 400px */
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .hot-topic-img-wrapper:hover {
-            transform: scale(1.03);
-            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.35);
-        }
-
-        .hot-topic-img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-            border-radius: 1.25rem;
-            transition: transform 0.3s ease;
-        }
-
-        .hot-topic-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 2rem;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
-            border-bottom-left-radius: 1.25rem;
-            border-bottom-right-radius: 1.25rem;
-        }
-
-        .hot-topic-title {
-            font-size: 2rem;
-            /* lebih besar */
-            margin-bottom: 0.5rem;
-            color: #fff;
-        }
-
-        .hot-topic-meta {
-            font-size: 1rem;
-            color: #ddd;
-        }
-
-        .hot-topic-desc {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #eee;
-            margin-top: 0.5rem;
-        }
-
-        .btn-read-more {
-            margin-top: 1rem;
-            font-size: 1.1rem;
-            padding: 0.75rem 1.75rem;
-        }
-
-        /* LATEST NEWS */
-        .card {
-            border-radius: 1rem;
-            transition: box-shadow 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .news-img {
-            height: 250px;
-            /* diperbesar */
-            width: 100%;
-            object-fit: cover;
-            border-top-left-radius: 1rem;
-            border-top-right-radius: 1rem;
-            transition: transform 0.3s ease;
-        }
-
-        .hover-shadow:hover .news-img {
-            transform: scale(1.05);
-        }
-
-        .card-body {
-            padding: 1.25rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .news-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #222;
-            flex-grow: 1;
-        }
-
-        .news-meta {
-            font-size: 0.95rem;
-            color: #777;
-            margin-top: auto;
-            font-style: italic;
-        }
-
-        /* RESPONSIVE - Skala turun bertahap */
-        @media (max-width: 992px) {
-            .hot-topic-img-wrapper {
-                height: 400px;
-            }
-
-            .news-img {
-                height: 200px;
-            }
-
-            .news-title {
-                font-size: 1.1rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hot-topic-img-wrapper {
-                height: 300px;
-            }
-
-            .news-img {
-                height: 160px;
-            }
-
-            .hot-topic-title {
-                font-size: 1.5rem;
-            }
-
-            .hot-topic-desc {
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .news-img {
-                height: 140px;
-            }
-
-            .news-title {
-                font-size: 1rem;
-            }
-        }
-
-        /* ==== BUTTON "READ MORE" ==== */
-        .btn-read-more {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, #0d6efd, #0056b3);
-            color: #fff;
-            font-weight: 600;
-            font-size: 1.05rem;
-            border: none;
-            border-radius: 50px;
-            text-decoration: none;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
-            gap: 0.5rem;
-        }
-
-        .btn-read-more:hover {
-            background: linear-gradient(135deg, #0046b3, #003580);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-arrow {
-            transition: transform 0.3s ease;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .btn-read-more:hover .btn-arrow {
-            transform: translateX(6px);
-        }
-
-
-        /* content   */
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Helvetica Neue', sans-serif;
-        }
-
+        /* === 1. HERO SECTION === */
         .hero-section {
             position: relative;
-            background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
                 url('/images/hero.jpg') no-repeat center center/cover;
-            height: 80vh;
+            /* Ensure your hero image is in public/images/ */
+            height: 85vh;
+            min-height: 500px;
             color: white;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
+            text-align: center;
             overflow: hidden;
         }
 
         .hero-content {
-            width: 100%;
-            max-width: 1140px;
-            padding-left: 400px;
-            padding-right: 30px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1.2s ease forwards;
-            animation-delay: 0.3s;
+            max-width: 800px;
         }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
 
         .hero-title {
-            font-size: 80px;
-            /* besar dan dominan */
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(3rem, 10vw, 6rem);
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 20px;
-            letter-spacing: 30px;
-            /* jarak antar huruf */
+            letter-spacing: 0.5rem;
             text-transform: uppercase;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .hero-desc {
-            font-size: 16px;
-            margin-bottom: 28px;
-            line-height: 1.6;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
             color: #ddd;
             max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .hero-btn {
             display: inline-block;
-            padding: 12px 30px;
+            padding: 12px 35px;
             background-color: transparent;
             border: 2px solid white;
             color: white;
             text-decoration: none;
             font-weight: 600;
-            border-radius: 25px;
-            transition: all 0.3s ease-in-out;
-            font-size: 14px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
             letter-spacing: 1.5px;
         }
 
         .hero-btn:hover {
             background-color: white;
             color: black;
+            transform: scale(1.05);
+        }
+
+        /* === UTILITY & HEADINGS === */
+        .section-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #212529;
+        }
+
+        .section-subheading {
+            font-size: 1.1rem;
+            color: #6c757d;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* === 2. MAIN GALLERY GRID === */
+        .gallery-container {
+            margin-top: -80px;
+            /* Pull the content up over the hero image slightly */
+            position: relative;
+            z-index: 2;
+            background: #f8f9fa;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .gallery-card-img-wrapper {
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .gallery-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-card:hover .gallery-card-img {
+            transform: scale(1.1);
+        }
+
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        /* === 3. HERO TOUR GUIDE SECTION === */
+        .hero-tour-section {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 3rem;
+        }
+
+        .hero-tour-img img {
+            max-width: 100%;
+            border-radius: 16px;
+        }
+
+        .hero-tour-text h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .hero-tour-text p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .btn-dark-custom {
+            margin-top: 1.5rem;
+            padding: 12px 35px;
+            background-color: #212529;
+            color: #fff;
+            border: 2px solid #212529;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-dark-custom:hover {
+            background-color: #fff;
+            color: #212529;
+        }
+
+        /* === 4. SCROLLING GALLERY === */
+        .scrolling-gallery-section {
+            overflow: hidden;
+            /* Important to contain the animation */
+        }
+
+        .scroll-gallery {
+            display: flex;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+        }
+
+        .scroll-track {
+            display: flex;
+            gap: 20px;
+            animation: scroll 40s linear infinite;
+        }
+
+        .scroll-card {
+            flex: 0 0 auto;
+            width: 250px;
+            height: 320px;
+            border-radius: 14px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .scroll-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
     </style>
 @endsection
