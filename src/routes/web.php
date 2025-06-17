@@ -151,7 +151,7 @@ Route::prefix('admin')->name('admin.')->middleware(
 
     // Gallery Routes
     Route::get('/gallery', [App\Http\Controllers\GaleriController::class, 'adminIndex'])->name('gallery.index');
-    Route::get('/gallery/{id}/edit-modal', [App\Http\Controllers\GaleriController::class, 'editModal'])->name('gallery.edit-modal');
+    Route::get('/gallery/{gallery}/edit-modal', [App\Http\Controllers\GaleriController::class, 'editModal'])->name('gallery.edit-modal');
     Route::post('/gallery', [App\Http\Controllers\GaleriController::class, 'store'])->name('gallery.store');
     Route::put('/gallery/{gallery}', [App\Http\Controllers\GaleriController::class, 'update'])->name('gallery.update');
     Route::delete('/gallery/{gallery}', [App\Http\Controllers\GaleriController::class, 'destroy'])->name('gallery.destroy');

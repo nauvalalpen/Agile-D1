@@ -19,13 +19,6 @@ class GaleriController extends Controller
         $galleries = Gallery::withTrashed()->get();
         return view('admin.gallery.index', compact('galleries'));
     }
-
-    public function editModal($id)
-    {
-        $gallery = Gallery::findOrFail($id);
-        return view('admin.gallery.edit', compact('gallery'));
-    }
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -53,23 +46,43 @@ class GaleriController extends Controller
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'tanggal' => 'required|date',
+            'tanggal' => 'nullable|date',
         ]);
 
+        // Handle file upload
         if ($request->hasFile('foto')) {
+            // Delete old image if exists
             if ($gallery->foto && Storage::disk('public')->exists($gallery->foto)) {
                 Storage::disk('public')->delete($gallery->foto);
             }
 
+            // Store new image
             $fotoPath = $request->file('foto')->store('gallery', 'public');
             $validated['foto'] = $fotoPath;
         }
 
+        // Set tanggal if not provided
+        if (!isset($validated['tanggal'])) {
+            $validated['tanggal'] = $gallery->tanggal ?? $gallery->created_at;
+        }
+
+        // Update the gallery
         $gallery->update($validated);
 
         return redirect()->route('admin.gallery.index')
             ->with('success', 'Gallery berhasil diperbarui.');
     }
+
+    public function editModal($gallery)
+    {
+        // Handle both ID and model binding
+        if (is_numeric($gallery)) {
+            $gallery = Gallery::findOrFail($gallery);
+        }
+        
+        return view('admin.gallery.edit', compact('gallery'));
+    }
+
 
     public function destroy(Gallery $gallery)
     {
