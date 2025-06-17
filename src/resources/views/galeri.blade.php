@@ -8,7 +8,7 @@
 
     <!-- 1. HERO SECTION -->
     <section class="hero-section">
-        <div class="hero-content" data-aos="fade-up">
+        <div class="hero-content">
             <div class="hero-title">GALLERY<br>WISATA</div>
             <div class="hero-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
             <a href="#gallery-grid" class="hero-btn">More info</a>
@@ -46,7 +46,7 @@
                                 </h6>
                                 <p class="card-text">{{ Str::limit($gallery->deskripsi, 100) }}</p>
                                 <div class="mt-auto">
-                                    <button type="button" class="btn btn-dark-custom w-100"
+                                    <button type="button" class="btn btn-primary w-100"
                                         onclick="showGalleryModal({{ $gallery->id }})">
                                         View Details
                                     </button>
@@ -421,63 +421,71 @@
             background-color: #f8f9fa;
         }
 
-        /* === 1. HERO SECTION === */
+        /* === 1. HERO SECTION (FIXED TO MATCH BERITA PAGE) === */
         .hero-section {
             position: relative;
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
                 url('/images/hero.jpg') no-repeat center center/cover;
-            height: 85vh;
-            min-height: 500px;
+            height: 80vh;
             color: white;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
+            justify-content: flex-start;
             overflow: hidden;
         }
 
         .hero-content {
-            max-width: 800px;
+            width: 100%;
+            max-width: 1140px;
+            padding-left: 295px;
+            padding-right: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.2s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: clamp(3rem, 10vw, 6rem);
+            font-size: 80px;
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 20px;
-            letter-spacing: 0.5rem;
+            letter-spacing: 30px;
             text-transform: uppercase;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .hero-desc {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
+            font-size: 16px;
+            margin-bottom: 28px;
+            line-height: 1.6;
             color: #ddd;
             max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .hero-btn {
             display: inline-block;
-            padding: 12px 35px;
+            padding: 12px 30px;
             background-color: transparent;
             border: 2px solid white;
             color: white;
             text-decoration: none;
             font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            font-size: 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease-in-out;
+            font-size: 14px;
             letter-spacing: 1.5px;
         }
 
         .hero-btn:hover {
             background-color: white;
             color: black;
-            transform: scale(1.05);
         }
 
         /* === UTILITY & HEADINGS === */
@@ -557,42 +565,6 @@
             color: #495057;
             line-height: 1.6;
             flex-grow: 1;
-        }
-
-        /* === UNIFIED BUTTON STYLES === */
-        .btn-dark-custom {
-            padding: 12px 35px;
-            background-color: #212529;
-            color: #fff;
-            border: 2px solid #212529;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 1rem;
-            letter-spacing: 0.5px;
-            text-align: center;
-        }
-
-        .btn-dark-custom:hover {
-            background-color: #fff;
-            color: #212529;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-dark-custom:active {
-            background-color: #e9ecef;
-            color: #212529;
-            transform: scale(0.98);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-dark-custom:focus {
-            box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.25);
-            outline: none;
         }
 
         /* === MODAL STYLES === */
@@ -696,6 +668,26 @@
             margin-bottom: 1.5rem;
         }
 
+        .btn-dark-custom {
+            padding: 12px 35px;
+            background-color: #212529;
+            color: #fff;
+            border: 2px solid #212529;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-dark-custom:hover {
+            background-color: #fff;
+            color: #212529;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
         /* === 4. SCROLLING GALLERY === */
         .scrolling-gallery-section {
             overflow: hidden;
@@ -765,6 +757,11 @@
                 letter-spacing: 0.2rem;
             }
 
+            .hero-content {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
             .gallery-container {
                 margin-top: -40px;
                 padding: 2rem 1rem;
@@ -790,11 +787,6 @@
                 padding-left: 0;
                 margin-top: 1rem;
             }
-
-            .btn-dark-custom {
-                padding: 10px 25px;
-                font-size: 0.9rem;
-            }
         }
 
         @media (max-width: 576px) {
@@ -815,17 +807,40 @@
                 width: 200px;
                 height: 260px;
             }
-
-            .btn-dark-custom {
-                padding: 8px 20px;
-                font-size: 0.85rem;
-            }
         }
 
         /* === LOADING SPINNER === */
         .spinner-border {
             width: 3rem;
             height: 3rem;
+        }
+
+        /* === BUTTON HOVER EFFECTS === */
+        .btn-primary {
+            padding: 12px 35px;
+            background-color: #212529;
+            color: #fff;
+            border: 2px solid #212529;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #fff;
+            color: #212529;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:active {
+            background-color: #e9ecef;
+            color: #212529;
+            transform: scale(0.98);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
         }
 
         /* === ACCESSIBILITY IMPROVEMENTS === */
@@ -848,19 +863,6 @@
         .modal-open .modal {
             overflow-x: hidden;
             overflow-y: auto;
-        }
-
-        /* === BUTTON CONSISTENCY === */
-        .btn-secondary {
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
         }
     </style>
 @endsection
