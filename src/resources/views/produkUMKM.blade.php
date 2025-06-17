@@ -411,4 +411,6 @@
             color: black;
         }
     </style>
+
+    @include('layouts.footer')
 @endsection

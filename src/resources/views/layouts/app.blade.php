@@ -48,7 +48,7 @@
             line-height: 1.6;
         }
 
-        /* Modern Navbar Styles */
+        /* Compact Modern Navbar Styles */
         .modern-navbar {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -61,104 +61,142 @@
             left: 0;
             right: 0;
             z-index: 1030;
+            padding: 0.5rem 0;
+            /* Reduced padding for compact design */
+            min-height: 60px;
+            /* Fixed compact height */
         }
 
         .modern-navbar.scrolled {
             background: rgba(255, 255, 255, 0.98);
             box-shadow: var(--shadow-md);
+            min-height: 55px;
+            /* Even more compact when scrolled */
         }
 
+        /* Compact Brand */
         .navbar-brand {
-            font-weight: 800;
-            font-size: 1.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            /* Reduced size */
             color: var(--dark-color) !important;
             text-decoration: none;
             transition: all 0.3s ease;
+            padding: 0.25rem 0;
+            /* Minimal padding */
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            font-size: 1.1rem;
+            /* Smaller icon */
+            margin-right: 0.5rem;
         }
 
         .navbar-brand:hover {
             color: var(--primary-color) !important;
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
 
+        /* Compact Navigation */
         .navbar-nav {
-            gap: 0.5rem;
+            gap: 0.25rem;
+            /* Reduced gap */
         }
 
         .nav-link {
             font-weight: 500;
             color: var(--secondary-color) !important;
-            padding: 0.75rem 1rem !important;
-            border-radius: 0.5rem;
+            padding: 0.4rem 0.75rem !important;
+            /* Compact padding */
+            border-radius: 0.375rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             text-decoration: none;
+            font-size: 0.875rem;
+            /* Smaller font */
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
         }
 
         .nav-link:hover,
         .nav-link.active {
             color: var(--primary-color) !important;
-            background-color: rgba(37, 99, 235, 0.1);
+            background-color: rgba(37, 99, 235, 0.08);
             transform: translateY(-1px);
         }
 
         .nav-link i {
-            margin-right: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        /* Dropdown Styles */
-        .dropdown-menu {
-            border: none;
-            box-shadow: var(--shadow-xl);
-            border-radius: 0.75rem;
-            padding: 0.5rem;
-            margin-top: 0.5rem;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-
-        .dropdown-item {
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            color: var(--secondary-color);
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-item:hover {
-            background-color: rgba(37, 99, 235, 0.1);
-            color: var(--primary-color);
-            transform: translateX(4px);
-        }
-
-        .dropdown-item i {
-            margin-right: 0.75rem;
-            width: 1rem;
+            font-size: 0.8rem;
+            /* Smaller icons */
+            margin-right: 0.4rem;
+            width: 14px;
+            /* Fixed width for alignment */
             text-align: center;
         }
 
-        /* Notification Styles */
+        /* Compact Dropdown */
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--shadow-xl);
+            border-radius: 0.5rem;
+            padding: 0.375rem;
+            margin-top: 0.25rem;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            min-width: 180px;
+            /* Compact width */
+        }
+
+        .dropdown-item {
+            padding: 0.5rem 0.75rem;
+            /* Compact padding */
+            border-radius: 0.375rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(37, 99, 235, 0.08);
+            color: var(--primary-color);
+            transform: translateX(2px);
+        }
+
+        .dropdown-item i {
+            margin-right: 0.5rem;
+            width: 14px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        /* Compact Notification Styles */
         .notification-wrapper {
             position: relative;
         }
 
         .notification-badge {
             position: absolute;
-            top: -8px;
-            right: -8px;
+            top: -6px;
+            right: -6px;
             background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 0.7rem;
+            width: 16px;
+            /* Smaller badge */
+            height: 16px;
+            font-size: 0.6rem;
             font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid white;
+            border: 1.5px solid white;
             animation: pulse 2s infinite;
         }
 
@@ -168,7 +206,7 @@
             }
 
             70% {
-                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+                box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
             }
 
             100% {
@@ -177,15 +215,17 @@
         }
 
         .notification-dropdown {
-            width: 350px;
-            max-height: 400px;
+            width: 320px;
+            /* Compact width */
+            max-height: 350px;
             overflow-y: auto;
         }
 
         .notification-item {
-            padding: 1rem;
+            padding: 0.75rem;
             border-bottom: 1px solid var(--border-color);
             transition: all 0.3s ease;
+            font-size: 0.875rem;
         }
 
         .notification-item:hover {
@@ -194,15 +234,18 @@
 
         .notification-item.unread {
             background-color: rgba(37, 99, 235, 0.05);
-            border-left: 3px solid var(--primary-color);
+            border-left: 2px solid var(--primary-color);
         }
 
-        /* Mobile Menu Toggle */
+        /* Compact Mobile Toggle */
         .navbar-toggler {
             border: none;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
+            padding: 0.375rem;
+            border-radius: 0.375rem;
             transition: all 0.3s ease;
+            width: 36px;
+            /* Compact size */
+            height: 36px;
         }
 
         .navbar-toggler:focus {
@@ -211,10 +254,11 @@
 
         .navbar-toggler-icon {
             background-image: none;
-            width: 24px;
+            width: 20px;
+            /* Smaller hamburger */
             height: 2px;
             background-color: var(--dark-color);
-            border-radius: 2px;
+            border-radius: 1px;
             position: relative;
             transition: all 0.3s ease;
         }
@@ -223,19 +267,19 @@
         .navbar-toggler-icon::after {
             content: '';
             position: absolute;
-            width: 24px;
+            width: 20px;
             height: 2px;
             background-color: var(--dark-color);
-            border-radius: 2px;
+            border-radius: 1px;
             transition: all 0.3s ease;
         }
 
         .navbar-toggler-icon::before {
-            top: -8px;
+            top: -6px;
         }
 
         .navbar-toggler-icon::after {
-            top: 8px;
+            top: 6px;
         }
 
         .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
@@ -252,10 +296,11 @@
             top: 0;
         }
 
-        /* User Avatar */
+        /* Compact User Avatar */
         .user-avatar {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            /* Smaller avatar */
+            height: 28px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             display: flex;
@@ -263,21 +308,23 @@
             justify-content: center;
             color: white;
             font-weight: 600;
-            font-size: 0.8rem;
-            margin-right: 0.5rem;
+            font-size: 0.75rem;
+            margin-right: 0.4rem;
         }
 
-        /* Modern Buttons */
+        /* Compact Buttons */
         .btn-modern {
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
+            padding: 0.4rem 1rem;
+            /* Compact padding */
+            border-radius: 0.375rem;
             font-weight: 600;
             border: none;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.375rem;
+            font-size: 0.875rem;
         }
 
         .btn-modern-primary {
@@ -286,7 +333,7 @@
         }
 
         .btn-modern-primary:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: var(--shadow-lg);
             color: white;
         }
@@ -294,19 +341,20 @@
         .btn-modern-outline {
             background: transparent;
             color: var(--primary-color);
-            border: 2px solid var(--primary-color);
+            border: 1.5px solid var(--primary-color);
         }
 
         .btn-modern-outline:hover {
             background: var(--primary-color);
             color: white;
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: var(--shadow-lg);
         }
 
-        /* Body padding for fixed navbar */
+        /* Compact body padding */
         body {
-            padding-top: 80px;
+            padding-top: 65px;
+            /* Reduced padding */
         }
 
         /* Responsive Design */
@@ -315,28 +363,47 @@
                 background: rgba(255, 255, 255, 0.98);
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
-                border-radius: 0.75rem;
-                padding: 1rem;
-                margin-top: 1rem;
+                border-radius: 0.5rem;
+                padding: 0.75rem;
+                margin-top: 0.5rem;
                 box-shadow: var(--shadow-lg);
             }
 
             .notification-dropdown {
-                width: 300px;
+                width: 280px;
             }
 
             body {
-                padding-top: 70px;
+                padding-top: 60px;
+            }
+
+            /* Stack mobile menu items more compactly */
+            .navbar-nav .nav-item {
+                margin-bottom: 0.25rem;
             }
         }
 
         @media (max-width: 576px) {
             .navbar-brand {
-                font-size: 1.25rem;
+                font-size: 1.1rem;
             }
 
             .notification-dropdown {
-                width: 280px;
+                width: 260px;
+            }
+
+            .nav-link {
+                font-size: 0.8rem;
+                padding: 0.35rem 0.6rem !important;
+            }
+
+            .btn-modern {
+                padding: 0.35rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            body {
+                padding-top: 55px;
             }
         }
 
@@ -347,8 +414,9 @@
 
         /* Loading animation */
         .loading-spinner {
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            /* Smaller spinner */
+            height: 16px;
             border: 2px solid #f3f3f3;
             border-top: 2px solid var(--primary-color);
             border-radius: 50%;
@@ -364,6 +432,279 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* Compact notification content */
+        .notification-item .d-flex .flex-shrink-0>div {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-item .d-flex .flex-shrink-0 i {
+            font-size: 0.8rem;
+        }
+
+        /* Ensure dropdown headers are compact */
+        .dropdown-header {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        /* Compact notification list styling */
+        .notification-list {
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .notification-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .notification-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 2px;
+        }
+
+        .notification-list::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .notification-list::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Compact user dropdown styling */
+        .dropdown-menu[aria-labelledby="userDropdown"] {
+            min-width: 200px;
+        }
+
+        /* Ensure all text is properly sized */
+        .notification-item p {
+            margin-bottom: 0.25rem;
+            line-height: 1.4;
+        }
+
+        .notification-item small {
+            font-size: 0.75rem;
+        }
+
+        /* Compact badge in notification dropdown */
+        .badge.bg-primary {
+            font-size: 0.65rem;
+            padding: 0.25rem 0.4rem;
+        }
+
+        /* Hover effects for better UX */
+        .navbar-nav .nav-item:hover .nav-link {
+            background-color: rgba(37, 99, 235, 0.05);
+        }
+
+        /* Focus states for accessibility */
+        .nav-link:focus,
+        .dropdown-item:focus,
+        .btn-modern:focus,
+        .navbar-toggler:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Ensure proper spacing in mobile view */
+        @media (max-width: 991.98px) {
+            .navbar-nav {
+                gap: 0.125rem;
+            }
+
+            .navbar-nav .nav-link {
+                border-radius: 0.25rem;
+                margin-bottom: 0.125rem;
+            }
+        }
+
+        /* Compact services dropdown */
+        .dropdown-menu[aria-labelledby="servicesDropdown"] {
+            min-width: 160px;
+        }
+
+        /* Ensure icons are properly aligned */
+        .nav-link i,
+        .dropdown-item i {
+            flex-shrink: 0;
+        }
+
+        /* Compact notification icon */
+        .nav-link .fas.fa-bell {
+            font-size: 0.9rem;
+        }
+
+        /* Smooth transitions for all interactive elements */
+        .nav-link,
+        .dropdown-item,
+        .btn-modern,
+        .social-link,
+        .notification-item {
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* Ensure proper text truncation in compact view */
+        .notification-item .fw-bold {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 180px;
+        }
+
+        /* Compact divider styling */
+        .dropdown-divider {
+            margin: 0.25rem 0;
+        }
+
+        /* Ensure proper alignment of user info in dropdown */
+        .dropdown-header .d-flex {
+            align-items: center;
+        }
+
+        .dropdown-header .user-avatar {
+            margin-right: 0.5rem;
+        }
+
+        /* Compact button group styling */
+        .navbar-nav.ms-auto {
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Ensure proper mobile menu item spacing */
+        @media (max-width: 991.98px) {
+            .navbar-nav .nav-item.dropdown .dropdown-menu {
+                position: static;
+                float: none;
+                width: auto;
+                margin-top: 0;
+                background-color: transparent;
+                border: 0;
+                box-shadow: none;
+                padding-left: 1rem;
+            }
+
+            .navbar-nav .nav-item.dropdown .dropdown-item {
+                color: var(--secondary-color);
+                padding: 0.25rem 0.5rem;
+            }
+        }
+
+        /* Compact notification empty state */
+        .notification-list .text-center {
+            padding: 1.5rem 1rem;
+        }
+
+        .notification-list .text-center i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Ensure proper button sizing in notification dropdown */
+        .notification-dropdown .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.8rem;
+        }
+
+        /* Compact alert styling for notifications */
+        .alert {
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        /* Ensure proper icon sizing in alerts */
+        .alert i {
+            font-size: 0.9rem;
+        }
+
+        /* Compact ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-animation 0.4s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        /* Ensure buttons have relative positioning for ripple effect */
+        .btn-modern,
+        .nav-link,
+        .dropdown-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Compact toast notifications */
+        .toast-notification {
+            min-width: 280px;
+            font-size: 0.875rem;
+        }
+
+        /* Ensure proper z-index stacking */
+        .modern-navbar {
+            z-index: 1030;
+        }
+
+        .dropdown-menu {
+            z-index: 1031;
+        }
+
+        .toast-notification {
+            z-index: 1040;
+        }
+
+        /* Compact search functionality (if needed) */
+        .navbar-search {
+            max-width: 200px;
+        }
+
+        .navbar-search .form-control {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            border-radius: 0.375rem;
+        }
+
+        /* Ensure proper mobile responsiveness */
+        @media (max-width: 480px) {
+            .modern-navbar {
+                padding: 0.375rem 0;
+                min-height: 50px;
+            }
+
+            .navbar-brand {
+                font-size: 1rem;
+            }
+
+            .nav-link {
+                font-size: 0.75rem;
+                padding: 0.3rem 0.5rem !important;
+            }
+
+            .user-avatar {
+                width: 24px;
+                height: 24px;
+                font-size: 0.7rem;
+            }
+
+            body {
+                padding-top: 50px;
+            }
+        }
     </style>
 </head>
 
@@ -373,7 +714,7 @@
             <div class="container">
                 <!-- Brand -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <i class="fas fa-eye me-2"></i>
+                    <i class="fas fa-eye"></i>
                     {{ $title ?? 'oneVision' }}
                 </a>
 
@@ -420,13 +761,13 @@
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('contact') ? 'active' : '' }}"
                                 href="{{ url('contact') }}">
-                                <i class="fas fa-envelope"></i>Contact Us
+                                <i class="fas fa-envelope"></i>Contact
                             </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-concierge-bell"></i>Our Services
+                                <i class="fas fa-concierge-bell"></i>Services
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
                                 <li>
@@ -452,16 +793,16 @@
                     </ul>
 
                     <!-- Right Navigation -->
-                    <ul class="navbar-nav ms-auto align-items-center">
+                    <ul class="navbar-nav ms-auto">
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">
-                                    <i class="fas fa-sign-in-alt"></i>{{ __('Login') }}
+                                    <i class="fas fa-sign-in-alt"></i>Login
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-modern btn-modern-primary" href="{{ route('register') }}">
-                                    <i class="fas fa-user-plus"></i>{{ __('Register') }}
+                                    <i class="fas fa-user-plus"></i>Register
                                 </a>
                             </li>
                         @else
@@ -482,10 +823,10 @@
                                 $totalUnreadNotifications = $unreadTourGuideNotifications + $unreadHoneyNotifications;
                             @endphp
 
-                            <li class="nav-item dropdown me-3">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link notification-wrapper" href="#" id="notificationDropdown"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-bell fs-5"></i>
+                                    <i class="fas fa-bell"></i>
                                     @if ($totalUnreadNotifications > 0)
                                         <span class="notification-badge">{{ $totalUnreadNotifications }}</span>
                                     @endif
@@ -540,13 +881,13 @@
                                                 <a class="notification-item {{ $notification->is_read ? '' : 'unread' }}"
                                                     href="{{ route('order-history.show', ['id' => $notification->id, 'type' => $notification->order_type]) }}">
                                                     <div class="d-flex">
-                                                        <div class="flex-shrink-0 me-3">
+                                                        <div class="flex-shrink-0 me-2">
                                                             @if ($notification->order_type == 'tour_guide')
-                                                                <div class="bg-primary rounded-circle p-2">
+                                                                <div class="bg-primary rounded-circle p-1">
                                                                     <i class="fas fa-user-tie text-white"></i>
                                                                 </div>
                                                             @else
-                                                                <div class="bg-warning rounded-circle p-2">
+                                                                <div class="bg-warning rounded-circle p-1">
                                                                     <i class="fas fa-jar text-white"></i>
                                                                 </div>
                                                             @endif
@@ -554,15 +895,14 @@
                                                         <div class="flex-grow-1">
                                                             <p class="mb-1 fw-medium">
                                                                 @if ($notification->order_type == 'tour_guide')
-                                                                    Tour guide request
+                                                                    Tour guide
                                                                 @else
                                                                     Honey order
                                                                 @endif
                                                                 <span
-                                                                    class="fw-bold">{{ $notification->item_name }}</span>
+                                                                    class="fw-bold">{{ Str::limit($notification->item_name, 15) }}</span>
                                                             </p>
                                                             <p class="mb-1 small">
-                                                                Status:
                                                                 @if ($notification->status == 'accepted')
                                                                     <span class="text-success fw-medium">
                                                                         <i class="fas fa-check-circle"></i> Accepted
@@ -582,9 +922,9 @@
                                                 </a>
                                             @endforeach
                                         @else
-                                            <div class="text-center py-4">
-                                                <i class="fas fa-bell-slash text-muted fs-2 mb-2"></i>
-                                                <p class="text-muted mb-0">No notifications</p>
+                                            <div class="text-center py-3">
+                                                <i class="fas fa-bell-slash text-muted fs-4 mb-2"></i>
+                                                <p class="text-muted mb-0 small">No notifications</p>
                                             </div>
                                         @endif
                                     </div>
@@ -593,7 +933,7 @@
                                         <div class="border-top p-2">
                                             <a class="btn btn-sm btn-outline-primary w-100"
                                                 href="{{ route('order-history.index') }}">
-                                                <i class="fas fa-history"></i> View All History
+                                                <i class="fas fa-history"></i> View All
                                             </a>
                                         </div>
                                     @endif
@@ -601,9 +941,9 @@
                             </li>
 
                             <!-- Order History -->
-                            <li class="nav-item me-3">
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('order-history.index') }}">
-                                    <i class="fas fa-history"></i>{{ __('Order History') }}
+                                    <i class="fas fa-history"></i>History
                                 </a>
                             </li>
 
@@ -614,7 +954,7 @@
                                     <div class="user-avatar">
                                         {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                                     </div>
-                                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                                    <span class="d-none d-md-inline">{{ Str::limit(Auth::user()->name, 12) }}</span>
                                 </a>
 
                                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
@@ -625,8 +965,9 @@
                                                     {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                                                 </div>
                                                 <div>
-                                                    <div class="fw-bold">{{ Auth::user()->name }}</div>
-                                                    <small class="text-muted">{{ Auth::user()->email }}</small>
+                                                    <div class="fw-bold">{{ Str::limit(Auth::user()->name, 20) }}</div>
+                                                    <small
+                                                        class="text-muted">{{ Str::limit(Auth::user()->email, 25) }}</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -636,7 +977,7 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user"></i>Profile Settings
+                                            <i class="fas fa-user"></i>Profile
                                         </a>
                                     </li>
                                     <li>
@@ -646,7 +987,7 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="#">
-                                            <i class="fas fa-cog"></i>Account Settings
+                                            <i class="fas fa-cog"></i>Settings
                                         </a>
                                     </li>
                                     <li>
@@ -655,7 +996,7 @@
                                     <li>
                                         <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="fas fa-sign-out-alt"></i>{{ __('Logout') }}
+                                            <i class="fas fa-sign-out-alt"></i>Logout
                                         </a>
                                     </li>
                                 </ul>
@@ -683,24 +1024,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Navbar scroll effect
+            // Compact navbar scroll effect
             const navbar = document.querySelector('.modern-navbar');
             let lastScrollTop = 0;
 
             window.addEventListener('scroll', function() {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-                if (scrollTop > 50) {
+                if (scrollTop > 30) {
                     navbar.classList.add('scrolled');
                 } else {
                     navbar.classList.remove('scrolled');
                 }
 
-                // Hide navbar on scroll down, show on scroll up
-                if (scrollTop > lastScrollTop && scrollTop > 100) {
-                    navbar.style.transform = 'translateY(-100%)';
-                } else {
-                    navbar.style.transform = 'translateY(0)';
+                // Hide navbar on scroll down, show on scroll up (for mobile)
+                if (window.innerWidth <= 768) {
+                    if (scrollTop > lastScrollTop && scrollTop > 80) {
+                        navbar.style.transform = 'translateY(-100%)';
+                    } else {
+                        navbar.style.transform = 'translateY(0)';
+                    }
                 }
 
                 lastScrollTop = scrollTop;
@@ -744,10 +1087,10 @@
 
                 dropdown.addEventListener('show.bs.dropdown', function() {
                     menu.style.opacity = '0';
-                    menu.style.transform = 'translateY(-10px)';
+                    menu.style.transform = 'translateY(-8px)';
 
                     setTimeout(() => {
-                        menu.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                        menu.style.transition = 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
                         menu.style.opacity = '1';
                         menu.style.transform = 'translateY(0)';
                     }, 10);
@@ -769,6 +1112,28 @@
                 });
             });
 
+            // Add ripple effect to clickable elements
+            document.querySelectorAll('.nav-link, .dropdown-item, .btn-modern').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple');
+
+                    this.appendChild(ripple);
+
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 400);
+                });
+            });
+
             // Notification auto-refresh (optional)
             @if (auth()->check())
                 setInterval(function() {
@@ -783,12 +1148,53 @@
                     window.location.reload();
                 }, 100);
             @endif
+
+            // Optimize for touch devices
+            if ('ontouchstart' in window) {
+                document.querySelectorAll('.nav-link, .dropdown-item').forEach(element => {
+                    element.addEventListener('touchstart', function() {
+                        this.style.backgroundColor = 'rgba(37, 99, 235, 0.1)';
+                    });
+
+                    element.addEventListener('touchend', function() {
+                        setTimeout(() => {
+                            this.style.backgroundColor = '';
+                        }, 150);
+                    });
+                });
+            }
+
+            // Keyboard navigation support
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Close all open dropdowns
+                    document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
+                        const dropdown = bootstrap.Dropdown.getInstance(menu
+                        .previousElementSibling);
+                        if (dropdown) dropdown.hide();
+                    });
+                }
+            });
+
+            // Preload critical resources
+            const criticalLinks = [
+                "{{ route('order-history.index') }}",
+                "{{ url('gallery/') }}",
+                "{{ route('minimap.index') }}"
+            ];
+
+            criticalLinks.forEach(link => {
+                const linkElement = document.createElement('link');
+                linkElement.rel = 'prefetch';
+                linkElement.href = link;
+                document.head.appendChild(linkElement);
+            });
         });
 
         // Utility functions
         function showLoading(element) {
             const originalContent = element.innerHTML;
-            element.innerHTML = '<span class="loading-spinner me-2"></span>Loading...';
+            element.innerHTML = '<span class="loading-spinner me-1"></span>Loading...';
             element.disabled = true;
 
             return function hideLoading() {
@@ -799,9 +1205,380 @@
 
         // Global notification function
         function showNotification(message, type = 'info') {
-            // You can implement toast notifications here
-            console.log(`${type.toUpperCase()}: ${message}`);
+            // Create compact toast notification
+            const toast = document.createElement('div');
+            toast.className = `alert alert-${type === 'success' ? 'success' : 'info'} position-fixed toast-notification`;
+            toast.style.cssText = `
+                top: 70px;
+                right: 15px;
+                z-index: 1040;
+                min-width: 280px;
+                animation: slideInRight 0.3s ease-out;
+                font-size: 0.875rem;
+            `;
+            toast.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+                    <span>${message}</span>
+                    <button type="button" class="btn-close btn-close-sm ms-auto" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+
+            document.body.appendChild(toast);
+
+            // Auto remove after 4 seconds
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.animation = 'slideOutRight 0.3s ease-out';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 4000);
         }
+
+        // Performance optimization
+        window.addEventListener('load', function() {
+            // Remove loading states
+            document.body.classList.add('loaded');
+
+            // Initialize intersection observer for lazy loading
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            img.classList.remove('lazy');
+                            observer.unobserve(img);
+                        }
+                    });
+                });
+
+                document.querySelectorAll('img[data-src]').forEach(img => {
+                    imageObserver.observe(img);
+                });
+            }
+        });
+        // Add CSS animations for toast notifications
+        const toastStyles = document.createElement('style');
+        toastStyles.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+
+            .toast-notification {
+                border-radius: 0.5rem;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+                border: none;
+            }
+
+            .toast-notification .btn-close-sm {
+                font-size: 0.7rem;
+                padding: 0.25rem;
+            }
+
+            /* Smooth loading state */
+            body:not(.loaded) {
+                overflow: hidden;
+            }
+
+            body.loaded {
+                overflow: visible;
+            }
+
+            /* Lazy loading placeholder */
+            img.lazy {
+                background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                background-size: 200% 100%;
+                animation: loading 1.5s infinite;
+            }
+
+            @keyframes loading {
+                0% {
+                    background-position: 200% 0;
+                }
+                100% {
+                    background-position: -200% 0;
+                }
+            }
+
+            /* Enhanced focus indicators for better accessibility */
+            .nav-link:focus-visible,
+            .dropdown-item:focus-visible,
+            .btn-modern:focus-visible {
+                outline: 2px solid var(--primary-color);
+                outline-offset: 2px;
+                border-radius: 0.375rem;
+            }
+
+            /* Reduce motion for users who prefer it */
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+
+            /* High contrast mode improvements */
+            @media (prefers-contrast: high) {
+                .modern-navbar {
+                    background: #ffffff;
+                    border-bottom: 2px solid #000000;
+                }
+
+                .nav-link,
+                .dropdown-item {
+                    color: #000000 !important;
+                }
+
+                .nav-link:hover,
+                .nav-link.active {
+                    background-color: #000000 !important;
+                    color: #ffffff !important;
+                }
+            }
+
+            /* Print styles */
+            @media print {
+                .modern-navbar {
+                    display: none !important;
+                }
+
+                body {
+                    padding-top: 0 !important;
+                }
+            }
+
+            /* Dark mode support (system preference) */
+            @media (prefers-color-scheme: dark) {
+                .modern-navbar {
+                    background: rgba(15, 23, 42, 0.95);
+                    border-bottom-color: rgba(255, 255, 255, 0.1);
+                }
+
+                .nav-link {
+                    color: rgba(255, 255, 255, 0.8) !important;
+                }
+
+                .nav-link:hover,
+                .nav-link.active {
+                    color: #3b82f6 !important;
+                    background-color: rgba(59, 130, 246, 0.1);
+                }
+
+                .dropdown-menu {
+                    background: rgba(15, 23, 42, 0.98);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .dropdown-item {
+                    color: rgba(255, 255, 255, 0.8);
+                }
+
+                .dropdown-item:hover {
+                    background-color: rgba(59, 130, 246, 0.1);
+                    color: #3b82f6;
+                }
+            }
+
+            /* Compact scrollbar for notification dropdown */
+            .notification-list::-webkit-scrollbar {
+                width: 3px;
+            }
+
+            .notification-list::-webkit-scrollbar-track {
+                background: rgba(0, 0, 0, 0.05);
+                border-radius: 1.5px;
+            }
+
+            .notification-list::-webkit-scrollbar-thumb {
+                background: var(--primary-color);
+                border-radius: 1.5px;
+            }
+
+            .notification-list::-webkit-scrollbar-thumb:hover {
+                background: var(--primary-dark);
+            }
+
+            /* Micro-interactions for better UX */
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background: var(--primary-color);
+                transition: all 0.3s ease;
+                transform: translateX(-50%);
+            }
+
+            .nav-link.active::after,
+            .nav-link:hover::after {
+                width: 80%;
+            }
+
+            /* Notification badge pulse animation */
+            .notification-badge {
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+                }
+                70% {
+                    transform: scale(1.05);
+                    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+                }
+                100% {
+                    transform: scale(1);
+                    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+                }
+            }
+
+            /* Smooth state transitions */
+            .navbar-toggler-icon,
+            .navbar-toggler-icon::before,
+            .navbar-toggler-icon::after {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            /* Enhanced mobile menu */
+            @media (max-width: 991.98px) {
+                .navbar-collapse {
+                    animation: slideDown 0.3s ease-out;
+                }
+
+                @keyframes slideDown {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-10px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                .navbar-nav .nav-item {
+                    animation: fadeInUp 0.3s ease-out;
+                    animation-fill-mode: both;
+                }
+
+                .navbar-nav .nav-item:nth-child(1) { animation-delay: 0.1s; }
+                .navbar-nav .nav-item:nth-child(2) { animation-delay: 0.15s; }
+                .navbar-nav .nav-item:nth-child(3) { animation-delay: 0.2s; }
+                .navbar-nav .nav-item:nth-child(4) { animation-delay: 0.25s; }
+                .navbar-nav .nav-item:nth-child(5) { animation-delay: 0.3s; }
+                .navbar-nav .nav-item:nth-child(6) { animation-delay: 0.35s; }
+                .navbar-nav .nav-item:nth-child(7) { animation-delay: 0.4s; }
+
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(10px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            }
+
+            /* Loading skeleton for better perceived performance */
+            .skeleton {
+                background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                background-size: 200% 100%;
+                animation: loading 1.5s infinite;
+            }
+
+            /* Ensure proper touch targets on mobile */
+            @media (max-width: 767.98px) {
+                .nav-link,
+                .dropdown-item,
+                .btn-modern {
+                    min-height: 44px;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+
+            /* Optimize for very small screens */
+            @media (max-width: 360px) {
+                .navbar-brand {
+                    font-size: 0.95rem;
+                }
+
+                .nav-link {
+                    font-size: 0.7rem;
+                    padding: 0.25rem 0.4rem !important;
+                }
+
+                .user-avatar {
+                    width: 22px;
+                    height: 22px;
+                    font-size: 0.65rem;
+                }
+
+                .notification-badge {
+                    width: 14px;
+                    height: 14px;
+                    font-size: 0.55rem;
+                }
+            }
+        `;
+        document.head.appendChild(toastStyles);
+
+        // Service Worker registration for PWA capabilities (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
+        // Network status monitoring
+        window.addEventListener('online', function() {
+            showNotification('Connection restored', 'success');
+        });
+
+        window.addEventListener('offline', function() {
+            showNotification('Connection lost. Some features may not work.', 'warning');
+        });
+
+        // Memory cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            // Clear any intervals or timeouts
+            // Remove event listeners if needed
+            // Clean up any resources
+        });
     </script>
 
     @stack('scripts')
