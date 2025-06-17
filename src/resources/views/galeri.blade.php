@@ -804,17 +804,32 @@
 
         /* === BUTTON HOVER EFFECTS === */
         .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
+            padding: 12px 35px;
+            background-color: #212529;
+            color: #fff;
+            border: 2px solid #212529;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            background-color: #fff;
+            color: #212529;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
+
+        .btn-primary:active {
+            background-color: #e9ecef;
+            color: #212529;
+            transform: scale(0.98);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
 
         /* === ACCESSIBILITY IMPROVEMENTS === */
         .btn:focus,
