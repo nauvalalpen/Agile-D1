@@ -56,13 +56,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [UserLoginController::class, 'logout'])->name('logout');
 });
 
-// Route::middleware(['auth', 'admin'])->group(function() {
-//     // Route::resource('tourists', TouristController::class);
-//     Route::resource('guides', GuideController::class);
-//     // Route::get('weather', [WeatherController::class, 'dashboard']);
-//     // Route::post('checkout/{tourist}', [CheckpointController::class, 'checkout']);
-// });
-
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 Route::get('/weather', [WeatherController::class, 'updateWeatherInfo'])->name('updateWeatherInfo');
@@ -72,17 +65,10 @@ Route::get('/weather', [App\Http\Controllers\WeatherController::class, 'index'])
 
 // Main features
 Route::get('/', [App\Http\Controllers\IndexController::class, 'index'])->name('index');
-// Route::get('/guides', [App\Http\Controllers\GuideController::class, 'index'])->name('guides');
-// Route::get('/honey', [App\Http\Controllers\HoneyController::class, 'index'])->name('honey');
-// Route::get('/umkm', [App\Http\Controllers\UmkmController::class, 'index'])->name('umkm');
 Route::get('/gallery', [App\Http\Controllers\GalleryController::class, 'index'])->name('gallery');
-// Route::get('/news', [App\Http\Controllers\NewsController::class, 'index'])->name('news');
-Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities');
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::post('/contact/submit', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
-// Route::get('/map', [App\Http\Controllers\MapController::class, 'index'])->name('map');
 Route::get('/weather', [App\Http\Controllers\WeatherController::class, 'index'])->name('weather');
-//Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile')->middleware('auth');
 
 //Tour Guides
 Route::get('tourguides', [TourGuideController::class, 'index'])->name('tourguides.index');
@@ -93,12 +79,28 @@ Route::put('tourguides/{id}', [TourGuideController::class, 'update'])->name('tou
 Route::delete('tourguides/{id}', [TourGuideController::class, 'destroy'])->name('tourguides.destroy');
 Route::get('/tourguides/{id}/order', [TourGuideController::class, 'order'])->name('tourguides.order');
 Route::post('/tourguides/{id}/order', [TourGuideController::class, 'orderSubmit'])->name('tourguides.orderSubmit');
+
 Route::get('/', [App\Http\Controllers\TourGuideController::class, 'homepage']);
+
+// Minimap Routes (add these lines to your existing web.php)
+Route::get('/minimap', [App\Http\Controllers\MinimapController::class, 'index'])->name('minimap.index');
+Route::get('/minimap/fullscreen', [App\Http\Controllers\MinimapController::class, 'fullscreen'])->name('minimap.fullscreen');
 
 // User Order History Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/order-history', [OrderHistoryController::class, 'index'])->name('order-history.index');
     Route::get('/order-history/{id}', [OrderHistoryController::class, 'show'])->name('order-history.show');
+    Route::get('/order-madu', [App\Http\Controllers\OrderMaduController::class, 'index'])->name('order-madu.index');
+    Route::get('/order-madu/{id}', [App\Http\Controllers\OrderMaduController::class, 'show'])->name('order-madu.show');
+    
+    // Redirect old routes to new unified system
+    Route::get('/order-madu', function() {
+        return redirect()->route('order-history.index', ['tab' => 'honey']);
+    })->name('order-madu.index');
+    
+    Route::get('/order-madu/{id}', function($id) {
+        return redirect()->route('order-history.show', ['id' => $id, 'type' => 'honey']);
+    })->name('order-madu.show');
 });
 
 // Admin Order Management Routes
@@ -110,10 +112,8 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
 // Public routes
 Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities.index');
-
 Route::get('/beritas', [App\Http\Controllers\BeritaController::class, 'index'])->name('berita.index');
 Route::get('/berita/{id}', [App\Http\Controllers\BeritaController::class, 'detail'])->name('berita.detail');
-
 Route::get('/gallery', [GaleriController::class, 'index'])->name('gallery.index');
 
 
@@ -121,15 +121,9 @@ Route::get('/gallery', [GaleriController::class, 'index'])->name('gallery.index'
 // Madu: 
 
 // Honey Product Routes
-Route::get('/honey', [App\Http\Controllers\MaduController::class, 'index'])->name('madu.index');
-Route::get('/honey/{id}/order', [App\Http\Controllers\MaduController::class, 'order'])->name('madu.order')->middleware('auth');
-Route::post('/honey/{id}/order', [App\Http\Controllers\MaduController::class, 'orderSubmit'])->name('madu.orderSubmit')->middleware('auth');
-
-// User Honey Order History Routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/order-madu', [App\Http\Controllers\OrderMaduController::class, 'index'])->name('order-madu.index');
-    Route::get('/order-madu/{id}', [App\Http\Controllers\OrderMaduController::class, 'show'])->name('order-madu.show');
-});
+Route::get('/madu', [App\Http\Controllers\MaduController::class, 'index'])->name('madu.index');
+Route::get('/madu/{id}/order', [App\Http\Controllers\MaduController::class, 'order'])->name('madu.order')->middleware('auth');
+Route::post('/madu/{id}/order', [App\Http\Controllers\MaduController::class, 'orderSubmit'])->name('madu.orderSubmit')->middleware('auth');
 
 // Admin Honey Management Routes
 Route::prefix('admin')->name('admin.')->middleware(
@@ -193,36 +187,15 @@ Route::prefix('admin')->name('admin.')->middleware(
 
     // Users Routes
     Route::resource('users', UsersController::class)->except(['show']);;
-    // Route untuk menampilkan trash (soft deleted users)
     Route::get('users/trash', [UsersController::class, 'trash'])->name('users.trash');
-    // Route untuk restore user yang dihapus soft delete
     Route::post('users/{id}/restore', [UsersController::class, 'restore'])->name('users.restore');
-    // Route untuk force delete user (hapus permanen)
     Route::delete('users/{id}/force-delete', [UsersController::class, 'forceDelete'])->name('users.force-delete');
 
     // Dashboard Routes
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 });
 
-// User Order History Routes - Unified
-Route::middleware(['auth'])->group(function () {
-    Route::get('/order-history', [OrderHistoryController::class, 'index'])->name('order-history.index');
-    Route::get('/order-history/{id}', [OrderHistoryController::class, 'show'])->name('order-history.show');
-    
-    // Redirect old routes to new unified system
-    Route::get('/order-madu', function() {
-        return redirect()->route('order-history.index', ['tab' => 'honey']);
-    })->name('order-madu.index');
-    
-    Route::get('/order-madu/{id}', function($id) {
-        return redirect()->route('order-history.show', ['id' => $id, 'type' => 'honey']);
-    })->name('order-madu.show');
-});
 
-
-// Minimap Routes (add these lines to your existing web.php)
-Route::get('/minimap', [App\Http\Controllers\MinimapController::class, 'index'])->name('minimap.index');
-Route::get('/minimap/fullscreen', [App\Http\Controllers\MinimapController::class, 'fullscreen'])->name('minimap.fullscreen');
 
 // Admin routes for produk UMKM+
 Route::get('/produk-umkm', [App\Http\Controllers\ProdukUMKMController::class, 'index'])->name('produkUMKM.index');
@@ -236,18 +209,4 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('/produkUMKM/{id}/restore', [App\Http\Controllers\ProdukUMKMController::class, 'restore'])->name('produkUMKM.restore');
     Route::delete('/produkUMKM/{id}/force-delete', [App\Http\Controllers\ProdukUMKMController::class, 'forceDelete'])->name('produkUMKM.force-delete');
 });
-
-// Route::get('/weather', function () {
-//     return view('weather');
-// });
-
-// Admin Dashboard Route (already exists in your admin routes group)
-// Route::prefix('admin')->name('admin.')->group(function () {
-    // Route::middleware(['auth', 'admin'])->group(function () {
-        // Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-        // Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
-    // });
-// });
-
-// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
