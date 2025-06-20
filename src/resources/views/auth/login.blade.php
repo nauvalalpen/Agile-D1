@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
 
     <style>
         body {
-            background-image: url('{{ asset("images/bg.png") }}');
+            background-image: url('{{ asset('images/bg.png') }}');
             background-size: cover;
             background-position: center;
             min-height: 100vh;
@@ -83,6 +84,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="bg-overlay"></div>
@@ -96,7 +98,7 @@
 
             <div class="mb-3">
                 <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                       placeholder="E-mail" value="{{ old('email') }}" required autofocus>
+                    placeholder="E-mail" value="{{ old('email') }}" required autofocus>
                 @error('email')
                     <span class="invalid-feedback d-block">{{ $message }}</span>
                 @enderror
@@ -104,7 +106,7 @@
 
             <div class="mb-3">
                 <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                       placeholder="Password" required>
+                    placeholder="Password" required>
                 @error('password')
                     <span class="invalid-feedback d-block">{{ $message }}</span>
                 @enderror
@@ -119,9 +121,24 @@
         <p>or</p>
 
         <div class="d-flex justify-content-center align-items-center mb-3 social-icons">
-        <i class="fab fa-facebook fa-2x mx-2"></i>
-        <i class="fas fa-envelope fa-2x mx-2"></i>
-        <i class="fab fa-apple fa-2x mx-2"></i>
+            <a href="" class="social-btn google-btn mx-2" title="Sign in with Google">
+                <i class="fab fa-google fa-2x"></i>
+            </a>
+            <a href="#" class="social-btn facebook-btn mx-2" title="Sign in with Facebook"
+                onclick="showComingSoon('Facebook')">
+                <i class="fab fa-facebook fa-2x"></i>
+            </a>
+            <a href="#" class="social-btn apple-btn mx-2" title="Sign in with Apple"
+                onclick="showComingSoon('Apple')">
+                <i class="fab fa-apple fa-2x"></i>
+            </a>
+        </div>
+
+        <!-- Add divider -->
+        <div class="divider-container mb-3">
+            <div class="divider-line"></div>
+            <span class="divider-text">or continue with email</span>
+            <div class="divider-line"></div>
         </div>
 
         <div class="login-text">
@@ -130,4 +147,115 @@
     </div>
 
 </body>
+
+<style>
+    .social-icons {
+        gap: 1rem;
+    }
+
+    .social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .google-btn {
+        background: linear-gradient(135deg, #4285f4, #34a853);
+        color: white;
+    }
+
+    .google-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+        color: white;
+    }
+
+    .facebook-btn {
+        background: linear-gradient(135deg, #1877f2, #42a5f5);
+        color: white;
+    }
+
+    .facebook-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+        color: white;
+    }
+
+    .apple-btn {
+        background: linear-gradient(135deg, #000000, #333333);
+        color: white;
+    }
+
+    .apple-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        color: white;
+    }
+
+    .divider-container {
+        display: flex;
+        align-items: center;
+        margin: 1.5rem 0;
+    }
+
+    .divider-line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+    }
+
+    .divider-text {
+        padding: 0 1rem;
+        color: #666;
+        font-size: 0.875rem;
+        background: white;
+    }
+
+    /* Loading state for Google button */
+    .social-btn.loading {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    .social-btn.loading i {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<!-- Add JavaScript for social login -->
+<script>
+    function showComingSoon(provider) {
+        alert(`${provider} login is coming soon! For now, please use Google or email login.`);
+    }
+
+    // Add loading state to Google button
+    document.addEventListener('DOMContentLoaded', function() {
+        const googleBtn = document.querySelector('.google-btn');
+        if (googleBtn) {
+            googleBtn.addEventListener('click', function() {
+                this.classList.add('loading');
+                const icon = this.querySelector('i');
+                icon.classList.remove('fa-google');
+                icon.classList.add('fa-spinner');
+            });
+        }
+    });
+</script>
+
 </html>
