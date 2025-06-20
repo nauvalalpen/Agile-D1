@@ -66,6 +66,10 @@
                 <div class="honey-card-body">
                     <div class="honey-header">
                         <h5 class="honey-title">{{ $madu->nama_madu }}</h5>
+                          <div class="honey-size">
+                            <span class="size-label">Size:</span>
+                            <span class="size-value">{{ $madu->ukuran }}</span>
+                        </div>
                         <div class="honey-rating">
                             <div class="stars">
                                 <i class="fas fa-star"></i>
@@ -270,6 +274,7 @@
                 return [
                     'id' => $madu->id,
                     'nama' => $madu->nama_madu,
+                    'ukuran' => $madu->ukuran,
                     'harga' => $madu->harga,
                     'stock' => $madu->stock,
                     'deskripsi' => $madu->deskripsi,
@@ -339,15 +344,9 @@
                 '<img src="' + honey.gambar + '" ' +
                 'class="img-fluid rounded honey-modal-img" ' +
                 'alt="' + honey.nama_madu + '"' +
-                'onclick="showImageViewer(\'' + honey.gambar + '\', \'' + honey.nama + '\')"' +
-                                'style="cursor: pointer; transition: transform 0.3s ease;"' +
                 'onmouseover="this.style.transform=\'scale(1.02)\'"' +
                 'onmouseout="this.style.transform=\'scale(1)\'">' +
                 '<div class="position-absolute top-0 end-0 m-2">' +
-                '<button class="btn btn-sm btn-light rounded-circle" ' +
-                'onclick="showImageViewer(\'' + honey.gambar + '\', \'' + honey.nama
-                 + '\')"' +
-                'title="Lihat ukuran penuh">' +
                 '<i class="fas fa-expand"></i>' +
                 '</button>' +
                 '</div>' +
@@ -386,12 +385,20 @@
                 '</h5>' +
 
                 '<div class="detail-item mb-3">' +
-                '<h6 class="fw-bold mb-1">' +
-                '<i class="fas fa-jar text-secondary me-2"></i>' +
-                'Nama Produk' +
-                '</h6>' +
-                '<p class="mb-0">' + honey.nama + '</p>' +
+                    '<h6 class="fw-bold mb-1">' +
+                        '<i class="fas fa-jar text-secondary me-2"></i>' +
+                        'Nama Produk' +
+                    '</h6>' +
+                    '<p class="mb-0">' + honey.nama + '</p>' +
                 '</div>' +
+                '<div class="detail-item mb-3">' +
+                    '<h6 class="fw-bold mb-1">' +
+                        '<i class="fas fa-ruler text-secondary me-2"></i>' +
+                        'Ukuran' +
+                    '</h6>' +
+                    '<p class="mb-0">' + (honey.ukuran || 'Standard') + '</p>' +
+                '</div>' +
+
 
                 '<div class="detail-item mb-3">' +
                 '<h6 class="fw-bold mb-1">' +
@@ -477,36 +484,7 @@
             }
         }
 
-        // Show image viewer modal
-        function showImageViewer(imageSrc, imageTitle) {
-            console.log('Opening image viewer for:', imageTitle);
-
-            const modal = document.getElementById('imageViewerModal');
-            const modalImg = document.getElementById('imageViewerImg');
-            const modalLabel = document.getElementById('imageViewerModalLabel');
-
-            if (!modal || !modalImg || !modalLabel) {
-                console.error('Image viewer modal elements not found');
-                return;
-            }
-
-            modalImg.src = imageSrc;
-            modalImg.alt = imageTitle;
-            modalLabel.textContent = imageTitle;
-
-            try {
-                const imageModal = new bootstrap.Modal(modal, {
-                    backdrop: true,
-                    keyboard: true,
-                    focus: true
-                });
-
-                imageModal.show();
-            } catch (error) {
-                console.error('Error showing image viewer:', error);
-            }
-        }
-
+ 
         // Document ready
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Honey page loaded with', honeyData.length, 'products');
@@ -734,6 +712,27 @@
 @keyframes placeholderPulse {
     0%, 100% { opacity: 0.5; transform: scale(1); }
     50% { opacity: 1; transform: scale(1.05); }
+}
+.honey-size {
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.size-label {
+    font-weight: 600;
+    color: #666;
+    margin-right: 0.5rem;
+}
+
+.size-value {
+    color: #333;
+    font-weight: 500;
+}
+
+.feature-badge.size {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
 }
 
 /* ===== OVERLAY EFFECTS ===== */
