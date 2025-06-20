@@ -409,12 +409,6 @@
                 '<p class="mb-0 fw-bold ' + stockClass + '">' + stockStatus + '</p>' +
                 '</div>' +
 
-                '<div class="detail-item mb-3">' +
-                '<h6 class="fw-bold mb-1">' +
-                '<i class="fas fa-clock text-secondary me-2"></i>' +
-                'Ditambahkan' +
-                '</h6>' +
-                '</div>' +
 
                 '<div class="detail-item">' +
                 '<h6 class="fw-bold mb-1">' +
