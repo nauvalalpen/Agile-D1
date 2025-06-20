@@ -224,6 +224,88 @@
                                         </div>
                                     </div>
 
+                                    <!-- Add this section to the Security tab, after the password change form -->
+                                    <hr class="my-4">
+
+                                    <h6 class="mb-3">Connected Accounts</h6>
+
+                                    <div class="connected-accounts">
+                                        <div
+                                            class="account-item d-flex justify-content-between align-items-center p-3 border rounded mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="account-icon me-3">
+                                                    <i class="fab fa-google fa-2x text-danger"></i>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-1">Google Account</h6>
+                                                    @if ($user->isGoogleUser())
+                                                        <small class="text-success">
+                                                            <i class="fas fa-check-circle me-1"></i>Connected
+                                                        </small>
+                                                    @else
+                                                        <small class="text-muted">Not connected</small>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div>
+                                                @if ($user->isGoogleUser())
+                                                    <form method="POST" action="{{ route('auth.google.unlink') }}"
+                                                        class="d-inline">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm"
+                                                            onclick="return confirm('Are you sure you want to unlink your Google account? Make sure you have a password set.')">
+                                                            <i class="fas fa-unlink me-1"></i>Unlink
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                    <a href="{{ route('auth.google') }}"
+                                                        class="btn btn-outline-primary btn-sm">
+                                                        <i class="fas fa-link me-1"></i>Connect
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <!-- Facebook (Coming Soon) -->
+                                        <div
+                                            class="account-item d-flex justify-content-between align-items-center p-3 border rounded mb-3 opacity-50">
+                                            <div class="d-flex align-items-center">
+                                                <div class="account-icon me-3">
+                                                    <i class="fab fa-facebook fa-2x text-primary"></i>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-1">Facebook Account</h6>
+                                                    <small class="text-muted">Coming soon</small>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm" disabled>
+                                                    <i class="fas fa-clock me-1"></i>Soon
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <!-- Apple (Coming Soon) -->
+                                        <div
+                                            class="account-item d-flex justify-content-between align-items-center p-3 border rounded mb-3 opacity-50">
+                                            <div class="d-flex align-items-center">
+                                                <div class="account-icon me-3">
+                                                    <i class="fab fa-apple fa-2x text-dark"></i>
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-1">Apple Account</h6>
+                                                    <small class="text-muted">Coming soon</small>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm" disabled>
+                                                    <i class="fas fa-clock me-1"></i>Soon
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                     <div class="password-requirements mb-3">
                                         <small class="text-muted">Password must contain:</small>
                                         <ul class="small text-muted mb-0">
@@ -440,7 +522,31 @@
         </div>
     </div>
 
+    <!-- Add CSS for connected accounts -->
     <style>
+        .connected-accounts .account-item {
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .connected-accounts .account-item:hover:not(.opacity-50) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .account-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        w
+
         /* Profile Photo Styles */
         .profile-photo-wrapper {
             width: 120px;

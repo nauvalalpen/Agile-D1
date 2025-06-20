@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -19,7 +20,9 @@ class User extends Authenticatable
         'role',
         'verification_code',
         'email_verified_at',
-        'is_verified'
+        'is_verified',
+        'google_id',        // Add this
+        'avatar_url',       // Add this
     ];
 
     protected $hidden = [
@@ -37,15 +40,25 @@ class User extends Authenticatable
         ];
     }
 
+    // Update the getPhotoUrlAttribute method to include Google avatar
     public function getPhotoUrlAttribute()
     {
-        if ($this->photo) {
-            return asset('storage/' . $this->photo);
+        if ($this->avatar_url) {
+            return $this->avatar_url; // Google avatar
+        } elseif ($this->photo) {
+            return Storage::url($this->photo); // Local uploaded photo
         } else {
             return 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
         }
     }
 
+    // Add method to check if user registered via Google
+    public function isGoogleUser()
+    {
+        return !is_null($this->google_id);
+    }
+
+    // Keep all your existing methods...
     public function roles()
     {
         return $this->belongsToMany(Role::class);

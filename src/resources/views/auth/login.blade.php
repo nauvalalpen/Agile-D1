@@ -120,18 +120,32 @@
         <hr class="my-4">
         <p>or</p>
 
-        <div class="d-flex justify-content-center align-items-center mb-3 social-icons">
-            <a href="" class="social-btn google-btn mx-2" title="Sign in with Google">
-                <i class="fab fa-google fa-2x"></i>
-            </a>
-            <a href="#" class="social-btn facebook-btn mx-2" title="Sign in with Facebook"
-                onclick="showComingSoon('Facebook')">
-                <i class="fab fa-facebook fa-2x"></i>
-            </a>
-            <a href="#" class="social-btn apple-btn mx-2" title="Sign in with Apple"
-                onclick="showComingSoon('Apple')">
-                <i class="fab fa-apple fa-2x"></i>
-            </a>
+        <!-- Replace the social icons section with this cleaner approach -->
+        <div class="social-login-section mb-4">
+            <x-google-login-button text="Sign in with Google" class="w-100 mb-3" />
+
+            <!-- Other social login buttons (coming soon) -->
+            <div class="row">
+                <div class="col-6">
+                    <button type="button" class="btn btn-outline-secondary w-100" disabled
+                        onclick="showComingSoon('Facebook')">
+                        <i class="fab fa-facebook me-2"></i>Facebook
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-outline-secondary w-100" disabled
+                        onclick="showComingSoon('Apple')">
+                        <i class="fab fa-apple me-2"></i>Apple
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add divider -->
+        <div class="divider-container mb-4">
+            <div class="divider-line"></div>
+            <span class="divider-text">or continue with email</span>
+            <div class="divider-line"></div>
         </div>
 
         <!-- Add divider -->
@@ -147,6 +161,74 @@
     </div>
 
 </body>
+
+<style>
+    .social-login-section {
+        margin: 2rem 0;
+    }
+
+    .divider-container {
+        display: flex;
+        align-items: center;
+        margin: 1.5rem 0;
+    }
+
+    .divider-line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+    }
+
+    .divider-text {
+        padding: 0 1rem;
+        color: #666;
+        font-size: 0.875rem;
+        background: white;
+        white-space: nowrap;
+    }
+
+    .btn-outline-secondary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* Loading state for Google button */
+    .btn-google.loading {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    .btn-google.loading svg {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<script>
+    function showComingSoon(provider) {
+        alert(`${provider} login is coming soon! For now, please use Google or email login.`);
+    }
+
+    // Add loading state to Google button
+    document.addEventListener('DOMContentLoaded', function() {
+        const googleBtn = document.querySelector('.btn-google');
+        if (googleBtn) {
+            googleBtn.addEventListener('click', function() {
+                this.classList.add('loading');
+                this.innerHTML = this.innerHTML.replace('Continue with Google', 'Connecting...');
+            });
+        }
+    });
+</script>
 
 <style>
     .social-icons {

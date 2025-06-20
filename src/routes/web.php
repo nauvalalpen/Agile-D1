@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\UserLoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FacilityController as AdminFacilityController;
 use App\Http\Controllers\TouristController;
@@ -218,6 +219,10 @@ Route::prefix('admin')->name('admin.')->middleware(
 
     // Dashboard Routes
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+    // OAuth Management routes
+    Route::get('oauth', [App\Http\Controllers\Admin\OAuthController::class, 'index'])->name('oauth.index');
+    Route::get('oauth/users', [App\Http\Controllers\Admin\OAuthController::class, 'users'])->name('oauth.users');
 });
 
 // User Order History Routes - Unified
@@ -263,6 +268,20 @@ Route::get('/email/verification-notice', function () {
 })->name('verification.notice');
 Route::post('/email/verification-notification', [RegisterController::class, 'resendVerification'])
     ->name('verification.resend');
+
+// Google OAuth routes with error handling
+Route::middleware(['socialite.errors'])->group(function () {
+    Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+});
+
+// Unlink Google account (for authenticated users)
+Route::middleware(['auth'])->group(function () {
+    Route::post('auth/google/unlink', [GoogleController::class, 'unlinkGoogle'])->name('auth.google.unlink');
+});
+
+
+
 // Route::get('/weather', function () {
 //     return view('weather');
 // });

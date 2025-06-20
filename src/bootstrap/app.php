@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
+            'socialite.errors' => \App\Http\Middleware\HandleSocialiteErrors::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

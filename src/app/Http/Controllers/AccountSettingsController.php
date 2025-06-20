@@ -22,6 +22,7 @@ class AccountSettingsController extends Controller
             'member_since' => $user->created_at->format('F Y'),
             'email_verified' => $user->hasVerifiedEmail(),
             'last_login' => $user->updated_at->diffForHumans(),
+            'login_method' => $user->isGoogleUser() ? 'Google' : 'Email', // Add this
         ];
 
         return view('settings.index', compact('user', 'stats'));
@@ -43,10 +44,22 @@ class AccountSettingsController extends Controller
                 ->with('error', 'Profile update failed. Please check your inputs.');
         }
 
-        $user->update($request->only(['name', 'email']));
+        // If email is being changed and user is not a Google user, mark as unverified
+        $updateData = $request->only(['name', 'email']);
+        
+        if ($request->email !== $user->email && !$user->isGoogleUser()) {
+            $updateData['email_verified_at'] = null;
+            $updateData['is_verified'] = false;
+        }
 
-        return redirect()->back()
-            ->with('success', 'Profile updated successfully!');
+        $user->update($updateData);
+
+        $message = 'Profile updated successfully!';
+        if ($request->email !== $user->getOriginal('email') && !$user->isGoogleUser()) {
+            $message .= ' Please verify your new email address.';
+        }
+
+        return redirect()->back()->with('success', $message);
     }
 
     public function updatePhoto(Request $request)
@@ -64,7 +77,7 @@ class AccountSettingsController extends Controller
 
         $user = Auth::user();
 
-        // Delete old photo if exists
+        // Delete old photo if exists (but keep Google avatar)
         if ($user->photo && Storage::disk('public')->exists($user->photo)) {
             Storage::disk('public')->delete($user->photo);
         }
@@ -72,7 +85,11 @@ class AccountSettingsController extends Controller
         // Store new photo
         $photoPath = $request->file('photo')->store('photos', 'public');
         
-        $user->update(['photo' => $photoPath]);
+        // Clear Google avatar URL when user uploads custom photo
+        $user->update([
+            'photo' => $photoPath,
+            'avatar_url' => null, // Clear Google avatar
+        ]);
 
         return response()->json([
             'success' => true,
@@ -83,10 +100,19 @@ class AccountSettingsController extends Controller
 
     public function updatePassword(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'current_password' => ['required', 'current_password'],
+        $user = Auth::user();
+
+        // Google users might not have a password set
+        $rules = [
             'password' => ['required', 'confirmed', Password::defaults()],
-        ]);
+        ];
+
+        // Only require current password if user has one set
+        if ($user->password && !Hash::check('', $user->password)) {
+            $rules['current_password'] = ['required', 'current_password'];
+        }
+
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -94,14 +120,20 @@ class AccountSettingsController extends Controller
                 ->with('error', 'Password update failed. Please check your inputs.');
         }
 
-        Auth::user()->update([
+        $user->update([
             'password' => Hash::make($request->password)
         ]);
 
-        return redirect()->back()
-            ->with('success', 'Password updated successfully!');
+        $message = 'Password updated successfully!';
+        if ($user->isGoogleUser()) {
+            $message .= ' You can now login with either Google or your password.';
+        }
+
+        return redirect()->back()->with('success', $message);
     }
 
+    // ... keep all your other existing methods (updateNotifications, deleteAccount, etc.)
+    
     public function updateNotifications(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -116,9 +148,6 @@ class AccountSettingsController extends Controller
                 ->with('error', 'Notification settings update failed.');
         }
 
-        // You can add notification preferences to your User model if needed
-        // For now, we'll store in session or create a separate preferences table
-
         session([
             'email_notifications' => $request->boolean('email_notifications'),
             'sms_notifications' => $request->boolean('sms_notifications'),
@@ -131,19 +160,25 @@ class AccountSettingsController extends Controller
 
     public function deleteAccount(Request $request)
     {
+        $user = Auth::user();
+        
         $validator = Validator::make($request->all(), [
-            'password' => ['required', 'current_password'],
             'confirmation' => ['required', 'in:DELETE'],
         ]);
+
+        // Only require password if user has one (Google users might not)
+        if ($user->password && !Hash::check('', $user->password)) {
+            $validator->addRules([
+                'password' => ['required', 'current_password'],
+            ]);
+        }
 
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)
-                ->with('error', 'Account deletion failed. Please verify your password and confirmation.');
+                ->with('error', 'Account deletion failed. Please verify your inputs.');
         }
 
-        $user = Auth::user();
-        
         // Delete user photo if exists
         if ($user->photo && Storage::disk('public')->exists($user->photo)) {
             Storage::disk('public')->delete($user->photo);
@@ -152,7 +187,7 @@ class AccountSettingsController extends Controller
         // Log out the user
         Auth::logout();
         
-        // Soft delete the user account (using your existing SoftDeletes trait)
+        // Soft delete the user account
         $user->delete();
 
         return redirect()->route('login')
@@ -166,6 +201,11 @@ class AccountSettingsController extends Controller
         if ($user->hasVerifiedEmail()) {
             return redirect()->back()
                 ->with('info', 'Your email is already verified.');
+        }
+
+        if ($user->isGoogleUser()) {
+            return redirect()->back()
+                ->with('info', 'Google users are automatically verified.');
         }
 
         $code = $user->generateVerificationCode();
@@ -190,6 +230,11 @@ class AccountSettingsController extends Controller
         }
 
         $user = Auth::user();
+
+        if ($user->isGoogleUser()) {
+            return redirect()->back()
+                ->with('info', 'Google users are automatically verified.');
+        }
 
         if ($user->verification_code !== $request->verification_code) {
             return redirect()->back()
