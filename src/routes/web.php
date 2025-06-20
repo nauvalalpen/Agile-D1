@@ -27,6 +27,7 @@ Route::get('/login', function () {
     return view('welcome');
 });
 
+
 // Admin routes
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest')->group(function () {
@@ -237,6 +238,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::delete('/produkUMKM/{id}/force-delete', [App\Http\Controllers\ProdukUMKMController::class, 'forceDelete'])->name('produkUMKM.force-delete');
 });
 
+// Email Verification Routes (must be before other auth routes)
+Route::get('/email/verify', [RegisterController::class, 'showVerificationForm'])
+    ->name('verification.show');
+Route::post('/email/verify', [RegisterController::class, 'verify'])
+    ->name('verification.verify');
+Route::get('/email/verification-notice', function () {
+    return view('auth.verification-notice');
+})->name('verification.notice');
+Route::post('/email/verification-notification', [RegisterController::class, 'resendVerification'])
+    ->name('verification.resend');
 // Route::get('/weather', function () {
 //     return view('weather');
 // });
