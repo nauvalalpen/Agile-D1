@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Mail\VerificationMail;
+// use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -25,7 +27,6 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'string', 'in:user,admin']
         ]);
 
         // Generate 6-digit verification code
@@ -35,13 +36,15 @@ class RegisterController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role' => $validated['role'],
+            'role' => 'user',
             'verification_code' => $verificationCode,
             'is_verified' => false
         ]);
 
         // dd($verificationCode);
         // Send verification email
+        Auth::login($user, $request->boolean('remember'));
+        $request->session()->regenerate();
         try {
             Mail::to($user->email)->send(new VerificationMail($user, $verificationCode));
             
@@ -65,11 +68,12 @@ class RegisterController extends Controller
     public function verify(Request $request)
     {
         $request->validate([
-            'email' => ['required', 'email'],
+            // Auth::user()->email,
+            // 'email' => ['required', 'email'],
             'verification_code' => ['required', 'string', 'size:6']
         ]);
 
-        $user = User::where('email', $request->email)
+        $user = User::where('email', Auth::user()->email)
                    ->where('verification_code', $request->verification_code)
                    ->where('is_verified', false)
                    ->first();
@@ -85,31 +89,30 @@ class RegisterController extends Controller
 
         $user->markEmailAsVerified();
 
-        return redirect()->route('login')
-            ->with('success', 'Email verified successfully! You can now login.');
+        if ($user->role === 'admin') {
+            return redirect()->intended('/admin/dashboard');
+        } else {
+            return redirect()->intended('/');
+        }
     }
 
     public function resendVerification(Request $request)
     {
-        $request->validate([
-            'email' => ['required', 'email']
-        ]);
-
-        $user = User::where('email', $request->email)
-                   ->where('is_verified', false)
-                   ->first();
+        // dd("test");
+        
+        $user = Auth::user();
 
         if (!$user) {
             return back()->withErrors(['email' => 'User not found or already verified.']);
         }
 
+        $user = User::where('email', $user->email)->first();
         // Generate new verification code
         $verificationCode = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
         $user->update(['verification_code' => $verificationCode]);
 
         try {
             // composer require psy/psysh --dev
-            pry();
             Mail::to($user->email)->send(new VerificationMail($user, $verificationCode));
             return back()->with('success', 'Verification code resent successfully!');
         } catch (\Exception $e) {

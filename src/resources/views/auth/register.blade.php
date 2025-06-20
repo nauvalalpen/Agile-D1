@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body {
-            background-image: url('{{ asset("images/bg.png") }}');
+            background-image: url('{{ asset('images/bg.png') }}');
             background-size: cover;
             background-position: center;
             min-height: 100vh;
@@ -49,7 +50,7 @@
             font-size: 1.05rem;
         }
 
- .btn-custom {
+        .btn-custom {
             border-radius: 25px;
             padding: 0.8rem;
             font-size: 1.1rem;
@@ -83,6 +84,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="bg-overlay"></div>
@@ -95,35 +97,35 @@
             @csrf
 
             <div class="mb-3">
-                <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                    name="name" placeholder="Name" value="{{ old('name') }}" required autofocus>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
+                    placeholder="Name" value="{{ old('name') }}" required autofocus>
                 @error('name')
                     <span class="invalid-feedback d-block">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                    name="email" placeholder="E-mail" value="{{ old('email') }}" required>
+                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
+                    placeholder="E-mail" value="{{ old('email') }}" required>
                 @error('email')
                     <span class="invalid-feedback d-block">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <input type="password" class="form-control @error('password') is-invalid @enderror" 
-                    name="password" placeholder="Password" required>
+                <input type="password" class="form-control @error('password') is-invalid @enderror" name="password"
+                    placeholder="Password" required>
                 @error('password')
                     <span class="invalid-feedback d-block">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <input type="password" class="form-control" 
-                    name="password_confirmation" placeholder="Confirm Password" required>
+                <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password"
+                    required>
             </div>
 
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <select class="form-select @error('role') is-invalid @enderror" name="role" required>
                     <option value="" disabled selected>Select Role</option>
                     <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
@@ -132,7 +134,7 @@
                 @error('role')
                     <span class="invalid-feedback d-block">{{ $message }}</span>
                 @enderror
-            </div>
+            </div> --}}
 
             <div class="d-grid">
                 <button type="submit" class="btn btn-custom">CREATE ACCOUNT</button>
@@ -143,9 +145,9 @@
         <p>or</p>
 
         <div class="d-flex justify-content-center align-items-center mb-3 social-icons">
-        <i class="fab fa-facebook fa-2x mx-2"></i>
-        <i class="fas fa-envelope fa-2x mx-2"></i>
-        <i class="fab fa-apple fa-2x mx-2"></i>
+            <i class="fab fa-facebook fa-2x mx-2"></i>
+            <i class="fas fa-envelope fa-2x mx-2"></i>
+            <i class="fab fa-apple fa-2x mx-2"></i>
 
         </div>
 
@@ -155,4 +157,5 @@
     </div>
 
 </body>
+
 </html>

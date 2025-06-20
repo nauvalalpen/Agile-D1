@@ -43,15 +43,14 @@ class UserLoginController extends Controller
             ])->onlyInput('email');
         }
 
+        Auth::login($user, $request->boolean('remember'));
+        $request->session()->regenerate();
         // Check if email is verified
         if (!$user->hasVerifiedEmail()) {
             return redirect()->route('verification.notice')
                 ->with('error', 'You must verify your email address before you can login.')
                 ->with('email', $user->email);
         }
-
-        Auth::login($user, $request->boolean('remember'));
-        $request->session()->regenerate();
 
         // Redirect based on user role
         if ($user->role === 'admin') {

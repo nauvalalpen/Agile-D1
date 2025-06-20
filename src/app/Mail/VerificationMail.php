@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
 class VerificationMail extends Mailable
 {
@@ -25,7 +26,11 @@ class VerificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Email Verification - ' . config('app.name'),
+            subject: 'Email Verification - oneVision',
+            from: new Address(
+                address: 'thomascharicco@gmail.com',
+                name: 'oneVision'
+            ),
         );
     }
 

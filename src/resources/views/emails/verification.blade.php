@@ -52,7 +52,7 @@
 
 <body>
     <div class="header">
-        <h1>Welcome to {{ config('app.name') }}!</h1>
+        <h1>Welcome to oneVision!</h1>
     </div>
 
     <div class="content">
