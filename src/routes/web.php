@@ -109,6 +109,21 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::put('/orders/{id}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
 });
 
+// Add these routes to your existing web.php file
+
+Route::middleware(['auth'])->group(function () {
+    // Account Settings routes
+    Route::get('/settings', [App\Http\Controllers\AccountSettingsController::class, 'index'])->name('settings.index');
+    Route::put('/settings/profile', [App\Http\Controllers\AccountSettingsController::class, 'updateProfile'])->name('settings.profile.update');
+    Route::post('/settings/photo', [App\Http\Controllers\AccountSettingsController::class, 'updatePhoto'])->name('settings.photo.update');
+    Route::put('/settings/password', [App\Http\Controllers\AccountSettingsController::class, 'updatePassword'])->name('settings.password.update');
+    Route::put('/settings/notifications', [App\Http\Controllers\AccountSettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
+    Route::delete('/settings/account', [App\Http\Controllers\AccountSettingsController::class, 'deleteAccount'])->name('settings.account.delete');
+    Route::post('/settings/resend-verification', [App\Http\Controllers\AccountSettingsController::class, 'resendVerification'])->name('settings.resend.verification');
+    Route::post('/settings/verify-email', [App\Http\Controllers\AccountSettingsController::class, 'verifyEmail'])->name('settings.verify.email');
+});
+
+
 // Public routes
 Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities.index');
 

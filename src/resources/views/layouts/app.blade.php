@@ -986,7 +986,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="{{ route('settings.index') }}">
                                             <i class="fas fa-cog"></i>Settings
                                         </a>
                                     </li>
@@ -1170,7 +1170,7 @@
                     // Close all open dropdowns
                     document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
                         const dropdown = bootstrap.Dropdown.getInstance(menu
-                        .previousElementSibling);
+                            .previousElementSibling);
                         if (dropdown) dropdown.hide();
                     });
                 }
