@@ -19,11 +19,79 @@ use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProdukUMKMController;
+use App\Http\Controllers\SettingsController;
 
 Route::get('/index', function () {
     return view('index');
 });
 
+// Authentication Routes
+// Auth::routes(['verify' => true]);
+
+// Google OAuth Routes
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+
+// Settings Routes (Protected)
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
+    Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.password.update');
+    Route::post('/settings/notifications', [SettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
+    Route::post('/settings/privacy', [SettingsController::class, 'updatePrivacy'])->name('settings.privacy.update');
+    Route::post('/settings/2fa/enable', [SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
+    Route::post('/settings/2fa/disable', [SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
+    Route::get('/settings/2fa/setup', [SettingsController::class, 'setup2FA'])->name('settings.2fa.setup');
+    Route::get('/settings/export', [SettingsController::class, 'exportData'])->name('settings.export');
+    Route::delete('/settings/account', [SettingsController::class, 'deleteAccount'])->name('settings.account.delete');
+});
+
+// Your existing routes...
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/minimap', function () {
+        return view('minimap.index');
+    })->name('minimap.index');
+    
+    Route::get('/weather', function () {
+        return view('weather.index');
+    });
+    
+    Route::get('/facilities', function () {
+        return view('facilities.index');
+    });
+    
+    Route::get('/gallery', function () {
+        return view('gallery.index');
+    });
+    
+    Route::get('/beritas', function () {
+        return view('beritas.index');
+    });
+    
+    Route::get('/contact', function () {
+        return view('contact.index');
+    });
+    
+    Route::get('/tourguides', function () {
+        return view('tourguides.index');
+    });
+    
+    Route::get('/madu', function () {
+        return view('madu.index');
+    })->name('madu.index');
+    
+    Route::get('/produk-umkm', function () {
+        return view('produk-umkm.index');
+    })->name('produkUMKM.index');
+    
+    Route::get('/order-history', function () {
+        return view('order-history.index');
+    })->name('order-history.index');
+    
+    Route::get('/order-history/{id}/{type}', function ($id, $type) {
+        return view('order-history.show', compact('id', 'type'));
+    })->name('order-history.show');
+});
 Route::get('/login', function () {
     return view('welcome');
 });
@@ -278,6 +346,44 @@ Route::middleware(['socialite.errors'])->group(function () {
 // Unlink Google account (for authenticated users)
 Route::middleware(['auth'])->group(function () {
     Route::post('auth/google/unlink', [GoogleController::class, 'unlinkGoogle'])->name('auth.google.unlink');
+});
+
+// Password Confirmation Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/confirm-password', [ConfirmPasswordController::class, 'show'])->name('password.confirm');
+    Route::post('/confirm-password', [ConfirmPasswordController::class, 'confirm']);
+});
+
+// Update Settings Routes to use the correct middleware alias
+Route::middleware(['auth', 'account.ownership'])->group(function () {
+    // Profile Settings
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
+    Route::post('/settings/photo', [SettingsController::class, 'updatePhoto'])->name('settings.photo.update');
+    Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.password.update');
+    
+    // Email Verification
+    Route::post('/settings/email/resend', [SettingsController::class, 'resendEmailVerification'])->name('settings.email.resend');
+    Route::post('/settings/email/verify', [SettingsController::class, 'verifyEmail'])->name('settings.email.verify');
+    
+    // Two-Factor Authentication
+    Route::post('/settings/2fa/generate', [SettingsController::class, 'generate2FA'])->name('settings.2fa.generate');
+    Route::post('/settings/2fa/enable', [SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
+    Route::post('/settings/2fa/disable', [SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
+    
+    // Preferences
+    Route::post('/settings/notifications', [SettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
+    Route::post('/settings/privacy', [SettingsController::class, 'updatePrivacy'])->name('settings.privacy.update');
+    
+    // Data Management
+    Route::post('/settings/data/export', [SettingsController::class, 'exportData'])->name('settings.data.export');
+    // Add this route to your settings group
+    Route::get('/settings/data/stats', [SettingsController::class, 'getDataStats'])->name('settings.data.stats');
+
+    Route::delete('/settings/account', [SettingsController::class, 'deleteAccount'])->name('settings.account.delete');
+    
+    // Social Account Management
+    Route::post('/auth/google/unlink', [SettingsController::class, 'unlinkGoogle'])->name('auth.google.unlink');
 });
 
 

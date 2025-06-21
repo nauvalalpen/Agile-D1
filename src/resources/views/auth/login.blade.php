@@ -1,343 +1,276 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Login' }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+@section('title', 'Login - OneVision')
 
-    <style>
-        body {
-            background-image: url('{{ asset('images/bg.png') }}');
-            background-size: cover;
-            background-position: center;
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
+@section('content')
+    <div class="min-vh-100 d-flex align-items-center justify-content-center py-5"
+        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+                    <div class="card shadow-lg border-0" style="border-radius: 1rem;">
+                        <div class="card-body p-5">
+                            <!-- Logo/Brand -->
+                            <div class="text-center mb-4">
+                                <div class="mb-3">
+                                    <i class="fas fa-eye text-primary" style="font-size: 3rem;"></i>
+                                </div>
+                                <h2 class="fw-bold text-dark mb-2">Welcome Back</h2>
+                                <p class="text-muted">Sign in to your OneVision account</p>
+                            </div>
 
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: -1;
-        }
+                            <!-- Social Login Buttons -->
+                            <div class="d-flex justify-content-center align-items-center mb-4 gap-3">
+                                <a href="{{ route('auth.google') }}"
+                                    class="btn btn-outline-danger d-flex align-items-center justify-content-center"
+                                    style="width: 50px; height: 50px; border-radius: 50%;" title="Login with Google">
+                                    <i class="fab fa-google fa-lg"></i>
+                                </a>
+                                <button type="button"
+                                    class="btn btn-outline-primary d-flex align-items-center justify-content-center"
+                                    style="width: 50px; height: 50px; border-radius: 50%;" title="Email Login" disabled>
+                                    <i class="fas fa-envelope fa-lg"></i>
+                                </button>
+                                <button type="button"
+                                    class="btn btn-outline-dark d-flex align-items-center justify-content-center"
+                                    style="width: 50px; height: 50px; border-radius: 50%;" title="Coming Soon" disabled>
+                                    <i class="fab fa-apple fa-lg"></i>
+                                </button>
+                            </div>
 
-        .auth-card {
-            background-color: #ffffff;
-            border-radius: 20px;
-            padding: 3rem 2.5rem;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
-            max-width: 500px;
-            width: 100%;
-        }
+                            <div class="text-center mb-4">
+                                <small class="text-muted">Or continue with email</small>
+                                <hr class="my-3">
+                            </div>
 
-        .auth-card h4 {
-            font-weight: bold;
-        }
+                            <!-- Login Form -->
+                            <form method="POST" action="{{ route('login') }}" id="loginForm">
+                                @csrf
 
-        .form-control {
-            border-radius: 25px;
-            padding: 0.8rem 1rem;
-            font-size: 1.1rem;
-        }
+                                <!-- Email Field -->
+                                <div class="mb-3">
+                                    <label for="email" class="form-label fw-medium">{{ __('Email Address') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0">
+                                            <i class="fas fa-envelope text-muted"></i>
+                                        </span>
+                                        <input id="email" type="email"
+                                            class="form-control border-start-0 @error('email') is-invalid @enderror"
+                                            name="email" value="{{ old('email') }}" required autocomplete="email"
+                                            autofocus placeholder="Enter your email">
+                                    </div>
+                                    @error('email')
+                                        <div class="invalid-feedback d-block">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                    @enderror
+                                </div>
 
-        .btn-custom {
-            border-radius: 25px;
-            padding: 0.8rem;
-            font-size: 1.1rem;
-            background-color: black;
-            color: white;
-        }
+                                <!-- Password Field -->
+                                <div class="mb-3">
+                                    <label for="password" class="form-label fw-medium">{{ __('Password') }}</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0">
+                                            <i class="fas fa-lock text-muted"></i>
+                                        </span>
+                                        <input id="password" type="password"
+                                            class="form-control border-start-0 border-end-0 @error('password') is-invalid @enderror"
+                                            name="password" required autocomplete="current-password"
+                                            placeholder="Enter your password">
+                                        <button class="btn btn-outline-secondary border-start-0" type="button"
+                                            id="togglePassword">
+                                            <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                                        </button>
+                                    </div>
+                                    @error('password')
+                                        <div class="invalid-feedback d-block">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                    @enderror
+                                </div>
 
-        .btn-custom:hover {
-            background-color: #a79f9f;
-        }
+                                <!-- Remember Me & Forgot Password -->
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                            {{ old('remember') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="remember">
+                                            {{ __('Remember Me') }}
+                                        </label>
+                                    </div>
+                                    @if (Route::has('password.request'))
+                                        <a class="text-decoration-none" href="{{ route('password.request') }}">
+                                            {{ __('Forgot Password?') }}
+                                        </a>
+                                    @endif
+                                </div>
 
-        .social-icons img {
-            width: 45px;
-            height: 45px;
-            margin: 0 10px;
-            cursor: pointer;
-        }
+                                <!-- Submit Button -->
+                                <div class="d-grid mb-3">
+                                    <button type="submit" class="btn btn-primary btn-lg fw-medium" id="loginBtn">
+                                        <i class="fas fa-sign-in-alt me-2"></i>
+                                        {{ __('Sign In') }}
+                                    </button>
+                                </div>
+                            </form>
 
-        .login-text {
-            font-size: 0.95rem;
-            text-align: center;
-            margin-top: 1.2rem;
-        }
+                            <!-- Register Link -->
+                            <div class="text-center">
+                                <p class="mb-0">Don't have an account?
+                                    <a href="{{ route('register') }}" class="text-decoration-none fw-medium">
+                                        Create one here
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
-        .login-text a {
-            text-decoration: none;
-        }
-
-        hr {
-            opacity: 0.3;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="bg-overlay"></div>
-
-    <div class="auth-card text-center">
-        <h4>Welcome back!</h4>
-        <p class="text-muted">Please log in to your account</p>
-
-        <form method="POST" action="{{ route('login.submit') }}">
-            @csrf
-
-            <div class="mb-3">
-                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                    placeholder="E-mail" value="{{ old('email') }}" required autofocus>
-                @error('email')
-                    <span class="invalid-feedback d-block">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                    placeholder="Password" required>
-                @error('password')
-                    <span class="invalid-feedback d-block">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="d-grid">
-                <button type="submit" class="btn btn-custom">LOG IN</button>
-            </div>
-        </form>
-
-        <hr class="my-4">
-        <p>or</p>
-
-        <!-- Replace the social icons section with this cleaner approach -->
-        <div class="social-login-section mb-4">
-            <x-google-login-button text="Sign in with Google" class="w-100 mb-3" />
-
-            <!-- Other social login buttons (coming soon) -->
-            <div class="row">
-                <div class="col-6">
-                    <button type="button" class="btn btn-outline-secondary w-100" disabled
-                        onclick="showComingSoon('Facebook')">
-                        <i class="fab fa-facebook me-2"></i>Facebook
-                    </button>
-                </div>
-                <div class="col-6">
-                    <button type="button" class="btn btn-outline-secondary w-100" disabled
-                        onclick="showComingSoon('Apple')">
-                        <i class="fab fa-apple me-2"></i>Apple
-                    </button>
+                    <!-- Additional Info -->
+                    <div class="text-center mt-4">
+                        <small class="text-white-50">
+                            By signing in, you agree to our
+                            <a href="#" class="text-white">Terms of Service</a> and
+                            <a href="#" class="text-white">Privacy Policy</a>
+                        </small>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Add divider -->
-        <div class="divider-container mb-4">
-            <div class="divider-line"></div>
-            <span class="divider-text">or continue with email</span>
-            <div class="divider-line"></div>
-        </div>
-
-        <!-- Add divider -->
-        <div class="divider-container mb-3">
-            <div class="divider-line"></div>
-            <span class="divider-text">or continue with email</span>
-            <div class="divider-line"></div>
-        </div>
-
-        <div class="login-text">
-            New here? <a href="{{ route('register') }}">Create your account</a>
         </div>
     </div>
 
-</body>
-
-<style>
-    .social-login-section {
-        margin: 2rem 0;
-    }
-
-    .divider-container {
-        display: flex;
-        align-items: center;
-        margin: 1.5rem 0;
-    }
-
-    .divider-line {
-        flex: 1;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
-    }
-
-    .divider-text {
-        padding: 0 1rem;
-        color: #666;
-        font-size: 0.875rem;
-        background: white;
-        white-space: nowrap;
-    }
-
-    .btn-outline-secondary:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    /* Loading state for Google button */
-    .btn-google.loading {
-        pointer-events: none;
-        opacity: 0.7;
-    }
-
-    .btn-google.loading svg {
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
+    <style>
+        .card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
         }
 
-        100% {
-            transform: rotate(360deg);
+        .input-group-text {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
         }
-    }
-</style>
 
-<script>
-    function showComingSoon(provider) {
-        alert(`${provider} login is coming soon! For now, please use Google or email login.`);
-    }
+        .form-control {
+            border: 1px solid #dee2e6;
+            padding: 0.75rem 1rem;
+        }
 
-    // Add loading state to Google button
-    document.addEventListener('DOMContentLoaded', function() {
-        const googleBtn = document.querySelector('.btn-google');
-        if (googleBtn) {
-            googleBtn.addEventListener('click', function() {
-                this.classList.add('loading');
-                this.innerHTML = this.innerHTML.replace('Continue with Google', 'Connecting...');
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+            border: none;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0b5ed7, #0a58ca);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+
+        .btn-outline-primary:hover:not(:disabled) {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+        }
+
+        .btn-outline-dark:hover:not(:disabled) {
+            background-color: #212529;
+            border-color: #212529;
+            color: white;
+        }
+
+        .social-login-btn {
+            transition: all 0.3s ease;
+        }
+
+        .social-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 576px) {
+            .card-body {
+                padding: 2rem !important;
+            }
+
+            .social-login-btn {
+                width: 45px !important;
+                height: 45px !important;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle password visibility
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('togglePasswordIcon');
+
+            if (togglePassword && passwordInput && toggleIcon) {
+                togglePassword.addEventListener('click', function() {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+
+                    if (type === 'text') {
+                        toggleIcon.classList.remove('fa-eye');
+                        toggleIcon.classList.add('fa-eye-slash');
+                    } else {
+                        toggleIcon.classList.remove('fa-eye-slash');
+                        toggleIcon.classList.add('fa-eye');
+                    }
+                });
+            }
+
+            // Form submission handling
+            const loginForm = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+
+            if (loginForm && loginBtn) {
+                loginForm.addEventListener('submit', function() {
+                    const originalText = loginBtn.innerHTML;
+                    loginBtn.innerHTML =
+                        '<span class="spinner-border spinner-border-sm me-2"></span>Signing In...';
+                    loginBtn.disabled = true;
+
+                    // Re-enable button after 10 seconds as fallback
+                    setTimeout(() => {
+                        loginBtn.innerHTML = originalText;
+                        loginBtn.disabled = false;
+                    }, 10000);
+                });
+            }
+
+            // Auto-focus on email field
+            const emailInput = document.getElementById('email');
+            if (emailInput && !emailInput.value) {
+                emailInput.focus();
+            }
+
+            // Add loading state to social login buttons
+            document.querySelectorAll('a[href*="auth/google"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const originalHTML = this.innerHTML;
+                    this.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+                    this.style.pointerEvents = 'none';
+
+                    // Fallback to restore button
+                    setTimeout(() => {
+                        this.innerHTML = originalHTML;
+                        this.style.pointerEvents = 'auto';
+                    }, 5000);
+                });
             });
-        }
-    });
-</script>
-
-<style>
-    .social-icons {
-        gap: 1rem;
-    }
-
-    .social-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .google-btn {
-        background: linear-gradient(135deg, #4285f4, #34a853);
-        color: white;
-    }
-
-    .google-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
-        color: white;
-    }
-
-    .facebook-btn {
-        background: linear-gradient(135deg, #1877f2, #42a5f5);
-        color: white;
-    }
-
-    .facebook-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
-        color: white;
-    }
-
-    .apple-btn {
-        background: linear-gradient(135deg, #000000, #333333);
-        color: white;
-    }
-
-    .apple-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        color: white;
-    }
-
-    .divider-container {
-        display: flex;
-        align-items: center;
-        margin: 1.5rem 0;
-    }
-
-    .divider-line {
-        flex: 1;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
-    }
-
-    .divider-text {
-        padding: 0 1rem;
-        color: #666;
-        font-size: 0.875rem;
-        background: white;
-    }
-
-    /* Loading state for Google button */
-    .social-btn.loading {
-        pointer-events: none;
-        opacity: 0.7;
-    }
-
-    .social-btn.loading i {
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-</style>
-
-<!-- Add JavaScript for social login -->
-<script>
-    function showComingSoon(provider) {
-        alert(`${provider} login is coming soon! For now, please use Google or email login.`);
-    }
-
-    // Add loading state to Google button
-    document.addEventListener('DOMContentLoaded', function() {
-        const googleBtn = document.querySelector('.google-btn');
-        if (googleBtn) {
-            googleBtn.addEventListener('click', function() {
-                this.classList.add('loading');
-                const icon = this.querySelector('i');
-                icon.classList.remove('fa-google');
-                icon.classList.add('fa-spinner');
-            });
-        }
-    });
-</script>
-
-</html>
+        });
+    </script>
+@endsection

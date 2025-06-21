@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Mail\GoogleLoginNotification;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
-use Exception;
 use Illuminate\Support\Str;
 
 class GoogleController extends Controller
@@ -19,7 +18,12 @@ class GoogleController extends Controller
      */
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        try {
+            return Socialite::driver('google')->redirect();
+        } catch (\Exception $e) {
+            Log::error('Google OAuth Redirect Error: ' . $e->getMessage());
+            return redirect('/login')->with('error', 'Unable to connect to Google. Please try again.');
+        }
     }
 
     /**
@@ -30,105 +34,48 @@ class GoogleController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
             
-            // Check if user already exists with this Google ID
-            $existingUser = User::where('google_id', $googleUser->id)->first();
+            // Check if user already exists
+            $existingUser = User::where('email', $googleUser->getEmail())->first();
             
             if ($existingUser) {
-                // Update user info from Google
+                // Update user info if needed
                 $existingUser->update([
-                    'name' => $googleUser->name,
-                    'avatar_url' => $googleUser->avatar,
-                    'email_verified_at' => now(),
+                    'name' => $googleUser->getName(),
+                    'google_id' => $googleUser->getId(),
+                    'avatar' => $googleUser->getAvatar(),
+                    'email_verified_at' => $existingUser->email_verified_at ?? now(),
                     'is_verified' => true,
+                    'last_login_at' => now(),
                 ]);
                 
                 Auth::login($existingUser);
                 
-                // Send login notification
-                try {
-                    Mail::to($existingUser->email)->send(new GoogleLoginNotification($existingUser, false));
-                } catch (Exception $e) {
-                    \Log::warning('Failed to send Google login notification: ' . $e->getMessage());
-                }
-                
                 return redirect()->intended('/')->with('success', 'Welcome back, ' . $existingUser->name . '!');
-            }
-            
-            // Check if user exists with same email but no Google ID
-            $existingEmailUser = User::where('email', $googleUser->email)->first();
-            
-            if ($existingEmailUser) {
-                // Link Google account to existing user
-                $existingEmailUser->update([
-                    'google_id' => $googleUser->id,
-                    'avatar_url' => $googleUser->avatar,
+            } else {
+                // Create new user
+                $newUser = User::create([
+                    'name' => $googleUser->getName(),
+                    'email' => $googleUser->getEmail(),
+                    'google_id' => $googleUser->getId(),
+                    'avatar' => $googleUser->getAvatar(),
+                    'password' => Hash::make(Str::random(24)), // Random password
                     'email_verified_at' => now(),
                     'is_verified' => true,
+                    'role' => 'user',
+                    'last_login_at' => now(),
                 ]);
                 
-                Auth::login($existingEmailUser);
+                Auth::login($newUser);
                 
-                // Send account linking notification
-                try {
-                    Mail::to($existingEmailUser->email)->send(new GoogleLoginNotification($existingEmailUser, false));
-                } catch (Exception $e) {
-                    \Log::warning('Failed to send Google linking notification: ' . $e->getMessage());
-                }
-                
-                return redirect()->intended('/')->with('success', 'Google account linked successfully! You can now login with either method.');
+                return redirect('/')->with('success', 'Welcome to OneVision, ' . $newUser->name . '! Your account has been created successfully.');
             }
             
-            // Create new user
-            $newUser = User::create([
-                'name' => $googleUser->name,
-                'email' => $googleUser->email,
-                'google_id' => $googleUser->id,
-                'avatar_url' => $googleUser->avatar,
-                'password' => Hash::make(Str::random(24)), // Random password for Google users
-                'role' => 'user',
-                'email_verified_at' => now(),
-                'is_verified' => true,
-            ]);
-            
-            Auth::login($newUser);
-            
-            // Send welcome email
-            try {
-                Mail::to($newUser->email)->send(new GoogleLoginNotification($newUser, true));
-            } catch (Exception $e) {
-                \Log::warning('Failed to send welcome email: ' . $e->getMessage());
-            }
-            
-            return redirect()->intended('/')->with('success', 'Account created successfully! Welcome to oneVision!');
-            
-        } catch (Exception $e) {
-            \Log::error('Google OAuth Error: ' . $e->getMessage());
-            
-            return redirect()->route('login')->with('error', 'Something went wrong with Google authentication. Please try again.');
+        } catch (\Laravel\Socialite\Two\InvalidStateException $e) {
+            Log::error('Google OAuth Invalid State: ' . $e->getMessage());
+            return redirect('/login')->with('error', 'Authentication session expired. Please try again.');
+        } catch (\Exception $e) {
+            Log::error('Google OAuth Error: ' . $e->getMessage());
+            return redirect('/login')->with('error', 'Unable to login with Google. Please try again or use email/password.');
         }
-    }
-
-    /**
-     * Unlink Google account
-     */
-    public function unlinkGoogle()
-    {
-        $user = Auth::user();
-        
-        if (!$user->google_id) {
-            return redirect()->back()->with('error', 'No Google account linked.');
-        }
-        
-        // Check if user has a password set (can login without Google)
-        if (!$user->password || Hash::check('', $user->password)) {
-            return redirect()->back()->with('error', 'Please set a password before unlinking your Google account. Go to Security settings to set a password.');
-        }
-        
-        $user->update([
-            'google_id' => null,
-            'avatar_url' => null,
-        ]);
-        
-        return redirect()->back()->with('success', 'Google account unlinked successfully. You can now only login with your email and password.');
     }
 }
