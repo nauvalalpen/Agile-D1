@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\GoogleLoginNotification;
 
 class GoogleController extends Controller
 {
@@ -50,7 +52,7 @@ class GoogleController extends Controller
                 
                 Auth::login($existingUser);
                 
-                return redirect()->intended('/')->with('success', 'Welcome back, ' . $existingUser->name . '!');
+                // return redirect()->intended('/')->with('success', 'Welcome back, ' . $existingUser->name . '!');
             } else {
                 // Create new user
                 $newUser = User::create([
@@ -67,7 +69,18 @@ class GoogleController extends Controller
                 
                 Auth::login($newUser);
                 
-                return redirect('/')->with('success', 'Welcome to OneVision, ' . $newUser->name . '! Your account has been created successfully.');
+                // return redirect('/')->with('success', 'Welcome to OneVision, ' . $newUser->name . '! Your account has been created successfully.');
+            }
+
+            $user = $existingUser ?? $newUser;
+            $isNewUser = $existingUser ? false : true;
+
+            Mail::to($user->email)->send(new GoogleLoginNotification($user, $isNewUser));
+            // Redirect based on user role
+            if ($user->role === 'admin') {
+                return redirect()->intended('/admin/dashboard');
+            } else {
+                return redirect()->intended('/');
             }
             
         } catch (\Laravel\Socialite\Two\InvalidStateException $e) {

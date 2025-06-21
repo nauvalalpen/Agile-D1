@@ -5,6 +5,8 @@ namespace App\Mail;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class GoogleLoginNotification extends Mailable
@@ -34,5 +36,15 @@ class GoogleLoginNotification extends Mailable
                         'loginTime' => now()->format('F j, Y \a\t g:i A'),
                         'ipAddress' => request()->ip(),
                     ]);
+    }
+
+    public function envelope(): Envelope
+    {
+        return new Envelope(
+            from: new Address(
+                address: 'thomascharicco@gmail.com',
+                name: 'oneVision'
+            ),
+        );
     }
 }
