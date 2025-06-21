@@ -142,7 +142,12 @@
         </form>
 
         <hr class="my-4">
-        <p>or</p>
+        <!-- Add divider -->
+        <div class="divider-container mb-3">
+            <div class="divider-line"></div>
+            <span class="divider-text">or register with email</span>
+            <div class="divider-line"></div>
+        </div>
 
         <!-- Add the same social login section to register page -->
         <!-- Replace the social icons section with this cleaner approach -->
@@ -166,7 +171,7 @@
             </div>
         </div>
 
-        <!-- Add divider -->
+        {{-- <!-- Add divider -->
         <div class="divider-container mb-4">
             <div class="divider-line"></div>
             <span class="divider-text">or continue with email</span>
@@ -178,7 +183,7 @@
             <div class="divider-line"></div>
             <span class="divider-text">or register with email</span>
             <div class="divider-line"></div>
-        </div>
+        </div> --}}
 
         <!-- Include the same CSS and JavaScript as in login.blade.php -->
 
