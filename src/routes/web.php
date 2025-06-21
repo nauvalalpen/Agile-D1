@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\UserLoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FacilityController as AdminFacilityController;
 use App\Http\Controllers\TouristController;
@@ -32,19 +33,39 @@ Route::get('/index', function () {
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
-// Settings Routes (Protected)
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
-    Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
-    Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.password.update');
-    Route::post('/settings/notifications', [SettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
-    Route::post('/settings/privacy', [SettingsController::class, 'updatePrivacy'])->name('settings.privacy.update');
-    Route::post('/settings/2fa/enable', [SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
-    Route::post('/settings/2fa/disable', [SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
-    Route::get('/settings/2fa/setup', [SettingsController::class, 'setup2FA'])->name('settings.2fa.setup');
-    Route::get('/settings/export', [SettingsController::class, 'exportData'])->name('settings.export');
-    Route::delete('/settings/account', [SettingsController::class, 'deleteAccount'])->name('settings.account.delete');
+// // Settings Routes (Protected)
+// Route::middleware(['auth', 'verified'])->group(function () {
+//     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+//     Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
+//     Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.password.update');
+//     Route::post('/settings/notifications', [SettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
+//     Route::post('/settings/privacy', [SettingsController::class, 'updatePrivacy'])->name('settings.privacy.update');
+//     Route::post('/settings/2fa/enable', [SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
+//     Route::post('/settings/2fa/disable', [SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
+//     Route::get('/settings/2fa/setup', [SettingsController::class, 'setup2FA'])->name('settings.2fa.setup');
+//     Route::get('/settings/export', [SettingsController::class, 'exportData'])->name('settings.export');
+//     Route::delete('/settings/account', [SettingsController::class, 'deleteAccount'])->name('settings.account.delete');
+// });
+
+// Add these routes to your existing web.php file
+Route::middleware('auth')->group(function () {
+    // Settings routes
+    Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/profile', [App\Http\Controllers\SettingsController::class, 'updateProfile'])->name('settings.profile.update');
+    Route::post('/settings/password', [App\Http\Controllers\SettingsController::class, 'updatePassword'])->name('settings.password.update');
+    Route::post('/settings/notifications', [App\Http\Controllers\SettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
+    Route::post('/settings/privacy', [App\Http\Controllers\SettingsController::class, 'updatePrivacy'])->name('settings.privacy.update');
+    
+    // 2FA routes
+    Route::post('/settings/2fa/generate', [App\Http\Controllers\SettingsController::class, 'generate2FA'])->name('settings.2fa.generate');
+    Route::post('/settings/2fa/enable', [App\Http\Controllers\SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
+    Route::post('/settings/2fa/disable', [App\Http\Controllers\SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
+    
+    // Data management routes
+    Route::get('/settings/export', [App\Http\Controllers\SettingsController::class, 'exportData'])->name('settings.export');
+    Route::delete('/settings/account', [App\Http\Controllers\SettingsController::class, 'deleteAccount'])->name('settings.account.delete');
 });
+
 
 // Your existing routes...
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -366,7 +387,7 @@ Route::middleware('auth')->group(function () {
     
     // 2FA routes
     Route::post('/settings/2fa/generate', [App\Http\Controllers\SettingsController::class, 'generate2FA'])->name('settings.2fa.generate');
-    Route::post('/settings/2fa/enable', [App\Http\Controllers\SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
+    // Route::post('/settings/2fa/enable', [App\Http\Controllers\SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
     Route::post('/settings/2fa/disable', [App\Http\Controllers\SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
     
     // Data management routes
@@ -389,7 +410,7 @@ Route::middleware(['auth', 'account.ownership'])->group(function () {
     
     // Two-Factor Authentication
     Route::post('/settings/2fa/generate', [SettingsController::class, 'generate2FA'])->name('settings.2fa.generate');
-    Route::post('/settings/2fa/enable', [SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
+    // Route::post('/settings/2fa/enable', [SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
     Route::post('/settings/2fa/disable', [SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
     
     // Preferences

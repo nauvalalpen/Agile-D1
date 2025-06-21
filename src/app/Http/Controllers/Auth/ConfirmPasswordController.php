@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Validator;
 
 class ConfirmPasswordController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the password confirmation form

@@ -15,7 +15,7 @@ class HandleSocialiteErrors
         } catch (InvalidStateException $e) {
             return redirect()->route('login')->with('error', 'Authentication session expired. Please try again.');
         } catch (\Exception $e) {
-            \Log::error('Socialite Error: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('Socialite Error: ' . $e->getMessage());
             return redirect()->route('login')->with('error', 'Authentication failed. Please try again.');
         }
     }

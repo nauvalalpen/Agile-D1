@@ -639,236 +639,289 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Add CSRF token to meta tag if not already present
+            if (!document.querySelector('meta[name="csrf-token"]')) {
+                const meta = document.createElement('meta');
+                meta.name = 'csrf-token';
+                meta.content = '{{ csrf_token() }}';
+                document.head.appendChild(meta);
+            }
+
             // Profile form submission
-            document.getElementById('profileForm').addEventListener('submit', function(e) {
-                e.preventDefault();
+            const profileForm = document.getElementById('profileForm');
+            if (profileForm) {
+                profileForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
 
-                const formData = new FormData(this);
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
+                    const formData = new FormData(this);
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
 
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
-                submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+                    submitBtn.disabled = true;
 
-                fetch('{{ route('settings.profile.update') }}', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                .getAttribute('content')
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showNotification(data.message, 'success');
-                            if (data.profile_photo) {
-                                document.querySelector('img[alt="Profile Photo"]').src = data
-                                    .profile_photo;
+                    fetch('{{ route('settings.profile.update') }}', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                    .getAttribute('content')
                             }
-                        } else {
-                            showNotification(data.message || 'An error occurred', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showNotification('An error occurred while saving your profile', 'error');
-                    })
-                    .finally(() => {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                    });
-            });
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showNotification(data.message, 'success');
+                                if (data.profile_photo) {
+                                    const profileImg = document.querySelector(
+                                        'img[alt="Profile Photo"]');
+                                    if (profileImg) {
+                                        profileImg.src = data.profile_photo;
+                                    }
+                                }
+                            } else {
+                                showNotification(data.message || 'An error occurred', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showNotification('An error occurred while saving your profile', 'error');
+                        })
+                        .finally(() => {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        });
+                });
+            }
 
             // Password form submission
-            document.getElementById('passwordForm').addEventListener('submit', function(e) {
-                e.preventDefault();
+            const passwordForm = document.getElementById('passwordForm');
+            if (passwordForm) {
+                passwordForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
 
-                const formData = new FormData(this);
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
+                    const formData = new FormData(this);
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
 
-                // Validate passwords match
-                const password = formData.get('password');
-                const passwordConfirmation = formData.get('password_confirmation');
+                    // Validate passwords match
+                    const password = formData.get('password');
+                    const passwordConfirmation = formData.get('password_confirmation');
 
-                if (password !== passwordConfirmation) {
-                    showNotification('Passwords do not match', 'error');
-                    return;
-                }
+                    if (password !== passwordConfirmation) {
+                        showNotification('Passwords do not match', 'error');
+                        return;
+                    }
 
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Updating...';
-                submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Updating...';
+                    submitBtn.disabled = true;
 
-                fetch('{{ route('settings.password.update') }}', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                .getAttribute('content')
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showNotification(data.message, 'success');
-                            this.reset();
-                        } else {
-                            showNotification(data.message || 'An error occurred', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showNotification('An error occurred while updating your password', 'error');
-                    })
-                    .finally(() => {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                    });
-            });
+                    fetch('{{ route('settings.password.update') }}', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                    .getAttribute('content')
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showNotification(data.message, 'success');
+                                this.reset();
+                            } else {
+                                showNotification(data.message || 'An error occurred', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showNotification('An error occurred while updating your password', 'error');
+                        })
+                        .finally(() => {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        });
+                });
+            }
 
             // Notifications form submission
-            document.getElementById('notificationsForm').addEventListener('submit', function(e) {
-                e.preventDefault();
+            const notificationsForm = document.getElementById('notificationsForm');
+            if (notificationsForm) {
+                notificationsForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
 
-                const formData = new FormData(this);
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
+                    const formData = new FormData(this);
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
 
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
-                submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+                    submitBtn.disabled = true;
 
-                fetch('{{ route('settings.notifications.update') }}', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                .getAttribute('content')
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showNotification(data.message, 'success');
-                        } else {
-                            showNotification(data.message || 'An error occurred', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showNotification('An error occurred while saving your preferences', 'error');
-                    })
-                    .finally(() => {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                    });
-            });
+                    fetch('{{ route('settings.notifications.update') }}', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                    .getAttribute('content')
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showNotification(data.message, 'success');
+                            } else {
+                                showNotification(data.message || 'An error occurred', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showNotification('An error occurred while saving your preferences',
+                                'error');
+                        })
+                        .finally(() => {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        });
+                });
+            }
 
             // Privacy form submission
-            document.getElementById('privacyForm').addEventListener('submit', function(e) {
-                e.preventDefault();
+            const privacyForm = document.getElementById('privacyForm');
+            if (privacyForm) {
+                privacyForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
 
-                const formData = new FormData(this);
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
+                    const formData = new FormData(this);
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
 
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
-                submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+                    submitBtn.disabled = true;
 
-                fetch('{{ route('settings.privacy.update') }}', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                .getAttribute('content')
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showNotification(data.message, 'success');
-                        } else {
-                            showNotification(data.message || 'An error occurred', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showNotification('An error occurred while saving your settings', 'error');
-                    })
-                    .finally(() => {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                    });
-            });
+                    fetch('{{ route('settings.privacy.update') }}', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                    .getAttribute('content')
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showNotification(data.message, 'success');
+                            } else {
+                                showNotification(data.message || 'An error occurred', 'error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showNotification('An error occurred while saving your settings', 'error');
+                        })
+                        .finally(() => {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        });
+                });
+            }
 
             // 2FA verification form
-            document.getElementById('verify2FAForm').addEventListener('submit', function(e) {
-                e.preventDefault();
+            const verify2FAForm = document.getElementById('verify2FAForm');
+            if (verify2FAForm) {
+                verify2FAForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
 
-                const formData = new FormData(this);
-                const submitBtn = this.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
+                    const formData = new FormData(this);
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
 
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Verifying...';
-                submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Verifying...';
+                    submitBtn.disabled = true;
 
-                fetch('{{ route('settings.2fa.enable') }}', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                .getAttribute('content')
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            document.getElementById('setup2FAStep2').style.display = 'none';
-                            document.getElementById('setup2FAStep3').style.display = 'block';
+                    let url = '{{ route('settings.2fa.enable') }}';
+                    console.log('URL:', url);
 
-                            // Display backup codes
-                            const backupCodesContainer = document.getElementById('backupCodes');
-                            const codesHtml = data.backup_codes.map(code =>
-                                `<div class="backup-code">${code}</div>`
-                            ).join('');
-                            backupCodesContainer.innerHTML =
-                                `<div class="backup-codes">${codesHtml}</div>`;
+                    fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                    .getAttribute('content')
+                            }
+                        })
+                        .then(response => {
+                            console.log('Response:', response);
+                            response.text().then(text => {
+                                console.log("Text:", text);
+                                data = JSON.parse(text);
+                                console.log("Data:", data);
+                                if (data.success) {
+                                    document.getElementById('setup2FAStep2').style.display =
+                                        'none';
+                                    document.getElementById('setup2FAStep3').style.display =
+                                        'block';
 
-                            showNotification(data.message, 'success');
+                                    // Display backup codes
+                                    const backupCodesContainer = document.getElementById(
+                                        'backupCodes');
+                                    if (data.backup_codes && backupCodesContainer) {
+                                        const codesHtml = data.backup_codes.map(code =>
+                                            `<div class="backup-code">${code}</div>`
+                                        ).join('');
+                                        backupCodesContainer.innerHTML =
+                                            `<div class="backup-codes">${codesHtml}</div>`;
+                                    }
 
-                            // Refresh page after 3 seconds
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 3000);
-                        } else {
-                            showNotification(data.message || 'Invalid verification code', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showNotification('An error occurred while enabling 2FA', 'error');
-                    })
-                    .finally(() => {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                    });
-            });
+                                    showNotification(data.message, 'success');
+
+                                    // Refresh page after 3 seconds
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 3000);
+                                } else {
+                                    showNotification(data.message ||
+                                        'Invalid verification code', 'error');
+                                }
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showNotification('An error occurred while enabling 2FA', 'error');
+                        })
+                        .finally(() => {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        });
+                });
+            }
 
             // Photo upload preview
-            document.getElementById('photo').addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.querySelector('img[alt="Profile Photo"]').src = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
+            const photoInput = document.getElementById('photo');
+            if (photoInput) {
+                photoInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const profileImg = document.querySelector('img[alt="Profile Photo"]');
+                            if (profileImg) {
+                                profileImg.src = e.target.result;
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
         });
 
         // Generate 2FA QR Code
         function generate2FAQRCode() {
+            const generateBtn = event.target;
+            const originalText = generateBtn.innerHTML;
+
+            generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Generating...';
+            generateBtn.disabled = true;
+
             fetch('{{ route('settings.2fa.generate') }}', {
                     method: 'POST',
                     headers: {
@@ -882,9 +935,13 @@
                         document.getElementById('setup2FAStep1').style.display = 'none';
                         document.getElementById('setup2FAStep2').style.display = 'block';
 
-                        document.getElementById('qrCodeContainer').innerHTML = data.qr_code;
-                        document.getElementById('secretKey').textContent = data.secret_key;
-                        document.getElementById('hiddenSecretKey').value = data.secret_key;
+                        const qrContainer = document.getElementById('qrCodeContainer');
+                        const secretKeyElement = document.getElementById('secretKey');
+                        const hiddenSecretKey = document.getElementById('hiddenSecretKey');
+
+                        if (qrContainer) qrContainer.innerHTML = data.qr_code;
+                        if (secretKeyElement) secretKeyElement.textContent = data.secret_key;
+                        if (hiddenSecretKey) hiddenSecretKey.value = data.secret_key;
                     } else {
                         showNotification(data.message || 'Failed to generate QR code', 'error');
                     }
@@ -892,6 +949,10 @@
                 .catch(error => {
                     console.error('Error:', error);
                     showNotification('An error occurred while generating QR code', 'error');
+                })
+                .finally(() => {
+                    generateBtn.innerHTML = originalText;
+                    generateBtn.disabled = false;
                 });
         }
 
@@ -918,7 +979,8 @@
                 .then(data => {
                     if (data.success) {
                         showNotification(data.message, 'success');
-                        bootstrap.Modal.getInstance(document.getElementById('disable2FAModal')).hide();
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('disable2FAModal'));
+                        if (modal) modal.hide();
                         setTimeout(() => {
                             window.location.reload();
                         }, 1500);
@@ -958,7 +1020,8 @@
                 .then(data => {
                     if (data.success) {
                         showNotification(data.message, 'success');
-                        bootstrap.Modal.getInstance(document.getElementById('deleteAccountModal')).hide();
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('deleteAccountModal'));
+                        if (modal) modal.hide();
                         setTimeout(() => {
                             window.location.href = data.redirect;
                         }, 2000);
@@ -992,6 +1055,7 @@
         z-index: 9999;
         min-width: 300px;
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        border-radius: 0.5rem;
     `;
 
             notification.innerHTML = `
@@ -1013,28 +1077,31 @@
         }
 
         // Password strength indicator
-        document.getElementById('password')?.addEventListener('input', function(e) {
-            const password = e.target.value;
-            const strength = calculatePasswordStrength(password);
+        const passwordInput = document.getElementById('password');
+        if (passwordInput) {
+            passwordInput.addEventListener('input', function(e) {
+                const password = e.target.value;
+                const strength = calculatePasswordStrength(password);
 
-            // Remove existing strength indicator
-            const existingIndicator = document.querySelector('.password-strength');
-            if (existingIndicator) {
-                existingIndicator.remove();
-            }
+                // Remove existing strength indicator
+                const existingIndicator = document.querySelector('.password-strength');
+                if (existingIndicator) {
+                    existingIndicator.remove();
+                }
 
-            if (password.length > 0) {
-                const indicator = document.createElement('div');
-                indicator.className = 'password-strength mt-2';
-                indicator.innerHTML = `
-            <div class="progress" style="height: 4px;">
-                <div class="progress-bar bg-${strength.color}" style="width: ${strength.percentage}%"></div>
-            </div>
-            <small class="text-${strength.color}">${strength.text}</small>
-        `;
-                e.target.parentElement.appendChild(indicator);
-            }
-        });
+                if (password.length > 0) {
+                    const indicator = document.createElement('div');
+                    indicator.className = 'password-strength mt-2';
+                    indicator.innerHTML = `
+                <div class="progress" style="height: 4px;">
+                    <div class="progress-bar bg-${strength.color}" style="width: ${strength.percentage}%"></div>
+                </div>
+                <small class="text-${strength.color}">${strength.text}</small>
+            `;
+                    e.target.parentElement.appendChild(indicator);
+                }
+            });
+        }
 
         function calculatePasswordStrength(password) {
             let score = 0;
@@ -1073,136 +1140,53 @@
             }
         }
 
-        // Form validation
-        function validateForm(form) {
-            const inputs = form.querySelectorAll('input[required]');
-            let isValid = true;
+        // Email validation
+        const emailInput = document.getElementById('email');
+        if (emailInput) {
+            emailInput.addEventListener('blur', function() {
+                const email = this.value;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    input.classList.add('is-invalid');
-                    isValid = false;
+                if (email && !emailRegex.test(email)) {
+                    this.classList.add('is-invalid');
+                    showNotification('Please enter a valid email address', 'error');
                 } else {
-                    input.classList.remove('is-invalid');
+                    this.classList.remove('is-invalid');
                 }
             });
-
-            return isValid;
         }
 
-        // Real-time validation
-        document.querySelectorAll('input[required]').forEach(input => {
-            input.addEventListener('blur', function() {
-                if (!this.value.trim()) {
-                    this.classList.add('is-invalid');
-                } else {
-                    this.classList.remove('is-invalid');
-                }
-            });
-
-            input.addEventListener('input', function() {
-                if (this.classList.contains('is-invalid') && this.value.trim()) {
-                    this.classList.remove('is-invalid');
-                }
-            });
-        });
-
-        // Email validation
-        document.getElementById('email')?.addEventListener('blur', function() {
-            const email = this.value;
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (email && !emailRegex.test(email)) {
-                this.classList.add('is-invalid');
-                showNotification('Please enter a valid email address', 'error');
-            } else {
-                this.classList.remove('is-invalid');
-            }
-        });
-
         // Phone number formatting
-        document.getElementById('phone')?.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 0) {
-                if (value.length <= 3) {
-                    value = `(${value}`;
-                } else if (value.length <= 6) {
-                    value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-                } else {
-                    value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+        const phoneInput = document.getElementById('phone');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 0) {
+                    if (value.length <= 3) {
+                        value = `(${value}`;
+                    } else if (value.length <= 6) {
+                        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+                    } else {
+                        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+                    }
                 }
-            }
-            e.target.value = value;
-        });
+                e.target.value = value;
+            });
+        }
 
         // Tab persistence
         const activeTab = localStorage.getItem('activeSettingsTab');
         if (activeTab) {
             const tabButton = document.querySelector(`button[data-bs-target="${activeTab}"]`);
             if (tabButton) {
-                bootstrap.Tab.getInstance(tabButton)?.show() || new bootstrap.Tab(tabButton).show();
+                const tab = new bootstrap.Tab(tabButton);
+                tab.show();
             }
         }
 
         document.querySelectorAll('button[data-bs-toggle="pill"]').forEach(button => {
             button.addEventListener('shown.bs.tab', function(e) {
                 localStorage.setItem('activeSettingsTab', e.target.getAttribute('data-bs-target'));
-            });
-        });
-
-        // Confirmation dialogs for sensitive actions
-        document.querySelectorAll('[data-confirm]').forEach(element => {
-            element.addEventListener('click', function(e) {
-                const message = this.getAttribute('data-confirm');
-                if (!confirm(message)) {
-                    e.preventDefault();
-                }
-            });
-        });
-
-        // Auto-save draft functionality for forms
-        let autoSaveTimeout;
-        document.querySelectorAll('input, textarea, select').forEach(input => {
-            input.addEventListener('input', function() {
-                clearTimeout(autoSaveTimeout);
-                autoSaveTimeout = setTimeout(() => {
-                    const formId = this.closest('form')?.id;
-                    if (formId) {
-                        const formData = new FormData(this.closest('form'));
-                        const draftData = {};
-                        for (let [key, value] of formData.entries()) {
-                            draftData[key] = value;
-                        }
-                        localStorage.setItem(`${formId}_draft`, JSON.stringify(draftData));
-                    }
-                }, 1000);
-            });
-        });
-
-        // Restore draft data
-        document.querySelectorAll('form').forEach(form => {
-            const draftData = localStorage.getItem(`${form.id}_draft`);
-            if (draftData) {
-                try {
-                    const data = JSON.parse(draftData);
-                    Object.keys(data).forEach(key => {
-                        const input = form.querySelector(`[name="${key}"]`);
-                        if (input && input.type !== 'password' && input.type !== 'file') {
-                            input.value = data[key];
-                        }
-                    });
-                } catch (e) {
-                    console.error('Error restoring draft data:', e);
-                }
-            }
-        });
-
-        // Clear draft data on successful form submission
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function() {
-                setTimeout(() => {
-                    localStorage.removeItem(`${this.id}_draft`);
-                }, 1000);
             });
         });
     </script>

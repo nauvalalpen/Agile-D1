@@ -74,7 +74,10 @@ class User extends Authenticatable
 
     public function hasRole($role)
     {
-        return $this->roles->contains('slug', $role);
+        if ($this->roles()->count() > 0) {
+            return $this->roles->contains('slug', $role);
+        }
+        return false;
     }
 
     public function hasVerifiedEmail()
@@ -162,7 +165,7 @@ class User extends Authenticatable
     {
         return $this->update([
             'two_factor_secret' => encrypt($secret),
-            'two_factor_recovery_codes' => $recoveryCodes ? encrypt($recoveryCodes) : null,
+            'two_factor_recovery_codes' => $recoveryCodes ? encrypt(json_encode($recoveryCodes)) : null,
             'two_factor_confirmed_at' => now(),
         ]);
     }
@@ -183,7 +186,16 @@ class User extends Authenticatable
 
     public function getTwoFactorRecoveryCodes()
     {
-        return $this->two_factor_recovery_codes ? decrypt($this->two_factor_recovery_codes) : [];
+        if (!$this->two_factor_recovery_codes) {
+            return [];
+        }
+        
+        try {
+            $decrypted = decrypt($this->two_factor_recovery_codes);
+            return is_string($decrypted) ? json_decode($decrypted, true) : $decrypted;
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 
     // Scopes

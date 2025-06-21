@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+// Import log
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Password;
 use App\Helpers\SettingsHelper;
 use PragmaRX\Google2FA\Google2FA;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
 
 class SettingsController extends Controller
 {
@@ -143,32 +142,39 @@ class SettingsController extends Controller
      */
     public function generate2FA()
     {
-        $user = Auth::user();
-        $google2fa = new Google2FA();
+        try {
+            $user = Auth::user();
+            $google2fa = new Google2FA();
 
-        $secretKey = $google2fa->generateSecretKey();
-        $qrCodeUrl = $google2fa->getQRCodeUrl(
-            config('app.name'),
-            $user->email,
-            $secretKey
-        );
+            $secretKey = $google2fa->generateSecretKey();
+            
+            // Create QR code URL
+            $qrCodeUrl = $google2fa->getQRCodeUrl(
+                config('app.name', 'oneVision'),
+                $user->email,
+                $secretKey
+            );
 
-        // Generate QR Code
-        $renderer = new ImageRenderer(
-            new RendererStyle(200),
-            new ImagickImageBackEnd()
-        );
-        $writer = new Writer($renderer);
-        $qrCode = base64_encode($writer->writeString($qrCodeUrl));
+            // Generate simple QR code using Google Charts API (fallback method)
+            $qrCodeImage = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' . urlencode($qrCodeUrl);
 
-        // Store secret key temporarily in session
-        session(['2fa_temp_secret' => $secretKey]);
+            // Store secret key temporarily in session
+            session(['2fa_temp_secret' => $secretKey]);
 
-        return response()->json([
-            'success' => true,
-            'qr_code' => '<img src="data:image/png;base64,' . $qrCode . '" alt="QR Code">',
-            'secret_key' => $secretKey
-        ]);
+            return response()->json([
+                'success' => true,
+                'qr_code' => '<img src="' . $qrCodeImage . '" alt="QR Code" style="max-width: 200px;">',
+                'secret_key' => $secretKey
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('2FA QR Code generation failed: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to generate QR code: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -176,47 +182,71 @@ class SettingsController extends Controller
      */
     public function enable2FA(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'verification_code' => ['required', 'string', 'size:6'],
-            'secret_key' => ['required', 'string']
-        ]);
+        error_log("disini sebelum validator");
+        // fwrite(STDOUT, 'foo');
+        // error_log('Some message here.');
+        try {
+            $validator = Validator::make($request->all(), [
+                'verification_code' => ['required', 'string', 'size:6'],
+                'secret_key' => ['required', 'string']
+            ]);
+            error_log("disini setelah validator");
 
-        if ($validator->fails()) {
+            if ($validator->fails()) {
+                error_log("disini validator fails");
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+            error_log("disini setelah validator success");
+
+            $user = Auth::user();
+            $google2fa = new Google2FA();
+            $secretKey = $request->secret_key;
+
+            error_log("disini sebelum verify key");
+            error_log("secret key: " . $secretKey);
+            error_log("verification code: " . $request->verification_code);
+            // Verify the code
+            $valid = $google2fa->verifyKey($secretKey, $request->verification_code);
+
+            if (!$valid) {
+                error_log("valid" . $valid);
+                error_log("disini verify failed");
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid verification code'
+                ], 422);
+            }
+            error_log("disini verify success");
+            // Generate backup codes
+            $backupCodes = SettingsHelper::generateBackupCodes();
+
+            error_log( "disini sebelum enable 2fa");
+            // Enable 2FA
+            $user->enable2FA($secretKey, $backupCodes);
+
+            error_log("disini setelah enable 2fa");
+            // Clear temporary session data
+            session()->forget('2fa_temp_secret');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Two-factor authentication enabled successfully',
+                'backup_codes' => $backupCodes
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('2FA enable failed: ' . $e->getMessage());
+            echo 'Error: ' . $e->getMessage() . "\n";
+            
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
+                'message' => 'Failed to enable 2FA: ' . $e->getMessage()
+            ], 500);
         }
-
-        $user = Auth::user();
-        $google2fa = new Google2FA();
-        $secretKey = $request->secret_key;
-
-        // Verify the code
-        $valid = $google2fa->verifyKey($secretKey, $request->verification_code);
-
-        if (!$valid) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid verification code'
-            ], 422);
-        }
-
-        // Generate backup codes
-        $backupCodes = SettingsHelper::generateBackupCodes();
-
-        // Enable 2FA
-        $user->enable2FA($secretKey, $backupCodes);
-
-        // Clear temporary session data
-        session()->forget('2fa_temp_secret');
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Two-factor authentication enabled successfully',
-            'backup_codes' => $backupCodes
-        ]);
     }
 
     /**
@@ -224,25 +254,37 @@ class SettingsController extends Controller
      */
     public function disable2FA(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'password' => ['required', 'current_password']
-        ]);
+        try {
+            $validator = Validator::make($request->all(), [
+                'password' => ['required', 'current_password']
+            ]);
 
-        if ($validator->fails()) {
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid password',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $user = Auth::user();
+            $user->disable2FA();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Two-factor authentication disabled successfully'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('2FA disable failed: ' . $e->getMessage());
+            // Print the error message to the terminal without using log
+            
+            
             return response()->json([
                 'success' => false,
-                'message' => 'Invalid password',
-                'errors' => $validator->errors()
-            ], 422);
+                'message' => 'Failed to disable 2FA: ' . $e->getMessage()
+            ], 500);
         }
-
-        $user = Auth::user();
-        $user->disable2FA();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Two-factor authentication disabled successfully'
-        ]);
     }
 
     /**
@@ -284,47 +326,57 @@ class SettingsController extends Controller
      */
     public function deleteAccount(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'password' => ['required', 'current_password'],
-            'confirmation' => ['required', 'in:DELETE']
-        ]);
+        try {
+            $validator = Validator::make($request->all(), [
+                'password' => ['required', 'current_password'],
+                'confirmation' => ['required', 'in:DELETE']
+            ]);
 
-        if ($validator->fails()) {
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $user = Auth::user();
+
+            // Delete profile photo if exists
+            if ($user->photo) {
+                Storage::disk('public')->delete($user->photo);
+            }
+
+            // Anonymize orders instead of deleting them
+            DB::table('order_tour_guides')->where('user_id', $user->id)->update([
+                'user_id' => null,
+                'updated_at' => now()
+            ]);
+
+            DB::table('order_madus')->where('user_id', $user->id)->update([
+                'user_id' => null,
+                'updated_at' => now()
+            ]);
+
+            // Log out the user
+            Auth::logout();
+
+            // Delete the user account
+            $user->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Your account has been deleted successfully',
+                'redirect' => route('login')
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Account deletion failed: ' . $e->getMessage());
+            
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $validator->errors()
-            ], 422);
+                'message' => 'Failed to delete account: ' . $e->getMessage()
+            ], 500);
         }
-
-        $user = Auth::user();
-
-        // Delete profile photo if exists
-        if ($user->photo) {
-            Storage::disk('public')->delete($user->photo);
-        }
-
-        // Anonymize orders instead of deleting them
-        \DB::table('order_tour_guides')->where('user_id', $user->id)->update([
-            'user_id' => null,
-            'updated_at' => now()
-        ]);
-
-        \DB::table('order_madus')->where('user_id', $user->id)->update([
-            'user_id' => null,
-            'updated_at' => now()
-        ]);
-
-        // Log out the user
-        Auth::logout();
-
-        // Delete the user account
-        $user->delete();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Your account has been deleted successfully',
-            'redirect' => route('login')
-        ]);
     }
 }
