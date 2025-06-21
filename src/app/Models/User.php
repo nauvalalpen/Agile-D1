@@ -6,7 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\DB;
+use App\Helpers\SettingsHelper;
 
 class User extends Authenticatable
 {
@@ -17,16 +17,17 @@ class User extends Authenticatable
         'email',
         'password',
         'photo',
-        'avatar',
-        'google_id',
         'role',
         'verification_code',
         'email_verified_at',
         'is_verified',
+        'phone',
+        'bio',
         'notification_preferences',
         'privacy_settings',
         'two_factor_secret',
         'two_factor_recovery_codes',
+        'two_factor_confirmed_at',
         'last_login_at'
     ];
 
@@ -42,20 +43,19 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'last_login_at' => 'datetime',
             'password' => 'hashed',
             'is_verified' => 'boolean',
             'notification_preferences' => 'array',
             'privacy_settings' => 'array',
             'two_factor_recovery_codes' => 'array',
+            'two_factor_confirmed_at' => 'datetime',
+            'last_login_at' => 'datetime',
         ];
     }
 
     public function getPhotoUrlAttribute()
     {
-        if ($this->avatar) {
-            return $this->avatar; // Google avatar
-        } elseif ($this->photo) {
+        if ($this->photo) {
             return asset('storage/' . $this->photo);
         } else {
             return 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
@@ -122,77 +122,68 @@ class User extends Authenticatable
         return $this->update(['verification_code' => null]);
     }
 
-    // Settings-related methods
-    public function has2FAEnabled(): bool
+    // Notification preferences methods
+    public function getNotificationPreferences()
     {
-        return !empty($this->two_factor_secret);
+        return array_merge(
+            SettingsHelper::getDefaultNotificationPreferences(),
+            $this->notification_preferences ?? []
+        );
     }
 
-    public function getNotificationPreferences(): array
+    public function updateNotificationPreferences(array $preferences)
     {
-        return $this->notification_preferences ?? \App\Helpers\SettingsHelper::getDefaultNotificationPreferences();
-    }
-
-    public function getPrivacySettings(): array
-    {
-        return $this->privacy_settings ?? \App\Helpers\SettingsHelper::getDefaultPrivacySettings();
-    }
-
-    public function updateNotificationPreferences(array $preferences): bool
-    {
-        $validated = \App\Helpers\SettingsHelper::validateNotificationPreferences($preferences);
+        $validated = SettingsHelper::validateNotificationPreferences($preferences);
         return $this->update(['notification_preferences' => $validated]);
     }
 
-    public function updatePrivacySettings(array $settings): bool
+    // Privacy settings methods
+    public function getPrivacySettings()
     {
-        $validated = \App\Helpers\SettingsHelper::validatePrivacySettings($settings);
+        return array_merge(
+            SettingsHelper::getDefaultPrivacySettings(),
+            $this->privacy_settings ?? []
+        );
+    }
+
+    public function updatePrivacySettings(array $settings)
+    {
+        $validated = SettingsHelper::validatePrivacySettings($settings);
         return $this->update(['privacy_settings' => $validated]);
     }
 
-    public function getSecurityScore(): array
+    // Two-Factor Authentication methods
+    public function has2FAEnabled()
     {
-        return \App\Helpers\SettingsHelper::calculateSecurityScore($this);
+        return !is_null($this->two_factor_secret) && !is_null($this->two_factor_confirmed_at);
     }
 
-    public function canDeleteAccount(): bool
+    public function enable2FA($secret, $recoveryCodes = null)
     {
-        $pendingOrders = DB::table('order_tour_guides')
-            ->where('user_id', $this->id)
-            ->where('status', 'pending')
-            ->count();
-            
-        $pendingHoneyOrders = DB::table('order_madus')
-            ->where('user_id', $this->id)
-            ->where('status', 'pending')
-            ->count();
-        
-        return ($pendingOrders + $pendingHoneyOrders) === 0;
+        return $this->update([
+            'two_factor_secret' => encrypt($secret),
+            'two_factor_recovery_codes' => $recoveryCodes ? encrypt($recoveryCodes) : null,
+            'two_factor_confirmed_at' => now(),
+        ]);
     }
 
-    public function getAccountDeletionRestrictions(): array
+    public function disable2FA()
     {
-        $restrictions = [];
-        
-        $pendingOrders = DB::table('order_tour_guides')
-            ->where('user_id', $this->id)
-            ->where('status', 'pending')
-            ->count();
-            
-        if ($pendingOrders > 0) {
-            $restrictions[] = "You have {$pendingOrders} pending tour guide order(s)";
-        }
-        
-        $pendingHoneyOrders = DB::table('order_madus')
-            ->where('user_id', $this->id)
-            ->where('status', 'pending')
-            ->count();
-            
-        if ($pendingHoneyOrders > 0) {
-            $restrictions[] = "You have {$pendingHoneyOrders} pending honey order(s)";
-        }
-        
-        return $restrictions;
+        return $this->update([
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'two_factor_confirmed_at' => null,
+        ]);
+    }
+
+    public function getTwoFactorSecret()
+    {
+        return $this->two_factor_secret ? decrypt($this->two_factor_secret) : null;
+    }
+
+    public function getTwoFactorRecoveryCodes()
+    {
+        return $this->two_factor_recovery_codes ? decrypt($this->two_factor_recovery_codes) : [];
     }
 
     // Scopes
@@ -216,5 +207,11 @@ class User extends Authenticatable
     public function scopeUsers($query)
     {
         return $query->where('role', 'user');
+    }
+
+    // Update last login
+    public function updateLastLogin()
+    {
+        return $this->update(['last_login_at' => now()]);
     }
 }

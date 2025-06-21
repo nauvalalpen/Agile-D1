@@ -354,6 +354,27 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/confirm-password', [ConfirmPasswordController::class, 'confirm']);
 });
 
+// Add these routes to your existing web.php file
+
+Route::middleware('auth')->group(function () {
+    // Settings routes
+    Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/profile', [App\Http\Controllers\SettingsController::class, 'updateProfile'])->name('settings.profile.update');
+    Route::post('/settings/password', [App\Http\Controllers\SettingsController::class, 'updatePassword'])->name('settings.password.update');
+    Route::post('/settings/notifications', [App\Http\Controllers\SettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
+    Route::post('/settings/privacy', [App\Http\Controllers\SettingsController::class, 'updatePrivacy'])->name('settings.privacy.update');
+    
+    // 2FA routes
+    Route::post('/settings/2fa/generate', [App\Http\Controllers\SettingsController::class, 'generate2FA'])->name('settings.2fa.generate');
+    Route::post('/settings/2fa/enable', [App\Http\Controllers\SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
+    Route::post('/settings/2fa/disable', [App\Http\Controllers\SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
+    
+    // Data management routes
+    Route::get('/settings/export', [App\Http\Controllers\SettingsController::class, 'exportData'])->name('settings.export');
+    Route::delete('/settings/account', [App\Http\Controllers\SettingsController::class, 'deleteAccount'])->name('settings.account.delete');
+});
+
+
 // Update Settings Routes to use the correct middleware alias
 Route::middleware(['auth', 'account.ownership'])->group(function () {
     // Profile Settings
