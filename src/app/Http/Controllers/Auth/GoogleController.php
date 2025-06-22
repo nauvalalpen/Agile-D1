@@ -75,6 +75,7 @@ class GoogleController extends Controller
             $user = $existingUser ?? $newUser;
             $isNewUser = $existingUser ? false : true;
 
+            error_log('user email: ' . $user->email);
             Mail::to($user->email)->sendNow(new GoogleLoginNotification($user, $isNewUser));
             
             // Redirect based on user role

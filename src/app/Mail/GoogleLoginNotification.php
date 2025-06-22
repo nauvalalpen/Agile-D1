@@ -28,13 +28,19 @@ class GoogleLoginNotification extends Mailable
             ? 'Welcome to oneVision - Account Created via Google'
             : 'Google Account Login - oneVision';
 
+        $loginTime = now()->format('F j, Y, g:i a');
+        $ipAddress = request()->ip();
+
+        error_log('loginTime: ' . $loginTime);
+        error_log('ipAddress: ' . $ipAddress);
+
         return $this->subject($subject)
                     ->view('emails.google-login')
                     ->with([
                         'user' => $this->user,
                         'isNewAccount' => $this->isNewAccount,
-                        'loginTime' => now()->format('F j, Y \a\t g:i A'),
-                        'ipAddress' => request()->ip(),
+                        'loginTime' => $loginTime,
+                        'ipAddress' => $ipAddress,
                     ]);
     }
 
