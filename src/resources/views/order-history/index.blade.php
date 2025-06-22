@@ -215,7 +215,8 @@
                                 tentang status pesanan, pembatalan, atau informasi lainnya.
                             </p>
                             <div class="action-buttons">
-                                <a href="#" class="btn btn-dark-custom me-3">
+                                <a href="https://wa.me/6283199877326?text=Halloo ... ,saya ingin bertanya terkait pesanan saya"
+                                    class="btn btn-dark-custom me-3">
                                     <i class="fab fa-whatsapp me-2"></i>Hubungi CS
                                 </a>
                                 <a href="#" class="btn btn-outline-dark">
