@@ -90,7 +90,7 @@ class GoogleController extends Controller
             Log::error('Google OAuth Invalid State: ' . $e->getMessage());
             return redirect('/login')->with('error', 'Authentication session expired. Please try again.');
         } catch (\Exception $e) {
-            error_log('exception');
+            error_log('exception' . $e->getMessage());
             Log::error('Google OAuth Error: ' . $e->getMessage());
             return redirect('/login')->with('error', 'Unable to login with Google. Please try again or use email/password.');
         }
