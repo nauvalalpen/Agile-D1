@@ -166,7 +166,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <a href="#" id="contactSellerBtn" class="btn btn-success">
+                    <a href="https://wa.me/6283199877326?text=Halloo ... , Apakah saya bisa melihat produk UMKM yang tersedia?"
+                        id="contactSellerBtn" class="btn btn-success">
                         <i class="fab fa-whatsapp me-2"></i>Hubungi Penjual
                     </a>
                 </div>
