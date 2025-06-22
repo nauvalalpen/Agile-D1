@@ -78,9 +78,9 @@ class GoogleController extends Controller
             Mail::to($user->email)->send(new GoogleLoginNotification($user, $isNewUser));
             // Redirect based on user role
             if ($user->role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
+                return redirect()->to('/admin/dashboard');
             } else {
-                return redirect()->intended('/');
+                return redirect()->to('/');
             }
             
         } catch (\Laravel\Socialite\Two\InvalidStateException $e) {

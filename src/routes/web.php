@@ -141,9 +141,9 @@ Route::middleware('guest')->group(function () {
 
 // User Dashboard Route
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('user.dashboard');
-    })->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('user.dashboard');
+    // })->name('dashboard');
     Route::post('/logout', [UserLoginController::class, 'logout'])->name('logout');
 });
 
@@ -154,7 +154,7 @@ Route::middleware(['auth'])->group(function () {
 //     // Route::post('checkout/{tourist}', [CheckpointController::class, 'checkout']);
 // });
 
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+// Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 Route::get('/weather', [WeatherController::class, 'updateWeatherInfo'])->name('updateWeatherInfo');
 
