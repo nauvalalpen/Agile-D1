@@ -86,9 +86,11 @@ class GoogleController extends Controller
             }
             
         } catch (\Laravel\Socialite\Two\InvalidStateException $e) {
+            error_log('invalid state exception');
             Log::error('Google OAuth Invalid State: ' . $e->getMessage());
             return redirect('/login')->with('error', 'Authentication session expired. Please try again.');
         } catch (\Exception $e) {
+            error_log('exception');
             Log::error('Google OAuth Error: ' . $e->getMessage());
             return redirect('/login')->with('error', 'Unable to login with Google. Please try again or use email/password.');
         }
