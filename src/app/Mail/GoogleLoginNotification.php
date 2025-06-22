@@ -31,8 +31,8 @@ class GoogleLoginNotification extends Mailable
         $loginTime = now()->format('F j, Y, g:i a');
         $ipAddress = request()->ip();
 
-        error_log('loginTime: ' . $loginTime);
-        error_log('ipAddress: ' . $ipAddress);
+        // error_log('loginTime: ' . $loginTime);
+        // error_log('ipAddress: ' . $ipAddress);
 
         return $this->subject($subject)
                     ->view('emails.google-login')

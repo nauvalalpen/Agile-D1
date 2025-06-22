@@ -182,7 +182,7 @@ class SettingsController extends Controller
      */
     public function enable2FA(Request $request)
     {
-        error_log("disini sebelum validator");
+        // error_log("disini sebelum validator");
         // fwrite(STDOUT, 'foo');
         // error_log('Some message here.');
         try {
@@ -190,7 +190,7 @@ class SettingsController extends Controller
                 'verification_code' => ['required', 'string', 'size:6'],
                 'secret_key' => ['required', 'string']
             ]);
-            error_log("disini setelah validator");
+            // error_log("disini setelah validator");
 
             if ($validator->fails()) {
                 error_log("disini validator fails");
@@ -200,35 +200,35 @@ class SettingsController extends Controller
                     'errors' => $validator->errors()
                 ], 422);
             }
-            error_log("disini setelah validator success");
+            // error_log("disini setelah validator success");
 
             $user = Auth::user();
             $google2fa = new Google2FA();
             $secretKey = $request->secret_key;
 
-            error_log("disini sebelum verify key");
-            error_log("secret key: " . $secretKey);
-            error_log("verification code: " . $request->verification_code);
+            // error_log("disini sebelum verify key");
+            // error_log("secret key: " . $secretKey);
+            // error_log("verification code: " . $request->verification_code);
             // Verify the code
             $valid = $google2fa->verifyKey($secretKey, $request->verification_code);
 
             if (!$valid) {
-                error_log("valid" . $valid);
-                error_log("disini verify failed");
+                // error_log("valid" . $valid);
+                // error_log("disini verify failed");
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid verification code'
                 ], 422);
             }
-            error_log("disini verify success");
+            // error_log("disini verify success");
             // Generate backup codes
             $backupCodes = SettingsHelper::generateBackupCodes();
 
-            error_log( "disini sebelum enable 2fa");
+            // error_log( "disini sebelum enable 2fa");
             // Enable 2FA
             $user->enable2FA($secretKey, $backupCodes);
 
-            error_log("disini setelah enable 2fa");
+            // error_log("disini setelah enable 2fa");
             // Clear temporary session data
             session()->forget('2fa_temp_secret');
 
