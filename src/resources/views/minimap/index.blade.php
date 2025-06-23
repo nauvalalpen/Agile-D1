@@ -82,6 +82,8 @@
             <a href="/minimap" class="hero-btn">More info</a>
         </div>
     </section>
+
+    {{-- The rest of your content remains the same --}}
     <div class="container mt-4">
         <div class="row">
             <div class="col-12">
@@ -438,7 +440,7 @@
         }
 
 
-        /* content   */
+        /* HERO SECTION STYLES */
         body,
         html {
             margin: 0;
@@ -455,18 +457,23 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            /* Default for desktop */
             overflow: hidden;
+            transition: height 0.3s ease;
+            /* Smooth height transition */
         }
 
         .hero-content {
             width: 100%;
             max-width: 1140px;
-            padding-left: 350px;
-            padding-right: 30px;
+            padding: 0 30px 0 350px;
+            /* Default desktop padding */
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 1.2s ease forwards;
             animation-delay: 0.3s;
+            transition: padding 0.3s ease;
+            /* Smooth padding transition */
         }
 
         @keyframes fadeInUp {
@@ -479,13 +486,13 @@
 
         .hero-title {
             font-size: 80px;
-            /* besar dan dominan */
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 20px;
             letter-spacing: 30px;
-            /* jarak antar huruf */
             text-transform: uppercase;
+            transition: all 0.3s ease;
+            /* Smooth font and spacing transition */
         }
 
         .hero-desc {
@@ -494,6 +501,9 @@
             line-height: 1.6;
             color: #ddd;
             max-width: 500px;
+            /* Ensure it can be centered on mobile */
+            margin-left: 0;
+            margin-right: 0;
         }
 
         .hero-btn {
@@ -513,6 +523,82 @@
         .hero-btn:hover {
             background-color: white;
             color: black;
+        }
+
+        /* === RESPONSIVE HERO SECTION STYLES (NEW) === */
+
+        /* For large tablets and smaller laptops */
+        @media (max-width: 1200px) {
+            .hero-content {
+                /* Start reducing the large padding earlier */
+                padding: 0 3rem 0 10rem;
+            }
+        }
+
+        /* For tablets */
+        @media (max-width: 992px) {
+            .hero-section {
+                justify-content: center;
+                /* Center the content block */
+                text-align: center;
+                /* Center the text inside the block */
+                height: 75vh;
+            }
+
+            .hero-content {
+                /* Remove fixed padding, use responsive padding */
+                padding: 0 2rem;
+            }
+
+            .hero-title {
+                font-size: 60px;
+                letter-spacing: 15px;
+            }
+
+            .hero-desc {
+                /* Allow description to center properly */
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        /* For small tablets and large phones */
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 70vh;
+            }
+
+            .hero-title {
+                font-size: 48px;
+                letter-spacing: 10px;
+                line-height: 1.2;
+            }
+
+            .hero-desc {
+                font-size: 15px;
+            }
+
+            .hero-btn {
+                padding: 10px 25px;
+                font-size: 13px;
+            }
+        }
+
+        /* For mobile phones */
+        @media (max-width: 576px) {
+            .hero-section {
+                height: 65vh;
+                /* Reduce height for small screens */
+            }
+
+            .hero-content {
+                padding: 0 1rem;
+            }
+
+            .hero-title {
+                font-size: 36px;
+                letter-spacing: 5px;
+            }
         }
     </style>
     @include('layouts.footer')
