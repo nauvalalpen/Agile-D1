@@ -512,7 +512,7 @@
         .hero-content {
             width: 100%;
             max-width: 1140px;
-            padding-left: 295px;
+            padding-left: 350px;
             padding-right: 30px;
             opacity: 0;
             transform: translateY(30px);
