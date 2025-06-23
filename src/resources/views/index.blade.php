@@ -1,2837 +1,2632 @@
 @extends('layouts.app')
 
-@section('title', 'Welcome - ONEVISION')
-
 @section('content')
-    <!-- Include AOS (Animate on Scroll) Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+@php
+    // Fetch real data from database
+    // $tourGuides = \App\Models\Tourguide::take(6)->get(); // Uncomment this line
+    $facilities = \App\Models\Facility::take(6)->get();
+    $galleries = \App\Models\Gallery::take(8)->get();
+    $beritas = \App\Models\Berita::latest()->take(3)->get();
+    $madus = \App\Models\Madu::take(4)->get();
+    $produkUMKMs = \App\Models\ProdukUMKM::take(4)->get();
+    
+    // Get statistics
+    // $totalTourGuides = \App\Models\Tourguide::count(); // Uncomment this line
+    $totalFacilities = \App\Models\Facility::count();
+    $totalGalleries = \App\Models\Gallery::count();
+    $totalNews = \App\Models\Berita::count();
+@endphp
 
-    <!-- 1. HERO SECTION -->
-    <section class="hero-section-modern position-relative overflow-hidden">
-        <div class="hero-particles"></div>
-        <div class="hero-overlay"></div>
+<style>
+    :root {
+        /* Modern Dark Green & White Color Palette */
+        --dark-forest: #0a1f0f;
+        --deep-green: #1a3d2e;
+        --forest-green: #2d5a3d;
+        --emerald-green: #228B22;
+        --light-green: #90EE90;
+        --pure-white: #ffffff;
+        --off-white: #f8fffe;
+        --glass-white: rgba(255, 255, 255, 0.1);
+        --glass-dark: rgba(10, 31, 15, 0.9);
+        
+        /* Advanced Gradients */
+        --hero-gradient: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%);
+        --glass-gradient: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+        --accent-gradient: linear-gradient(90deg, #228B22, #90EE90, #228B22);
+        
+        /* Modern Shadows & Effects */
+        --shadow-hero: 0 25px 80px rgba(10, 31, 15, 0.6);
+        --shadow-glass: 0 15px 35px rgba(0, 0, 0, 0.1);
+        --glow-green: 0 0 40px rgba(34, 139, 34, 0.4);
+        --glow-white: 0 0 30px rgba(255, 255, 255, 0.3);
+        
+        /* Animations */
+        --transition-smooth: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+        --transition-bounce: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        <div class="container-fluid h-100">
-            <div class="row h-100 align-items-center">
-                <div class="col-lg-6 hero-content-left" data-aos="fade-right" data-aos-duration="1000">
-                    <div class="hero-badge" data-aos="zoom-in" data-aos-delay="200">
-                        <i class="fas fa-star"></i>
-                        <span>Premium Destination</span>
-                    </div>
-                    <h1 class="hero-title-modern" data-aos="fade-up" data-aos-delay="400">
-                        Discover the Magic of
-                        <span class="gradient-text">AIR TERJUN LUBUK HITAM</span>
-                    </h1>
-                    <p class="hero-description-modern" data-aos="fade-up" data-aos-delay="600">
-                        Experience the breathtaking beauty of West Sumatra's hidden gem. Immerse yourself in pristine
-                        nature,
-                        crystal-clear waters, and unforgettable adventures that will create memories to last a lifetime.
-                    </p>
-                    <div class="hero-actions-modern" data-aos="fade-up" data-aos-delay="800">
-                        <a href="{{ route('login') }}" class="btn-hero-primary">
-                            <i class="fas fa-compass"></i>
-                            Start Your Journey
-                        </a>
-                        <a href="#explore-section" class="btn-hero-secondary">
-                            <i class="fas fa-play"></i>
-                            Explore More
-                        </a>
-                    </div>
-                    <div class="hero-stats-modern" data-aos="fade-up" data-aos-delay="1000">
-                        <div class="stat-item-modern">
-                            <span class="stat-number-modern" data-count="1000">0</span>
-                            <span class="stat-label-modern">Happy Visitors</span>
-                        </div>
-                        <div class="stat-item-modern">
-                            <span class="stat-number-modern" data-count="{{ $tourGuides->count() }}">0</span>
-                            <span class="stat-label-modern">Expert Guides</span>
-                        </div>
-                        <div class="stat-item-modern">
-                            <span class="stat-number-modern" data-count="50">0</span>
-                            <span class="stat-label-modern">Facilities</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 hero-content-right" data-aos="fade-left" data-aos-delay="600">
-                    <div class="hero-image-wrapper">
-                        <div class="hero-floating-card" data-aos="zoom-in" data-aos-delay="1200">
-                            <div class="floating-card-content">
-                                <div class="floating-card-icon">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
-                                <div class="floating-card-text">
-                                    <h6>Beautiful Location</h6>
-                                    <p>West Sumatra, Indonesia</p>
-                                </div>
-                            </div>
-                        </div>
-                        <img src="{{ asset('images/waterfall.jpg') }}" alt="Air Terjun Lubuk Hitam" class="hero-main-image">
-                    </div>
-                </div>
-            </div>
-        </div>
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
 
-        <div class="scroll-indicator-modern" data-aos="bounce" data-aos-delay="1400">
-            <div class="scroll-arrow-modern"></div>
-        </div>
-    </section>
+    /* ===== MODERN DARK HERO SECTION ===== */
+    .hero-dark-modern {
+        position: relative;
+        min-height: 100vh;
+        background: var(--hero-gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        color: var(--pure-white);
+    }
 
-    <!-- 2. EXPLORE SECTION -->
-    <section id="explore-section" class="explore-section-modern py-5">
-        <div class="container">
-            <div class="section-header-modern text-center mb-5" data-aos="fade-up">
-                <div class="section-badge-modern">
-                    <i class="fas fa-mountain"></i>
-                    <span>Explore Nature</span>
-                </div>
-                <h2 class="section-title-modern">Discover Amazing Places</h2>
-                <p class="section-subtitle-modern">
-                    Uncover the hidden treasures and breathtaking landscapes that make Air Terjun Lubuk Hitam
-                    a truly magical destination for nature lovers and adventure seekers.
-                </p>
-            </div>
+    /* Animated Background Canvas */
+    .hero-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
 
-            <div class="row g-4">
-                <div class="col-lg-8" data-aos="fade-right" data-aos-delay="200">
-                    <div class="explore-main-card">
-                        <div class="explore-main-image">
-                            <img src="{{ asset('images/explore-bg.jpg') }}" alt="Main Attraction" class="img-fluid">
-                            <div class="explore-main-overlay">
-                                <div class="explore-main-content">
-                                    <h3>The Majestic Waterfall</h3>
-                                    <p>Experience the power and beauty of cascading waters surrounded by lush tropical
-                                        forest.</p>
-                                    <a href="{{ route('login') }}" class="btn-explore-main">
-                                        <i class="fas fa-arrow-right"></i>
-                                        Explore Now
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="row g-3">
-                        <div class="col-12" data-aos="fade-left" data-aos-delay="300">
-                            <div class="explore-sub-card">
-                                <img src="{{ asset('images/pos1.jpeg') }}" alt="Azure Haven" class="img-fluid">
-                                <div class="explore-sub-overlay">
-                                    <h5>Azure Haven</h5>
-                                    <p>Crystal clear pools</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12" data-aos="fade-left" data-aos-delay="400">
-                            <div class="explore-sub-card">
-                                <img src="{{ asset('images/mushalla.jpg') }}" alt="Serene Sanctuary" class="img-fluid">
-                                <div class="explore-sub-overlay">
-                                    <h5>Serene Sanctuary</h5>
-                                    <p>Peaceful meditation spots</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12" data-aos="fade-left" data-aos-delay="500">
-                            <div class="explore-sub-card">
-                                <img src="{{ asset('images/toilet.jpg') }}" alt="Verdant Vista" class="img-fluid">
-                                <div class="explore-sub-overlay">
-                                    <h5>Modern Facilities</h5>
-                                    <p>Comfort in nature</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    /* Floating Particles */
+    .hero-particles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 2;
+    }
 
-    <!-- 3. FACILITIES SECTION -->
-    <section class="facilities-section-modern py-5 bg-light">
-        <div class="container">
-            <div class="section-header-modern text-center mb-5" data-aos="fade-up">
-                <div class="section-badge-modern">
-                    <i class="fas fa-cogs"></i>
-                    <span>Our Facilities</span>
-                </div>
-                <h2 class="section-title-modern">World-Class Amenities</h2>
-                <p class="section-subtitle-modern">
-                    Enjoy premium facilities designed to enhance your experience and ensure maximum comfort during your
-                    visit.
-                </p>
-            </div>
+    .particle {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: float-up 15s infinite linear;
+    }
 
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="facility-card-modern">
-                        <div class="facility-icon-modern">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
-                        <h5 class="facility-title-modern">Competitive Prices</h5>
-                        <p class="facility-description-modern">
-                            Affordable packages and transparent pricing with no hidden costs.
-                            Get the best value for your adventure experience.
-                        </p>
-                        <div class="facility-features">
-                            <span class="feature-tag">Budget Friendly</span>
-                            <span class="feature-tag">No Hidden Fees</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="facility-card-modern">
-                        <div class="facility-icon-modern">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h5 class="facility-title-modern">Secure & Safe</h5>
-                        <p class="facility-description-modern">
-                            Your safety is our priority. Professional guides, safety equipment,
-                            and emergency protocols ensure a worry-free experience.
-                        </p>
-                        <div class="facility-features">
-                            <span class="feature-tag">24/7 Security</span>
-                            <span class="feature-tag">Safety First</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="facility-card-modern">
-                        <div class="facility-icon-modern">
-                            <i class="fas fa-sync-alt"></i>
-                        </div>
-                        <h5 class="facility-title-modern">Seamless Experience</h5>
-                        <p class="facility-description-modern">
-                            From booking to departure, enjoy a smooth and hassle-free journey
-                            with our dedicated customer service team.
-                        </p>
-                        <div class="facility-features">
-                            <span class="feature-tag">Easy Booking</span>
-                            <span class="feature-tag">24/7 Support</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    .particle.green {
+        background: rgba(34, 139, 34, 0.2);
+    }
 
-    <!-- 4. TOUR GUIDE SECTION -->
-    <section class="tourguide-section-modern py-5">
-        <div class="container">
-            <div class="section-header-modern text-center mb-5" data-aos="fade-up">
-                <div class="section-badge-modern">
-                    <i class="fas fa-users"></i>
-                    <span>Expert Guides</span>
-                </div>
-                <h2 class="section-title-modern">Meet Our Professional Tour Guides</h2>
-                <p class="section-subtitle-modern">
-                    Our experienced and certified guides are passionate locals who know every hidden gem and story of this
-                    beautiful region.
-                </p>
-            </div>
+    /* Geometric Overlay */
+    .hero-geometric {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 25% 25%, rgba(34, 139, 34, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+            conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(144, 238, 144, 0.1) 90deg, transparent 180deg);
+        z-index: 3;
+        animation: rotate-slow 60s infinite linear;
+    }
 
-            <div class="row g-4 mb-5">
-                @foreach ($tourGuides->take(3) as $index => $guide)
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
-                        <div class="guide-card-modern">
-                            <div class="guide-image-wrapper-modern">
-                                <img src="{{ asset('storage/' . $guide->foto) }}" alt="{{ $guide->nama }}"
-                                    class="guide-image-modern">
-                                <div class="guide-overlay-modern">
-                                    <div class="guide-rating-modern">
-                                        <i class="fas fa-star"></i>
-                                        <span>4.9</span>
-                                    </div>
-                                    <div class="guide-status-modern">
-                                        <i class="fas fa-circle"></i>
-                                        <span>Available</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="guide-content-modern">
-                                <h5 class="guide-name-modern">{{ $guide->nama }}</h5>
-                                <div class="guide-details-modern">
-                                    <div class="guide-detail-item">
-                                        <i class="fas fa-phone"></i>
-                                        <span>{{ $guide->nohp }}</span>
-                                    </div>
-                                    <div class="guide-detail-item">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <span>{{ $guide->alamat }}</span>
-                                    </div>
-                                </div>
-                                <div class="guide-price-modern">
-                                    <span class="price-label">Starting from</span>
-                                    <span class="price-value">{{ $guide->price_range ?? 'Rp 500K' }}</span>
-                                </div>
-                                <div class="guide-skills-modern">
-                                    <span class="skill-tag">Nature Expert</span>
-                                    <span class="skill-tag">Photography</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+    /* Hero Content Grid */
+    .hero-content-grid {
+        position: relative;
+        z-index: 10;
+        max-width: 1400px;
+        width: 100%;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 5rem;
+        align-items: center;
+    }
 
-            <div class="text-center" data-aos="fade-up" data-aos-delay="600">
-                <a href="{{ route('tourguides.index') }}" class="btn-view-all-modern">
-                    <i class="fas fa-users me-2"></i>
-                    View All Guides
-                    <i class="fas fa-arrow-right ms-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+    /* Enhanced Tour Guide Cards */
+.guide-card-enhanced {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-glow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
 
-    <!-- 5. UMKM & HONEY PRODUCTS SECTION -->
-    <section class="products-section-modern py-5 bg-light">
-        <div class="container">
-            <div class="section-header-modern text-center mb-5" data-aos="fade-up">
-                <div class="section-badge-modern">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>Local Products</span>
-                </div>
-                <h2 class="section-title-modern">Authentic Local Products</h2>
-                <p class="section-subtitle-modern">
-                    Discover and support local businesses with our curated selection of authentic honey an Discover and
-                    support local businesses with our curated selection of authentic honey and UMKM products.
-                </p>
-            </div>
+.guide-card-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    transform: scaleX(0);
+    transition: var(--transition);
+}
 
-            <div class="row g-4 mb-5">
-                <!-- Honey Products -->
-                <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
-                    <div class="product-category-card-modern honey-card">
-                        <div class="product-category-image">
-                            <img src="{{ asset('images/honey-bg.jpg') }}" alt="Honey Products" class="img-fluid">
-                            <div class="product-category-overlay">
-                                <div class="product-category-content">
-                                    <div class="product-category-icon">
-                                        <i class="fas fa-jar"></i>
-                                    </div>
-                                    <h4>Premium Honey</h4>
-                                    <p>Pure, natural honey harvested from local beekeepers with traditional methods.</p>
-                                    <div class="product-features-modern">
-                                        <span class="product-feature">100% Natural</span>
-                                        <span class="product-feature">Locally Sourced</span>
-                                        <span class="product-feature">Premium Quality</span>
-                                    </div>
-                                    <a href="{{ route('madu.index') }}" class="btn-product-category">
-                                        <i class="fas fa-shopping-cart"></i>
-                                        Shop Honey
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+.guide-card-enhanced:hover::before {
+    transform: scaleX(1);
+}
 
-                <!-- UMKM Products -->
-                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
-                    <div class="product-category-card-modern umkm-card">
-                        <div class="product-category-image">
-                            <img src="{{ asset('images/umkm-bg.jpg') }}" alt="UMKM Products" class="img-fluid">
-                            <div class="product-category-overlay">
-                                <div class="product-category-content">
-                                    <div class="product-category-icon">
-                                        <i class="fas fa-store"></i>
-                                    </div>
-                                    <h4>UMKM Products</h4>
-                                    <p>Support local entrepreneurs with handcrafted products and traditional specialties.
-                                    </p>
-                                    <div class="product-features-modern">
-                                        <span class="product-feature">Handcrafted</span>
-                                        <span class="product-feature">Local Business</span>
-                                        <span class="product-feature">Authentic</span>
-                                    </div>
-                                    <a href="{{ route('produkUMKM.index') }}" class="btn-product-category">
-                                        <i class="fas fa-handshake"></i>
-                                        Support Local
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+.guide-card-enhanced:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(34, 139, 34, 0.4);
+}
 
-            <!-- Product Highlights -->
-            <div class="product-highlights-modern" data-aos="fade-up" data-aos-delay="400">
-                <div class="row g-4">
-                    <div class="col-md-3 col-6">
-                        <div class="highlight-item-modern">
-                            <div class="highlight-icon-modern">
-                                <i class="fas fa-leaf"></i>
-                            </div>
-                            <h6>Organic</h6>
-                            <p>100% Natural</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-6">
-                        <div class="highlight-item-modern">
-                            <div class="highlight-icon-modern">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <h6>Healthy</h6>
-                            <p>Good for You</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-6">
-                        <div class="highlight-item-modern">
-                            <div class="highlight-icon-modern">
-                                <i class="fas fa-shipping-fast"></i>
-                            </div>
-                            <h6>Fast Delivery</h6>
-                            <p>Quick & Safe</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-6">
-                        <div class="highlight-item-modern">
-                            <div class="highlight-icon-modern">
-                                <i class="fas fa-medal"></i>
-                            </div>
-                            <h6>Quality</h6>
-                            <p>Premium Grade</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+.guide-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(34, 139, 34, 0.3);
+    margin: 0 auto 1rem;
+    display: block;
+    transition: var(--transition);
+}
 
-    <!-- 6. NEWS & GALLERY SECTION -->
-    <section class="news-gallery-section-modern py-5">
-        <div class="container">
-            <div class="row g-5">
-                <!-- News Section -->
-                <div class="col-lg-6">
-                    <div class="section-header-modern mb-4" data-aos="fade-right">
-                        <div class="section-badge-modern">
-                            <i class="fas fa-newspaper"></i>
-                            <span>Latest News</span>
-                        </div>
-                        <h3 class="section-title-modern">Stay Updated</h3>
-                        <p class="section-subtitle-modern">
-                            Get the latest news and updates about events, activities, and developments.
-                        </p>
-                    </div>
+.guide-card-enhanced:hover .guide-avatar {
+    transform: scale(1.1);
+    border-color: rgba(34, 139, 34, 0.6);
+}
 
-                    <div class="news-cards-modern">
-                        @if (isset($beritas) && $beritas->count() > 0)
-                            @foreach ($beritas->take(3) as $berita)
-                                <div class="news-card-modern" data-aos="fade-right"
-                                    data-aos-delay="{{ $loop->index * 100 }}">
-                                    <div class="news-image-modern">
-                                        @if ($berita->foto)
-                                            <img src="{{ asset('storage/' . $berita->foto) }}"
-                                                alt="{{ $berita->judul }}">
-                                        @else
-                                            <img src="{{ asset('images/default-news.jpg') }}"
-                                                alt="{{ $berita->judul }}">
-                                        @endif
-                                        <div class="news-date-modern">
-                                            <span class="date-day">{{ date('d', strtotime($berita->created_at)) }}</span>
-                                            <span
-                                                class="date-month">{{ date('M', strtotime($berita->created_at)) }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="news-content-modern">
-                                        <h6 class="news-title-modern">{{ Str::limit($berita->judul, 60) }}</h6>
-                                        <p class="news-excerpt-modern">{{ Str::limit($berita->konten, 100) }}</p>
-                                        <div class="news-meta-modern">
-                                            <span class="news-author">Admin</span>
-                                            <span>{{ $berita->created_at->diffForHumans() }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <div class="news-card-modern" data-aos="fade-right">
-                                <div class="news-image-modern">
-                                    <img src="{{ asset('images/default-news.jpg') }}" alt="Sample News">
-                                    <div class="news-date-modern">
-                                        <span class="date-day">15</span>
-                                        <span class="date-month">Dec</span>
-                                    </div>
-                                </div>
-                                <div class="news-content-modern">
-                                    <h6 class="news-title-modern">Welcome to Our Tourism Platform</h6>
-                                    <p class="news-excerpt-modern">Discover amazing destinations and experiences with our
-                                        comprehensive tourism services.</p>
-                                    <div class="news-meta-modern">
-                                        <span class="news-author">Admin</span>
-                                        <span>2 days ago</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="news-card-modern" data-aos="fade-right" data-aos-delay="100">
-                                <div class="news-image-modern">
-                                    <img src="{{ asset('images/default-news.jpg') }}" alt="Sample News">
-                                    <div class="news-date-modern">
-                                        <span class="date-day">12</span>
-                                        <span class="date-month">Dec</span>
-                                    </div>
-                                </div>
-                                <div class="news-content-modern">
-                                    <h6 class="news-title-modern">Explore Local Culture</h6>
-                                    <p class="news-excerpt-modern">Immerse yourself in the rich cultural heritage of our
-                                        beautiful destinations.</p>
-                                    <div class="news-meta-modern">
-                                        <span class="news-author">Admin</span>
-                                        <span>5 days ago</span>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
+.guide-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+.guide-rating .star {
+    color: #fbbf24;
+    font-size: 1.2rem;
+}
+
+.guide-specialties {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.specialty-tag {
+    background: rgba(34, 139, 34, 0.1);
+    color: #2d5a3d;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(34, 139, 34, 0.2);
+}
+.guide-photo {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.guide-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.guide-image:hover {
+    transform: scale(1.05);
+}
+
+.guide-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: #2d5016; /* Warna hijau gelap seperti di footer */
+}
+
+.detail-row i {
+    width: 16px;
+    text-align: center;
+    color: #28a745; /* Warna hijau untuk icon */
+    font-size: 0.85rem;
+}
+
+.detail-row a {
+    color: #2d5016;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.detail-row a:hover {
+    color: #1a2e0a;
+    text-decoration: underline;
+}
+
+.detail-description {
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(45, 80, 22, 0.2);
+}
+
+.detail-description p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #2d5016;
+    line-height: 1.5;
+    text-align: justify;
+    opacity: 0.8;
+}
+
+.price-section {
+    padding: 0.75rem 0;
+    border-top: 1px solid rgba(45, 80, 22, 0.2);
+    text-align: center;
+}
+
+.price-display {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #28a745; /* Warna hijau untuk harga */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(45, 80, 22, 0.2);
+}
+
+.btn-glass {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.btn-details {
+    background: rgba(45, 80, 22, 0.1);
+    color: #2d5016;
+    border: 1px solid rgba(45, 80, 22, 0.3);
+}
+
+.btn-details:hover {
+    background: rgba(45, 80, 22, 0.2);
+    color: #1a2e0a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45, 80, 22, 0.2);
+}
+
+.btn-glass-primary {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: #ffffff;
+    border: 1px solid #28a745;
+}
+
+.btn-glass-primary:hover {
+    background: linear-gradient(135deg, #20c997, #28a745);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+}
+
+/* Untuk card title */
+.card-title-glass {
+    color: #1a2e0a; /* Hijau sangat gelap */
+    font-weight: 700;
+}
+
+/* Untuk section header */
+.section-title-glass {
+    color: #1a2e0a;
+}
+
+.section-description-glass {
+    color: #2d5016;
+    opacity: 0.9;
+}
+.detail-row {
+    color: rgba(0, 100, 0, 0.8); /* Hijau gelap dengan transparansi */
+}
+
+.detail-row i {
+    color: #006400; /* Hijau gelap untuk icon */
+}
+
+.detail-row a {
+    color: #006400;
+}
+
+.detail-row a:hover {
+    color: #004d00;
+}
+
+.detail-description p {
+    color: rgba(0, 100, 0, 0.7);
+}
+
+.price-display {
+    color: #006400;
+    font-weight: 800;
+}
+
+.btn-details {
+    background: rgba(0, 100, 0, 0.1);
+    color: #006400;
+    border: 1px solid rgba(0, 100, 0, 0.3);
+}
+
+.btn-details:hover {
+    background: rgba(0, 100, 0, 0.2);
+    color: #004d00;
+}
+
+.btn-glass-primary {
+    background: linear-gradient(135deg, #006400, #228B22);
+    color: white;
+}
+
+.btn-glass-primary:hover {
+    background: linear-gradient(135deg, #228B22, #006400);
+}
 
 
-                    <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="300">
-                        @if (isset($beritas) && $beritas->count() > 0)
-                            <a href="{{ route('beritas.index') }}" class="btn-view-all-modern">
-                                <i class="fas fa-newspaper"></i>
-                                <span>View All News</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        @else
-                            <a href="#" class="btn-view-all-modern">
-                                <i class="fas fa-newspaper"></i>
-                                <span>Coming Soon</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        @endif
-                    </div>
-
-                </div>
-
-                <!-- Gallery Section -->
-                <div class="col-lg-6">
-                    <div class="section-header-modern mb-4" data-aos="fade-left">
-                        <div class="section-badge-modern">
-                            <i class="fas fa-images"></i>
-                            <span>Gallery</span>
-                        </div>
-                        <h3 class="section-title-modern">Visual Journey</h3>
-                        <p class="section-subtitle-modern">
-                            Explore stunning visuals and capture the beauty of our destination.
-                        </p>
-                    </div>
-
-                    <div class="gallery-grid-modern">
-                        @if (isset($galleries) && $galleries->count() > 0)
-                            @foreach ($galleries->take(6) as $gallery)
-                                <div class="gallery-item-modern" data-aos="zoom-in"
-                                    data-aos-delay="{{ $loop->index * 50 }}">
-                                    @if ($gallery->foto)
-                                        <img src="{{ asset('storage/' . $gallery->foto) }}" alt="{{ $gallery->judul }}">
-                                    @else
-                                        <img src="{{ asset('images/default-gallery.jpg') }}"
-                                            alt="{{ $gallery->judul }}">
-                                    @endif
-                                    <div class="gallery-overlay-modern">
-                                        <div class="gallery-overlay-content">
-                                            <i class="fas fa-search-plus"></i>
-                                            <h6>{{ Str::limit($gallery->judul, 30) }}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <div class="gallery-item-modern" data-aos="zoom-in">
-                                <img src="{{ asset('images/default-gallery.jpg') }}" alt="Sample Gallery">
-                                <div class="gallery-overlay-modern">
-                                    <div class="gallery-overlay-content">
-                                        <i class="fas fa-search-plus"></i>
-                                        <h6>Beautiful Landscape</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="gallery-item-modern" data-aos="zoom-in" data-aos-delay="50">
-                                <img src="{{ asset('images/default-gallery.jpg') }}" alt="Sample Gallery">
-                                <div class="gallery-overlay-modern">
-                                    <div class="gallery-overlay-content">
-                                        <i class="fas fa-search-plus"></i>
-                                        <h6>Cultural Heritage</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="gallery-item-modern" data-aos="zoom-in" data-aos-delay="100">
-                                <img src="{{ asset('images/default-gallery.jpg') }}" alt="Sample Gallery">
-                                <div class="gallery-overlay-modern">
-                                    <div class="gallery-overlay-content">
-                                        <i class="fas fa-search-plus"></i>
-                                        <h6>Adventure Tours</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="gallery-item-modern" data-aos="zoom-in" data-aos-delay="150">
-                                <img src="{{ asset('images/default-gallery.jpg') }}" alt="Sample Gallery">
-                                <div class="gallery-overlay-modern">
-                                    <div class="gallery-overlay-content">
-                                        <i class="fas fa-search-plus"></i>
-                                        <h6>Local Cuisine</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="gallery-item-modern" data-aos="zoom-in" data-aos-delay="200">
-                                <img src="{{ asset('images/default-gallery.jpg') }}" alt="Sample Gallery">
-                                <div class="gallery-overlay-modern">
-                                    <div class="gallery-overlay-content">
-                                        <i class="fas fa-search-plus"></i>
-                                        <h6>Natural Wonders</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="gallery-item-modern" data-aos="zoom-in" data-aos-delay="250">
-                                <img src="{{ asset('images/default-gallery.jpg') }}" alt="Sample Gallery">
-                                <div class="gallery-overlay-modern">
-                                    <div class="gallery-overlay-content">
-                                        <i class="fas fa-search-plus"></i>
-                                        <h6>Traditional Arts</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .detail-row {
+        font-size: 0.85rem;
+    }
+    
+    .price-display {
+        font-size: 1.1rem;
+    }
+    
+    .guide-image {
+        height: 180px;
+    }
+}
 
 
-                    <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="300">
-                        @if (isset($galleries) && $galleries->count() > 0)
-                            <a href="{{ route('galeri.index') }}" class="btn-view-all-modern">
-                                <i class="fas fa-images"></i>
-                                <span>View All Gallery</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        @else
-                            <a href="#" class="btn-view-all-modern">
-                                <i class="fas fa-images"></i>
-                                <span>Coming Soon</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        @endif
-                    </div>
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .detail-row {
+        font-size: 0.85rem;
+    }
+    
+    .price-display {
+        font-size: 1.1rem;
+    }
+    
+    .guide-image {
+        height: 180px;
+    }
+}
 
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- 7. TESTIMONIALS SECTION -->
-    <section class="testimonials-section-modern py-5 bg-light">
-        <div class="container">
-            <div class="section-header-modern text-center mb-5" data-aos="fade-up">
-                <div class="section-badge-modern">
-                    <i class="fas fa-quote-left"></i>
-                    <span>Testimonials</span>
-                </div>
-                <h2 class="section-title-modern">What Our Visitors Say</h2>
-                <p class="section-subtitle-modern">
-                    Read authentic reviews from travelers who have experienced the magic of Air Terjun Lubuk Hitam.
-                </p>
-            </div>
+    /* Left Content Section */
+    .hero-text-section {
+        animation: slideInLeft 1.2s ease-out;
+    }
 
-            <div class="testimonials-carousel-modern" data-aos="fade-up" data-aos-delay="200">
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="testimonial-card-modern">
-                            <div class="testimonial-rating-modern">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="testimonial-text-modern">
-                                "An absolutely breathtaking experience! The waterfall is stunning and the guides were
-                                incredibly knowledgeable.
-                                This place exceeded all my expectations."
-                            </p>
-                            <div class="testimonial-author-modern">
-                                <div class="author-avatar-modern">
-                                    <img src="{{ asset('images/avatar1.jpg') }}" alt="Sarah Johnson">
-                                </div>
-                                <div class="author-info-modern">
-                                    <h6>Sarah Johnson</h6>
-                                    <span>Travel Blogger</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="testimonial-card-modern">
-                            <div class="testimonial-rating-modern">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="testimonial-text-modern">
-                                "Perfect for families! The facilities are excellent and the staff is very friendly.
-                                My kids loved every moment of our adventure here."
-                            </p>
-                            <div class="testimonial-author-modern">
-                                <div class="author-avatar-modern">
-                                    <img src="{{ asset('images/avatar2.jpg') }}" alt="Michael Chen">
-                                </div>
-                                <div class="author-info-modern">
-                                    <h6>Michael Chen</h6>
-                                    <span>Family Traveler</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="testimonial-card-modern">
-                            <div class="testimonial-rating-modern">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <p class="testimonial-text-modern">
-                                "The natural beauty here is unmatched. Great for photography and the local honey is amazing!
-                                Will definitely come back again."
-                            </p>
-                            <div class="testimonial-author-modern">
-                                <div class="author-avatar-modern">
-                                    <img src="{{ asset('images/avatar3.jpg') }}" alt="Emma Rodriguez">
-                                </div>
-                                <div class="author-info-modern">
-                                    <h6>Emma Rodriguez</h6>
-                                    <span>Nature Photographer</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--glass-gradient);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-glass);
+        animation: badge-glow 3s ease-in-out infinite;
+    }
 
-    <!-- 8. CTA SECTION -->
-    <section class="cta-section-modern py-5">
-        <div class="container">
-            <div class="cta-content-modern text-center" data-aos="zoom-in">
-                <div class="cta-icon-modern">
-                    <i class="fas fa-mountain"></i>
-                </div>
-                <h2 class="cta-title-modern">Ready for Your Adventure?</h2>
-                <p class="cta-description-modern">
-                    Join thousands of satisfied visitors who have discovered the magic of Air Terjun Lubuk Hitam.
-                    Book your unforgettable experience today!
-                </p>
-                <div class="cta-actions-modern">
-                    <a href="{{ route('register') }}" class="btn-cta-primary">
-                        <i class="fas fa-user-plus"></i>
-                        Get Started Now
-                    </a>
-                    <a href="{{ route('login') }}" class="btn-cta-secondary">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Sign In
-                    </a>
-                </div>
-                <div class="cta-features-modern">
-                    <div class="cta-feature-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Instant Booking</span>
-                    </div>
-                    <div class="cta-feature-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Best Price Guarantee</span>
-                    </div>
-                    <div class="cta-feature-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>24/7 Support</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    .hero-title-modern {
+        font-size: clamp(3rem, 7vw, 6rem);
+        font-weight: 900;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #ffffff 0%, #90EE90 50%, #ffffff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+        letter-spacing: -0.02em;
+        position: relative;
+    }
 
-    @include('layouts.footer')
+    .hero-title-modern::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 100px;
+        height: 4px;
+        background: var(--accent-gradient);
+        border-radius: 2px;
+        animation: title-underline 2s ease-out 0.5s both;
+    }
 
-    <!-- AOS Script -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    .hero-subtitle {
+        font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+        font-weight: 300;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 3rem;
+        max-width: 600px;
+    }
 
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 50,
-        });
+    /* Hero Actions */
+    .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
 
-        // Counter Animation
-        function animateCounters() {
-            const counters = document.querySelectorAll('.stat-number-modern[data-count]');
+    .btn-hero-primary {
+        background: var(--pure-white);
+        color: var(--dark-forest);
+        padding: 1.2rem 2.5rem;
+        border-radius: 60px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-decoration: none;
+        transition: var(--transition-bounce);
+        box-shadow: var(--glow-white);
+        position: relative;
+        overflow: hidden;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
 
-            counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-count'));
-                const increment = target / 50;
-                let current = 0;
+    .btn-hero-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(34, 139, 34, 0.2), transparent);
+        transition: left 0.6s ease;
+    }
 
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        counter.textContent = target;
-                        clearInterval(timer);
-                    } else {
-                        counter.textContent = Math.floor(current);
-                    }
-                }, 30);
-            });
+    .btn-hero-primary:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 20px 40px rgba(255, 255, 255, 0.3);
+        color: var(--dark-forest);
+    }
+
+    .btn-hero-primary:hover::before {
+        left: 100%;
+    }
+
+    .btn-hero-secondary {
+        background: transparent;
+        color: var(--pure-white);
+        padding: 1.2rem 2.5rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 60px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-decoration: none;
+        transition: var(--transition-smooth);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .btn-hero-secondary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s ease;
+    }
+
+    .btn-hero-secondary:hover {
+        transform: translateY(-3px);
+        border-color: var(--pure-white);
+        color: var(--pure-white);
+        box-shadow: var(--glow-white);
+    }
+
+    .btn-hero-secondary:hover::before {
+        transform: scaleX(1);
+    }
+    
+
+    /* Hero Stats */
+    .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .hero-stat-item {
+        text-align: center;
+        padding: 1.5rem;
+        background: var(--glass-gradient);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        transition: var(--transition-smooth);
+    }
+
+    .hero-stat-item:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-glass);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        display: block;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #ffffff, #90EE90);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-stat-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 500;
+    }
+
+    /* Right Content Section */
+    .hero-visual-section {
+        position: relative;
+        animation: slideInRight 1.2s ease-out;
+    }
+
+    .hero-image-container {
+        position: relative;
+        width: 100%;
+        height: 500px;
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: var(--shadow-hero);
+        background: var(--glass-gradient);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition-smooth);
+    }
+
+    .hero-image-container:hover .hero-image {
+        transform: scale(1.1);
+    }
+
+    /* .hero-image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition-smooth);
+    } */
+
+    .hero-image-container:hover .hero-image-overlay {
+        opacity: 1;
+    }
+
+    
+
+    /* Floating Elements */
+    .hero-floating-elements {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    .floating-element {
+        position: absolute;
+        background: var(--glass-gradient);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 1rem;
+        animation: float-element 6s ease-in-out infinite;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .floating-element.element-1 {
+        top: 20%;
+        right: 10%;
+        animation-delay: 0s;
+    }
+
+    .floating-element.element-2 {
+        bottom: 30%;
+        left: 5%;
+        animation-delay: 2s;
+    }
+
+     .floating-element.element-3 {
+        top: 60%;
+        right: 20%;
+        animation-delay: 4s;
+    }
+
+    /* Scroll Indicator */
+    .hero-scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        
+    }
+
+    .scroll-mouse {
+        width: 30px;
+        height: 50px;
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        border-radius: 15px;
+        position: relative;
+        animation: mouse-bounce 2s infinite;
+    }
+
+    .scroll-mouse::before {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 8px;
+        background: var(--pure-white);
+        border-radius: 2px;
+        animation: scroll-wheel 2s infinite;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes float-up {
+        0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0;
+        }
+        10% {
+            opacity: 1;
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-100px) rotate(360deg);
+            opacity: 0;
+        }
+    }
+
+    @keyframes rotate-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes badge-glow {
+        0%, 100% {
+            box-shadow: var(--shadow-glass);
+        }
+        50% {
+            box-shadow: var(--glow-green);
+        }
+    }
+
+    @keyframes title-underline {
+        from {
+            width: 0;
+            opacity: 0;
+        }
+        to {
+            width: 100px;
+            opacity: 1;
+        }
+    }
+
+    @keyframes float-element {
+        0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+            transform: translateY(-20px) rotate(5deg);
+        }
+    }
+
+    @keyframes mouse-bounce {
+        0%, 100% {
+            transform: translateX(-50%) translateY(0);
+        }
+        50% {
+            transform: translateX(-50%) translateY(-10px);
+        }
+    }
+
+    @keyframes scroll-wheel {
+        0% {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        100% {
+            opacity: 0;
+            transform: translateX(-50%) translateY(15px);
+        }
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 1024px) {
+        .hero-content-grid {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            text-align: center;
         }
 
-        // Intersection Observer for counter animation
-        const observerOptions = {
-            threshold: 0.5,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counters = entry.target.querySelectorAll('.stat-number-modern[data-count]');
-                    if (counters.length > 0 && !entry.target.classList.contains('animated')) {
-                        entry.target.classList.add('animated');
-                        animateCounters();
-                    }
-                }
-            });
-        }, observerOptions);
-
-        // Observe hero stats section
-        document.addEventListener('DOMContentLoaded', function() {
-            const heroStats = document.querySelector('.hero-stats-modern');
-            if (heroStats) {
-                observer.observe(heroStats);
-            }
-
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-
-            // Parallax effect for hero section
-            window.addEventListener('scroll', function() {
-                const scrolled = window.pageYOffset;
-                const parallax = document.querySelector('.hero-section-modern');
-                const speed = scrolled * 0.5;
-
-                if (parallax) {
-                    parallax.style.transform = `translateY(${speed}px)`;
-                }
-            });
-
-            // Floating animation for hero cards
-            const floatingCards = document.querySelectorAll('.hero-floating-card');
-            floatingCards.forEach(card => {
-                setInterval(() => {
-                    card.style.transform = `translateY(${Math.sin(Date.now() * 0.001) * 10}px)`;
-                }, 16);
-            });
-
-            // Gallery item hover effects
-            const galleryItems = document.querySelectorAll('.gallery-item-modern');
-            galleryItems.forEach(item => {
-                item.addEventListener('mouseenter', function() {
-                    this.style.transform = 'scale(1.05)';
-                });
-
-                item.addEventListener('mouseleave', function() {
-                    this.style.transform = 'scale(1)';
-                });
-            });
-
-            // Testimonial card animations
-            const testimonialCards = document.querySelectorAll('.testimonial-card-modern');
-            testimonialCards.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.2}s`;
-            });
-        });
-
-        // Particle animation for hero background
-        function createParticles() {
-            const particlesContainer = document.querySelector('.hero-particles');
-            if (!particlesContainer) return;
-
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particlesContainer.appendChild(particle);
-            }
+        .hero-image-container {
+            height: 400px;
         }
 
-        // Initialize particles when page loads
-        window.addEventListener('load', createParticles);
-    </script>
-@endsection
-
-@section('styles')
-    <style>
-        /* === GLOBAL STYLES === */
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #f59e0b;
-            --accent-color: #10b981;
-            --dark-color: #1f2937;
-            --light-color: #f8fafc;
-            --text-color: #374151;
-            --text-muted: #6b7280;
-            --border-color: #e5e7eb;
-            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        .hero-stats {
+            grid-template-columns: repeat(3, 1fr);
         }
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            overflow-x: hidden;
-        }
-
-        /* === HERO SECTION === */
-        .hero-section-modern {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .hero-particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: float 15s infinite linear;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 2;
-        }
-
-        .hero-content-left,
-        .hero-content-right {
-            position: relative;
-            z-index: 3;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            color: white;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+    @media (max-width: 768px) {
+        .hero-content-grid {
+            padding: 0 1rem;
         }
 
         .hero-title-modern {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            color: white;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
+            font-size: 3rem;
         }
 
-        .gradient-text {
-            background: linear-gradient(45deg, #fbbf24, #f59e0b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-description-modern {
-            font-size: 1.125rem;
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            max-width: 500px;
-        }
-
-        .hero-actions-modern {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
+        .hero-actions {
+            flex-direction: column;
+            align-items: center;
         }
 
         .btn-hero-primary,
         .btn-hero-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .btn-hero-primary {
-            background: var(--gradient-secondary);
-            color: white;
-            box-shadow: var(--shadow-medium);
-        }
-
-        .btn-hero-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-heavy);
-            color: white;
-        }
-
-        .btn-hero-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-hero-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        .hero-stats-modern {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .stat-item-modern {
-            text-align: center;
-        }
-
-        .stat-number-modern {
-            display: block;
-            font-size: 2rem;
-            font-weight: 800;
-            color: white;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .stat-label-modern {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 500;
-        }
-
-        .hero-image-wrapper {
-            position: relative;
-            height: 600px;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .hero-main-image {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 20px;
-            box-shadow: var(--shadow-heavy);
+            max-width: 300px;
+            justify-content: center;
         }
 
-        .hero-floating-card {
-            position: absolute;
-            bottom: 2rem;
-            left: 2rem;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow-medium);
-            max-width: 250px;
-        }
-
-        .floating-card-content {
-            display: flex;
-            align-items: center;
+        .hero-stats {
+            grid-template-columns: 1fr;
             gap: 1rem;
         }
 
-        .floating-card-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.25rem;
+        .hero-image-container {
+            height: 300px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-title-modern {
+            font-size: 2.5rem;
         }
 
-        .floating-card-text h6 {
-            margin: 0;
-            font-weight: 600;
-            color: var(--dark-color);
+        .hero-subtitle {
+            font-size: 1.1rem;
         }
 
-        .floating-card-text p {
-            margin: 0;
-            font-size: 0.875rem;
-            color: var(--text-muted);
+        .floating-element {
+            display: none;
         }
+    }
+    
+    /* ===== GLASS SECTIONS STYLES ===== */
+    .glass-section {
+        padding: 8rem 0;
+        position: relative;
+    }
 
-        .scroll-indicator-modern {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 3;
-        }
+    .glass-bg-primary {
+        background: linear-gradient(135deg, #f8fffe 0%, #f0fff0 50%, #e6ffe6 100%);
+    }
 
-        .scroll-arrow-modern {
-            width: 30px;
-            height: 30px;
-            border: 2px solid white;
-            border-top: none;
-            border-left: none;
-            transform: rotate(45deg);
-            animation: bounce 2s infinite;
-        }
+    .glass-bg-secondary {
+        background: linear-gradient(135deg, #e6ffe6 0%, #ccffcc 50%, #b3ffb3 100%);
+    }
 
-        @keyframes bounce {
+    .section-header-glass {
+        text-align: center;
+        margin-bottom: 5rem;
+        position: relative;
+    }
 
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0) rotate(45deg);
+    .section-title-glass {
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #0a1f0f 0%, #228B22 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+    }
+
+    .section-title-glass::after {
+        content: '';
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--accent-gradient);
+        border-radius: 2px;
+        box-shadow: var(--glow-green);
+    }
+
+    .section-description-glass {
+        font-size: 1.2rem;
+        color: var(--deep-green);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.8;
+    }
+
+    .glass-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2.5rem;
+        margin-top: 4rem;
+    }
+
+    .glass-card {
+        background: var(--glass-gradient);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 25px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow-glass);
+        transition: var(--transition-smooth);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glass-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--accent-gradient);
+        transform: scaleX(0);
+        transition: var(--transition-smooth);
+    }
+
+    .glass-card:hover {
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: var(--shadow-hero);
+        border-color: rgba(34, 139, 34, 0.4);
+    }
+
+    .glass-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .scroll-reveal {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .scroll-reveal.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .card-title-glass {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: var(--dark-forest);
+        margin-bottom: 1rem;
+    }
+
+    .card-description-glass {
+        color: var(--deep-green);
+        line-height: 1.7;
+        margin-bottom: 2rem;
+    }
+
+    .btn-glass {
+        padding: 1rem 2.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-decoration: none;
+        transition: var(--transition-smooth);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin: 0.5rem;
+        position: relative;
+        overflow: hidden;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-glass-primary {
+        background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+        color: white;
+        box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+    }
+
+    .btn-glass-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(34, 139, 34, 0.6);
+        color: white;
+    }
+    .guide-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.detail-row i {
+    width: 16px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.detail-row a {
+    color: var(--dark-color);
+    text-decoration: none;
+}
+
+.detail-row a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.price-row .price-text {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.detail-description {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.detail-description p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    line-height: 1.4;
+}
+
+</style>
+
+<!-- Modern Dark Hero Section -->
+<section class="hero-dark-modern" id="hero-section">
+    <!-- Animated Canvas Background -->
+    <canvas class="hero-canvas" id="hero-canvas"></canvas>
+
+    
+    <!-- Geometric Overlay -->
+    <div class="hero-geometric"></div>
+    
+
+
+    <!-- Hero Content -->
+    <div class="hero-content-grid">
+        <!-- Left Content -->
+        <div class="hero-text-section">
+            <div class="hero-badge">
+                <span>Surga Tersembunyi di Indonesia</span>
+            </div>
+            
+            <h1 class="hero-title-modern">
+                Keindahan<br>
+                <span style="background: linear-gradient(135deg, #90EE90 0%, #ffffff 50%, #90EE90 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Lubuk Hitam</span>
+            </h1>
+            
+            <p class="hero-subtitle">
+                  Rasakan keindahan menakjubkan dari air terjun yang mengalir deras, alam yang masih asli, 
+        dan petualangan tak terlupakan di salah satu destinasi alam paling spektakuler di Indonesia.
+            </p>
+
+            <div class="hero-actions">
+                <a href="{{ route('minimap.index') }}" class="btn-hero-primary" id="primary-cta">
+                    <span>Mulai Perjalanan</span>
+                </a>
+                <a href="{{ url('gallery/') }}" class="btn-hero-secondary" id="secondary-cta">
+                    <span>Eksplor Keindahan</span>
+                </a>
+            </div>
+
+            <div class="hero-stats">
+                 <div class="hero-stat-item">
+                    {{-- <span class="hero-stat-number" data-count="{{ $totalTourGuides }}">0</span> --}}
+                    <span class="hero-stat-label">Tour Guides</span>
+                </div>
+                <div class="hero-stat-item">
+                    <span class="hero-stat-number" data-count="{{ $totalFacilities }}">0</span>
+                    <span class="hero-stat-label">Fasilitas</span>
+                </div>
+                <div class="hero-stat-item">
+                    <span class="hero-stat-number" data-count="{{ $totalGalleries }}">0</span>
+                    <span class="hero-stat-label">Galeri</span>
+                </div>
+                <div class="hero-stat-item">
+                    <span class="hero-stat-number" data-count="{{ $totalNews }}">0</span>
+                    <span class="hero-stat-label">Berita</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Content -->
+        <div class="hero-visual-section">
+            <div class="hero-image-container" id="hero-image-container">
+                <img src="https://www.itrip.id/wp-content/uploads/2022/04/Alamat-Air-Terjun-Lubuk-Hitam-.jpg" 
+                     alt="Lubuk Hitam Waterfall" 
+                     class="hero-image"
+                     id="hero-image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="hero-scroll-indicator" id="scroll-indicator">
+        <div class="scroll-mouse"></div>
+    </div>
+</section>
+
+<!-- Amazing JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🌟 Lubuk Hitam Modern Hero Loading...');
+
+    // ===== CANVAS ANIMATION =====
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Animated background waves
+    let waveOffset = 0;
+    function drawWaves() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Create gradient
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(0, 'rgba(34, 139, 34, 0.1)');
+        gradient.addColorStop(0.5, 'rgba(144, 238, 144, 0.05)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.02)');
+        
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        
+        for (let x = 0; x <= canvas.width; x += 10) {
+            const y = Math.sin((x + waveOffset) * 0.01) * 50 + canvas.height * 0.7;
+            if (x === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
             }
+        }
+        
+        ctx.lineTo(canvas.width, canvas.height);
+        ctx.lineTo(0, canvas.height);
+        ctx.closePath();
+        ctx.fill();
+        
+        waveOffset += 2;
+        requestAnimationFrame(drawWaves);
+    }
+    
+    drawWaves();
 
-            40% {
-                transform: translateY(-10px) rotate(45deg);
+    // ===== PARTICLE SYSTEM =====
+    const particlesContainer = document.getElementById('particles-container');
+    const particleCount = 50;
+    
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.className = Math.random() > 0.5 ? 'particle' : 'particle green';
+        
+        const size = Math.random() * 4 + 2;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        
+        particlesContainer.appendChild(particle);
+        
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
             }
+        }, 20000);
+    }
+    
+    // Create initial particles
+    for (let i = 0; i < particleCount; i++) {
+        setTimeout(() => createParticle(), i * 200);
+    }
+    
+    // Continuously create new particles
+    setInterval(createParticle, 1000);
 
-            60% {
-                transform: translateY(-5px) rotate(45deg);
+    // ===== COUNTER ANIMATION =====
+    function animateCounter(element) {
+        const target = parseInt(element.getAttribute('data-count'));
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
             }
-        }
+            element.textContent = Math.floor(current);
+        }, 16);
+    }
 
-        /* === SECTION HEADERS === */
-        .section-header-modern {
-            margin-bottom: 3rem;
+    // Enhanced tour guide card interactions
+document.querySelectorAll('.guide-card-enhanced').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        const avatar = this.querySelector('.guide-avatar');
+        const specialties = this.querySelectorAll('.specialty-tag');
+        
+        if (avatar) {
+            avatar.style.transform = 'scale(1.1) rotate(5deg)';
         }
-
-        .section-badge-modern {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
+        
+        specialties.forEach((tag, index) => {
+            setTimeout(() => {
+                tag.style.transform = 'translateY(-2px)';
+                tag.style.boxShadow = '0 5px 15px rgba(34, 139, 34, 0.2)';
+            }, index * 50);
+        });
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        const avatar = this.querySelector('.guide-avatar');
+        const specialties = this.querySelectorAll('.specialty-tag');
+        
+        if (avatar) {
+            avatar.style.transform = 'scale(1) rotate(0deg)';
         }
+        
+        specialties.forEach(tag => {
+            tag.style.transform = 'translateY(0)';
+            tag.style.boxShadow = 'none';
+        });
+    });
+});
 
-        .section-title-modern {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            color: var(--dark-color);
-            margin-bottom: 1rem;
-            line-height: 1.3;
-        }
+// Tour guide booking functionality
+document.querySelectorAll('[href*="tourguides.book"]').forEach(bookBtn => {
+    bookBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const guideName = this.closest('.glass-card').querySelector('.card-title-glass').textContent;
+        
+        showNotification(`Booking request for ${guideName} has been initiated!`, 'success');
+        
+        // You can add actual booking logic here
+        setTimeout(() => {
+            window.location.href = this.href;
+        }, 1000);
+    });
+});
 
-        .section-subtitle-modern {
-            font-size: 1.125rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+    // ===== SCROLL REVEAL ANIMATION =====
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
-        /* === EXPLORE SECTION === */
-        .explore-section-modern {
-            padding: 5rem 0;
-            background: var(--light-color);
-        }
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                
+                // Trigger counter animation for statistics
+                const statNumbers = entry.target.querySelectorAll('.hero-stat-number');
+                statNumbers.forEach(statNumber => {
+                    if (!statNumber.classList.contains('animated')) {
+                        animateCounter(statNumber);
+                        statNumber.classList.add('animated');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
 
-        .explore-main-card {
-            height: 100%;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-        }
+    // Observe hero stats
+    document.querySelectorAll('.hero-stat-item').forEach(el => {
+        observer.observe(el);
+    });
 
-        .explore-main-image {
-            height: 500px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-        }
+    // ===== INTERACTIVE ELEMENTS =====
+    
+    // Primary CTA Button Effects
+    const primaryCTA = document.getElementById('primary-cta');
+    primaryCTA.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px) scale(1.05)';
+        this.style.boxShadow = '0 20px 40px rgba(255, 255, 255, 0.3)';
+    });
+    
+    primaryCTA.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+        this.style.boxShadow = '0 0 30px rgba(255, 255, 255, 0.3)';
+    });
 
-        .explore-main-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
+    // Secondary CTA Button Effects
+    const secondaryCTA = document.getElementById('secondary-cta');
+    secondaryCTA.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-3px)';
+        this.style.borderColor = '#ffffff';
+        this.style.boxShadow = '0 0 30px rgba(255, 255, 255, 0.3)';
+    });
+    
+    secondaryCTA.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+        this.style.boxShadow = 'none';
+    });
 
-        .explore-main-card:hover .explore-main-image img {
-            transform: scale(1.1);
-        }
+    // ===== HERO IMAGE INTERACTIONS =====
+    const heroImageContainer = document.getElementById('hero-image-container');
+    const heroImage = document.getElementById('hero-image');
+    const playButton = document.getElementById('play-button');
 
-        .explore-main-overlay {
+    heroImageContainer.addEventListener('mouseenter', function() {
+        heroImage.style.transform = 'scale(1.1)';
+    });
+
+    heroImageContainer.addEventListener('mouseleave', function() {
+        heroImage.style.transform = 'scale(1)';
+    });
+
+    playButton.addEventListener('click', function() {
+        // Add ripple effect
+        const ripple = document.createElement('div');
+        ripple.style.cssText = `
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .explore-main-card:hover .explore-main-overlay {
-            opacity: 1;
-        }
-
-        .explore-main-content {
-            text-align: center;
-            color: white;
-            padding: 2rem;
-        }
-
-        .explore-main-content h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .explore-main-content p {
-            font-size: 1.125rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.9;
-        }
-
-        .btn-explore-main {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--gradient-secondary);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-explore-main:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-medium);
-            color: white;
-        }
-
-        .explore-sub-card {
-            height: 150px;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .explore-sub-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .explore-sub-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .explore-sub-card:hover img {
-            transform: scale(1.1);
-        }
-
-        .explore-sub-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-            color: white;
-            padding: 1rem;
-        }
-
-        .explore-sub-overlay h5 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .explore-sub-overlay p {
-            font-size: 0.875rem;
-            margin: 0;
-            opacity: 0.9;
-        }
-
-        /* === FACILITIES SECTION === */
-        .facilities-section-modern {
-            padding: 5rem 0;
-        }
-
-        .facility-card-modern {
-            background: white;
-            padding: 2.5rem 2rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow-light);
-            transition: all 0.3s ease;
-            height: 100%;
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-
-        .facility-card-modern:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .facility-icon-modern {
-            width: 80px;
-            height: 80px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-            color: white;
-        }
-
-        .facility-title-modern {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 1rem;
-        }
-
-        .facility-description-modern {
-            color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .facility-features {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .feature-tag {
-            background: var(--gradient-accent);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        /* === TOUR GUIDE SECTION === */
-        .tourguide-section-modern {
-            padding: 5rem 0;
-            background: var(--light-color);
-        }
-
-        .guide-card-modern {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-light);
-            transition: all 0.3s ease;
-            height: 100%;
-        }
-
-        .guide-card-modern:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .guide-image-wrapper-modern {
-            position: relative;
-            height: 250px;
-            overflow: hidden;
-        }
-
-        .guide-image-modern {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .guide-card-modern:hover .guide-image-modern {
-            transform: scale(1.1);
-        }
-
-        .guide-overlay-modern {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .guide-rating-modern,
-        .guide-status-modern {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 0.5rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .guide-rating-modern {
-            color: var(--secondary-color);
-        }
-
-        .guide-status-modern {
-            color: var(--accent-color);
-        }
-
-        .guide-status-modern i {
-            font-size: 0.5rem;
-            animation: pulse 2s infinite;
-        }
-
-        .guide-content-modern {
-            padding: 1.5rem;
-        }
-
-        .guide-name-modern {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 1rem;
-        }
-
-        .guide-details-modern {
-            margin-bottom: 1rem;
-        }
-
-        .guide-detail-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        .guide-detail-item i {
-            width: 16px;
-            color: var(--primary-color);
-        }
-
-        .guide-price-modern {
-            background: var(--light-color);
-            padding: 0.75rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .price-label {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 0.25rem;
-        }
-
-        .price-value {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .guide-skills-modern {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .skill-tag {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        /* === PRODUCTS SECTION === */
-        .products-section-modern {
-            padding: 5rem 0;
-        }
-
-        .product-category-card-modern {
-            height: 400px;
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .product-category-card-modern:hover {
-            transform: translateY(-10px);
-        }
-
-        .product-category-image {
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-category-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .product-category-card-modern:hover .product-category-image img {
-            transform: scale(1.1);
-        }
-
-        .product-category-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .product-category-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .product-category-content h4 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .product-category-content p {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-
-        .product-features-modern {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-
-        .product-feature {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-product-category {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--gradient-secondary);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-product-category:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-medium);
-            color: white;
-        }
-
-        .product-highlights-modern {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow-light);
-        }
-
-        .highlight-item-modern {
-            text-align: center;
-            padding: 1rem;
-        }
-
-        .highlight-icon-modern {
-            width: 60px;
-            height: 60px;
-            background: var(--gradient-accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .highlight-item-modern h6 {
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .highlight-item-modern p {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        /* === NEWS & GALLERY SECTION === */
-        .news-gallery-section-modern {
-            padding: 5rem 0;
-            background: var(--light-color);
-        }
-
-        .news-cards-modern {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .news-card-modern {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: var(--shadow-light);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-        }
-
-        .news-card-modern:hover {
-            transform: translateX(10px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .news-image-modern {
-            position: relative;
-            width: 100px;
-            height: 80px;
-            border-radius: 10px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .news-image-modern img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .news-date-modern {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-align: center;
-            line-height: 1.2;
-        }
-
-        .date-day {
-            display: block;
-            font-size: 0.875rem;
-        }
-
-        .date-month {
-            display: block;
-            font-size: 0.625rem;
-            opacity: 0.8;
-        }
-
-        .news-content-modern {
-            flex: 1;
-        }
-
-        .news-title-modern {
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-            line-height: 1.4;
-        }
-
-        .news-excerpt-modern {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            margin-bottom: 0.75rem;
-            line-height: 1.5;
-        }
-
-        .news-meta-modern {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .news-author {
-            font-weight: 500;
-        }
-
-        .gallery-grid-modern {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            height: 400px;
-        }
-
-        .gallery-item-modern {
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .gallery-item-modern:nth-child(1) {
-            grid-row: span 2;
-        }
-
-        .gallery-item-modern:nth-child(4) {
-            grid-row: span 2;
-        }
-
-        .gallery-item-modern img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item-modern:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-overlay-modern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            color: white;
-            text-align: center;
-        }
-
-        .gallery-item-modern:hover .gallery-overlay-modern {
-            opacity: 1;
-        }
-
-        .gallery-overlay-content i {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .gallery-overlay-content h6 {
-            font-weight: 600;
-            margin: 0;
-        }
-
-        /* === TESTIMONIALS SECTION === */
-        .testimonials-section-modern {
-            padding: 5rem 0;
-        }
-
-        .testimonial-card-modern {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow-light);
-            transition: all 0.3s ease;
-            height: 100%;
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-
-        .testimonial-card-modern:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .testimonial-rating-modern {
-            color: var(--secondary-color);
-            margin-bottom: 1.5rem;
-            font-size: 1.25rem;
-        }
-
-        .testimonial-text-modern {
-            font-style: italic;
-            color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            font-size: 1rem;
-        }
-
-        .testimonial-author-modern {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .author-avatar-modern {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid var(--border-color);
-        }
-
-        .author-avatar-modern img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .author-info-modern h6 {
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 0.25rem;
-        }
-
-        .author-info-modern span {
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-
-        /* === CTA SECTION === */
-        .cta-section-modern {
-            padding: 5rem 0;
-            background: var(--gradient-primary);
-            color: white;
-            text-align: center;
-        }
-
-        .cta-content-modern {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .cta-icon-modern {
             width: 100px;
             height: 100px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            font-size: 3rem;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .cta-title-modern {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            line-height: 1.3;
-        }
-
-        .cta-description-modern {
-            font-size: 1.125rem;
-            line-height: 1.7;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-        }
-
-        .cta-actions-modern {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-cta-primary,
-        .btn-cta-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .btn-cta-primary {
-            background: white;
-            color: var(--primary-color);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .btn-cta-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-heavy);
-            color: var(--primary-color);
-        }
-
-        .btn-cta-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-cta-secondary:hover {
             background: rgba(255, 255, 255, 0.3);
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        .cta-features-modern {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .cta-feature-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .cta-feature-item i {
-            color: var(--accent-color);
-        }
-
-        /* === VIEW ALL BUTTONS === */
-        .btn-view-all-modern {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--gradient-primary);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-light);
-        }
-
-        .btn-view-all-modern:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-medium);
-            color: white;
-        }
-
-        /* === RESPONSIVE DESIGN === */
-        @media (max-width: 1200px) {
-            .hero-content-left {
-                padding-right: 2rem;
-            }
-
-            .hero-image-wrapper {
-                height: 500px;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .hero-section-modern {
-                min-height: auto;
-                padding: 5rem 0;
-            }
-
-            .hero-content-right {
-                margin-top: 3rem;
-            }
-
-            .hero-image-wrapper {
-                height: 400px;
-            }
-
-            .hero-floating-card {
-                position: static;
-                margin-top: 1rem;
-                max-width: none;
-            }
-
-            .gallery-grid-modern {
-                grid-template-columns: repeat(2, 1fr);
-                height: 300px;
-            }
-
-            .explore-main-image {
-                height: 300px;
-            }
-
-            .explore-sub-card {
-                height: 120px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-title-modern {
-                font-size: 2.5rem;
-            }
-
-            .hero-actions-modern {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .hero-stats-modern {
-                justify-content: center;
-                gap: 1rem;
-            }
-
-            .section-title-modern {
-                font-size: 2rem;
-            }
-
-            .facility-card-modern,
-            .testimonial-card-modern {
-                padding: 2rem 1.5rem;
-            }
-
-            .gallery-grid-modern {
-                grid-template-columns: 1fr;
-                height: auto;
-                gap: 0.5rem;
-            }
-
-            .gallery-item-modern {
-                height: 200px;
-            }
-
-            .gallery-item-modern:nth-child(1),
-            .gallery-item-modern:nth-child(4) {
-                grid-row: span 1;
-            }
-
-            .news-card-modern {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .news-image-modern {
-                width: 100%;
-                height: 150px;
-            }
-
-            .cta-actions-modern {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .cta-features-modern {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero-section-modern {
-                padding: 3rem 0;
-            }
-
-            .hero-title-modern {
-                font-size: 2rem;
-            }
-
-            .hero-description-modern {
-                font-size: 1rem;
-            }
-
-            .section-header-modern {
-                margin-bottom: 2rem;
-            }
-
-            .section-title-modern {
-                font-size: 1.75rem;
-            }
-
-            .section-subtitle-modern {
-                font-size: 1rem;
-            }
-
-            .facility-card-modern,
-            .testimonial-card-modern {
-                padding: 1.5rem 1rem;
-            }
-
-            .facility-icon-modern {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
-
-            .facility-title-modern {
-                font-size: 1.25rem;
-            }
-
-            .guide-content-modern {
-                padding: 1rem;
-            }
-
-            .product-category-card-modern {
-                height: 300px;
-            }
-
-            .product-category-content {
-                padding: 1.5rem;
-            }
-
-            .product-category-content h4 {
-                font-size: 1.5rem;
-            }
-
-            .testimonial-card-modern {
-                padding: 1.5rem;
-            }
-
-            .cta-icon-modern {
-                width: 80px;
-                height: 80px;
-                font-size: 2rem;
-            }
-
-            .cta-title-modern {
-                font-size: 1.75rem;
-            }
-
-            .cta-description-modern {
-                font-size: 1rem;
-            }
-        }
-
-        /* === ANIMATIONS === */
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.5;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* === ACCESSIBILITY === */
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* === DARK MODE SUPPORT === */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --light-color: #1f2937;
-                --text-color: #f9fafb;
-                --text-muted: #d1d5db;
-                --border-color: #374151;
-            }
-        }
-
-        /* === PRINT STYLES === */
-        @media print {
-
-            .hero-section-modern,
-            .cta-section-modern {
-                background: white !important;
-                color: black !important;
-            }
-
-            .btn-hero-primary,
-            .btn-hero-secondary,
-            .btn-cta-primary,
-            .btn-cta-secondary,
-            .btn-view-all-modern {
-                display: none !important;
-            }
-
-            .facility-card-modern,
-            .testimonial-card-modern,
-            .guide-card-modern {
-                break-inside: avoid;
-                box-shadow: none !important;
-                border: 1px solid #ddd !important;
-            }
-        }
-
-        /* === CUSTOM SCROLLBAR === */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--light-color);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #1d4ed8;
-        }
-
-        /* === LOADING STATES === */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .loading::after {
-            content: '';
-            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-effect 0.6s linear;
             top: 50%;
             left: 50%;
-            width: 20px;
-            height: 20px;
-            margin: -10px 0 0 -10px;
-            border: 2px solid var(--border-color);
-            border-top: 2px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            margin-top: -50px;
+            margin-left: -50px;
+            pointer-events: none;
+        `;
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+        
+        // Simulate video play
+        showNotification('Video player would open here!', 'info');
+    });
+
+    // ===== SCROLL INDICATOR =====
+    const scrollIndicator = document.getElementById('scroll-indicator');
+    scrollIndicator.addEventListener('click', function() {
+        const nextSection = document.querySelector('.glass-section');
+        if (nextSection) {
+            nextSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
         }
+    });
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+    // Hide scroll indicator when scrolled
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const heroHeight = document.getElementById('hero-section').offsetHeight;
+        
+        if (scrolled > heroHeight * 0.3) {
+            scrollIndicator.style.opacity = '0';
+            scrollIndicator.style.transform = 'translateX(-50%) translateY(20px)';
+        } else {
+            scrollIndicator.style.opacity = '1';
+            scrollIndicator.style.transform = 'translateX(-50%) translateY(0)';
         }
+    });
 
-        /* === FOCUS STYLES === */
-        .btn-hero-primary:focus,
-        .btn-hero-secondary:focus,
-        .btn-cta-primary:focus,
-        .btn-cta-secondary:focus,
-        .btn-view-all-modern:focus {
-            outline: 2px solid var(--secondary-color);
-            outline-offset: 2px;
+    window.addEventListener('scroll', requestTick);
+
+    // ===== FLOATING ELEMENTS INTERACTION =====
+    const floatingElements = document.querySelectorAll('.floating-element');
+    floatingElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1) translateY(-10px)';
+            this.style.boxShadow = '0 15px 35px rgba(255, 255, 255, 0.2)';
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) translateY(0)';
+            this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.1)';
+        });
+    });
+
+    // ===== MOUSE MOVEMENT EFFECTS =====
+    document.addEventListener('mousemove', function(e) {
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
+        
+        // Move floating elements based on mouse position
+        floatingElements.forEach((element, index) => {
+            const speed = 0.02 + (index * 0.01);
+            const x = (mouseX - 0.5) * 20 * speed;
+            const y = (mouseY - 0.5) * 20 * speed;
+            
+            element.style.transform += ` translate(${x}px, ${y}px)`;
+        });
+        
+        // Subtle parallax for hero content
+        const heroContent = document.querySelector('.hero-content-grid');
+        if (heroContent) {
+            const x = (mouseX - 0.5) * 10;
+            const y = (mouseY - 0.5) * 10;
+            heroContent.style.transform += ` translate(${x}px, ${y}px)`;
         }
+    });
 
-        /* === HIGH CONTRAST MODE === */
-        @media (prefers-contrast: high) {
+    // ===== PERFORMANCE OPTIMIZATIONS =====
+    
+    // Reduce animations on low-end devices
+    const isLowEndDevice = navigator.hardwareConcurrency < 4 || navigator.deviceMemory < 4;
+    
+    if (isLowEndDevice) {
+        // Disable heavy animations
+        document.documentElement.style.setProperty('--transition-smooth', 'all 0.2s ease');
+        document.documentElement.style.setProperty('--transition-bounce', 'all 0.3s ease');
+        
+        // Reduce particle count
+        particlesContainer.style.display = 'none';
+        
+        // Disable parallax
+        window.removeEventListener('scroll', requestTick);
+    }
 
-            .facility-card-modern,
-            .testimonial-card-modern,
-            .guide-card-modern {
-                border: 2px solid var(--dark-color);
-            }
-
-            .btn-hero-primary,
-            .btn-cta-primary {
-                border: 2px solid var(--dark-color);
-            }
-        }
-
-        /* === TOUCH DEVICE OPTIMIZATIONS === */
-        @media (hover: none) and (pointer: coarse) {
-
-            .facility-card-modern:hover,
-            .testimonial-card-modern:hover,
-            .guide-card-modern:hover {
-                transform: none;
-            }
-
-            .btn-hero-primary,
-            .btn-hero-secondary,
-            .btn-cta-primary,
-            .btn-cta-secondary {
-                min-height: 44px;
-                min-width: 44px;
-            }
-        }
-
-        /* === PERFORMANCE OPTIMIZATIONS === */
-        .hero-main-image,
-        .explore-main-image img,
-        .guide-image-modern,
-        .gallery-item-modern img {
-            will-change: transform;
-        }
-
-        .facility-card-modern,
-        .testimonial-card-modern,
-        .guide-card-modern {
-            will-change: transform, box-shadow;
-        }
-
-        /* === SKELETON LOADING === */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }
-
-        .skeleton-text {
-            height: 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: 4px;
-        }
-
-        .skeleton-title {
-            height: 1.5rem;
-            width: 70%;
-            margin-bottom: 1rem;
-            border-radius: 4px;
-        }
-
-        .skeleton-image {
-            height: 200px;
-            border-radius: 15px;
-        }
-
-        /* === UTILITY CLASSES === */
-        .text-gradient {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .bg-gradient-primary {
-            background: var(--gradient-primary);
-        }
-
-        .bg-gradient-secondary {
-            background: var(--gradient-secondary);
-        }
-
-        .bg-gradient-accent {
-            background: var(--gradient-accent);
-        }
-
-        .shadow-light {
-            box-shadow: var(--shadow-light);
-        }
-
-        .shadow-medium {
-            box-shadow: var(--shadow-medium);
-        }
-
-        .shadow-heavy {
-            box-shadow: var(--shadow-heavy);
-        }
-
-        .border-radius-modern {
-            border-radius: 20px;
-        }
-
-        .border-radius-small {
+    // ===== UTILITY FUNCTIONS =====
+    
+    // Notification system
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 10000;
+            padding: 1rem 1.5rem;
+            background: ${type === 'success' ? 'linear-gradient(135deg, #228B22, #2d5a3d)' : 'linear-gradient(135deg, #1a3d2e, #0a1f0f)'};
+            color: white;
             border-radius: 10px;
-        }
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            font-weight: 500;
+            max-width: 300px;
+            animation: slideInRight 0.3s ease-out;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        `;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.3s ease-out';
+            setTimeout(() => notification.remove(), 300);
+        }, 4000);
+    }
 
-        .backdrop-blur {
-            backdrop-filter: blur(10px);
-        }
+    // ===== LOADING STATES =====
+    window.addEventListener('load', function() {
+        document.body.classList.add('loaded');
+        
+        // Trigger hero animations
+        setTimeout(() => {
+            document.querySelector('.hero-text-section').style.opacity = '1';
+            document.querySelector('.hero-visual-section').style.opacity = '1';
+        }, 100);
+        
+        showNotification('Selamat Datang Di Website Wisata Air Terjun Lubuk Hitam! ', 'success');
+    });
 
-        /* === COMPONENT VARIATIONS === */
-        .facility-card-modern.featured {
-            background: var(--gradient-primary);
-            color: white;
-        }
+    // ===== NETWORK STATUS MONITORING =====
+    window.addEventListener('online', function() {
+        showNotification('Connection restored! All features are now available.', 'success');
+    });
 
-        .facility-card-modern.featured .facility-icon-modern {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-        }
+    window.addEventListener('offline', function() {
+        showNotification('You are offline. Some features may not work properly.', 'info');
+    });
 
-        .facility-card-modern.featured .facility-title-modern,
-        .facility-card-modern.featured .facility-description-modern {
-            color: white;
-        }
-
-        .guide-card-modern.premium {
-            border: 2px solid var(--secondary-color);
-            position: relative;
-            overflow: visible;
-        }
-
-        .guide-card-modern.premium::before {
-            content: 'Premium';
-            position: absolute;
-            top: -10px;
-            left: 20px;
-            background: var(--secondary-color);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            z-index: 1;
-        }
-
-        .testimonial-card-modern.highlighted {
-            background: var(--gradient-accent);
-            color: white;
-        }
-
-        .testimonial-card-modern.highlighted .testimonial-text-modern {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* === MICRO-INTERACTIONS === */
-        .facility-icon-modern {
-            transition: all 0.3s ease;
-        }
-
-        .facility-card-modern:hover .facility-icon-modern {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .guide-rating-modern {
-            transition: all 0.3s ease;
-        }
-
-        .guide-card-modern:hover .guide-rating-modern {
-            transform: scale(1.1);
-        }
-
-        .testimonial-rating-modern i {
-            transition: all 0.2s ease;
-        }
-
-        .testimonial-card-modern:hover .testimonial-rating-modern i {
-            transform: scale(1.2);
-        }
-
-        /* === ADVANCED ANIMATIONS === */
-        @keyframes slideInFromBottom {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
+    // ===== KEYBOARD NAVIGATION =====
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            if (e.target.classList.contains('btn-hero-primary') || 
+                e.target.classList.contains('btn-hero-secondary')) {
+                e.target.click();
             }
         }
-
-        @keyframes slideInFromTop {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        if (e.key === 'ArrowDown') {
+            scrollIndicator.click();
         }
+    });
 
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8);
-            }
+    console.log('✅ Lubuk Hitam Modern Hero Loaded Successfully!');
+});
 
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes rotateIn {
-            from {
-                opacity: 0;
-                transform: rotate(-180deg) scale(0.8);
-            }
-
-            to {
-                opacity: 1;
-                transform: rotate(0deg) scale(1);
-            }
-        }
-
-        /* === ENHANCED HOVER EFFECTS === */
-        .facility-card-modern::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .facility-card-modern:hover::before {
-            left: 100%;
-        }
-
-        .guide-card-modern::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+// ===== ADDITIONAL CSS ANIMATIONS =====
+const additionalStyles = document.createElement('style');
+additionalStyles.textContent = `
+    @keyframes ripple-effect {
+        to {
+            transform: scale(4);
             opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
         }
-
-        .guide-card-modern:hover::after {
+    }
+    
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
             opacity: 1;
         }
-
-        /* === FLOATING ELEMENTS === */
+    }
+    
+    @keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+    
+    /* Smooth transitions for all interactive elements */
+    .hero-stat-item,
+    .floating-element,
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        transition: var(--transition-smooth);
+    }
+    
+    /* Loading state */
+    body:not(.loaded) .hero-text-section,
+    body:not(.loaded) .hero-visual-section {
+        opacity: 0;
+    }
+    
+    /* Focus states for accessibility */
+    .btn-hero-primary:focus,
+    .btn-hero-secondary:focus {
+        outline: 2px solid rgba(255, 255, 255, 0.5);
+        outline-offset: 2px;
+    }
+    
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        .hero-dark-modern {
+            background: #000000 !important;
+        }
+        
+        .hero-title-modern,
+        .hero-subtitle {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+        
+        .glass-card,
+        .hero-stat-item {
+            background: #ffffff !important;
+            border: 2px solid #000000 !important;
+            color: #000000 !important;
+        }
+    }
+    
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+        
+        .hero-canvas,
+        .hero-particles,
+        .hero-geometric {
+            display: none !important;
+        }
+    }
+    
+    /* Print styles */
+    @media print {
+        .hero-dark-modern {
+            background: #ffffff !important;
+            color: #000000 !important;
+        }
+        
+        .hero-canvas,
+        .hero-particles,
+        .hero-geometric,
         .floating-element {
-            animation: float-gentle 6s ease-in-out infinite;
+            display: none !important;
         }
+        
+        .btn-hero-primary,
+        .btn-hero-secondary {
+            border: 1px solid #000000 !important;
+            background: #ffffff !important;
+            color: #000000 !important;
+        }
+    }
+`;
 
-        @keyframes float-gentle {
+document.head.appendChild(additionalStyles);
+</script>
 
-            0%,
-            100% {
-                transform: translateY(0px);
+<!-- Statistics Section with Modern Design -->
+<section class="glass-section glass-bg-primary">
+    <div class="container">
+        <div class="section-header-glass scroll-reveal">
+            <h2 class="section-title-glass">Kilasan Data Menakjubkan</h2>
+            <p class="section-description-glass">
+                Temukan apa yang membuat Lubuk Hitam menjadi destinasi luar biasa melalui statistik kami yang mengesankan
+            </p>
+        </div>
+
+        <div class="glass-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+            <div class="glass-card scroll-reveal text-center">
+                <div style="font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #228B22, #90EE90); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" data-count="{{ $totalFacilities }}">0</div>
+                <div style="font-size: 1.1rem; color: #1a3d2e; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Pemandu Wisata Terbaik</div>
+                <p style="margin-top: 1rem; color: #2d5a3d; font-size: 0.9rem;">Nikmati pengalaman perjalanan yang menyenangkan dan aman bersama pemandu ahli kami.</p>
+            </div>
+            <div class="glass-card scroll-reveal text-center">
+                <div style="font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #228B22, #90EE90); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" data-count="{{ $totalFacilities }}">0</div>
+                <div style="font-size: 1.1rem; color: #1a3d2e; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Fasilitas Terbaik</div>
+                <p style="margin-top: 1rem; color: #2d5a3d; font-size: 0.9rem;">Fasilitas lengkap dan nyaman yang mendukung petualangan Anda.</p>
+            </div>
+            
+            <div class="glass-card scroll-reveal text-center">
+                <div style="font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #228B22, #90EE90); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" data-count="{{ $totalGalleries }}">0</div>
+                <div style="font-size: 1.1rem; color: #1a3d2e; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Foto Menakjubkan</div>
+                <p style="margin-top: 1rem; color: #2d5a3d; font-size: 0.9rem;">Tangkap momen terbaik dalam keindahan alam Lubuk Hitam.</p>
+            </div>
+            
+            <div class="glass-card scroll-reveal text-center">
+                <div style="font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #228B22, #90EE90); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" data-count="{{ $totalNews }}">0</div>
+                <div style="font-size: 1.1rem; color: #1a3d2e; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Informasi Terbaru</div>
+                <p style="margin-top: 1rem; color: #2d5a3d; font-size: 0.9rem;">Berita dan pembaruan terkini tentang destinasi kami.</p>
+            </div>
+        </div>
+    </div>
+    
+</section>
+=
+<!-- Tour Guides Section -->
+<section class="glass-section">
+    <div class="container">
+        <div class="section-header-glass scroll-reveal">
+            <h2 class="section-title-glass">Pemandu Wisata Profesional</h2>
+            <p class="section-description-glass">
+                Temui pemandu lokal berpengalaman kami yang akan memandu Anda dengan aman menjelajahi keajaiban Lubuk Hitam
+            </p>
+        </div>
+
+        @if($tourGuides && $tourGuides->count() > 0)
+        <div class="glass-grid">
+            @foreach($tourGuides as $index => $guide)
+            <div class="glass-card scroll-reveal" style="animation-delay: {{ $index * 0.1 }}s;">
+                <!-- Guide Photo -->
+                @if($guide->foto)
+                <div class="guide-photo mb-3">
+                    <img src="{{ asset('storage/' . $guide->foto) }}"
+                         alt="{{ $guide->nama }}"
+                         class="guide-image">
+                </div>
+                @endif
+
+                <!-- Guide Info -->
+                <h3 class="card-title-glass">{{ $guide->nama }}</h3>
+
+                <div class="card-description-glass">
+                    <div class="guide-details">
+                        <!-- Address -->
+                        @if($guide->alamat)
+                        <div class="detail-row">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ $guide->alamat }}</span>
+                        </div>
+                        @endif
+
+                        <!-- Phone -->
+                        @if($guide->nohp)
+                        <div class="detail-row">
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:{{ $guide->nohp }}">{{ $guide->nohp }}</a>
+                        </div>
+                        @endif
+
+                        <!-- Description -->
+                        @if($guide->deskripsi)
+                        <div class="detail-description">
+                            <p>{{ Str::limit($guide->deskripsi, 120) }}</p>
+                        </div>
+                        @endif
+                    </div>
+
+                    <!-- Price Display -->
+                    <div class="price-section mt-3">
+                    <span class="price-display">
+                        @if($guide->price_range)
+                            {{ $guide->price_range }}/hari
+                        @elseif($guide->harga)
+                            Rp {{ number_format($guide->harga, 0, ',', '.') }}/hari
+                        @else
+                            Harga belum tersedia
+                        @endif
+                    </span>
+                </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="card-actions">
+                    <a href="{{ route('tourguides.order', $guide->id) }}"
+                       class="btn-glass btn-details">
+                        <i class="fas fa-eye me-1"></i>
+                        Lihat Detail
+                    </a>
+                    <a href="{{ route('tourguides.order', $guide->id) }}"
+                       class="btn-glass btn-glass-primary">
+                        <i class="fas fa-calendar-check me-1"></i>
+                        Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        @else
+        <div class="text-center">
+            <div class="glass-card mx-auto" style="max-width: 500px;">
+                <div style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.5;">👨‍🏫</div>
+                <h3 class="card-title-glass">Pemandu Wisata Segera Hadir</h3>
+                <p class="card-description-glass">
+                    Pemandu profesional kami akan segera tersedia untuk meningkatkan pengalaman Anda di Lubuk Hitam.
+                </p>
+            </div>
+        </div>
+        @endif
+
+        <div class="text-center mt-5">
+            <a href="{{ route('tourguides.index') }}" class="btn-glass btn-glass-primary">
+                <i class="fas fa-users me-2"></i>
+                Lihat Semua Pemandu
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- Facilities Section -->
+<section class="glass-section">
+    <div class="container">
+        <div class="section-header-glass scroll-reveal">
+            <h2 class="section-title-glass">Fasilitas Unggulan Kami</h2>
+            <p class="section-description-glass">
+               Rasakan kenyamanan dan kemudahan dengan fasilitas terbaik yang kami sediakan untuk melengkapi pengalaman Anda di Lubuk Hitam.
+            </p>
+        </div>
+
+        @if($facilities->count() > 0)
+        <div class="glass-grid">
+            @foreach($facilities as $index => $facility)
+            <div class="glass-card scroll-reveal" style="animation-delay: {{ $index * 0.1 }}s;">
+                @if($facility->foto)
+                <div style="margin-bottom: 1.5rem; border-radius: 15px; overflow: hidden; height: 200px;">
+                    <img src="{{ asset('storage/' . $facility->foto) }}" 
+                         alt="{{ $facility->nama_fasilitas }}" 
+                         style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                </div>
+                @endif
+                
+                <h3 class="card-title-glass">{{ $facility->nama_fasilitas }}</h3>
+                <p class="card-description-glass">
+                    {{ $facility->deskripsi ?? 'Fasilitas ini dirancang khusus untuk menunjang kenyamanan Anda selama berkunjung.' }}
+                </p>
+                
+                @if($facility->lokasi || $facility->status)
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(34, 139, 34, 0.1);">
+                    @if($facility->lokasi)
+                        <div style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #2d5a3d;">
+                            <strong>Location:</strong> {{ $facility->lokasi }}
+                        </div>
+                    @endif
+
+                    @if($facility->status)
+                        <div>
+                            <span style="background: linear-gradient(135deg, #228B22, #90EE90); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500;">
+                                {{ $facility->status }}
+                            </span>
+                        </div>
+                    @endif
+                </div>
+                @endif
+            </div>
+            @endforeach
+        </div>
+        @else
+        <div class="text-center">
+            <div class="glass-card mx-auto" style="max-width: 500px;">
+                <h3 class="card-title-glass">FFasilitas Akan Segera Tersedia</h3>
+                <p class="card-description-glass">Kami sedang menyiapkan berbagai fasilitas menarik untuk mendukung pengalaman Anda di Lubuk Hitam.</p>
+            </div>
+        </div>
+        @endif
+
+        <div class="text-center mt-5">
+            <a href="{{ url('facilities/') }}" class="btn-glass btn-glass-primary">
+                Jelajahi Semua Fasilitas
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="glass-section glass-bg-secondary">
+    <div class="container">
+        <div class="section-header-glass scroll-reveal">
+            <h2 class="section-title-glass">Jelajahi Galeri</h2>
+            <p class="section-description-glass">
+                Nikmati keindahan Lubuk Hitam melalui koleksi foto pilihan yang memukau
+            </p>
+        </div>
+
+        @if($galleries->count() > 0)
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem;">
+            @foreach($galleries as $gallery)
+            <div class="scroll-reveal" style="position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; transition: transform 0.3s ease; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);">
+                <img src="{{ asset('storage/' . $gallery->foto) }}" 
+                     alt="{{ $gallery->judul }}" 
+                     style="width: 100%; height: 250px; object-fit: cover; transition: transform 0.3s ease;">
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(10, 31, 15, 0.7), rgba(34, 139, 34, 0.5)); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; color: white; text-align: center; padding: 1.5rem;">
+                    <h4 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">{{ $gallery->judul }}</h4>
+                    <p style="font-size: 0.9rem; opacity: 0.9;">{{ Str::limit($gallery->deskripsi ?? 'Panorama menakjubkan dari Lubuk Hitam', 60) }}</p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        @else
+        <div class="text-center">
+            <div class="glass-card mx-auto" style="max-width: 500px;">
+                <h3 class="card-title-glass">Galeri Segera Hadir</h3>
+                <p class="card-description-glass">Koleksi foto keindahan Lubuk Hitam akan segera tersedia untuk Anda nikmati.</p>
+            </div>
+        </div>
+        @endif
+
+        <div class="text-center mt-5">
+            <a href="{{ url('gallery/') }}" class="btn-glass btn-glass-primary">
+                Lihat Selengkapnya
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Local Products Section -->
+<section class="glass-section">
+    <div class="container">
+        <div class="section-header-glass scroll-reveal">
+            <h2 class="section-title-glass">Produk Unggulan Warga</h2>
+            <p class="section-description-glass">
+                 Dukung usaha warga lokal dengan menikmati produk-produk khas dari Lubuk Hitam.
+        </div>
+
+        <div class="row">
+            <!-- Honey Products -->
+            <div class="col-lg-6 mb-5">
+                <div class="scroll-reveal">
+                    <h3 style="font-size: 2rem; font-weight: 600; margin-bottom: 2rem; text-align: center; background: linear-gradient(135deg, #f59e0b, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        Madu Hutan Alami
+                    </h3>
+                    
+                    @if($madus->count() > 0)
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                        @foreach($madus as $madu)
+                        <div class="glass-card scroll-reveal" style="overflow: hidden;">
+                            @if($madu->gambar)
+                            <div style="margin-bottom: 1.5rem; border-radius: 15px; overflow: hidden; height: 200px;">
+                                <img src="{{ asset('storage/' . $madu->gambar) }}" 
+                                     alt="{{ $madu->nama_madu }}" 
+                                     style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                            </div>
+                            @else
+                            <div style="height: 200px; background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; margin-bottom: 1.5rem; border-radius: 15px;">
+                                Madu
+                            </div>
+                            @endif
+                            <h4 class="card-title-glass">{{ $madu->nama_madu }}</h4>
+                            <div style="font-size: 1.2rem; font-weight: 700; background: linear-gradient(135deg, #f59e0b, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem;">
+                                Rp {{ number_format($madu->harga, 0, ',', '.') }}
+                            </div>
+                            <p style="color: #64748b; line-height: 1.6; margin-bottom: 1.5rem;">{{ Str::limit($madu->deskripsi ?? 'Pure natural honey from local beekeepers', 80) }}</p>
+                            <a href="{{ route('madu.index') }}" class="btn-glass btn-glass-primary" style="width: 100%; justify-content: center;">
+                                Pesan Sekarang
+                            </a>
+                        </div>
+                        @endforeach
+                    </div>
+                    @else
+                    <div class="text-center">
+                        <div class="glass-card">
+                            <h5 class="card-title-glass">Madu Segera Tersedia</h5>
+                            <p class="card-description-glass">Kami sedang menyiapkan madu hutan terbaik untuk Anda.</p>
+                        </div>
+                    </div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- UMKM Products -->
+            <div class="col-lg-6 mb-5">
+                <div class="scroll-reveal">
+                    <h3 style="font-size: 2rem; font-weight: 600; margin-bottom: 2rem; text-align: center; background: linear-gradient(135deg, #228B22, #90EE90); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        Produk UMKM
+                    </h3>
+                    
+                    @if($produkUMKMs->count() > 0)
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                        @foreach($produkUMKMs as $produk)
+                        <div class="glass-card scroll-reveal" style="overflow: hidden;">
+                            @if($produk->gambar)
+                            <div style="margin-bottom: 1.5rem; border-radius: 15px; overflow: hidden; height: 200px;">
+                                <img src="{{ asset('storage/' . $produk->gambar) }}" 
+                                     alt="{{ $produk->nama_produk }}" 
+                                     style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                            </div>
+                            @                            @else
+                            <div style="height: 200px; background: linear-gradient(135deg, #228B22, #90EE90); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; margin-bottom: 1.5rem; border-radius: 15px;">
+                                UMKM
+                            </div>
+                            @endif
+                            <h4 class="card-title-glass">{{ $produk->nama_produk }}</h4>
+                            <div style="font-size: 1.2rem; font-weight: 700; background: linear-gradient(135deg, #228B22, #90EE90); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem;">
+                                Rp {{ number_format($produk->harga, 0, ',', '.') }}
+                            </div>
+                            <p style="color: #64748b; line-height: 1.6; margin-bottom: 1.5rem;">{{ Str::limit($produk->deskripsi ?? 'Handcrafted product from local community', 80) }}</p>
+                            <a href="{{ route('produkUMKM.index') }}" class="btn-glass btn-glass-primary" style="width: 100%; justify-content: center;">
+                                Info Lebih Lanjut
+                            </a>
+                        </div>
+                        @endforeach
+                    </div>
+                    @else
+                    <div class="text-center">
+                        <div class="glass-card">
+                            <h5 class="card-title-glass">Produk UMKM Belum Tersedia</h5>
+                            <p class="card-description-glass">Daftar produk UMKM sedang dalam proses kurasi.</p>
+                        </div>
+                    </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Latest News Section -->
+<section class="glass-section glass-bg-primary">
+    <div class="container">
+        <div class="section-header-glass scroll-reveal">
+            <h2 class="section-title-glass">Berita & Informasi Terbaru</h2>
+            <p class="section-description-glass">
+                Ikuti perkembangan terbaru dan cerita menarik seputar Lubuk Hitam
+            </p>
+        </div>
+
+        @if($beritas->count() > 0)
+        <div class="glass-grid">
+            @foreach($beritas as $index => $berita)
+            <div class="glass-card scroll-reveal" style="animation-delay: {{ $index * 0.2 }}s; overflow: hidden; position: relative;">
+                <!-- Shimmer effect overlay -->
+                <div style="position: absolute; top: 0; left: 0; right: 0; height: 100%; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%); transform: translateX(-100%); transition: transform 0.6s ease; z-index: 1;"></div>
+                
+                @if($berita->foto)
+                <div style="margin-bottom: 1.5rem; border-radius: 15px; overflow: hidden; height: 220px;">
+                    <img src="{{ asset('storage/' . $berita->foto) }}" 
+                         alt="{{ $berita->judul }}" 
+                         style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                </div>
+                @else
+                <div style="height: 220px; background: linear-gradient(135deg, #228B22, #90EE90); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; margin-bottom: 1.5rem; border-radius: 15px;">
+                    Berita
+                </div>
+                @endif
+                
+                <div style="position: relative; z-index: 2;">
+                    <h4 class="card-title-glass">{{ $berita->judul }}</h4>
+                    <div style="color: #2d5a3d; font-size: 0.9rem; margin-bottom: 1rem; font-weight: 500;">
+                        {{ \Carbon\Carbon::parse($berita->created_at)->format('F d, Y') }}
+                    </div>
+                    <p class="card-description-glass">{{ Str::limit($berita->deskripsi ?? 'Read more about this news update.', 120) }}</p>
+
+                    <a href="{{ route('berita.index', $berita->id) }}" class="btn-glass btn-glass-primary">
+                        Baca Selengkapnya
+                    </a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        @else
+        <div class="text-center">
+            <div class="glass-card mx-auto" style="max-width: 500px;">
+                <h3 class="card-title-glass">Berita Segera Hadir</h3>
+                <p class="card-description-glass">Latest updates about Lubuk Hitam will be available soonInformasi terbaru tentang Lubuk Hitam akan kami bagikan segera.</p>
+            </div>
+        </div>
+        @endif
+
+        <div class="text-center mt-5">
+            <a href="{{ url('beritas/') }}" class="btn-glass btn-glass-primary">
+                Lihat Semua Berita
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Services Section -->
+<section class="glass-section">
+    <div class="container">
+        <div class="section-header-glass scroll-reveal">
+            <h2 class="section-title-glass">Rencanakan Kunjungan Anda</h2>
+            <p class="section-description-glass">
+               Dapatkan info penting supaya kunjungan ke Lubuk Hitam makin mudah dan menyenangkan
+            </p>
+        </div>
+
+        <div class="glass-grid">
+            <div class="glass-card scroll-reveal text-center" style="position: relative; overflow: hidden;">
+                <div style="font-size: 4rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, #3b82f6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
+                    Cuaca
+                </div>
+                <h3 class="card-title-glass">Info Cuaca Terbaru</h3>
+                <p class="card-description-glass">
+                     Cek update cuaca secara langsung, termasuk suhu, kelembapan, dan kondisi angin untuk persiapan kunjungan Anda.
+                </p>
+                <div class="row mt-3 mb-4">
+                    <div class="col-4">
+                        <div style="font-size: 1.2rem; font-weight: 600; color: #3b82f6;">Suhu</div>
+                        <small style="color: #64748b;">Terbaru</small>
+                    </div>
+                    <div class="col-4">
+                        <div style="font-size: 1.2rem; font-weight: 600; color: #06b6d4;">Kelembapan</div>
+                        <small style="color: #64748b;">Tingkat Kenyamanan</small>
+                    </div>
+                    <div class="col-4">
+                        <div style="font-size: 1.2rem; font-weight: 600; color: #10b981;">Angin</div>
+                        <small style="color: #64748b;">Kondisi Terkini</small>
+                    </div>
+                </div>
+                <a href="{{ url('weather') }}" class="btn-glass btn-glass-primary" style="width: 100%; justify-content: center;">
+                    Cek Cuaca
+                </a>
+            </div>
+
+            <div class="glass-card scroll-reveal text-center" style="position: relative; overflow: hidden;">
+                <div style="font-size: 4rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, #228B22, #90EE90); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
+                    Peta
+                </div>
+                <h3 class="card-title-glass">Peta Interaktif</h3>
+                <p class="card-description-glass">
+                    Temukan jalur, tempat menarik, dan fasilitas penting dengan mudah lewat peta interaktif ini.
+                </p>
+                <div class="row mt-3 mb-4">
+                    <div class="col-3">
+                        <div style="font-size: 1rem; font-weight: 600;">Jalur</div>
+                        <small style="color: #64748b;">Rute Perjalanan</small>
+                    </div>
+                    <div class="col-3">
+                        <div style="font-size: 1rem; font-weight: 600;">Tempat</div>
+                        <small style="color: #64748b;">Spot Menarik</small>
+                    </div>
+                    <div class="col-3">
+                        <div style="font-size: 1rem; font-weight: 600;">Fasilitas</div>
+                        <small style="color: #64748b;">Layanan</small>
+                    </div>
+                    <div class="col-3">
+                        <div style="font-size: 1rem; font-weight: 600;">Pemandangan</div>
+                        <small style="color: #64748b;">Galeri</small>
+                    </div>
+                </div>
+                <a href="{{ route('minimap.index') }}" class="btn-glass btn-glass-primary" style="width: 100%; justify-content: center;">
+                    Buka Peta
+                </a>
+            </div>
+
+            <div class="glass-card scroll-reveal text-center" style="position: relative; overflow: hidden;">
+                <div style="font-size: 4rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, #f59e0b, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
+                    Bantuan
+                </div>
+                <h3 class="card-title-glass">Kontak & Dukungan</h3>
+                <p class="card-description-glass">
+                    Hubungi kami kapan saja untuk bantuan, reservasi, atau info seputar kunjungan Anda.
+                </p>
+                <div class="mt-3 mb-4">
+                    <div style="margin-bottom: 0.5rem;">
+                        <strong>24/7 Layanan</strong>
+                    </div>
+                    <div style="margin-bottom: 0.5rem;">
+                        <strong>Bantuan Reservasi</strong>
+                    </div>
+                    <div>
+                        <strong>Informasi Lokal</strong>
+                    </div>
+                </div>
+                <a href="{{ url('contact') }}" class="btn-glass btn-glass-primary" style="width: 100%; justify-content: center;">
+                    Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section style="position: relative; padding: 8rem 0; background: linear-gradient(135deg, rgba(10, 31, 15, 0.95) 0%, rgba(26, 61, 46, 0.9) 50%, rgba(45, 90, 61, 0.95) 100%), url('https://www.itrip.id/wp-content/uploads/2022/04/Alamat-Air-Terjun-Lubuk-Hitam-.jpg') center/cover fixed; color: white; text-align: center; overflow: hidden;">
+    <!-- Animated background elements -->
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 80%, rgba(144, 238, 144, 0.2) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(34, 139, 34, 0.2) 0%, transparent 50%); animation: float 15s ease-in-out infinite;"></div>
+    
+  <div class="container">
+    <div class="scroll-reveal" style="position: relative; z-index: 2; max-width: 800px; margin: 0 auto; padding: 3rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 25px; box-shadow: 0 25px 80px rgba(10, 31, 15, 0.6);">
+        <h2 style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; margin-bottom: 1.5rem; line-height: 1.2;">
+            Siap untuk Petualangan Alammu?
+        </h2>
+        <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.95; line-height: 1.6;">
+             Bergabunglah dengan ribuan pecinta alam yang telah menemukan keajaiban Air Terjun Lubuk Hitam.  
+            Pesan pemandu, jelajahi fasilitas, dan ciptakan kenangan tak terlupakan di surga alam ini.
+        </p>
+       <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
+        <a href="{{ url('tourguides/') }}" class="btn-glass btn-glass-primary">
+            Pesan Tour Guide
+        </a>
+        <a href="{{ route('minimap.index') }}" class="btn-glass btn-details" style="color: white;">
+            Rencanakan Rute Kamu
+        </a>
+        <a href="{{ url('contact') }}" class="btn-glass btn-glass-details" style="color: white;">
+            Dapatkan Informasi
+        </a>
+    </div>
+    </div>
+</div>
+</section>
+ @include('layouts.footer')
+<script>
+// Additional JavaScript for enhanced interactions
+document.addEventListener('DOMContentLoaded', function() {
+    // Enhanced scroll reveal for all sections
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                
+                                // Trigger counter animation for statistics
+                const statNumbers = entry.target.querySelectorAll('[data-count]');
+                statNumbers.forEach(statNumber => {
+                    if (!statNumber.classList.contains('animated')) {
+                        animateCounter(statNumber);
+                        statNumber.classList.add('animated');
+                    }
+                });
+
+                // Trigger shimmer effect for news cards
+                const shimmerOverlay = entry.target.querySelector('div[style*="translateX(-100%)"]');
+                if (shimmerOverlay) {
+                    setTimeout(() => {
+                        shimmerOverlay.style.transform = 'translateX(100%)';
+                    }, 500);
+                }
             }
+        });
+    }, observerOptions);
 
-            50% {
-                transform: translateY(-10px);
+    // Observe all scroll-reveal elements
+    document.querySelectorAll('.scroll-reveal').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Enhanced counter animation
+    function animateCounter(element) {
+        const target = parseInt(element.getAttribute('data-count'));
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
             }
-        }
+            element.textContent = Math.floor(current);
+        }, 16);
+    }
 
-        .floating-element-delayed {
-            animation: float-gentle 6s ease-in-out infinite;
-            animation-delay: 2s;
+    // Gallery hover effects
+    document.querySelectorAll('.glass-section img').forEach(img => {
+        const container = img.closest('div[style*="position: relative"]');
+        if (container) {
+            const overlay = container.querySelector('div[style*="position: absolute"]');
+            
+            container.addEventListener('mouseenter', function() {
+                img.style.transform = 'scale(1.1)';
+                if (overlay) {
+                    overlay.style.opacity = '1';
+                }
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            container.addEventListener('mouseleave', function() {
+                img.style.transform = 'scale(1)';
+                if (overlay) {
+                    overlay.style.opacity = '0';
+                }
+                this.style.transform = 'translateY(0) scale(1)';
+            });
         }
+    });
 
-        /* === GRADIENT BORDERS === */
-        .gradient-border {
-            position: relative;
-            background: white;
-            border-radius: 20px;
+    // Enhanced button interactions
+    document.querySelectorAll('.btn-glass').forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) scale(1.05)';
+            this.style.boxShadow = '0 15px 35px rgba(34, 139, 34, 0.4)';
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = '0 8px 25px rgba(34, 139, 34, 0.2)';
+        });
+
+        // Ripple effect on click
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple-effect 0.6s linear;
+                pointer-events: none;
+                z-index: 10;
+            `;
+
+            this.style.position = 'relative';
+            this.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+
+    // Smooth scrolling for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Lazy loading optimization
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.classList.remove('loading');
+                        observer.unobserve(img);
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            img.classList.add('loading');
+            imageObserver.observe(img);
+        });
+    }
+
+    // Performance monitoring
+    const performanceObserver = new PerformanceObserver((list) => {
+        list.getEntries().forEach((entry) => {
+            if (entry.entryType === 'navigation') {
+                console.log('Page Load Time:', entry.loadEventEnd - entry.loadEventStart, 'ms');
+            }
+        });
+    });
+
+    if ('PerformanceObserver' in window) {
+        performanceObserver.observe({ entryTypes: ['navigation'] });
+    }
+
+    // Accessibility enhancements
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+            document.body.classList.add('keyboard-navigation');
         }
+    });
 
-        .gradient-border::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            padding: 2px;
-            background: var(--gradient-primary);
-            border-radius: inherit;
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask-composite: exclude;
+    document.addEventListener('mousedown', function() {
+        document.body.classList.remove('keyboard-navigation');
+    });
+
+    // Error handling for images
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', function() {
+            const placeholder = document.createElement('div');
+            placeholder.style.cssText = `
+                width: 100%;
+                height: ${this.offsetHeight || 200}px;
+                background: linear-gradient(135deg, #f8fffe, #e6ffe6);
+                border-radius: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #64748b;
+                font-size: 1rem;
+                font-weight: 500;
+                border: 2px dashed #cccccc;
+            `;
+            placeholder.textContent = 'Image not available';
+            this.parentNode.replaceChild(placeholder, this);
+        });
+    });
+
+    // Network status monitoring
+    function updateNetworkStatus() {
+        const status = navigator.onLine ? 'online' : 'offline';
+        document.body.setAttribute('data-network-status', status);
+        
+        if (!navigator.onLine) {
+            showNotification('You are offline. Some features may not work properly.', 'warning');
         }
+    }
 
-        /* === GLASS MORPHISM EFFECTS === */
+    window.addEventListener('online', updateNetworkStatus);
+    window.addEventListener('offline', updateNetworkStatus);
+    updateNetworkStatus();
+
+    // Simple notification system
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        const bgColor = type === 'success' ? 'linear-gradient(135deg, #228B22, #2d5a3d)' : 
+                        type === 'warning' ? 'linear-gradient(135deg, #f59e0b, #fbbf24)' : 
+                        'linear-gradient(135deg, #1a3d2e, #0a1f0f)';
+        
+        notification.style.cssText = `
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 10000;
+            padding: 1rem 1.5rem;
+            background: ${bgColor};
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            font-weight: 500;
+            max-width: 350px;
+            animation: slideInRight 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        `;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)';
+            setTimeout(() => notification.remove(), 400);
+        }, 4000);
+    }
+
+    // Initialize on page load
+    window.addEventListener('load', function() {
+        document.body.classList.add('loaded');
+        showNotification('Selamat Datang di Wisata Air Terjun Lubuk Hitam! ', 'success');
+        
+        // Preload critical images
+        const criticalImages = [
+            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+        ];
+        
+        criticalImages.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    });
+
+    console.log('✅ Lubuk Hitam Modern Homepage Loaded Successfully!');
+});
+
+// Additional CSS for enhanced animations
+const enhancedStyles = document.createElement('style');
+enhancedStyles.textContent = `
+    /* Keyboard navigation styles */
+    .keyboard-navigation *:focus {
+        outline: 2px solid rgba(34, 139, 34, 0.8) !important;
+        outline-offset: 2px !important;
+    }
+    
+    /* Loading states */
+    img.loading {
+        background: linear-gradient(90deg, #f0fff0 25%, #e6ffe6 50%, #f0fff0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+    
+    @keyframes shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+    
+    /* Network status indicators */
+    body[data-network-status="offline"] .btn-glass {
+        opacity: 0.7;
+        pointer-events: none;
+    }
+    
+    body[data-network-status="offline"]::before {
+        content: "You are currently offline";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, #f59e0b, #fbbf24);
+        color: white;
+        text-align: center;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        z-index: 10001;
+    }
+    
+    /* Enhanced hover effects */
+    .glass-card:hover img {
+        transform: scale(1.05);
+    }
+    
+    /* Smooth transitions for all elements */
+    * {
+        transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                   opacity 0.3s ease,
+                   box-shadow 0.3s ease;
+    }
+    
+    /* Custom scrollbar for webkit browsers */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #f0fff0;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #228B22, #90EE90);
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #1a3d2e, #228B22);
+    }
+    
+    /* Print optimizations */
+    @media print {
+        .hero-dark-modern,
+        .glass-section {
+            background: white !important;
+            color: black !important;
+        }
+        
+        .btn-glass {
+            border: 1px solid black !important;
+            background: white !important;
+            color: black !important;
+        }
+        
         .glass-card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid #cccccc !important;
+            box-shadow: none !important;
         }
-
-        .glass-card-dark {
-            background: rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    
+    /* High contrast mode */
+    @media (prefers-contrast: high) {
+        .glass-card,
+        .hero-stat-item {
+            background: white !important;
+            border: 2px solid black !important;
+            color: black !important;
         }
-
-        /* === NEON EFFECTS === */
-        .neon-glow {
-            box-shadow:
-                0 0 5px var(--primary-color),
-                0 0 10px var(--primary-color),
-                0 0 15px var(--primary-color),
-                0 0 20px var(--primary-color);
+        
+        .section-title-glass,
+        .card-title-glass {
+            color: black !important;
+            -webkit-text-fill-color: black !important;
         }
-
-        .neon-text {
-            text-shadow:
-                0 0 5px var(--primary-color),
-                0 0 10px var(--primary-color),
-                0 0 15px var(--primary-color),
-                0 0 20px var(--primary-color);
+    }
+    
+    /* Reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
         }
+    }
+`;
 
-        /* === PARALLAX LAYERS === */
-        .parallax-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+document.head.appendChild(enhancedStyles);
 
-        .parallax-back {
-            transform: translateZ(-1px) scale(2);
-        }
+</script>
 
-        .parallax-mid {
-            transform: translateZ(-0.5px) scale(1.5);
-        }
-
-        .parallax-front {
-            transform: translateZ(0);
-        }
-
-        /* === CUSTOM PROPERTIES FOR DYNAMIC THEMING === */
-        .theme-blue {
-            --primary-color: #3b82f6;
-            --secondary-color: #f59e0b;
-            --accent-color: #10b981;
-        }
-
-        .theme-purple {
-            --primary-color: #8b5cf6;
-            --secondary-color: #f59e0b;
-            --accent-color: #06d6a0;
-        }
-
-        .theme-green {
-            --primary-color: #10b981;
-            --secondary-color: #f59e0b;
-            --accent-color: #3b82f6;
-        }
-
-        /* === ENHANCED RESPONSIVE BREAKPOINTS === */
-        @media (max-width: 480px) {
-            .hero-badge {
-                font-size: 0.75rem;
-                padding: 0.375rem 0.75rem;
-            }
-
-            .section-badge-modern {
-                font-size: 0.75rem;
-                padding: 0.375rem 0.75rem;
-            }
-
-            .btn-hero-primary,
-            .btn-hero-secondary {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.875rem;
-            }
-
-            .facility-icon-modern {
-                width: 50px;
-                height: 50px;
-                font-size: 1.25rem;
-            }
-
-            .product-category-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .hero-title-modern {
-                font-size: 1.75rem;
-            }
-
-            .section-title-modern {
-                font-size: 1.5rem;
-            }
-
-            .facility-card-modern,
-            .testimonial-card-modern {
-                padding: 1rem 0.75rem;
-            }
-
-            .cta-icon-modern {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
-        }
-    </style>
 @endsection
+
