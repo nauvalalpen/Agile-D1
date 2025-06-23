@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Helpers\SettingsHelper;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Register SettingsHelper as singleton
+        $this->app->singleton('settings.helper', function ($app) {
+            return new SettingsHelper();
+        });
     }
 
     /**
@@ -19,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Add any boot logic here
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 }

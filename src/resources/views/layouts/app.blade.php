@@ -976,17 +976,12 @@
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fas fa-user"></i>Profile
-                                        </a>
-                                    </li>
-                                    <li>
                                         <a class="dropdown-item" href="{{ route('order-history.index') }}">
                                             <i class="fas fa-shopping-bag"></i>My Orders
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="{{ route('settings.index') }}">
                                             <i class="fas fa-cog"></i>Settings
                                         </a>
                                     </li>
@@ -1170,7 +1165,7 @@
                     // Close all open dropdowns
                     document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
                         const dropdown = bootstrap.Dropdown.getInstance(menu
-                        .previousElementSibling);
+                            .previousElementSibling);
                         if (dropdown) dropdown.hide();
                     });
                 }

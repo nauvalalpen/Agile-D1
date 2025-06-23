@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\UserLoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FacilityController as AdminFacilityController;
 use App\Http\Controllers\TouristController;
@@ -18,14 +20,103 @@ use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\TiketController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProdukUMKMController;
+use App\Http\Controllers\SettingsController;
 
 Route::get('/index', function () {
     return view('index');
 });
 
+// Authentication Routes
+// Auth::routes(['verify' => true]);
+
+// Google OAuth Routes
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+
+// // Settings Routes (Protected)
+// Route::middleware(['auth', 'verified'])->group(function () {
+//     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+//     Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
+//     Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.password.update');
+//     Route::post('/settings/notifications', [SettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
+//     Route::post('/settings/privacy', [SettingsController::class, 'updatePrivacy'])->name('settings.privacy.update');
+//     Route::post('/settings/2fa/enable', [SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
+//     Route::post('/settings/2fa/disable', [SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
+//     Route::get('/settings/2fa/setup', [SettingsController::class, 'setup2FA'])->name('settings.2fa.setup');
+//     Route::get('/settings/export', [SettingsController::class, 'exportData'])->name('settings.export');
+//     Route::delete('/settings/account', [SettingsController::class, 'deleteAccount'])->name('settings.account.delete');
+// });
+
+// Add these routes to your existing web.php file
+Route::middleware('auth')->group(function () {
+    // Settings routes
+    Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/profile', [App\Http\Controllers\SettingsController::class, 'updateProfile'])->name('settings.profile.update');
+    Route::post('/settings/password', [App\Http\Controllers\SettingsController::class, 'updatePassword'])->name('settings.password.update');
+    Route::post('/settings/notifications', [App\Http\Controllers\SettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
+    Route::post('/settings/privacy', [App\Http\Controllers\SettingsController::class, 'updatePrivacy'])->name('settings.privacy.update');
+    
+    // 2FA routes
+    Route::post('/settings/2fa/generate', [App\Http\Controllers\SettingsController::class, 'generate2FA'])->name('settings.2fa.generate');
+    Route::post('/settings/2fa/enable', [App\Http\Controllers\SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
+    Route::post('/settings/2fa/disable', [App\Http\Controllers\SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
+    
+    // Data management routes
+    Route::get('/settings/export', [App\Http\Controllers\SettingsController::class, 'exportData'])->name('settings.export');
+    Route::delete('/settings/account', [App\Http\Controllers\SettingsController::class, 'deleteAccount'])->name('settings.account.delete');
+});
+
+
+// Your existing routes...
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/minimap', function () {
+        return view('minimap.index');
+    })->name('minimap.index');
+    
+    Route::get('/weather', function () {
+        return view('weather.index');
+    });
+    
+    Route::get('/facilities', function () {
+        return view('facilities.index');
+    });
+    
+    Route::get('/gallery', function () {
+        return view('gallery.index');
+    });
+    
+    Route::get('/beritas', function () {
+        return view('beritas.index');
+    });
+    
+    Route::get('/contact', function () {
+        return view('contact.index');
+    });
+    
+    Route::get('/tourguides', function () {
+        return view('tourguides.index');
+    });
+    
+    Route::get('/madu', function () {
+        return view('madu.index');
+    })->name('madu.index');
+    
+    Route::get('/produk-umkm', function () {
+        return view('produk-umkm.index');
+    })->name('produkUMKM.index');
+    
+    Route::get('/order-history', function () {
+        return view('order-history.index');
+    })->name('order-history.index');
+    
+    Route::get('/order-history/{id}/{type}', function ($id, $type) {
+        return view('order-history.show', compact('id', 'type'));
+    })->name('order-history.show');
+});
 Route::get('/login', function () {
     return view('welcome');
 });
+
 
 // Admin routes
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -50,13 +141,20 @@ Route::middleware('guest')->group(function () {
 
 // User Dashboard Route
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('user.dashboard');
-    })->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('user.dashboard');
+    // })->name('dashboard');
     Route::post('/logout', [UserLoginController::class, 'logout'])->name('logout');
 });
 
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+// Route::middleware(['auth', 'admin'])->group(function() {
+//     // Route::resource('tourists', TouristController::class);
+//     Route::resource('guides', GuideController::class);
+//     // Route::get('weather', [WeatherController::class, 'dashboard']);
+//     // Route::post('checkout/{tourist}', [CheckpointController::class, 'checkout']);
+// });
+
+// Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 Route::get('/weather', [WeatherController::class, 'updateWeatherInfo'])->name('updateWeatherInfo');
 
@@ -109,6 +207,21 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/orders/{id}/edit', [AdminOrderController::class, 'edit'])->name('admin.orders.edit');
     Route::put('/orders/{id}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
 });
+
+// Add these routes to your existing web.php file
+
+Route::middleware(['auth'])->group(function () {
+    // Account Settings routes
+    Route::get('/settings', [App\Http\Controllers\AccountSettingsController::class, 'index'])->name('settings.index');
+    Route::put('/settings/profile', [App\Http\Controllers\AccountSettingsController::class, 'updateProfile'])->name('settings.profile.update');
+    Route::post('/settings/photo', [App\Http\Controllers\AccountSettingsController::class, 'updatePhoto'])->name('settings.photo.update');
+    Route::put('/settings/password', [App\Http\Controllers\AccountSettingsController::class, 'updatePassword'])->name('settings.password.update');
+    Route::put('/settings/notifications', [App\Http\Controllers\AccountSettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
+    Route::delete('/settings/account', [App\Http\Controllers\AccountSettingsController::class, 'deleteAccount'])->name('settings.account.delete');
+    Route::post('/settings/resend-verification', [App\Http\Controllers\AccountSettingsController::class, 'resendVerification'])->name('settings.resend.verification');
+    Route::post('/settings/verify-email', [App\Http\Controllers\AccountSettingsController::class, 'verifyEmail'])->name('settings.verify.email');
+});
+
 
 // Public routes
 Route::get('/facilities', [App\Http\Controllers\FacilityController::class, 'index'])->name('facilities.index');
@@ -193,6 +306,10 @@ Route::prefix('admin')->name('admin.')->middleware(
 
     // Dashboard Routes
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+    // OAuth Management routes
+    Route::get('oauth', [App\Http\Controllers\Admin\OAuthController::class, 'index'])->name('oauth.index');
+    Route::get('oauth/users', [App\Http\Controllers\Admin\OAuthController::class, 'users'])->name('oauth.users');
 });
 
 
@@ -209,4 +326,101 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('/produkUMKM/{id}/restore', [App\Http\Controllers\ProdukUMKMController::class, 'restore'])->name('produkUMKM.restore');
     Route::delete('/produkUMKM/{id}/force-delete', [App\Http\Controllers\ProdukUMKMController::class, 'forceDelete'])->name('produkUMKM.force-delete');
 });
+
+// Email Verification Routes (must be before other auth routes)
+Route::get('/email/verify', [RegisterController::class, 'showVerificationForm'])
+    ->name('verification.show');
+Route::post('/email/verify', [RegisterController::class, 'verify'])
+    ->name('verification.verify');
+Route::get('/email/verification-notice', function () {
+    return view('auth.verification-notice');
+})->name('verification.notice');
+Route::post('/email/verification-notification', [RegisterController::class, 'resendVerification'])
+    ->name('verification.resend');
+
+// Google OAuth routes with error handling
+Route::middleware(['socialite.errors'])->group(function () {
+    Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+});
+
+// Unlink Google account (for authenticated users)
+Route::middleware(['auth'])->group(function () {
+    Route::post('auth/google/unlink', [GoogleController::class, 'unlinkGoogle'])->name('auth.google.unlink');
+});
+
+// Password Confirmation Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/confirm-password', [ConfirmPasswordController::class, 'show'])->name('password.confirm');
+    Route::post('/confirm-password', [ConfirmPasswordController::class, 'confirm']);
+});
+
+// Add these routes to your existing web.php file
+
+Route::middleware('auth')->group(function () {
+    // Settings routes
+    Route::get('/settings', [App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/profile', [App\Http\Controllers\SettingsController::class, 'updateProfile'])->name('settings.profile.update');
+    Route::post('/settings/password', [App\Http\Controllers\SettingsController::class, 'updatePassword'])->name('settings.password.update');
+    Route::post('/settings/notifications', [App\Http\Controllers\SettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
+    Route::post('/settings/privacy', [App\Http\Controllers\SettingsController::class, 'updatePrivacy'])->name('settings.privacy.update');
+    
+    // 2FA routes
+    Route::post('/settings/2fa/generate', [App\Http\Controllers\SettingsController::class, 'generate2FA'])->name('settings.2fa.generate');
+    // Route::post('/settings/2fa/enable', [App\Http\Controllers\SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
+    Route::post('/settings/2fa/disable', [App\Http\Controllers\SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
+    
+    // Data management routes
+    Route::get('/settings/export', [App\Http\Controllers\SettingsController::class, 'exportData'])->name('settings.export');
+    Route::delete('/settings/account', [App\Http\Controllers\SettingsController::class, 'deleteAccount'])->name('settings.account.delete');
+});
+
+
+// Update Settings Routes to use the correct middleware alias
+Route::middleware(['auth', 'account.ownership'])->group(function () {
+    // Profile Settings
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
+    Route::post('/settings/photo', [SettingsController::class, 'updatePhoto'])->name('settings.photo.update');
+    Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('settings.password.update');
+    
+    // Email Verification
+    Route::post('/settings/email/resend', [SettingsController::class, 'resendEmailVerification'])->name('settings.email.resend');
+    Route::post('/settings/email/verify', [SettingsController::class, 'verifyEmail'])->name('settings.email.verify');
+    
+    // Two-Factor Authentication
+    Route::post('/settings/2fa/generate', [SettingsController::class, 'generate2FA'])->name('settings.2fa.generate');
+    // Route::post('/settings/2fa/enable', [SettingsController::class, 'enable2FA'])->name('settings.2fa.enable');
+    Route::post('/settings/2fa/disable', [SettingsController::class, 'disable2FA'])->name('settings.2fa.disable');
+    
+    // Preferences
+    Route::post('/settings/notifications', [SettingsController::class, 'updateNotifications'])->name('settings.notifications.update');
+    Route::post('/settings/privacy', [SettingsController::class, 'updatePrivacy'])->name('settings.privacy.update');
+    
+    // Data Management
+    Route::post('/settings/data/export', [SettingsController::class, 'exportData'])->name('settings.data.export');
+    // Add this route to your settings group
+    Route::get('/settings/data/stats', [SettingsController::class, 'getDataStats'])->name('settings.data.stats');
+
+    Route::delete('/settings/account', [SettingsController::class, 'deleteAccount'])->name('settings.account.delete');
+    
+    // Social Account Management
+    Route::post('/auth/google/unlink', [SettingsController::class, 'unlinkGoogle'])->name('auth.google.unlink');
+});
+
+
+
+// Route::get('/weather', function () {
+//     return view('weather');
+// });
+
+// Admin Dashboard Route (already exists in your admin routes group)
+// Route::prefix('admin')->name('admin.')->group(function () {
+    // Route::middleware(['auth', 'admin'])->group(function () {
+        // Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        // Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
+    // });
+// });
+
+// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 

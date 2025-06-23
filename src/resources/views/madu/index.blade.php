@@ -12,7 +12,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <h1 class="text-center mb-4">Honey Products</h1>
-                <p class="text-center lead">Discover our premium honey products from Desa Wisata Kampung Budaya Polowijen
+                <p class="text-center lead">Discover our premium honey products from Desa Wisata Lubuk Hitam Lestari
                 </p>
             </div>
         </div>

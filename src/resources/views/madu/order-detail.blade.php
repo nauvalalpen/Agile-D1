@@ -66,8 +66,8 @@
                             @elseif ($order->status == 'accepted')
                                 <p>Your order has been accepted!</p>
                                 <p class="mb-0">Please pick up your honey on
-                                    {{ date('l, d F Y', strtotime($order->tanggal)) }} at our location in Desa Wisata
-                                    Kampung Budaya Polowijen.</p>
+                                    {{ date('l, d F Y', strtotime($order->tanggal)) }} at our location in Desa Wisata Lubuk
+                                    Hitam Lestari</p>
                             @elseif ($order->status == 'rejected')
                                 <p>We're sorry, but your order has been rejected.</p>
                                 <p class="mb-0">This could be due to stock unavailability or other issues. Please contact

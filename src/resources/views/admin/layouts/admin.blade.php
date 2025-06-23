@@ -141,6 +141,15 @@
                 </a>
             </li>
 
+            <!-- Add this to your admin sidebar navigation -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.oauth.index') }}">
+                    <i class="fab fa-fw fa-google"></i>
+                    <span>OAuth Management</span>
+                </a>
+            </li>
+
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
