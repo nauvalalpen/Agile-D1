@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tourguide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -15,21 +16,19 @@ class TourGuideController extends Controller
 
      public function homepage()
      {
-         // Fetch tour guides ordered by ID ascending
-         $tourGuides = DB::table('tourguides')
-                         ->orderBy('id', 'asc')
-                         ->limit(3)
-                         ->get();
+         // Fetch tour guides ordered by ID ascending using Eloquent
+         $tourGuides = Tourguide::orderBy('id', 'asc')
+                              ->limit(3)
+                              ->get();
          
          // Pass the data to the view
          return view('index', compact('tourGuides'));
      }
+
     public function index()
     {
-        //
-        // dd(Auth::user());
-        $tourguides = DB::table('tourguides')->get();
-        
+        // Using Eloquent model instead of Query Builder
+        $tourguides = Tourguide::all();
         
         if (!Auth::user() || Auth::user()->role === 'user' || Auth::user()->role === null) {
             return view('tourguides/indexUser', compact('tourguides'));
@@ -43,7 +42,6 @@ class TourGuideController extends Controller
      */
     public function create()
     {
-        //
         return view('tourguides/create');
     }
 
@@ -57,7 +55,7 @@ class TourGuideController extends Controller
             'nohp' => 'required|string|max:255',
             'deskripsi' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
-            'pricerange' => 'required|string|max:255', // Make sure this matches your form field name
+            'pricerange' => 'required|string|max:255',
             'foto' => 'required|image|max:2048',
         ]);
     
@@ -69,16 +67,14 @@ class TourGuideController extends Controller
             $file->move(public_path('storage/tourguides'), $fotoPath);
         }
     
-        // Insert into database - make sure the column name matches exactly
-        DB::table('tourguides')->insert([
+        // Create using Eloquent model
+        Tourguide::create([
             'nama' => $request->nama,
             'nohp' => $request->nohp,
             'deskripsi' => $request->deskripsi,
             'alamat' => $request->alamat,
-            'price_range' => $request->pricerange, // This is the key line - make sure it matches your DB column
+            'price_range' => $request->pricerange,
             'foto' => $fotoPath,
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
     
         return redirect()->route('tourguides.index')->with('success', 'Tour guide created successfully.');
@@ -89,7 +85,8 @@ class TourGuideController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $tourguide = Tourguide::findOrFail($id);
+        return view('tourguides.show', compact('tourguide'));
     }
 
     /**
@@ -97,8 +94,7 @@ class TourGuideController extends Controller
      */
     public function edit(string $id)
     {
-        //
-        $tourguides = DB::table('tourguides')->where('id', $id)->first();
+        $tourguides = Tourguide::findOrFail($id);
         return view('tourguides.edit', compact('tourguides'));
     }
 
@@ -112,11 +108,11 @@ class TourGuideController extends Controller
             'nohp' => 'required|string|max:255',
             'deskripsi' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
-            'pricerange' => 'required|string|max:255', // Make sure this matches your form field name
+            'pricerange' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $tourguide = DB::table('tourguides')->where('id', $id)->first();
+        $tourguide = Tourguide::findOrFail($id);
         $fotoPath = $tourguide->foto;
 
         // Handle file upload if a new photo is provided
@@ -131,26 +127,21 @@ class TourGuideController extends Controller
             $file->move(public_path('storage/tourguides'), $fotoPath);
         }
 
-        DB::table('tourguides')->where('id', $id)->update([
+        $tourguide->update([
             'nama' => $request->nama,
             'nohp' => $request->nohp,
             'deskripsi' => $request->deskripsi,
             'alamat' => $request->alamat,
-            'price_range' => $request->pricerange, // Make sure this matches your form field name
+            'price_range' => $request->pricerange,
             'foto' => $fotoPath,
-            'updated_at' => now(),
         ]);
         
         return redirect()->route('tourguides.index')->with('success', 'Data Tour Guide berhasil diupdate');
     }
 
-    public function order(Request $request, $id){
-        $tourguide = DB::table('tourguides')->where('id', $id)->first();
-    
-        if (!$tourguide) {
-            return redirect()->route('tourguides.index')->with('error', 'Tour guide not found.');
-        }
-        
+    public function order(Request $request, $id)
+    {
+        $tourguide = Tourguide::findOrFail($id);
         return view('tourguides.order', compact('tourguide'));
     }
 
@@ -165,11 +156,7 @@ class TourGuideController extends Controller
             'notes' => 'nullable|string|max:500',
         ]);
         
-        $tourguide = DB::table('tourguides')->where('id', $id)->first();
-        
-        if (!$tourguide) {
-            return redirect()->route('tourguides.index')->with('error', 'Tour guide not found.');
-        }
+        $tourguide = Tourguide::findOrFail($id);
         
         // Insert the order into the database
         DB::table('order_tour_guides')->insert([
@@ -177,10 +164,10 @@ class TourGuideController extends Controller
             'tourguide_id' => $id,
             'tanggal_order' => $request->tanggal_order,
             'jumlah_orang' => $request->jumlah_orang,
-            'price_range' => $tourguide->price_range, // Get price range from the tourguide
+            'price_range' => $tourguide->price_range,
             'notes' => $request->notes,
-            'status' => 'pending', // Set initial status
-            'is_read' => 0, // Set as unread
+            'status' => 'pending',
+            'is_read' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -193,8 +180,15 @@ class TourGuideController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-        DB::table('tourguides')->where('id', $id)->delete();
+        $tourguide = Tourguide::findOrFail($id);
+        
+        // Delete associated photo if exists
+        if ($tourguide->foto && Storage::disk('public')->exists($tourguide->foto)) {
+            Storage::disk('public')->delete($tourguide->foto);
+        }
+        
+        $tourguide->delete();
+        
         return redirect()->route('tourguides.index')->with('success', 'Data Tour Guide berhasil dihapus');
     }
 }
