@@ -19,16 +19,12 @@
             {{-- Article Image --}}
             <div class="article-image-wrapper">
                 <img src="{{ asset('storage/' . $berita->foto) }}" alt="{{ $berita->judul }}" class="article-image">
-                <div class="article-badge">
-                    <i class="fas fa-newspaper me-2"></i>
-                    News Article
-                </div>
             </div>
 
             {{-- Article Content --}}
             <div class="article-content">
                 <h1 class="article-title">{{ $berita->judul }}</h1>
-                
+
                 <div class="article-meta">
                     <span class="meta-item">
                         <i class="fas fa-calendar-alt me-2"></i>
@@ -63,7 +59,7 @@
             left: 0;
             width: 0%;
             height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            background: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%);
             z-index: 1000;
             transition: width 0.2s ease;
         }
@@ -78,7 +74,7 @@
             display: inline-flex;
             align-items: center;
             padding: 12px 24px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%);
             color: white;
             text-decoration: none;
             border-radius: 50px;
@@ -296,9 +292,9 @@
 
             function handleScroll() {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
+
                 updateReadingProgress();
-                
+
                 if (scrollTop > 300) {
                     floatingBack.classList.add('show');
                 } else {
@@ -307,7 +303,9 @@
             }
 
             updateReadingProgress();
-            window.addEventListener('scroll', handleScroll, { passive: true });
+            window.addEventListener('scroll', handleScroll, {
+                passive: true
+            });
 
             // Keyboard shortcut
             document.addEventListener('keydown', function(e) {

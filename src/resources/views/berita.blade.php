@@ -65,12 +65,7 @@
                                     <a href="{{ route('berita.detail', $berita->id) }}" class="d-block overflow-hidden">
                                         <img src="{{ asset('storage/' . $berita->foto) }}" alt="News Image"
                                             class="card-img-top news-img">
-                                        <div class="news-overlay">
-                                            <i class="fas fa-eye view-icon"></i>
-                                            <span class="view-text">Read More</span>
-                                        </div>
                                     </a>
-                                    <div class="news-category-badge">News</div>
                                 </div>
                                 <div class="card-body">
                                     <a href="{{ route('berita.detail', $berita->id) }}"
@@ -90,13 +85,6 @@
                                             <i class="fas fa-map-marker-alt me-1"></i>
                                             {{ $berita->sumber ?? 'Air Terjun Lubuk Hitam' }}
                                         </small>
-                                        <div class="news-actions">
-                                            <button class="action-btn like-btn" data-id="{{ $berita->id }}">
-                                                <i class="far fa-heart"></i>
-                                            </button>
-                                            <button class="action-btn share-btn" data-id="{{ $berita->id }}">
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -208,21 +196,12 @@
                 content: '';
                 flex: 1;
                 height: 3px;
-                background: linear-gradient(135deg, #667eea, #764ba2);
+                background: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%);
                 border-radius: 2px;
             }
 
-            .hot-icon,
             .news-icon {
-                font-size: 2rem;
-                background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
-
-            .news-icon {
-                background: linear-gradient(135deg, #667eea, #764ba2);
+                background: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
@@ -429,21 +408,6 @@
                 transition: all 0.5s ease;
             }
 
-            .news-overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.8);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                opacity: 0;
-                transition: all 0.4s ease;
-                gap: 0.5rem;
-            }
 
             .news-card:hover .news-overlay {
                 opacity: 1;
@@ -476,18 +440,7 @@
                 transform: scale(1.1);
             }
 
-            .news-category-badge {
-                position: absolute;
-                top: 15px;
-                left: 15px;
-                background: linear-gradient(135deg, #667eea, #764ba2);
-                color: white;
-                padding: 5px 12px;
-                border-radius: 15px;
-                font-size: 0.8rem;
-                font-weight: 600;
-                z-index: 2;
-            }
+
 
             .card-body {
                 padding: 1.8rem;
@@ -509,7 +462,7 @@
             }
 
             .news-card:hover .news-title {
-                color: #667eea;
+                color: #04221e;
             }
 
             .news-excerpt {
@@ -535,7 +488,7 @@
             }
 
             .news-meta i {
-                color: #667eea;
+                color: #228B22;
             }
 
             .news-actions {
@@ -563,18 +516,13 @@
                 transform: scale(1.1);
             }
 
-            .action-btn.liked {
-                background: #ff6b6b;
-                color: white;
-            }
-
             /* BUTTONS */
             .btn-read-more {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
                 padding: 15px 35px;
-                background: linear-gradient(135deg, #667eea, #764ba2);
+                background: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%);
                 color: #fff;
                 font-weight: 700;
                 font-size: 1.1rem;
@@ -595,7 +543,7 @@
                 left: -100%;
                 width: 100%;
                 height: 100%;
-                background: linear-gradient(135deg, #764ba2, #667eea);
+                background: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%);
                 transition: left 0.4s ease;
                 z-index: -1;
             }
@@ -606,7 +554,7 @@
 
             .btn-read-more:hover {
                 transform: translateY(-3px);
-                box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+                box-shadow: 0 15px 40px rgba(28, 83, 76, 0.4);
                 color: white;
             }
 
@@ -686,8 +634,6 @@
                     transform: translateX(100%);
                 }
             }
-
-
 
             /* RESPONSIVE DESIGN */
             @media (max-width: 992px) {
@@ -772,6 +718,7 @@
 
             }
 
+            /* For large tablets and smaller laptops */
             @media (max-width: 1200px) {
                 .hero-content {
                     /* Start reducing the large padding earlier */
@@ -939,31 +886,6 @@
                 });
 
 
-                // LIKE BUTTON FUNCTIONALITY
-                const likeBtns = document.querySelectorAll('.like-btn');
-
-                likeBtns.forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        this.classList.toggle('liked');
-                        const icon = this.querySelector('i');
-
-                        if (this.classList.contains('liked')) {
-                            icon.classList.remove('far');
-                            icon.classList.add('fas');
-                            this.style.animation = 'heartBeat 0.6s ease';
-                        } else {
-                            icon.classList.remove('fas');
-                            icon.classList.add('far');
-                        }
-
-                        setTimeout(() => {
-                            this.style.animation = '';
-                        }, 600);
-                    });
-                });
 
 
                 // SCROLL ANIMATIONS

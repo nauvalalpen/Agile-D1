@@ -765,6 +765,80 @@
             animation-delay: 0.6s;
         }
 
+        /* For large tablets and smaller laptops */
+        @media (max-width: 1200px) {
+            .hero-content {
+                /* Start reducing the large padding earlier */
+                padding: 0 3rem 0 10rem;
+            }
+        }
+
+        /* For tablets */
+        @media (max-width: 992px) {
+            .hero-section {
+                justify-content: center;
+                /* Center the content block */
+                text-align: center;
+                /* Center the text inside the block */
+                height: 75vh;
+            }
+
+            .hero-content {
+                /* Remove fixed padding, use responsive padding */
+                padding: 0 2rem;
+            }
+
+            .hero-title {
+                font-size: 60px;
+                letter-spacing: 15px;
+            }
+
+            .hero-desc {
+                /* Allow description to center properly */
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        /* For small tablets and large phones */
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 70vh;
+            }
+
+            .hero-title {
+                font-size: 48px;
+                letter-spacing: 10px;
+                line-height: 1.2;
+            }
+
+            .hero-desc {
+                font-size: 15px;
+            }
+
+            .hero-btn {
+                padding: 10px 25px;
+                font-size: 13px;
+            }
+        }
+
+        /* For mobile phones */
+        @media (max-width: 576px) {
+            .hero-section {
+                height: 65vh;
+                /* Reduce height for small screens */
+            }
+
+            .hero-content {
+                padding: 0 1rem;
+            }
+
+            .hero-title {
+                font-size: 36px;
+                letter-spacing: 5px;
+            }
+        }
+
         @keyframes fadeInUp {
             to {
                 opacity: 1;
@@ -1026,13 +1100,13 @@
                                 @auth
                                     ${honey.stock > 0 ? 
                                         `<a href="{{ route('madu.order', $madu->id) }}" class="btn-order">
-                                                    <i class="fas fa-shopping-cart me-2"></i>
-                                                    Pesan Sekarang
-                                                </a>` :
+                                                            <i class="fas fa-shopping-cart me-2"></i>
+                                                            Pesan Sekarang
+                                                        </a>` :
                                         `<button class="btn btn-lg w-100" disabled style="opacity: 0.5; cursor: not-allowed;">
-                                                    <i class="fas fa-times-circle me-2"></i>
-                                                    Tidak Tersedia
-                                                </button>`
+                                                            <i class="fas fa-times-circle me-2"></i>
+                                                            Tidak Tersedia
+                                                        </button>`
                                     }
                                 @else
                                     <a href="{{ route('login') }}" class="btn btn-lg w-100">
