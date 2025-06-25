@@ -3,11 +3,13 @@
 @section('content')
     <section class="hero-section">
         <div class="hero-content">
-            <div class="hero-title">RECAP<br>NEWS</div>
+            <div class="hero-title">DAFTAR<br>BERITA</div>
             <div class="hero-desc">Ikuti perkembangan, cerita, dan fakta terbaru dari Lubuk Hitam.</div>
             <a href="#beritas-grid" class="hero-btn">Lihat Berita</a>
         </div>
     </section>
+
+
     <div id="beritas-grid" class="beritas-container">
         <div class="container py-5">
             <!-- HOT TOPICS -->
@@ -60,7 +62,7 @@
                     @foreach ($beritas as $index => $berita)
                         <div class="col news-item" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}"
                             data-category="recent">
-                            <div class="card border-0 h-100 shadow-sm news-card">
+                            <div>
                                 <div class="news-image-container">
                                     <a href="{{ route('berita.detail', $berita->id) }}" class="d-block overflow-hidden">
                                         <img src="{{ asset('storage/' . $berita->foto) }}" alt="News Image"
@@ -196,7 +198,7 @@
                 content: '';
                 flex: 1;
                 height: 3px;
-                background: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%);
+                background: linear-gradient(135deg, #28a745, #20c997);
                 border-radius: 2px;
             }
 
@@ -264,22 +266,6 @@
                 border-radius: 1.5rem;
             }
 
-            .hot-badge {
-                position: absolute;
-                top: 25px;
-                right: 25px;
-                background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-                color: white;
-                padding: 10px 18px;
-                border-radius: 30px;
-                font-size: 0.9rem;
-                font-weight: 700;
-                animation: hotPulse 3s infinite;
-                box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
-                z-index: 4;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
 
             @keyframes hotPulse {
 
@@ -306,6 +292,7 @@
                 transition: all 0.4s ease;
                 border-radius: 0 0 1.5rem 1.5rem;
             }
+
 
             .hot-topic-title {
                 font-size: 2.3rem;
@@ -378,22 +365,14 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: linear-gradient(135deg, rgba(102, 126, 234, 0.03), rgba(220, 53, 69, 0.03));
+                background: linear-gradient(135deg, rgba(20, 68, 4, 0.03), rgba(51, 192, 95, 0.03));
                 opacity: 0;
                 transition: opacity 0.3s ease;
                 z-index: 1;
                 border-radius: 1.5rem;
             }
 
-            .news-card:hover::before {
-                opacity: 1;
-            }
 
-            .news-card:hover {
-                transform: translateY(-12px) scale(1.02);
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-                border-color: rgba(102, 126, 234, 0.2);
-            }
 
             .news-image-container {
                 position: relative;
@@ -439,8 +418,6 @@
             .news-card:hover .news-img {
                 transform: scale(1.1);
             }
-
-
 
             .card-body {
                 padding: 1.8rem;
@@ -488,7 +465,7 @@
             }
 
             .news-meta i {
-                color: #228B22;
+                color: #1e671e;
             }
 
             .news-actions {
@@ -511,7 +488,7 @@
             }
 
             .action-btn:hover {
-                background: #667eea;
+                background: #278049;
                 color: white;
                 transform: scale(1.1);
             }
@@ -522,7 +499,7 @@
                 align-items: center;
                 justify-content: center;
                 padding: 15px 35px;
-                background: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%);
+                background: linear-gradient(135deg, #006400, #228B22);
                 color: #fff;
                 font-weight: 700;
                 font-size: 1.1rem;
@@ -530,7 +507,7 @@
                 border-radius: 50px;
                 text-decoration: none;
                 transition: all 0.4s ease;
-                box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+                box-shadow: 0 10px 30px rgba(66, 255, 154, 0.3);
                 gap: 1rem;
                 position: relative;
                 overflow: hidden;
@@ -543,7 +520,7 @@
                 left: -100%;
                 width: 100%;
                 height: 100%;
-                background: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%);
+                background: linear-gradient(135deg, #006400, #228B22);
                 transition: left 0.4s ease;
                 z-index: -1;
             }
@@ -568,33 +545,12 @@
                 transform: translateX(8px);
             }
 
-            .btn-load-more {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                padding: 12px 30px;
-                background: transparent;
-                border: 2px solid #667eea;
-                color: #667eea;
-                font-weight: 600;
-                border-radius: 50px;
-                transition: all 0.3s ease;
-                gap: 0.5rem;
-                cursor: pointer;
-            }
-
-            .btn-load-more:hover {
-                background: #667eea;
-                color: white;
-                transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            }
 
             /* ANIMATIONS */
             .ripple {
                 position: absolute;
                 border-radius: 50%;
-                background: rgba(102, 126, 234, 0.3);
+                background: rgba(66, 255, 154, 0.3);
                 transform: scale(0);
                 animation: rippleEffect 0.6s linear;
                 pointer-events: none;
