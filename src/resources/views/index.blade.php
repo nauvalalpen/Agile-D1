@@ -673,18 +673,18 @@
         }
 
         /* .hero-image-overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 0;
-                transition: var(--transition-smooth);
-            } */
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    opacity: 0;
+                    transition: var(--transition-smooth);
+                } */
 
         .hero-image-container:hover .hero-image-overlay {
             opacity: 1;
@@ -1202,8 +1202,8 @@
             <!-- Right Content -->
             <div class="hero-visual-section">
                 <div class="hero-image-container" id="hero-image-container">
-                    <img src="https://www.itrip.id/wp-content/uploads/2022/04/Alamat-Air-Terjun-Lubuk-Hitam-.jpg"
-                        alt="Lubuk Hitam Waterfall" class="hero-image" id="hero-image">
+                    <img src="{{ asset('images/hero.jpg') }}" alt="Lubuk Hitam Waterfall" class="hero-image"
+                        id="hero-image">
                 </div>
             </div>
         </div>
