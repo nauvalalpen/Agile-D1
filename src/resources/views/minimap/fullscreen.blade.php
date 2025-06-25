@@ -173,7 +173,7 @@
             top: 20px;
             left: 20px;
             z-index: 1000;
-            background: var(--danger-gradient);
+            /* background: var(--danger-gradient); */
             border: none;
             color: white;
             padding: 12px 20px;
@@ -325,6 +325,12 @@
         .controls-hidden .info-panel,
         .controls-hidden .close-btn {
             opacity: 0.3;
+        }
+
+        #close-btn {
+            background: rgba(0, 100, 0, 0.1);
+            color: #white;
+            border-radius: 50px;
         }
     </style>
 </head>
