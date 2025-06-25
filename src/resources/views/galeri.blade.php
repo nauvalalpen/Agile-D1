@@ -46,7 +46,7 @@
                                 </h6>
                                 <p class="card-text">{{ Str::limit($gallery->deskripsi, 100) }}</p>
                                 <div class="mt-auto">
-                                    <button type="button" class="btn btn-dark-custom w-100"
+                                    <button type="button" class="btn btn-custom w-100" id="btn-view-details"
                                         onclick="showGalleryModal({{ $gallery->id }})">
                                         View Details
                                     </button>
@@ -74,7 +74,8 @@
                             inspiration and rejuvenation. Venture into nature's embrace on our thrilling hiking adventures
                             or chase the thundering roar of cascading waterfalls.
                         </p>
-                        <a href="{{ route('tourguides.index') }}" class="btn btn-dark-custom">Find a Guide</a>
+                        <a href="{{ route('tourguides.index') }}" class="btn btn-custom w-70" id="btn-view-details">Find a
+                            Guide</a>
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
@@ -874,6 +875,13 @@
         .btn-secondary:hover {
             transform: translateY(-1px);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        #btn-view-details {
+            border-radius: 50px;
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
         }
 
         @media (max-width: 1200px) {
