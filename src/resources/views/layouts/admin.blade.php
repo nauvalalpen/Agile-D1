@@ -66,7 +66,7 @@
                     <i class="fas fa-fw fa-users"></i>
                     <span>Tourists</span>
                 </a>
-            </li>
+a            </li>
 
             <!-- Nav Item - Guides -->
             <li class="nav-item">

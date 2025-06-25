@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            // $table->timestamp('avatar')->nullable()->after('google_id');
-            // $table->timestamp('two_factor_confirmed_at')->nullable()->after('two_factor_recovery_codes');
+            $table->timestamp('avatar')->nullable()->after('google_id');
+            $table->timestamp('two_factor_confirmed_at')->nullable()->after('two_factor_recovery_codes');
         });
     }
 

@@ -76,33 +76,6 @@
             </div>
         </div>
 
-        <!-- Newsletter Subscription -->
-        <div class="newsletter-section-green">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h4 style="margin-bottom: 0.5rem; color: #013220;">Stay Updated</h4>
-                    <p style="margin-bottom: 0; color: #014421;">Subscribe to get the latest news and special offers</p>
-                </div>
-                <div class="col-lg-6">
-                    <form class="newsletter-form-green" action="#" method="POST">
-                        @csrf
-                        <div class="input-group">
-                            <input type="email" 
-                                   class="form-input-green" 
-                                   placeholder="Enter your email address" 
-                                   required
-                                   style="border-radius: 25px 0 0 25px; border-right: none;">
-                            <button type="submit" 
-                                    class="btn-newsletter-green"
-                                    style="border-radius: 0 25px 25px 0; padding: 1rem 2rem; background: var(--primary-gradient); color: white; border: none; font-weight: 600; transition: var(--transition);">
-                                Subscribe
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
         <!-- Footer Bottom -->
         <div class="footer-bottom-green">
             <div class="row align-items-center">
