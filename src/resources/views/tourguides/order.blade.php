@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10 col-lg-8">
                 <div class="card shadow-lg border-0" style="border-radius: 15px;">
-                    <div class="card-header bg-primary text-white text-center p-4">
+                    <div class="card-header text-center p-4" id="btn-header-tourguide">
                         <h3 class="mb-0 fw-bold">Booking Confirmation</h3>
                         <p class="mb-0">You are booking a tour with</p>
                     </div>
@@ -98,10 +98,10 @@
 
                             <div class="row">
                                 <div class="col-md-7 offset-md-4 d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary btn-lg flex-grow-1">
-                                        <i class="fas fa-check-circle me-2"></i>{{ __('Confirm Order') }}
+                                    <button type="submit" class="btn-lg flex-grow-1" id="btn-order-tourguide">
+                                        <i class="fas fa-check-circle me-2" id=""></i>{{ __('Confirm Order') }}
                                     </button>
-                                    <a href="{{ url()->previous() }}" class="btn btn-secondary btn-lg">
+                                    <a href="{{ url()->previous() }}" class="btn-lg" id="btn-cancel-order">
                                         {{ __('Cancel') }}
                                     </a>
                                 </div>
@@ -133,6 +133,53 @@
 
         .col-form-label {
             font-weight: 500;
+        }
+
+        #btn-header-tourguide {
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+
+        #btn-order-tourguide {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+
+        #btn-cancel-order {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
         }
     </style>
 @endsection

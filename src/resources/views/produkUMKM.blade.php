@@ -47,7 +47,7 @@
                                     <h5 class="card-title">{{ $produk->nama }}</h5>
                                     <p class="card-text">{{ Str::limit($produk->deskripsi, 100) }}</p>
                                     <div class="mt-auto">
-                                        <button type="button" class="btn btn-dark-custom w-100"
+                                        <button type="button" class="btn btn-custom w-100" id="btn-lihat-detail"
                                             onclick="showProductModal({{ $produk->id }})">
                                             Lihat Detail
                                         </button>
@@ -97,7 +97,8 @@
                                 <span>Mendukung Ekonomi Lokal</span>
                             </div>
                         </div>
-                        <a href="#" class="btn btn-dark-custom mt-3">Bergabung Sebagai Mitra</a>
+                        <a href="https://wa.me/6283199877326?text=Halloo..., Apakah saya dapat mengajukan diri untuk bergabung sebagai mitra UMKM?"
+                            class="btn btn-custom mt-3" id="btn-lihat-detail">Bergabung Sebagai Mitra</a>
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
@@ -166,7 +167,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                    <a href="https://wa.me/6283199877326?text=Halloo ... ,Apakah saya bisa melihat produk UMKM yang tersedia?"
+                    <a href="https://wa.me/6283199877326?text=Halloo..., Apakah saya bisa melihat produk UMKM yang tersedia?"
                         id="contactSellerBtn" class="btn btn-success">
                         <i class="fab fa-whatsapp me-2"></i>Hubungi Penjual
                     </a>
@@ -723,8 +724,8 @@
         .category-icon {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #0d6efd, #0056b3);
-            color: white;
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1186,6 +1187,13 @@
         .skeleton-image {
             height: 220px;
             border-radius: 15px;
+        }
+
+        #btn-lihat-detail {
+            border-radius: 50px;
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
         }
     </style>
 @endsection
