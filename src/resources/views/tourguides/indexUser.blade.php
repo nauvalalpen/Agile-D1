@@ -30,13 +30,13 @@
             <!-- Filter and Search Section -->
             <div class="filter-search-section mb-5" data-aos="fade-up" data-aos-delay="200">
                 <div class="row align-items-center g-3">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
                             <input type="text" id="searchGuides" placeholder="Search guides by name or location...">
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    {{-- <div class="col-lg-6">
                         <div class="filter-buttons">
                             <button class="filter-btn active" data-filter="all">
                                 <i class="fas fa-globe"></i>
@@ -51,7 +51,7 @@
                                 Available
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -142,17 +142,19 @@
                             </div>
 
                             <div class="guide-actions">
-                                <button class="btn-action btn-secondary" onclick="viewGuideProfile({{ $tourguide->id }})">
+                                <button class="btn-action" id="btn-view-profile"
+                                    onclick="viewGuideProfile({{ $tourguide->id }})">
                                     <i class="fas fa-eye"></i>
                                     View Profile
                                 </button>
                                 @auth
-                                    <a href="{{ route('tourguides.order', $tourguide->id) }}" class="btn-action btn-primary">
+                                    <a href="{{ route('tourguides.order', $tourguide->id) }}" class="btn-action"
+                                        id="btn-book-now">
                                         <i class="fas fa-calendar-check"></i>
                                         Book Now
                                     </a>
                                 @else
-                                    <a href="{{ route('login') }}" class="btn-action btn-primary">
+                                    <a href="{{ route('login') }}" class="btn-action" id="btn-book-now">
                                         <i class="fas fa-sign-in-alt"></i>
                                         Login to Book
                                     </a>
@@ -192,7 +194,7 @@
             <div class="row g-4">
                 <div class="col-lg-4" data-aos="fade-right" data-aos-delay="200">
                     <div class="feature-card">
-                        <div class="feature-icon">
+                        <div class="feature-icon" id="feature-icon">
                             <i class="fas fa-shield-alt"></i>
                         </div>
                         <h3>Verified Guides</h3>
@@ -201,7 +203,7 @@
                 </div>
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
                     <div class="feature-card">
-                        <div class="feature-icon">
+                        <div class="feature-icon" id="feature-icon">
                             <i class="fas fa-clock"></i>
                         </div>
                         <h3>24/7 Support</h3>
@@ -210,7 +212,7 @@
                 </div>
                 <div class="col-lg-4" data-aos="fade-left" data-aos-delay="600">
                     <div class="feature-card">
-                        <div class="feature-icon">
+                        <div class="feature-icon" id="feature-icon">
                             <i class="fas fa-money-bill-wave"></i>
                         </div>
                         <h3>Best Prices</h3>
@@ -221,7 +223,7 @@
         </div>
 
         <!-- 4. CTA SECTION -->
-        <div class="cta-section my-5 py-5" data-aos="fade-up">
+        <div class="cta-section my-5 py-5" data-aos="fade-up" id="cta-section">
             <div class="cta-content text-center">
                 <h2 class="cta-title">Ready for Your Next Adventure?</h2>
                 <p class="cta-description">
@@ -438,8 +440,8 @@
                                             ${guide.foto ? 
                                                 `<img src="${guide.foto}" alt="${guide.nama}" class="img-fluid rounded">` :
                                                 `<div class="bg-light d-flex align-items-center justify-content-center rounded" style="height: 200px;">
-                                                                            <i class="fas fa-user fa-3x text-muted"></i>
-                                                                        </div>`
+                                                                                                                                                                    <i class="fas fa-user fa-3x text-muted"></i>
+                                                                                                                                                                </div>`
                                             }
                                         </div>
                                     </div>
@@ -1032,7 +1034,8 @@
 
         /* === 4. CTA SECTION === */
         .cta-section {
-            background: linear-gradient(135deg, #212529, #495057);
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            /* color: #006400; */
             border-radius: 20px;
             color: white;
         }
@@ -1742,6 +1745,27 @@
         .success-state p {
             color: #6c757d;
             margin-bottom: 2rem;
+        }
+
+        #btn-book-now {
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+
+        #btn-view-profile {
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
+        }
+
+        #feature-icon {
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
+        }
+
+        #cta-section {
+            /* background: rgba(0, 100, 0, 0.1); */
+            /* color: #006400; */
         }
     </style>
 @endsection
