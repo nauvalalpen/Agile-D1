@@ -307,7 +307,7 @@ Route::prefix('admin')->name('admin.')->middleware(
     Route::delete('users/{id}/force-delete', [UsersController::class, 'forceDelete'])->name('users.force-delete');
 
     // Dashboard Routes
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     // OAuth Management routes
     Route::get('oauth', [App\Http\Controllers\Admin\OAuthController::class, 'index'])->name('oauth.index');
