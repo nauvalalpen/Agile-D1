@@ -1287,7 +1287,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<<<<<<< HEAD
     @push('script')
+=======
+
+
+    <!-- Custom JavaScript -->
+    <script src="{{ asset('js/admin.js') }}"></script>
+
+    <!-- Page specific scripts -->
+    @stack('scripts')
+</body>
+@push('script')
+>>>>>>> cdcc9756b4dde8d7a3f6d0a7ff29f5fe7aca157d
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Sidebar Toggle
@@ -1585,13 +1597,6 @@
             }
         });
     </script>
-    @endpush
-
-    <!-- Custom JavaScript -->
-    <script src="{{ asset('js/admin.js') }}"></script>
-
-    <!-- Page specific scripts -->
-    @stack('scripts')
-</body>
+@endpush
 
 </html>

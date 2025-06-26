@@ -27,7 +27,7 @@
             </div>
 
             <!-- Order Statistics -->
-            <div class="order-stats-section mb-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="order-stats-section mb-5" data-aos="fade-up" data-aos-delay="100" id="order-stats">
                 <div class="row g-4">
                     <div class="col-md-3 col-6">
                         <div class="stat-card">
@@ -72,16 +72,16 @@
             <div class="order-tabs-section mb-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="custom-tabs">
                     <div class="tab-buttons">
-                        <button class="tab-btn {{ $activeTab == 'all' ? 'active' : '' }}" onclick="filterOrders('all')"
-                            data-tab="all">
+                        <button class="tab-btn {{ $activeTab == 'all' ? 'active' : '' }}" id="tab-btn-navbar"
+                            onclick="filterOrders('all')" data-tab="all">
                             <i class="fas fa-list me-2"></i>Semua Pesanan
                         </button>
-                        <button class="tab-btn {{ $activeTab == 'tour_guide' ? 'active' : '' }}"
+                        <button class="tab-btn {{ $activeTab == 'tour_guide' ? 'active' : '' }}" id="tab-btn-tourguide"
                             onclick="filterOrders('tour_guide')" data-tab="tour_guide">
                             <i class="fas fa-user-tie me-2"></i>Tour Guide
                         </button>
-                        <button class="tab-btn {{ $activeTab == 'honey' ? 'active' : '' }}" onclick="filterOrders('honey')"
-                            data-tab="honey">
+                        <button class="tab-btn {{ $activeTab == 'honey' ? 'active' : '' }}" id="tab-btn-navbar"
+                            onclick="filterOrders('honey')" data-tab="honey">
                             <i class="fas fa-jar me-2"></i>Produk Madu
                         </button>
                     </div>
@@ -116,9 +116,9 @@
                                 <i class="fas fa-hashtag me-1"></i>
                                 <span>{{ $order->id }}</span>
                             </div>
-                            <div class="order-type-badge">
+                            <div class="order-type-badge" id="tab-btn-navbar">
                                 @if ($order->order_type == 'tour_guide')
-                                    <span class="badge badge-tour-guide">
+                                    <span class="badge badge-tour-guide" id="tab-btn-navbar">
                                         <i class="fas fa-user-tie me-1"></i>Tour Guide
                                     </span>
                                 @elseif ($order->order_type == 'honey')
@@ -162,18 +162,18 @@
                                 </div>
                             </div>
 
-                            <div class="order-status-section">
-                                <div class="status-badge">
+                            <div class="order-status-section" id="validasi-hasil-pesanan">
+                                <div class="status-badge" id="validasi-hasil-pesanan">
                                     @if ($order->status == 'pending')
-                                        <span class="status-pending">
+                                        <span class="status-pending" id="validasi-hasil-pesanan">
                                             <i class="fas fa-clock me-1"></i>Menunggu
                                         </span>
                                     @elseif ($order->status == 'accepted')
-                                        <span class="status-accepted">
+                                        <span class="status-accepted" id="validasi-hasil-pesanan">
                                             <i class="fas fa-check-circle me-1"></i>Diterima
                                         </span>
                                     @elseif ($order->status == 'rejected')
-                                        <span class="status-rejected">
+                                        <span class="status-rejected" id="validasi-hasil-pesanan">
                                             <i class="fas fa-times-circle me-1"></i>Ditolak
                                         </span>
                                     @endif
@@ -181,8 +181,8 @@
                             </div>
                         </div>
 
-                        <div class="order-card-footer">
-                            <button type="button" class="btn btn-dark-custom"
+                        <div class="order-card-footer btn btn-custom w-100">
+                            <button type="button" class="btn btn-custom w-70" id="tab-btn-lihatDetail"
                                 onclick="showOrderModal({{ $order->id }}, '{{ $order->order_type }}')">
                                 <i class="fas fa-eye me-2"></i>Lihat Detail
                             </button>
@@ -216,10 +216,10 @@
                             </p>
                             <div class="action-buttons">
                                 <a href="https://wa.me/6283199877326?text=Halloo ... ,saya ingin bertanya terkait pesanan saya"
-                                    class="btn btn-dark-custom me-3">
+                                    class="btn btn-custom me-3" id="btn-hubungi-CS">
                                     <i class="fab fa-whatsapp me-2"></i>Hubungi CS
                                 </a>
-                                <a href="#" class="btn btn-outline-dark">
+                                <a href="#" class="btn btn-outline" id="btn-FAQ">
                                     <i class="fas fa-question-circle me-2"></i>FAQ
                                 </a>
                             </div>
@@ -740,6 +740,7 @@
         }
 
         .stat-label {
+            /* background: rgba(255, 255, 255, 0.1); */
             font-size: 1rem;
             color: rgba(255, 255, 255, 0.9);
             margin-bottom: 0;
@@ -1372,6 +1373,24 @@
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
         }
 
+        #validasi-hasil-pesanan {
+            background: rgba(244, 245, 244, 0.1);
+            /* color: #006400; */
+        }
+
+        #btn-hubungi-CS {
+            border-radius: 50px;
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+
+        #btn-FAQ {
+            border-radius: 50px;
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
+        }
+
         /* === ADDITIONAL ANIMATIONS === */
         @keyframes pulse {
             0% {
@@ -1460,6 +1479,28 @@
             border-top: 2px solid #3498db;
             border-radius: 50%;
             animation: spin 1s linear infinite;
+        }
+
+        #order-stats {
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+
+        #tab-btn-navbar {
+            background: rgba(255, 255, 255, 0.1);
+            color: #006400;
+        }
+
+        #tab-btn-lihatDetail {
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
+            border-radius: 50px;
+        }
+
+        #tab-btn-tourguide {
+            background: rgb(255, 255, 255);
+            color: #006400;
         }
 
         @keyframes spin {
