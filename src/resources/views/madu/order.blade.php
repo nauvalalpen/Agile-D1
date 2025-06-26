@@ -7,8 +7,8 @@
         <div class="order-card">
             <!-- Header -->
             <div class="card-header">
-                <h1>Place Your Order</h1>
-                <p>Complete your honey purchase</p>
+                <h1>Pesan Sekarang</h1>
+                <p>Selesaikan pembelian madumu</p>
             </div>
 
             <!-- Product Info -->
@@ -25,7 +25,7 @@
                 <div class="product-details">
                     <h2>{{ $madu->nama }}</h2>
                     <div class="price">Rp {{ number_format($madu->harga, 0, ',', '.') }}</div>
-                    <div class="stock">{{ $madu->stock }} in stock</div>
+                    <div class="stock">{{ $madu->stock }} Tersedia</div>
                 </div>
             </div>
 
@@ -35,7 +35,7 @@
                 
                 <div class="form-grid">
                     <div class="input-group">
-                        <label>Full Name</label>
+                        <label>Nama</label>
                         <input type="text" name="nama" value="{{ auth()->user()->name ?? '' }}" required>
                     </div>
 
@@ -45,17 +45,17 @@
                     </div>
 
                     <div class="input-group">
-                        <label>Phone Number</label>
+                        <label>Nomor HandPhone</label>
                         <input type="tel" name="telepon" required>
                     </div>
 
                     <div class="input-group">
-                        <label>Quantity</label>
+                        <label>Jumlah</label>
                         <input type="number" name="jumlah" id="quantity" value="1" min="1" max="{{ $madu->stock }}" required>
                     </div>
 
                     <div class="input-group">
-                        <label>Pickup Date</label>
+                        <label>Tanggal Pengambilan</label>
                         <input type="date" name="tanggal" min="{{ date('Y-m-d', strtotime('+1 day')) }}" required>
                     </div>
 
@@ -64,11 +64,11 @@
                 <!-- Order Summary -->
                 <div class="summary">
                     <div class="summary-row">
-                        <span>Price per item</span>
+                        <span>Harga per Item</span>
                         <span>Rp {{ number_format($madu->harga, 0, ',', '.') }}</span>
                     </div>
                     <div class="summary-row">
-                        <span>Quantity</span>
+                        <span>Jumlah</span>
                         <span id="qty-display">1</span>
                     </div>
                     <div class="summary-row total">
@@ -81,11 +81,11 @@
                 <div class="action-buttons">
                     <button type="button" class="cancel-btn" onclick="cancelOrder()">
                         <i class="fas fa-times"></i>
-                        Cancel
+                       Batal
                     </button>
                     <button type="submit" class="order-btn">
                         <i class="fas fa-shopping-cart"></i>
-                        Place Order
+                        Pesan Sekarang
                     </button>
                 </div>
             </form>

@@ -30,11 +30,11 @@
 
     <style>
         :root {
-            --primary-color: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary-color: #64748b;
+            --primary-color: #0a1f0f;
+            --primary-dark: #1a3d2e;
+            --secondary-color: #2f5842;
             --accent-color: #f59e0b;
-            --dark-color: #0f172a;
+            --dark-color: #071d0e;
             --light-color: #f8fafc;
             --border-color: #e2e8f0;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -124,7 +124,7 @@
         .nav-link:hover,
         .nav-link.active {
             color: var(--primary-color) !important;
-            background-color: rgba(37, 99, 235, 0.08);
+            background-color: rgba(10, 100, 40, 0.08);
             transform: translateY(-1px);
         }
 
@@ -185,7 +185,7 @@
             position: absolute;
             top: -6px;
             right: -6px;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: linear-gradient(90deg, #228B22, #90EE90, #228B22);
             color: white;
             border-radius: 50%;
             width: 16px;
@@ -202,7 +202,7 @@
 
         @keyframes pulse {
             0% {
-                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+                box-shadow: 0 0 0 0 rgba(39, 146, 75, 0.7);
             }
 
             70% {
@@ -715,7 +715,7 @@
                 <!-- Brand -->
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <i class="fas fa-eye"></i>
-                    {{ $title ?? 'oneVision' }}
+                    {{ $title ?? 'Air Terjun Lubuk Hitam' }}
                 </a>
 
                 <!-- Mobile Toggle -->
@@ -731,53 +731,53 @@
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('minimap.*') ? 'active' : '' }}"
                                 href="{{ route('minimap.index') }}">
-                                <i class="fas fa-map-marked-alt"></i>Map
+                                <i class="fas fa-map-marked-alt"></i>Peta
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('weather') ? 'active' : '' }}"
                                 href="{{ url('weather') }}">
-                                <i class="fas fa-cloud-sun"></i>Weather
+                                <i class="fas fa-cloud-sun"></i>Cuaca
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('facilities/*') ? 'active' : '' }}"
                                 href="{{ url('facilities/') }}">
-                                <i class="fas fa-building"></i>Facility
+                                <i class="fas fa-building"></i>Fasilitas
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('gallery/*') ? 'active' : '' }}"
                                 href="{{ url('gallery/') }}">
-                                <i class="fas fa-images"></i>Gallery
+                                <i class="fas fa-images"></i>Galeri
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('beritas/*') ? 'active' : '' }}"
                                 href="{{ url('beritas/') }}">
-                                <i class="fas fa-newspaper"></i>News
+                                <i class="fas fa-newspaper"></i>Berita
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->is('contact') ? 'active' : '' }}"
                                 href="{{ url('contact') }}">
-                                <i class="fas fa-envelope"></i>Contact
+                                <i class="fas fa-envelope"></i>Kontak
                             </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-concierge-bell"></i>Services
+                                <i class="fas fa-concierge-bell"></i>Layanan
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
                                 <li>
                                     <a class="dropdown-item" href="{{ url('tourguides/') }}">
-                                        <i class="fas fa-user-tie"></i>Tour Guide
+                                        <i class="fas fa-user-tie"></i>Pemandu Wisata
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('madu.index') }}">
-                                        <i class="fas fa-jar"></i>Honey Product
+                                        <i class="fas fa-jar"></i>Madu
                                     </a>
                                 </li>
                                 <li>
@@ -785,7 +785,7 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('produkUMKM.index') }}">
-                                        <i class="fas fa-store"></i>UMKM Product
+                                        <i class="fas fa-store"></i>Produk UMKM
                                     </a>
                                 </li>
                             </ul>
@@ -797,12 +797,12 @@
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">
-                                    <i class="fas fa-sign-in-alt"></i>Login
+                                    <i class="fas fa-sign-in-alt"></i>Masuk
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-modern btn-modern-primary" href="{{ route('register') }}">
-                                    <i class="fas fa-user-plus"></i>Register
+                                    <i class="fas fa-user-plus"></i>Daftar
                                 </a>
                             </li>
                         @else
@@ -895,9 +895,9 @@
                                                         <div class="flex-grow-1">
                                                             <p class="mb-1 fw-medium">
                                                                 @if ($notification->order_type == 'tour_guide')
-                                                                    Tour guide
+                                                                    Pemandu Wisata
                                                                 @else
-                                                                    Honey order
+                                                                    Madu
                                                                 @endif
                                                                 <span
                                                                     class="fw-bold">{{ Str::limit($notification->item_name, 15) }}</span>
@@ -905,11 +905,11 @@
                                                             <p class="mb-1 small">
                                                                 @if ($notification->status == 'accepted')
                                                                     <span class="text-success fw-medium">
-                                                                        <i class="fas fa-check-circle"></i> Accepted
+                                                                        <i class="fas fa-check-circle"></i> Diterima
                                                                     </span>
                                                                 @elseif($notification->status == 'rejected')
                                                                     <span class="text-danger fw-medium">
-                                                                        <i class="fas fa-times-circle"></i> Rejected
+                                                                        <i class="fas fa-times-circle"></i> Ditolak
                                                                     </span>
                                                                 @endif
                                                             </p>
@@ -924,7 +924,7 @@
                                         @else
                                             <div class="text-center py-3">
                                                 <i class="fas fa-bell-slash text-muted fs-4 mb-2"></i>
-                                                <p class="text-muted mb-0 small">No notifications</p>
+                                                <p class="text-muted mb-0 small">Tidak Ada Notifikasi</p>
                                             </div>
                                         @endif
                                     </div>
@@ -933,7 +933,7 @@
                                         <div class="border-top p-2">
                                             <a class="btn btn-sm btn-outline-primary w-100"
                                                 href="{{ route('order-history.index') }}">
-                                                <i class="fas fa-history"></i> View All
+                                                <i class="fas fa-history"></i> Lihat Semuanya
                                             </a>
                                         </div>
                                     @endif
@@ -943,7 +943,7 @@
                             <!-- Order History -->
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('order-history.index') }}">
-                                    <i class="fas fa-history"></i>History
+                                    <i class="fas fa-history"></i>Riwayat
                                 </a>
                             </li>
 
@@ -977,12 +977,12 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('order-history.index') }}">
-                                            <i class="fas fa-shopping-bag"></i>My Orders
+                                            <i class="fas fa-shopping-bag"></i>Pesanan Saya
                                         </a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('settings.index') }}">
-                                            <i class="fas fa-cog"></i>Settings
+                                            <i class="fas fa-cog"></i>Pengaturan
                                         </a>
                                     </li>
                                     <li>
@@ -991,7 +991,7 @@
                                     <li>
                                         <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            <i class="fas fa-sign-out-alt"></i>Logout
+                                            <i class="fas fa-sign-out-alt"></i>Keluar
                                         </a>
                                     </li>
                                 </ul>

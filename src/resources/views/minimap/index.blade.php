@@ -665,9 +665,9 @@
     {{-- Hero Section --}}
     <section class="hero-section">
         <div class="hero-content">
-            <div class="hero-title">DIGITAL<br>NAVIGATION</div>
-            <div class="hero-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-            <a href="/minimap" class="hero-btn">More info</a>
+            <div class="hero-title">NAVIGASI<br>DIGITAL</div>
+            <div class="hero-desc">Temukan arah dan lokasi wisata dengan mudah melalui panduan digital kami.</div>
+            <a href="/minimap" class="hero-btn">Selengkapnya</a>
         </div>
     </section>
 
@@ -679,33 +679,33 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h4 class="card-title mb-0">
                             <i class="fas fa-compass"></i>
-                            {{ $minimapData['title'] ?? 'Digital Minimap' }}
+                            {{ $minimapData['title'] ?? 'Peta Navigasi Digital' }}
                         </h4>
                         <div class="action-buttons">
                             <button class="btn-custom btn-reset" onclick="resetZoom()">
-                                <i class="fas fa-home"></i> Reset View
+                                <i class="fas fa-home"></i> Atur Ulang Tampilan
                             </button>
                             <a href="{{ route('minimap.fullscreen') }}" class="btn-custom btn-fullscreen" target="_blank">
-                                <i class="fas fa-expand"></i> Fullscreen
+                                <i class="fas fa-expand"></i> Layar Penuh
                             </a>
                         </div>
                     </div>
                     <div class="card-body">
                         <p class="text-muted">
-                            {{ $minimapData['description'] ?? 'Click on the image to activate, then use zoom buttons to zoom in/out, click and drag to pan around the map.' }}
+                            {{ $minimapData['description'] ?? 'Klik pada gambar untuk mengaktifkan, lalu gunakan tombol zoom untuk memperbesar atau memperkecil. Klik dan seret untuk menggeser peta.' }}
                         </p>
 
                         <div class="minimap-container" id="minimapContainer">
                             <div class="minimap-controls">
-                                <button class="control-btn" onclick="zoomIn()" title="Zoom In">
+                                <button class="control-btn" onclick="zoomIn()" title="Perbesar">
                                     <i class="fas fa-plus"></i>
                                 </button>
-                                <button class="control-btn" onclick="zoomOut()" title="Zoom Out">
+                                <button class="control-btn" onclick="zoomOut()" title="Perkecil">
                                     <i class="fas fa-minus"></i>
                                 </button>
                             </div>
 
-                            <img src="{{ asset('images/minimap/oneVision-Minimap.jpg') }}" alt="Digital Navigation Map"
+                            <img src="{{ asset('images/minimap/oneVision-Minimap.jpg') }}" alt="Peta Navigasi Digital"
                                 class="minimap-image" id="minimapImage" draggable="false">
 
                             <div class="zoom-level" id="zoomLevel">
@@ -714,34 +714,34 @@
 
                             <div class="instruction-overlay" id="instructionOverlay">
                                 <i class="fas fa-mouse-pointer mb-2" style="font-size: 1.5rem;"></i><br>
-                                Click to activate map
+                                Klik untuk mengaktifkan peta
                             </div>
                         </div>
 
                         <div class="minimap-legend">
                             <h6 class="legend-title mb-3">
                                 <i class="fas fa-map-signs"></i>
-                                Map Legend
+                                Keterangan Peta
                             </h6>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="legend-item">
                                         <div class="legend-color" style="background-color: #28a745;"></div>
-                                        <span class="legend-text">Tourist Attractions</span>
+                                        <span class="legend-text">Objek Wisata</span>
                                     </div>
                                     <div class="legend-item">
                                         <div class="legend-color" style="background-color: #007bff;"></div>
-                                        <span class="legend-text">Facilities</span>
+                                        <span class="legend-text">Fasilitas Umum</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="legend-item">
                                         <div class="legend-color" style="background-color: #ffc107;"></div>
-                                        <span class="legend-text">Tour Guide Areas</span>
+                                        <span class="legend-text">Area Pemandu Wisata</span>
                                     </div>
                                     <div class="legend-item">
                                         <div class="legend-color" style="background-color: #dc3545;"></div>
-                                        <span class="legend-text">Important Locations</span>
+                                        <span class="legend-text">Lokasi Penting</span>
                                     </div>
                                 </div>
                             </div>
@@ -753,14 +753,14 @@
                                 <div class="info-card">
                                     <h6 class="mb-2">
                                         <i class="fas fa-info-circle me-1"></i>
-                                        Navigation Tips
+                                        Tips Navigasi
                                     </h6>
                                     <ul class="list-unstyled small mb-0">
-                                        <li><i class="fas fa-mouse-pointer me-1"></i> Click on the image first to activate
+                                        <li><i class="fas fa-mouse-pointer me-1"></i> Klik gambar terlebih dahulu untuk mengaktifkan
                                         </li>
-                                        <li><i class="fas fa-search-plus me-1"></i> Use zoom buttons to zoom in/out</li>
-                                        <li><i class="fas fa-hand-paper me-1"></i> Click and drag to pan the map</li>
-                                        <li><i class="fas fa-mobile-alt me-1"></i> Touch and pinch on mobile devices</li>
+                                        <li><i class="fas fa-search-plus me-1"></i> Gunakan tombol zoom untuk memperbesar atau memperkecil</li>
+                                        <li><i class="fas fa-hand-paper me-1"></i>  Klik dan seret untuk menggeser peta</li>
+                                        <li><i class="fas fa-mobile-alt me-1"></i> Sentuh dan cubit pada perangkat mobile</li>
                                     </ul>
                                 </div>
                             </div>
@@ -768,13 +768,13 @@
                                 <div class="info-card">
                                     <h6 class="mb-2">
                                         <i class="fas fa-lightbulb me-1"></i>
-                                        Additional Features
+                                        Fitur Tambahan
                                     </h6>
                                     <ul class="list-unstyled small mb-0">
-                                        <li><i class="fas fa-home me-1"></i> Reset to return to initial view</li>
-                                        <li><i class="fas fa-expand me-1"></i> Fullscreen mode for maximum detail</li>
-                                        <li><i class="fas fa-mobile-alt me-1"></i> Responsive on all devices</li>
-                                        <li><i class="fas fa-eye me-1"></i> Zoom up to 300% for details</li>
+                                        <li><i class="fas fa-home me-1"></i> Atur ulang untuk kembali ke tampilan awal</li>
+                                        <li><i class="fas fa-expand me-1"></i> Mode layar penuh untuk detail maksimal</li>
+                                        <li><i class="fas fa-mobile-alt me-1"></i>  Responsif di semua perangkat</li>
+                                        <li><i class="fas fa-eye me-1"></i> Zoom hingga 300% untuk melihat detail lebih jelas</li>
                                     </ul>
                                 </div>
                             </div>
