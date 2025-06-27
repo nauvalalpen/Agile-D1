@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Manage Tourists</h1>
+            <h1 class="h3 mb-0 text-gray-800">Kelola Wisatawan</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTouristsModal">
                 <i class="fas fa-plus"></i> Tambah Tiket Masuk
             </button>

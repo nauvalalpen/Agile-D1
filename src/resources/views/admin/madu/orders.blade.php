@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Manage Honey Orders</h1>
+        <h1 class="h3 mb-4 text-gray-800">Kelola Pesanan Madu</h1>
 
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -20,21 +20,21 @@
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Honey Orders List</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Daftar Pesanan Madu</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Order ID</th>
-                                <th>User</th>
-                                <th>Honey Product</th>
-                                <th>Quantity</th>
-                                <th>Date</th>
-                                <th>Total Price</th>
+                                 <th>ID Pesanan</th>
+                                <th>Pengguna</th>
+                                <th>Produk Madu</th>
+                                <th>Jumlah</th>
+                                <th>Tanggal</th>
+                                <th>Total Harga</th>
                                 <th>Status</th>
-                                <th>Actions</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,23 +48,23 @@
                                     <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                                     <td>
                                         @if ($order->status == 'pending')
-                                            <span class="badge bg-warning text-dark">Pending</span>
+                                            <span class="badge bg-warning text-dark">Menunggu</span>
                                         @elseif ($order->status == 'accepted')
-                                            <span class="badge bg-success">Accepted</span>
+                                            <span class="badge bg-success">Diterima</span>
                                         @elseif ($order->status == 'rejected')
-                                            <span class="badge bg-danger">Rejected</span>
+                                            <span class="badge bg-danger">Ditolak</span>
                                         @endif
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#editOrderModal{{ $order->id }}">
-                                            <i class="fas fa-edit"></i> Process Order
+                                            <i class="fas fa-edit"></i> Proses Pesanan
                                         </button>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center py-4">No orders found</td>
+                                    <td colspan="8" class="text-center py-4">Tidak ada pesanan ditemukan</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -81,47 +81,47 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editOrderModalLabel{{ $order->id }}">Process Honey Order</h5>
+                        <h5 class="modal-title" id="editOrderModalLabel{{ $order->id }}">Proses Pesanan Madu</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-4">
-                            <h5>Order Information</h5>
+                            <h5>Informasi Pesanan</h5>
                             <table class="table table-bordered">
                                 <tbody>
                                     <tr>
-                                        <th>Order ID</th>
+                                        <th>ID Pesanan</th>
                                         <td>{{ $order->id }}</td>
                                     </tr>
                                     <tr>
-                                        <th>User</th>
+                                        <th>Pengguna</th>
                                         <td>{{ $order->user_name }} ({{ $order->user_email }})</td>
                                     </tr>
                                     <tr>
-                                        <th>Honey Product</th>
+                                        <th>Produk Madu</th>
                                         <td>{{ $order->nama_madu }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Quantity</th>
+                                        <th>Jumlah</th>
                                         <td>{{ $order->jumlah }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Date</th>
+                                        <th>Tanggal</th>
                                         <td>{{ $order->tanggal }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Total Price</th>
+                                        <th>Total Harga</th>
                                         <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Current Status</th>
+                                        <th>Status Saat Ini</th>
                                         <td>
                                             @if ($order->status == 'pending')
-                                                <span class="badge bg-warning text-dark">Pending</span>
+                                                <span class="badge bg-warning text-dark">Menunggu</span>
                                             @elseif ($order->status == 'accepted')
-                                                <span class="badge bg-success">Accepted</span>
+                                                <span class="badge bg-success">Diterima</span>
                                             @elseif ($order->status == 'rejected')
-                                                <span class="badge bg-danger">Rejected</span>
+                                                <span class="badge bg-danger">Ditolak</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -134,16 +134,16 @@
                             @method('PUT')
 
                             <div class="form-group row mb-3">
-                                <label for="status{{ $order->id }}" class="col-md-4 col-form-label text-md-right">Update
+                                <label for="status{{ $order->id }}" class="col-md-4 col-form-label text-md-right">Perbarui
                                     Status</label>
                                 <div class="col-md-6">
                                     <select class="form-select" id="status{{ $order->id }}" name="status" required>
-                                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending
+                                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Menunggu
                                         </option>
                                         <option value="accepted" {{ $order->status == 'accepted' ? 'selected' : '' }}>
-                                            Accept</option>
+                                            Diterima</option>
                                         <option value="rejected" {{ $order->status == 'rejected' ? 'selected' : '' }}>
-                                            Reject</option>
+                                            Ditolak</option>
                                     </select>
                                 </div>
                             </div>
@@ -151,7 +151,7 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        Update Status
+                                        Perbarui Status
                                     </button>
                                 </div>
                             </div>

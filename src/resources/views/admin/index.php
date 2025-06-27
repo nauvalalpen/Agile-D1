@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 @section('content')
 <div class="container">
-    <h2>Tourist Management</h2>
+    <h2>Manajemen Wisatawan</h2>
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>ID Card</th>
-                <th>Entry Date</th>
-                <th>Actions</th>
+                <th>Nama</th>
+                <th>KTP / ID</th>
+                <th>Tanggal Masuk</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>

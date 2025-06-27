@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container py-5">
-        <h1 class="mb-4">My Honey Orders</h1>
+        <h1 class="mb-4">Pesanan Maduku</h1>
 
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -17,14 +17,14 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Order ID</th>
-                                <th>Product</th>
-                                <th>Quantity</th>
-                                <th>Total Price</th>
-                                <th>Pickup Date</th>
+                               <th>ID Pesanan</th>
+                                <th>Produk</th>
+                                <th>Jumlah</th>
+                                <th>Total Harga</th>
+                                <th>Tanggal Ambil</th>
                                 <th>Status</th>
-                                <th>Order Date</th>
-                                <th>Actions</th>
+                                <th>Tanggal Pesan</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,24 +37,24 @@
                                     <td>{{ date('d M Y', strtotime($order->tanggal)) }}</td>
                                     <td>
                                         @if ($order->status == 'pending')
-                                            <span class="badge bg-warning text-dark">Pending</span>
+                                            <span class="badge bg-warning text-dark">Menunggu</span>
                                         @elseif ($order->status == 'accepted')
-                                            <span class="badge bg-success">Accepted</span>
+                                            <span class="badge bg-success">Diterima</span>
                                         @elseif ($order->status == 'rejected')
-                                            <span class="badge bg-danger">Rejected</span>
+                                            <span class="badge bg-danger">Ditolak</span>
                                         @endif
                                     </td>
                                     <td>{{ date('d M Y', strtotime($order->created_at)) }}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
                                             data-bs-target="#orderDetailModal{{ $order->id }}">
-                                            <i class="fas fa-eye"></i> Details
+                                            <i class="fas fa-eye"></i> Detail
                                         </button>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center py-4">You haven't placed any honey orders yet.
+                                    <td colspan="8" class="text-center py-4">Anda belum melakukan pemesanan madu.
                                     </td>
                                 </tr>
                             @endforelse
@@ -77,43 +77,43 @@
                         </div>
                         <div class="modal-body">
                             <div class="mb-4">
-                                <h6 class="text-muted">Order Information</h6>
+                                <h6 class="text-muted">Informasi Pesanan</h6>
                                 <table class="table table-bordered">
                                     <tbody>
                                         <tr>
-                                            <th>Order ID</th>
+                                            <th>ID Pesanan</th>
                                             <td>#{{ $order->id }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Product</th>
+                                            <th>Produk</th>
                                             <td>{{ $order->nama_madu }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Quantity</th>
+                                            <th>Jumlah</th>
                                             <td>{{ $order->jumlah }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Total Price</th>
+                                            <th>Total Harga</th>
                                             <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Pickup Date</th>
+                                            <th>Tanggal Ambil</th>
                                             <td>{{ date('d M Y', strtotime($order->tanggal)) }}</td>
                                         </tr>
                                         <tr>
                                             <th>Status</th>
                                             <td>
                                                 @if ($order->status == 'pending')
-                                                    <span class="badge bg-warning text-dark">Pending</span>
+                                                    <span class="badge bg-warning text-dark">Menunggu</span>
                                                 @elseif ($order->status == 'accepted')
-                                                    <span class="badge bg-success">Accepted</span>
+                                                    <span class="badge bg-success">Diterima</span>
                                                 @elseif ($order->status == 'rejected')
-                                                    <span class="badge bg-danger">Rejected</span>
+                                                    <span class="badge bg-danger">Ditolak</span>
                                                 @endif
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Order Date</th>
+                                            <th>Tanggal Pesan</th>
                                             <td>{{ date('d M Y H:i', strtotime($order->created_at)) }}</td>
                                         </tr>
                                     </tbody>
@@ -121,21 +121,18 @@
                             </div>
 
                             <div class="alert alert-info">
-                                <h6 class="alert-heading">Order Status Information</h6>
+                                <h6 class="alert-heading">Informasi Status Pesanan</h6>
                                 @if ($order->status == 'pending')
-                                    <p class="mb-0">Your order is currently being reviewed. We'll update you once it's
-                                        processed.</p>
+                                    <p class="mb-0">YPesanan Anda sedang ditinjau. Kami akan memberi tahu Anda setelah diproses.</p>
                                 @elseif ($order->status == 'accepted')
-                                    <p class="mb-0">Your order has been accepted! Please pick up your honey on the
-                                        scheduled date.</p>
+                                    <p class="mb-0">Pesanan Anda telah diterima! Silakan ambil madu pada tanggal yang dijadwalkan.</p>
                                 @elseif ($order->status == 'rejected')
-                                    <p class="mb-0">We're sorry, but your order has been rejected. Please contact us for
-                                        more information.</p>
+                                    <p class="mb-0">Maaf, pesanan Anda ditolak. Silakan hubungi kami untuk informasi lebih lanjut.</p>
                                 @endif
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         </div>
                     </div>
                 </div>

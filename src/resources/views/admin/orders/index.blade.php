@@ -3,7 +3,7 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">{{ __('Manage Tour Guide Orders') }}</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{ __('Kelola Pesanan Pemandu Wisata') }}</h6>
         </div>
 
         <div class="card-body">
@@ -25,14 +25,14 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>User</th>
-                                <th>Tour Guide</th>
-                                <th>Tanggal Order</th>
+                                <th>Pengguna</th>
+                                <th>Pemandu Wisata</th>
+                                <th>Tanggal Pesan</th>
                                 <th>Jumlah Orang</th>
-                                <th>Price Range</th>
+                                <th>Rentang Harga</th>
                                 <th>Status</th>
-                                <th>Final Price</th>
-                                <th>Actions</th>
+                                <th>Harga Final</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,7 +71,7 @@
                 </div>
             @else
                 <div class="alert alert-info">
-                    There are no tour guide orders yet.
+                     Belum ada pesanan pemandu wisata.
                 </div>
             @endif
         </div>
