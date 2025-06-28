@@ -667,12 +667,12 @@
         <div class="hero-content">
             <div class="hero-title">NAVIGASI<br>DIGITAL</div>
             <div class="hero-desc">Temukan arah dan lokasi wisata dengan mudah melalui panduan digital kami.</div>
-            <a href="/minimap" class="hero-btn">Selengkapnya</a>
+            <a href="#minimap-content" class="hero-btn">Selengkapnya</a>
         </div>
     </section>
 
     {{-- Main Content --}}
-    <div class="container mt-4 main-container">
+    <div class="container mt-4 main-container" id="minimap-content">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -756,11 +756,14 @@
                                         Tips Navigasi
                                     </h6>
                                     <ul class="list-unstyled small mb-0">
-                                        <li><i class="fas fa-mouse-pointer me-1"></i> Klik gambar terlebih dahulu untuk mengaktifkan
+                                        <li><i class="fas fa-mouse-pointer me-1"></i> Klik gambar terlebih dahulu untuk
+                                            mengaktifkan
                                         </li>
-                                        <li><i class="fas fa-search-plus me-1"></i> Gunakan tombol zoom untuk memperbesar atau memperkecil</li>
-                                        <li><i class="fas fa-hand-paper me-1"></i>  Klik dan seret untuk menggeser peta</li>
-                                        <li><i class="fas fa-mobile-alt me-1"></i> Sentuh dan cubit pada perangkat mobile</li>
+                                        <li><i class="fas fa-search-plus me-1"></i> Gunakan tombol zoom untuk memperbesar
+                                            atau memperkecil</li>
+                                        <li><i class="fas fa-hand-paper me-1"></i> Klik dan seret untuk menggeser peta</li>
+                                        <li><i class="fas fa-mobile-alt me-1"></i> Sentuh dan cubit pada perangkat mobile
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -773,8 +776,9 @@
                                     <ul class="list-unstyled small mb-0">
                                         <li><i class="fas fa-home me-1"></i> Atur ulang untuk kembali ke tampilan awal</li>
                                         <li><i class="fas fa-expand me-1"></i> Mode layar penuh untuk detail maksimal</li>
-                                        <li><i class="fas fa-mobile-alt me-1"></i>  Responsif di semua perangkat</li>
-                                        <li><i class="fas fa-eye me-1"></i> Zoom hingga 300% untuk melihat detail lebih jelas</li>
+                                        <li><i class="fas fa-mobile-alt me-1"></i> Responsif di semua perangkat</li>
+                                        <li><i class="fas fa-eye me-1"></i> Zoom hingga 300% untuk melihat detail lebih
+                                            jelas</li>
                                     </ul>
                                 </div>
                             </div>
@@ -810,7 +814,7 @@
 
         function updateImageTransform() {
             minimapImage.style.transform =
-            `scale(${currentZoom}) translate(${currentTranslateX}px, ${currentTranslateY}px)`;
+                `scale(${currentZoom}) translate(${currentTranslateX}px, ${currentTranslateY}px)`;
         }
 
         function zoomIn() {
