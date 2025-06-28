@@ -14,7 +14,7 @@
             <!-- Product Info -->
             <div class="product-section">
                 <div class="product-image">
-                    @if($madu->gambar)
+                    @if ($madu->gambar)
                         <img src="{{ asset('storage/' . $madu->gambar) }}" alt="{{ $madu->nama }}">
                     @else
                         <div class="no-image">
@@ -32,7 +32,7 @@
             <!-- Order Form -->
             <form action="{{ route('madu.orderSubmit', $madu->id) }}" method="POST" class="order-form">
                 @csrf
-                
+
                 <div class="form-grid">
                     <div class="input-group">
                         <label>Nama</label>
@@ -45,13 +45,14 @@
                     </div>
 
                     <div class="input-group">
-                        <label>Nomor HandPhone</label>
+                        <label>Nomor Handphone</label>
                         <input type="tel" name="telepon" required>
                     </div>
 
                     <div class="input-group">
                         <label>Jumlah</label>
-                        <input type="number" name="jumlah" id="quantity" value="1" min="1" max="{{ $madu->stock }}" required>
+                        <input type="number" name="jumlah" id="quantity" value="1" min="1"
+                            max="{{ $madu->stock }}" required>
                     </div>
 
                     <div class="input-group">
@@ -81,7 +82,7 @@
                 <div class="action-buttons">
                     <button type="button" class="cancel-btn" onclick="cancelOrder()">
                         <i class="fas fa-times"></i>
-                       Batal
+                        Batal
                     </button>
                     <button type="submit" class="order-btn">
                         <i class="fas fa-shopping-cart"></i>
@@ -371,7 +372,7 @@
 
         function cancelOrder() {
             if (confirm('Are you sure you want to cancel this order?')) {
-                window.location.href = '{{ route("madu.index") }}';
+                window.location.href = '{{ route('madu.index') }}';
             }
         }
     </script>
