@@ -599,7 +599,7 @@
             <div class="sidebar-brand-icon">
                 <i class="fas fa-mountain"></i>
             </div>
-            <div class="sidebar-brand-text">Admin Panel</div>
+            <div class="sidebar-brand-text">Panel Admin</div>
         </a>
 
         <!-- Navigation -->
@@ -609,19 +609,19 @@
                 <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
                     href="{{ route('admin.dashboard') }}">
                     <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
+                    <span>Beranda</span>
                 </a>
             </li>
 
             <hr class="sidebar-divider">
-            <div class="sidebar-heading">Management</div>
+            <div class="sidebar-heading">Manajemen</div>
 
             <!-- Tourists -->
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.tiketmasuks.*') ? 'active' : '' }}"
                     href="{{ route('admin.tiketmasuks.index') }}">
                     <i class="fas fa-users"></i>
-                    <span>Tourists</span>
+                    <span>Wisatawan</span>
                 </a>
             </li>
 
@@ -630,7 +630,7 @@
                 <a class="nav-link {{ request()->routeIs('tourguides.*') ? 'active' : '' }}"
                     href="{{ route('tourguides.index') }}">
                     <i class="fas fa-user-tie"></i>
-                    <span>Tour Guides</span>
+                    <span>Pemandu Wisata</span>
                 </a>
             </li>
 
@@ -639,7 +639,7 @@
                 <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}"
                     href="{{ route('admin.orders.index') }}">
                     <i class="fas fa-calendar-check"></i>
-                    <span>Guide Orders</span>
+                    <span>Pemesanan Pemandu</span>
                 </a>
             </li>
 
@@ -648,7 +648,7 @@
                 <a class="nav-link {{ request()->routeIs('admin.facilities.*') ? 'active' : '' }}"
                     href="{{ route('admin.facilities.index') }}">
                     <i class="fas fa-hotel"></i>
-                    <span>Facilities</span>
+                    <span>Fasilitas</span>
                 </a>
             </li>
 
@@ -657,7 +657,7 @@
                 <a class="nav-link {{ request()->routeIs('admin.berita.*') ? 'active' : '' }}"
                     href="{{ route('admin.berita.index') }}">
                     <i class="fas fa-newspaper"></i>
-                    <span>News</span>
+                    <span>Berita</span>
                 </a>
             </li>
 
@@ -666,19 +666,19 @@
                 <a class="nav-link {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}"
                     href="{{ route('admin.gallery.index') }}">
                     <i class="fas fa-images"></i>
-                    <span>Gallery</span>
+                    <span>Galeri</span>
                 </a>
             </li>
 
             <hr class="sidebar-divider">
-            <div class="sidebar-heading">Products</div>
+            <div class="sidebar-heading">Produk</div>
 
             <!-- Honey Products -->
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.madu.*') ? 'active' : '' }}"
                     href="{{ route('admin.madu.index') }}">
                     <i class="fas fa-jar"></i>
-                    <span>Honey Products</span>
+                    <span>Produk Madu</span>
                 </a>
             </li>
 
@@ -687,7 +687,7 @@
                 <a class="nav-link {{ request()->routeIs('admin.orders-madu.*') ? 'active' : '' }}"
                     href="{{ route('admin.orders-madu.index') }}">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Honey Orders</span>
+                    <span>Pesanan Madu</span>
                 </a>
             </li>
 
@@ -696,31 +696,31 @@
                 <a class="nav-link {{ request()->routeIs('admin.produkUMKM.*') ? 'active' : '' }}"
                     href="{{ route('admin.produkUMKM.index') }}">
                     <i class="fas fa-store"></i>
-                    <span>UMKM Products</span>
+                    <span>Produk UMKM</span>
                 </a>
             </li>
 
             <hr class="sidebar-divider">
-            <div class="sidebar-heading">Reports & Analytics</div>
+            <div class="sidebar-heading">Laporan & Analitik</div>
 
             <!-- Sales Report -->
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.laporan-penjualan.*') ? 'active' : '' }}"
                     href="{{ route('admin.laporan-penjualan.index') }}">
                     <i class="fas fa-chart-line"></i>
-                    <span>Sales Report</span>
+                    <span>Laporan Penjualan</span>
                 </a>
             </li>
 
             <hr class="sidebar-divider">
-            <div class="sidebar-heading">System</div>
+            <div class="sidebar-heading">Sistem</div>
 
             <!-- Users -->
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}"
                     href="{{ route('admin.users.index') }}">
                     <i class="fas fa-users-cog"></i>
-                    <span>Users</span>
+                    <span>Pengguna</span>
                 </a>
             </li>
 
@@ -729,18 +729,18 @@
                 <a class="nav-link {{ request()->routeIs('admin.oauth.*') ? 'active' : '' }}"
                     href="{{ route('admin.oauth.index') }}">
                     <i class="fab fa-google"></i>
-                    <span>OAuth Settings</span>
+                    <span>Pengaturan OAuth</span>
                 </a>
             </li>
 
             <hr class="sidebar-divider">
-            <div class="sidebar-heading">Settings</div>
+            <div class="sidebar-heading">Pengaturan</div>
 
             <!-- Profile -->
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="fas fa-user-cog"></i>
-                    <span>Profile</span>
+                    <span>Profil</span>
                 </a>
             </li>
         </ul>
@@ -786,7 +786,7 @@
                         aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header bg-primary text-white">
                             <i class="fas fa-bell me-2"></i>
-                            Notifications
+                            Notifikasi
                         </h6>
                         <a class="dropdown-item d-flex align-items-center" href="#">
                             <div class="me-3">
@@ -795,8 +795,8 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="small text-gray-500">Today</div>
-                                <span class="fw-bold">New tourist registrations!</span>
+                                <div class="small text-gray-500">Hari Ini</div>
+                                <span class="fw-bold">Pendaftaran wisatawan baru!</span>
                             </div>
                         </a>
                         <a class="dropdown-item d-flex align-items-center" href="#">
@@ -806,12 +806,12 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="small text-gray-500">2 hours ago</div>
-                                <span class="fw-bold">New honey order received!</span>
+                                <div class="small text-gray-500">2 jam yang lalu</div>
+                                <span class="fw-bold">Pesanan madu baru diterima!</span>
                             </div>
                         </a>
                         <a class="dropdown-item text-center small text-gray-500" href="#">
-                            Show All Notifications
+                            Lihat Semua Notifikasi
                         </a>
                     </div>
                 </li>
@@ -826,7 +826,7 @@
                     <div class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="messagesDropdown">
                         <h6 class="dropdown-header bg-success text-white">
                             <i class="fas fa-envelope me-2"></i>
-                            Messages
+                            Pesan
                         </h6>
                         <a class="dropdown-item d-flex align-items-center" href="#">
                             <div class="dropdown-list-image me-3">
@@ -834,13 +834,12 @@
                                 <div class="status-indicator bg-success"></div>
                             </div>
                             <div>
-                                <div class="text-truncate">Hi there! I am wondering if you can help me with a problem
-                                    I've been having.</div>
-                                <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                <div class="text-truncate">Hai! Aku ingin tahu apakah kamu bisa membantuku dengan sebuah masalah yang sedang kuhadapi.</div>
+                                <div class="small text-gray-500">Emily Fowler · 58 menit yang lalu</div>
                             </div>
                         </a>
                         <a class="dropdown-item text-center small text-gray-500" href="#">
-                            Read More Messages
+                           Baca Pesan Lainnya
                         </a>
                     </div>
                 </li>
@@ -871,21 +870,21 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">
                             <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
-                            Profile
+                            Profil
                         </a>
                         <a class="dropdown-item" href="#">
                             <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
-                            Settings
+                            Pengaturan
                         </a>
                         <a class="dropdown-item" href="#">
                             <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
-                            Activity Log
+                            Log Aktivitas
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" data-bs-toggle="modal"
                             data-bs-target="#logoutModal">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
-                            Logout
+                            Keluar
                         </a>
                     </div>
                 </li>
@@ -905,7 +904,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="text-xs fw-bold text-primary text-uppercase mb-1">
-                                        Tourists Today
+                                        Wisatawan Hari Ini
                                     </div>
                                     <div class="h4 mb-0 fw-bold text-gray-800">
                                         @php
@@ -926,7 +925,7 @@
                             <div class="mt-3">
                                 <a href="{{ route('admin.tiketmasuks.index') }}" class="btn btn-primary btn-sm">
                                     <i class="fas fa-arrow-right me-1"></i>
-                                    View Details
+                                    Lihat Detail
                                 </a>
                             </div>
                         </div>
@@ -942,7 +941,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="text-xs fw-bold text-success text-uppercase mb-1">
-                                        Active Guides
+                                        Pemandu Aktif
                                     </div>
                                     <div class="h4 mb-0 fw-bold text-gray-800">
                                         @php
@@ -963,7 +962,7 @@
                             <div class="mt-3">
                                 <a href="{{ route('admin.orders.index') }}" class="btn btn-success btn-sm">
                                     <i class="fas fa-arrow-right me-1"></i>
-                                    Manage Guides
+                                   Kelola Pemandu
                                 </a>
                             </div>
                         </div>
@@ -979,7 +978,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="text-xs fw-bold text-info text-uppercase mb-1">
-                                        Honey Orders
+                                        Pesanan Madu
                                     </div>
                                     <div class="h4 mb-0 fw-bold text-gray-800">
                                         @php
@@ -1000,7 +999,7 @@
                             <div class="mt-3">
                                 <a href="{{ route('admin.orders-madu.index') }}" class="btn btn-info btn-sm">
                                     <i class="fas fa-arrow-right me-1"></i>
-                                    View Orders
+                                    Lihat Pesanan
                                 </a>
                             </div>
                         </div>
@@ -1016,7 +1015,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="text-xs fw-bold text-warning text-uppercase mb-1">
-                                        Total Revenue
+                                        Total Pendapatan
                                     </div>
                                     <div class="h4 mb-0 fw-bold text-gray-800">
                                         @php
@@ -1048,7 +1047,7 @@
                                 <a href="{{ route('admin.laporan-penjualan.index') }}"
                                     class="btn btn-warning btn-sm">
                                     <i class="fas fa-arrow-right me-1"></i>
-                                    View Report
+                                    Lihat Laporan
                                 </a>
                             </div>
                         </div>
@@ -1066,35 +1065,35 @@
                             <div class="card-body p-4">
                                 <h5 class="card-title mb-4">
                                     <i class="fas fa-bolt me-2 text-primary"></i>
-                                    Quick Actions
+                                    Aksi Cepat
                                 </h5>
                                 <div class="row">
                                     <div class="col-md-3 col-sm-6 mb-3">
                                         <a href="{{ route('admin.tiketmasuks.index') }}"
                                             class="btn btn-outline-primary w-100 py-3">
                                             <i class="fas fa-plus-circle mb-2 d-block"></i>
-                                            Add Tourist Entry
+                                            Tambah Data Pengunjung
                                         </a>
                                     </div>
                                     <div class="col-md-3 col-sm-6 mb-3">
                                         <a href="{{ route('tourguides.index') }}"
                                             class="btn btn-outline-success w-100 py-3">
                                             <i class="fas fa-user-plus mb-2 d-block"></i>
-                                            Add Tour Guide
+                                            Tambah Pemandu Wisata
                                         </a>
                                     </div>
                                     <div class="col-md-3 col-sm-6 mb-3">
                                         <a href="{{ route('admin.madu.index') }}"
                                             class="btn btn-outline-warning w-100 py-3">
                                             <i class="fas fa-jar mb-2 d-block"></i>
-                                            Manage Products
+                                           Kelola Produk Madu
                                         </a>
                                     </div>
                                     <div class="col-md-3 col-sm-6 mb-3">
                                         <a href="{{ route('admin.berita.index') }}"
                                             class="btn btn-outline-info w-100 py-3">
                                             <i class="fas fa-newspaper mb-2 d-block"></i>
-                                            Create News
+                                            Buat Berita
                                         </a>
                                     </div>
                                 </div>
@@ -1110,7 +1109,7 @@
                             <div class="card-body p-4">
                                 <h5 class="card-title mb-4">
                                     <i class="fas fa-chart-area me-2 text-info"></i>
-                                    Monthly Registration Trends
+                                    Tren Pendaftaran Bulanan
                                 </h5>
                                 <div class="chart-container" style="height: 300px;">
                                     <canvas id="registrationChart"></canvas>
@@ -1123,7 +1122,7 @@
                             <div class="card-body p-4">
                                 <h5 class="card-title mb-4">
                                     <i class="fas fa-clock me-2 text-success"></i>
-                                    Recent Activities
+                                    Aktivitas Terbaru
                                 </h5>
                                 <div class="activity-feed">
                                     @php
@@ -1214,12 +1213,12 @@
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between">
                     <div class="copyright text-center text-sm-start">
-                        <span>&copy; {{ date('Y') }} OneVision. All rights reserved.</span>
+                        <span>&copy; {{ date('Y') }} OneVision. Semua hak dilindungi.</span>
                     </div>
                     <div class="footer-links text-center text-sm-end mt-2 mt-sm-0">
-                        <a href="#" class="text-decoration-none me-3">Privacy Policy</a>
-                        <a href="#" class="text-decoration-none me-3">Terms of Service</a>
-                        <a href="#" class="text-decoration-none">Support</a>
+                        <a href="#" class="text-decoration-none me-3">Kebijakan Privasi</a>
+                        <a href="#" class="text-decoration-none me-3">Syarat & Ketentuan</a>
+                        <a href="#" class="text-decoration-none">Dukungan</a>
                     </div>
                 </div>
             </div>

@@ -3,9 +3,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Manajemen Pengelolaan User</h1>
+    <h1 class="h3 mb-0 text-gray-800">Manajemen Pengelolaan Pengguna</h1>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUserModal">
-            <i class="fas fa-plus"></i> Add Users
+            <i class="fas fa-plus"></i> Tambah Pengguna Baru
         </button>
     </div>
 
@@ -30,12 +30,12 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Profile</th>
-                            <th>Name</th>
+                            <th>Foto</th>
+                            <th>Nama</th>
                             <th>Email</th>
-                            <th>Role</th>
-                            <th>Created At</th>
-                            <th>Actions</th>
+                            <th>Peran</th>
+                            <th>Dibuat Pada</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,7 +46,7 @@
                                 @if ($user->photo)
                                     <img src="{{ asset('storage/' . $user->photo) }}" alt="{{ $user->name }}" width="60" height="60" class="img-thumbnail rounded-circle">
                                 @else
-                                    <span class="badge bg-secondary">No Photo</span>
+                                    <span class="badge bg-secondary">Tidak Ada Foto</span>
                                 @endif
                             </td>
                             <td>{{ $user->name }}</td>
@@ -60,7 +60,7 @@
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <!-- Delete Button -->
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}" title="Delete">
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}" title="Hapus">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -80,7 +80,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="mb-3">
-                                                <label for="name{{ $user->id }}" class="form-label">Name</label>
+                                                <label for="name{{ $user->id }}" class="form-label">Nama</label>
                                                 <input type="text" class="form-control" id="name{{ $user->id }}" name="name" value="{{ old('name', $user->name) }}" required>
                                             </div>
                                             <div class="mb-3">
@@ -88,23 +88,23 @@
                                                 <input type="email" class="form-control" id="email{{ $user->id }}" name="email" value="{{ old('email', $user->email) }}" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="role{{ $user->id }}" class="form-label">Role</label>
+                                                <label for="role{{ $user->id }}" class="form-label">Peran</label>
                                                 <select name="role" id="role{{ $user->id }}" class="form-select" required>
                                                     <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
-                                                    <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>User</option>
+                                                    <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>Pengguna</option>
                                                     
                                                 </select>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="password{{ $user->id }}" class="form-label">Password <small class="text-muted">(Kosongkan jika tidak ingin diubah)</small></label>
+                                                <label for="password{{ $user->id }}" class="form-label">Kata Sandi <small class="text-muted">(Kosongkan jika tidak ingin diubah)</small></label>
                                                 <input type="password" class="form-control" id="password{{ $user->id }}" name="password" autocomplete="new-password">
                                             </div>
                                             <div class="form-group">
-                                                <label for="password_confirmation">Confirm Password</label>
+                                                <label for="password_confirmation">Konfirmasi Kata Sandi</label>
                                                 <input type="password" name="password_confirmation" id="password_confirmation_edit" class="form-control" >
                                             </div>
                                             <div class="mb-3">
-                                                <label for="photo{{ $user->id }}" class="form-label">New Photo</label>
+                                                <label for="photo{{ $user->id }}" class="form-label">Foto Baru</label>
                                                 <input type="file" class="form-control" id="photo{{ $user->id }}" name="photo" accept="image/*">
                                                 @if ($user->photo)
                                                 <img src="{{ asset('storage/' . $user->photo) }}" alt="{{ $user->name }}" class="img-thumbnail mt-2 rounded-circle" style="max-height: 150px;">
@@ -112,8 +112,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                         </div>
                                     </form>
                                 </div>
@@ -128,15 +128,15 @@
                                     @method('DELETE')
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteModalLabel{{ $user->id }}">Delete User</h5>
+                                            <h5 class="modal-title" id="deleteModalLabel{{ $user->id }}">Hapus Pengguna</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            Are you sure you want to delete user <strong>{{ $user->name }}</strong>?
+                                            Apakah Anda yakin ingin menghapus pengguna <strong>{{ $user->name }}</strong>?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
                                         </div>
                                     </div>
                                 </form>
@@ -145,14 +145,14 @@
 
                         @empty
                         <tr>
-                            <td colspan="7" class="text-center py-4">No users found.</td>
+                            <td colspan="7" class="text-center py-4">Tidak ada pengguna yang ditemukan.</td>
                         </tr>
                         @endforelse
                     </tbody>
                 </table>
                 <div class="mt-3 text-center">
                     <a href="{{ route('admin.users.trash') }}" class="btn btn-warning me-2">
-                        <i class="fas fa-trash"></i> Deleted Users
+                        <i class="fas fa-trash"></i> Pengguna Terhapus
                     </a>
                 </div>
             </div>
@@ -167,12 +167,12 @@
             <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createUserModalLabel">Add New User</h5>
+                    <h5 class="modal-title" id="createUserModalLabel">Tambah Pengguna Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">Nama</label>
                         <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                     <div class="mb-3">
@@ -180,29 +180,29 @@
                         <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
+                        <label for="role" class="form-label">Peran</label>
                         <select name="role" id="role" class="form-select" required>
                             <option value="admin">Admin</option>
-                            <option value="user" selected>User</option>
+                            <option value="user" selected>Pengguna</option>
                             
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label">Kata Sandi</label>
                         <input type="password" class="form-control" id="password" name="password" autocomplete="new-password" required>
                     </div>
                     <div class="form-group">
-                        <label for="password_confirmation">Confirm Password</label>
+                        <label for="password_confirmation">Konfirmasi Kata Sandi</label>
                         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label for="photo" class="form-label">Photo</label>
+                        <label for="photo" class="form-label">Foto</label>
                         <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Add User</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Tambah Pengguna</button>
                 </div>
             </form>
         </div>

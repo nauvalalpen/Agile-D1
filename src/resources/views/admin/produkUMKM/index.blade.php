@@ -3,9 +3,9 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Manage Produk UMKM</h1>
+            <h1 class="h3 mb-0 text-gray-800">Kelola Produk UMKM</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProdukUMKMModal">
-                <i class="fas fa-plus"></i> Add New Product
+                <i class="fas fa-plus"></i> Tambah Produk Baru
             </button>
         </div>
 
@@ -18,19 +18,19 @@
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Produk UMKM List</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Daftar Produk UMKM </h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Photo</th>
+                                <th>Gambar</th>
                                 <th>Nama</th>
                                 <th>Harga</th>
                                 <th>Deskripsi</th>
                                 <th>Status</th>
-                                <th>Actions</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,7 +41,7 @@
                                             <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->nama }}"
                                                 width="50" height="50" class="img-thumbnail">
                                         @else
-                                            <span class="badge bg-secondary">No Image</span>
+                                            <span class="badge bg-secondary">Tidak Ada Gambar </span>
                                         @endif
                                     </td>
                                     <td>{{ $produk->nama }}</td>
@@ -49,9 +49,9 @@
                                     <td>{{ Str::limit($produk->deskripsi, 50) }}</td>
                                     <td>
                                         @if ($produk->deleted_at)
-                                            <span class="badge bg-danger">Deleted</span>
+                                            <span class="badge bg-danger">Dihapus</span>
                                         @else
-                                            <span class="badge bg-success">Active</span>
+                                            <span class="badge bg-success">Aktif</span>
                                         @endif
                                     </td>
                                     <td>
@@ -60,8 +60,8 @@
                                                 method="POST" class="d-inline">
                                                 @csrf
                                                 <button type="submit" class="btn btn-success btn-sm"
-                                                    onclick="return confirm('Are you sure you want to restore this product?')">
-                                                    <i class="fas fa-undo"></i> Restore
+                                                    onclick="return confirm('Apakah Anda yakin ingin mengembalikan produk ini')">
+                                                    <i class="fas fa-undo"></i> Pulihkan
                                                 </button>
                                             </form>
                                             <form action="{{ route('admin.produkUMKM.force-delete', $produk->id) }}"
@@ -69,8 +69,8 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Are you sure you want to permanently delete this product?')">
-                                                    <i class="fas fa-trash"></i> Delete Permanently
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus permanen produk ini?')">
+                                                    <i class="fas fa-trash"></i> Hapus Permanen
                                                 </button>
                                             </form>
                                         @else
@@ -84,8 +84,8 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Are you sure you want to delete this product?')">
-                                                    <i class="fas fa-trash"></i> Delete
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">
+                                                    <i class="fas fa-trash"></i> Hapus
                                                 </button>
                                             </form>
                                         @endif
@@ -93,7 +93,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">No products found.</td>
+                                    <td colspan="6" class="text-center">Tidak ada produk ditemukan.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -109,7 +109,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createProdukUMKMModalLabel">Add New Produk UMKM</h5>
+                    <h5 class="modal-title" id="createProdukUMKMModalLabel">Tambah Produk UMKM Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -143,7 +143,7 @@
                             <label for="foto" class="form-label">Photo</label>
                             <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto"
                                 name="foto" accept="image/*">
-                            <small class="form-text text-muted">Upload image file (JPEG, PNG, JPG, GIF). Max size:
+                            <small class="form-text text-muted">Unggah file gambar (JPEG, PNG, JPG, GIF). Ukuran maksimum:
                                 2MB</small>
                             @error('foto')
                                 <div class="invalid-feedback">
@@ -164,9 +164,9 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Save Product
+                                <i class="fas fa-save"></i> Simpan Produk UMKM
                             </button>
                         </div>
                     </form>
@@ -212,11 +212,10 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="edit_foto" class="form-label">Photo</label>
+                            <label for="edit_foto" class="form-label">Gambar</label>
                             <input type="file" class="form-control @error('foto') is-invalid @enderror" id="edit_foto"
                                 name="foto" accept="image/*">
-                            <small class="form-text text-muted">Upload a new image to replace the current one. Leave empty
-                                to keep the current image.</small>
+                            <small class="form-text text-muted">Unggah gambar baru untuk menggantikan gambar saat ini. Biarkan kosong jika ingin mempertahankan gambar yang ada.</small>
                             @error('foto')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -238,7 +237,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Update Product
+                                <i class="fas fa-save"></i> Perbarui Produk UMKM
                             </button>
                         </div>
                     </form>

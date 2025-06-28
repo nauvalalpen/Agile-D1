@@ -14,7 +14,7 @@
         <div class="container py-5">
             <!-- HOT TOPICS -->
             <h2 class="section-title mb-4" data-aos="fade-up">
-                Hot Topics
+                Sedang Tren
             </h2>
             <div class="row g-4 mb-5 align-items-stretch">
                 <div class="col-lg-8" data-aos="fade-right">
@@ -53,7 +53,7 @@
             <div class="latest-news-section">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h3 class="section-title mb-0" data-aos="fade-up">
-                        </i>Latest News
+                        </i>Kilas Berita
                     </h3>
                 </div>
 

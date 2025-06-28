@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">OAuth Management</h1>
+            <h1 class="h3 mb-0 text-gray-800"> Manajemen OAuth</h1>
         </div>
 
         <!-- Stats Cards -->
@@ -17,7 +17,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Total Users</div>
+                                    Total Pengguna</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     {{ number_format($stats['total_users']) }}</div>
                             </div>
@@ -35,7 +35,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Google Users</div>
+                                    Pengguna Google</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     {{ number_format($stats['google_users']) }}</div>
                             </div>
@@ -53,7 +53,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                    Email Users</div>
+                                    Email Pengguna</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     {{ number_format($stats['email_users']) }}</div>
                             </div>
@@ -71,7 +71,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Verified Users</div>
+                                    Pengguna Terverifikasi</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     {{ number_format($stats['verified_users']) }}</div>
                             </div>
@@ -87,9 +87,9 @@
         <!-- Recent Google Users -->
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Recent Google Users</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Pengguna Google Terbaru</h6>
                 <a href="{{ route('admin.oauth.users', ['filter' => 'google']) }}" class="btn btn-primary btn-sm">
-                    View All Google Users
+                    Lihat Semua Pengguna Google
                 </a>
             </div>
             <div class="card-body">
@@ -98,9 +98,9 @@
                         <thead>
                             <tr>
                                 <th>Avatar</th>
-                                <th>Name</th>
+                                <th>Nama</th>
                                 <th>Email</th>
-                                <th>Joined</th>
+                                <th>Bergabung</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -116,15 +116,15 @@
                                     <td>{{ $user->created_at->format('M j, Y') }}</td>
                                     <td>
                                         @if ($user->is_verified)
-                                            <span class="badge badge-success">Verified</span>
+                                            <span class="badge badge-success">Terverifikasi</span>
                                         @else
-                                            <span class="badge badge-warning">Unverified</span>
+                                            <span class="badge badge-warning">Belum Verifikasi</span>
                                         @endif
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center">No Google users found</td>
+                                    <td colspan="5" class="text-center">Tidak ada pengguna Google yang ditemukan</td>
                                 </tr>
                             @endforelse
                         </tbody>

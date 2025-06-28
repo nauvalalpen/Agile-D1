@@ -9,10 +9,9 @@
     <!-- 1. HERO SECTION -->
     <section class="hero-section">
         <div class="hero-content">
-            <div class="hero-title">TOUR<br>GUIDES</div>
-            <div class="hero-desc">Discover amazing destinations with our professional and experienced tour guides who will
-                make your journey unforgettable.</div>
-            <a href="#tourguides-grid" class="hero-btn">Explore Guides</a>
+            <div class="hero-title">PEMANDU<br>WISATA</div>
+            <div class="hero-desc"> Jelajahi destinasi menakjubkan bersama pemandu wisata profesional dan berpengalaman yang akan membuat perjalanan Anda tak terlupakan.</div>
+            <a href="#tourguides-grid" class="hero-btn">Lihat Pemandu</a>
         </div>
     </section>
 
@@ -22,9 +21,8 @@
         <!-- 2. MAIN TOUR GUIDES SECTION -->
         <div id="tourguides-grid" class="tourguides-container">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="section-heading">Meet Our Expert Tour Guides</h2>
-                <p class="section-subheading">Passionate locals ready to share their knowledge and create amazing
-                    experiences for you</p>
+                <h2 class="section-heading">Temui Pemandu Wisata Terbaik Kami</h2>
+                <p class="section-subheading">Pemandu lokal yang antusias dan siap berbagi pengetahuan serta menciptakan pengalaman tak terlupakan untuk Anda</p>
             </div>
 
             <!-- Filter and Search Section -->
@@ -33,7 +31,7 @@
                     <div class="col-lg-12">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" id="searchGuides" placeholder="Search guides by name or location...">
+                            <input type="text" id="searchGuides" placeholder="Cari pemandu berdasarkan nama atau lokasi... ">
                         </div>
                     </div>
                     {{-- <div class="col-lg-6">
@@ -122,9 +120,9 @@
 
                             <!-- Skills/Specialties -->
                             <div class="guide-skills">
-                                <span class="skill-tag">Nature Tours</span>
-                                <span class="skill-tag">Photography</span>
-                                <span class="skill-tag">History</span>
+                                <span class="skill-tag">Tur Alami</span>
+                                <span class="skill-tag">Fotografi</span>
+                                <span class="skill-tag">Sejarah</span>
                             </div>
                         </div>
 
@@ -133,11 +131,11 @@
                             <div class="guide-stats">
                                 <div class="stat">
                                     <i class="fas fa-users"></i>
-                                    <span>127 Tours</span>
+                                    <span>127 Tur</span>
                                 </div>
                                 <div class="stat">
                                     <i class="fas fa-language"></i>
-                                    <span>3 Languages</span>
+                                    <span>3 Bahasa</span>
                                 </div>
                             </div>
 
@@ -145,18 +143,18 @@
                                 <button class="btn-action" id="btn-view-profile"
                                     onclick="viewGuideProfile({{ $tourguide->id }})">
                                     <i class="fas fa-eye"></i>
-                                    View Profile
+                                    Lihat Profil
                                 </button>
                                 @auth
                                     <a href="{{ route('tourguides.order', $tourguide->id) }}" class="btn-action"
                                         id="btn-book-now">
                                         <i class="fas fa-calendar-check"></i>
-                                        Book Now
+                                        Pesan Sekarang
                                     </a>
                                 @else
                                     <a href="{{ route('login') }}" class="btn-action" id="btn-book-now">
                                         <i class="fas fa-sign-in-alt"></i>
-                                        Login to Book
+                                        Silakan Masuk untuk Memesan
                                     </a>
                                 @endauth
                             </div>
@@ -167,11 +165,11 @@
                         <div class="empty-icon">
                             <i class="fas fa-user-friends"></i>
                         </div>
-                        <h3>No Tour Guides Available</h3>
-                        <p>We're currently updating our guide roster. Please check back soon!</p>
+                        <h3>Belum Ada Pemandu Wisata Tersedia</h3>
+                        <p>Saat ini kami sedang memperbarui daftar pemandu. Silakan kembali lagi nanti!</p>
                         <a href="{{ url('/') }}" class="btn-action btn-primary">
                             <i class="fas fa-home"></i>
-                            Back to Home
+                             Kembali ke Beranda
                         </a>
                     </div>
                 @endforelse
@@ -188,8 +186,8 @@
         <!-- 3. FEATURES SECTION -->
         <div class="features-section my-5 py-5" data-aos="fade-up">
             <div class="text-center mb-5">
-                <h2 class="section-heading">Why Choose Our Guides?</h2>
-                <p class="section-subheading">Professional service with local expertise</p>
+                <h2 class="section-heading">Mengapa Memilih Pemandu Kami?</h2>
+                <p class="section-subheading">Layanan profesional dengan keahlian lokal</p>
             </div>
             <div class="row g-4">
                 <div class="col-lg-4" data-aos="fade-right" data-aos-delay="200">
@@ -197,8 +195,8 @@
                         <div class="feature-icon" id="feature-icon">
                             <i class="fas fa-shield-alt"></i>
                         </div>
-                        <h3>Verified Guides</h3>
-                        <p>All our guides are professionally verified and certified with extensive local knowledge.</p>
+                        <h3>Pemandu Terverifikasi</h3>
+                        <p>Semua pemandu kami telah diverifikasi secara profesional dan memiliki pengetahuan lokal yang mendalam.</p>
                     </div>
                 </div>
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
@@ -206,8 +204,8 @@
                         <div class="feature-icon" id="feature-icon">
                             <i class="fas fa-clock"></i>
                         </div>
-                        <h3>24/7 Support</h3>
-                        <p>Round-the-clock customer support to ensure your tour experience is seamless.</p>
+                        <h3>Dukungan 24/7</h3>
+                        <p>Layanan pelanggan tersedia 24 jam untuk memastikan pengalaman tur Anda berjalan lancar.</p>
                     </div>
                 </div>
                 <div class="col-lg-4" data-aos="fade-left" data-aos-delay="600">
@@ -215,8 +213,8 @@
                         <div class="feature-icon" id="feature-icon">
                             <i class="fas fa-money-bill-wave"></i>
                         </div>
-                        <h3>Best Prices</h3>
-                        <p>Competitive pricing with no hidden fees. Get the best value for your money.</p>
+                        <h3>Harga Terbaik</h3>
+                        <p>Harga bersaing tanpa biaya tersembunyi. Dapatkan nilai terbaik untuk setiap perjalanan Anda.</p>
                     </div>
                 </div>
             </div>
@@ -225,13 +223,13 @@
         <!-- 4. CTA SECTION -->
         <div class="cta-section my-5 py-5" data-aos="fade-up" id="cta-section">
             <div class="cta-content text-center">
-                <h2 class="cta-title">Ready for Your Next Adventure?</h2>
+                <h2 class="cta-title">Siap untuk Petualangan Selanjutnya?</h2>
                 <p class="cta-description">
-                    Join thousands of satisfied travelers who have discovered amazing places with our guides.
+                     Bergabunglah bersama ribuan wisatawan puas yang telah menjelajahi tempat-tempat menakjubkan bersama pemandu kami.
                 </p>
                 <a href="#tourguides-grid" class="btn-cta">
                     <i class="fas fa-rocket"></i>
-                    Start Exploring
+                    Mulai Jelajah
                 </a>
             </div>
         </div>
@@ -243,13 +241,13 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Guide Profile</h5>
+                    <h5 class="modal-title">Profil Pemandu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body" id="guideProfileContent">
                     <div class="loading-spinner">
                         <div class="spinner"></div>
-                        <p>Loading guide profile...</p>
+                        <p>Memuat profil pemandu...</p>
                     </div>
                 </div>
             </div>

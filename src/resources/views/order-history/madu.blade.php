@@ -4,17 +4,17 @@
     <div class="container py-5">
         <div class="row mb-4">
             <div class="col-12">
-                <h1 class="mb-4">My Orders</h1>
+                <h1 class="mb-4">Pesanan Saya</h1>
 
                 <ul class="nav nav-tabs mb-4">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('order-history') ? 'active' : '' }}"
-                            href="{{ route('order-history.index') }}">Tour Guide</a>
+                            href="{{ route('order-history.index') }}">Pemandu Wisata</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('order-madu.index') }}">Honey Products</a>
+                        <a class="nav-link active" href="{{ route('order-madu.index') }}">Produk Madu</a>
                     </li>
-                    <!-- Add more tabs for other order types as needed -->
+                    <!-- Tambahkan tab lain jika diperlukan -->
                 </ul>
             </div>
         </div>
@@ -22,7 +22,7 @@
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
             </div>
         @endif
 
@@ -32,14 +32,14 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Order ID</th>
-                                <th>Product</th>
-                                <th>Quantity</th>
-                                <th>Total Price</th>
-                                <th>Pickup Date</th>
+                                <th>ID Pesanan</th>
+                                <th>Produk</th>
+                                <th>Jumlah</th>
+                                <th>Total Harga</th>
+                                <th>Tanggal Ambil</th>
                                 <th>Status</th>
-                                <th>Order Date</th>
-                                <th>Actions</th>
+                                <th>Tanggal Pesan</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,27 +49,26 @@
                                     <td>{{ $order->nama_madu }}</td>
                                     <td>{{ $order->jumlah }}</td>
                                     <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
-                                    <td>{{ date('d M Y', strtotime($order->tanggal)) }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($order->tanggal)->translatedFormat('d M Y') }}</td>
                                     <td>
                                         @if ($order->status == 'pending')
-                                            <span class="badge bg-warning text-dark">Pending</span>
+                                            <span class="badge bg-warning text-dark">Menunggu</span>
                                         @elseif ($order->status == 'accepted')
-                                            <span class="badge bg-success">Accepted</span>
+                                            <span class="badge bg-success">Diterima</span>
                                         @elseif ($order->status == 'rejected')
-                                            <span class="badge bg-danger">Rejected</span>
+                                            <span class="badge bg-danger">Ditolak</span>
                                         @endif
                                     </td>
-                                    <td>{{ date('d M Y', strtotime($order->created_at)) }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($order->created_at)->translatedFormat('d M Y') }}</td>
                                     <td>
                                         <a href="{{ route('order-madu.show', $order->id) }}" class="btn btn-sm btn-info">
-                                            <i class="fas fa-eye"></i> Details
+                                            <i class="fas fa-eye"></i> Detail
                                         </a>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center py-4">You haven't placed any honey orders yet.
-                                    </td>
+                                    <td colspan="8" class="text-center py-4">Anda belum memiliki pesanan produk madu.</td>
                                 </tr>
                             @endforelse
                         </tbody>

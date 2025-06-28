@@ -3,11 +3,12 @@
         <div class="footer-content-green">
             <!-- About Section -->
             <div class="footer-section-green">
-                <h4>Lubuk Hitam Waterfall</h4>
+                <h4>Air Terjun Lubuk Hitam</h4>
                 <p>
-                    Discover the breathtaking beauty of one of Indonesia's most spectacular natural destinations.
-                    Experience pristine waterfalls, lush forests, and unforgettable adventures in the heart of nature.
+                    Temukan keindahan menakjubkan dari salah satu destinasi alam paling spektakuler di Indonesia.  
+                    Rasakan segarnya air terjun alami, hutan yang rimbun, dan petualangan tak terlupakan di tengah alam yang memukau.
                 </p>
+                
                 <div class="social-links-green mt-3">
                     <a href="#" class="social-link-green" aria-label="Facebook">
                         <i class="fab fa-facebook-f"></i>
@@ -29,36 +30,36 @@
 
             <!-- Quick Links -->
             <div class="footer-section-green">
-                <h4>Quick Links</h4>
+                <h4>Tautan Cepat</h4>
                 <ul class="footer-links-green">
-                    <li><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="{{ route('minimap.index') }}">Interactive Map</a></li>
-                    <li><a href="{{ url('gallery/') }}">Gallery</a></li>
-                    <li><a href="{{ url('facilities/') }}">Facilities</a></li>
-                    <li><a href="{{ url('beritas/') }}">News & Updates</a></li>
-                    <li><a href="{{ url('contact') }}">Contact Us</a></li>
+                    <li><a href="{{ url('/') }}">Beranda</a></li>
+                    <li><a href="{{ route('minimap.index') }}">Peta Interaktif</a></li>
+                    <li><a href="{{ url('gallery/') }}">Galeri</a></li>
+                    <li><a href="{{ url('facilities/') }}">Fasilitas</a></li>
+                    <li><a href="{{ url('beritas/') }}">Berita & Informasi</a></li>
+                    <li><a href="{{ url('contact') }}">Hubungi Kami</a></li>
                 </ul>
             </div>
 
             <!-- Services -->
             <div class="footer-section-green">
-                <h4>Our Services</h4>
+                <h4>Layanan Kami</h4>
                 <ul class="footer-links-green">
-                    <li><a href="{{ url('tourguides/') }}">Tour Guides</a></li>
-                    <li><a href="{{ route('madu.index') }}">Local Honey</a></li>
-                    <li><a href="{{ route('produkUMKM.index') }}">UMKM Products</a></li>
-                    <li><a href="{{ url('weather') }}">Weather Forecast</a></li>
-                    <li><a href="{{ route('order-history.index') }}">Order History</a></li>
+                    <li><a href="{{ url('tourguides/') }}">Pemandu Wisata</a></li>
+                    <li><a href="{{ route('madu.index') }}">Madu Lokal</a></li>
+                    <li><a href="{{ route('produkUMKM.index') }}">Produk UMKM</a></li>
+                    <li><a href="{{ url('weather') }}">Cuaca</a></li>
+                    <li><a href="{{ route('order-history.index') }}">Riwayat Pemesanan</a></li>
                 </ul>
             </div>
 
             <!-- Contact Info -->
             <div class="footer-section-green">
-                <h4>Contact Information</h4>
+                <h4>Informasi Kontak</h4>
                 <div class="contact-info-green">
                     <div class="contact-item-green">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>Lubuk Hitam Waterfall<br>West Sumatra, Indonesia</span>
+                        <span>Air Terjun Lubuk Hitam<br>Sumatera Barat, Indonesia</span>
                     </div>
                     <div class="contact-item-green">
                         <i class="fas fa-phone"></i>
@@ -70,7 +71,7 @@
                     </div>
                     <div class="contact-item-green">
                         <i class="fas fa-clock"></i>
-                        <span>Open Daily: 6:00 AM - 6:00 PM</span>
+                        <span>Buka Setiap Hari: 08.00 - 17.00 WIB</span>
                     </div>
                 </div>
             </div>
@@ -81,16 +82,16 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <p style="margin-bottom: 0; color: #014421;">
-                        &copy; {{ date('Y') }} Lubuk Hitam Waterfall. All rights reserved.
+                        &copy; {{ date('Y') }}  Air Terjun Lubuk Hitam. Seluruh hak cipta dilindungi.
                     </p>
                 </div>
                 <div class="col-lg-6 text-lg-end">
                     <div class="footer-bottom-links">
-                        <a href="{{ url('privacy-policy') }}">Privacy Policy</a>
+                        <a href="{{ url('privacy-policy') }}">Kebijakan Privasi</a>
                         <span class="separator">|</span>
-                        <a href="{{ url('terms-of-service') }}">Terms of Service</a>
+                        <a href="{{ url('terms-of-service') }}">Syarat & Ketentuan</a>
                         <span class="separator">|</span>
-                        <a href="{{ url('sitemap') }}">Sitemap</a>
+                        <a href="{{ url('sitemap') }}">Peta Situs</a>
                     </div>
                 </div>
             </div>

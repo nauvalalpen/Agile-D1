@@ -2049,9 +2049,9 @@
                                         <p style="color: #64748b; line-height: 1.6; margin-bottom: 1.5rem;">
                                             {{ Str::limit($madu->deskripsi ?? 'Pure natural honey from local beekeepers', 80) }}
                                         </p>
-                                        <a href="{{ route('madu.index') }}" class="btn-glass btn-glass-primary"
-                                            style="width: 100%; justify-content: center;">
-                                            Pesan Sekarang
+                                        <a href="{{ route('madu.order', $madu->id)  }}" class="btn-glass btn-glass-primary"
+                                        style="width: 100%; justify-content: center;">
+                                        Pesan Sekarang
                                         </a>
                                     </div>
                                 @endforeach
@@ -2164,7 +2164,7 @@
                                 <p class="card-description-glass">
                                     {{ Str::limit($berita->deskripsi ?? 'Read more about this news update.', 120) }}</p>
 
-                                <a href="{{ route('berita.index', $berita->id) }}" class="btn-glass btn-glass-primary">
+                                <a href="{{ route('berita.detail', $berita->id) }}" class="btn-glass btn-glass-primary">
                                     Baca Selengkapnya
                                 </a>
                             </div>

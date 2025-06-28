@@ -5,11 +5,11 @@
 
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard Analytics</h1>
+            <h1 class="h3 mb-0 text-gray-800">Analitik Dashboard</h1>
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-outline-primary active" data-filter="week">This Week</button>
-                <button type="button" class="btn btn-outline-primary" data-filter="month">This Month</button>
-                <button type="button" class="btn btn-outline-primary" data-filter="year">This Year</button>
+                <button type="button" class="btn btn-outline-primary active" data-filter="week">Minggu Ini</button>
+                <button type="button" class="btn btn-outline-primary" data-filter="month">Bulan Ini</button>
+                <button type="button" class="btn btn-outline-primary" data-filter="year">Tahun Ini</button>
             </div>
         </div>
 
@@ -102,7 +102,7 @@
             <div class="col-xl-8 col-lg-7">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">User Activity Overview</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Ringkasan Aktivitas Pengguna</h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-area">
@@ -116,7 +116,7 @@
             <div class="col-xl-4 col-lg-5">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">User Distribution</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Distribusi Pengguna</h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-pie pt-4 pb-2">
@@ -133,7 +133,7 @@
             <div class="col-xl-6 col-lg-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Monthly Registration Trends</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Tren Pendaftaran Bulanan</h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-bar">
@@ -147,7 +147,7 @@
             <div class="col-xl-6 col-lg-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Popular Facilities</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Fasilitas Terpopuler</h6>
                     </div>
                     <div class="card-body">
                         <div class="chart-bar">
@@ -164,7 +164,7 @@
             <div class="col-xl-6 col-lg-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Most Used Facilities</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Fasilitas yang Paling Sering Digunakan</h6>
                     </div>
                     <div class="card-body">
                         @if (isset($analytics['most_used_facilities']) && count($analytics['most_used_facilities']) > 0)
@@ -188,12 +188,12 @@
                                     </div>
                                     <div class="text-right">
                                         <div class="font-weight-bold text-primary">{{ $facility->usage_count }}</div>
-                                        <div class="text-muted small">uses</div>
+                                        <div class="text-muted small">seringkali digunakan</div>
                                     </div>
                                 </div>
                             @endforeach
                         @else
-                            <p class="text-muted">No facility usage data available.</p>
+                            <p class="text-muted">Belum ada data penggunaan fasilitas.</p>
                         @endif
                     </div>
                 </div>
@@ -203,7 +203,7 @@
             <div class="col-xl-6 col-lg-6">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Recently Used Facilities</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Fasilitas yang Baru Digunakan</h6>
                     </div>
                     <div class="card-body">
                         @if (isset($analytics['recently_used_facilities']) && count($analytics['recently_used_facilities']) > 0)
@@ -229,12 +229,12 @@
                                         <div class="font-weight-bold text-success">
                                             {{ $facility->last_used_at ? $facility->last_used_at->diffForHumans() : 'Never' }}
                                         </div>
-                                        <div class="text-muted small">last used</div>
+                                        <div class="text-muted small">terakhir digunakan</div>
                                     </div>
                                 </div>
                             @endforeach
                         @else
-                            <p class="text-muted">No recent facility usage data available.</p>
+                            <p class="text-muted">Belum ada data penggunaan terbaru.</p>
                         @endif
                     </div>
                 </div>
@@ -246,24 +246,24 @@
             <div class="col-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Recent User Activities</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Aktivitas Pengguna Terbaru</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>User Name</th>
-                                        <th>Activity</th>
-                                        <th>Timestamp</th>
+                                       <th>Nama Pengguna</th>
+                                        <th>Aktivitas</th>
+                                        <th>Waktu</th>
                                         <th>Status</th>
-                                        <th>Actions</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($recentActivities ?? [] as $activity)
                                         <tr>
-                                            <td>{{ $activity->user->name ?? 'Unknown' }}</td>
+                                            <td>{{ $activity->user->name ?? 'Tidak Dikenal' }}</td>
                                             <td>{{ $activity->activity_type ?? 'Login' }}</td>
                                             <td>{{ $activity->created_at->format('M d, Y H:i') }}</td>
                                             <td>
@@ -273,12 +273,12 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                                                <a href="#" class="btn btn-sm btn-primary">Lihat Detail</a>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center">No recent activities found</td>
+                                            <td colspan="5" class="text-center">Belum ada aktivitas terbaru.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

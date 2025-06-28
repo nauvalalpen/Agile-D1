@@ -9,9 +9,9 @@
     <!-- 1. HERO SECTION -->
     <section class="hero-section">
         <div class="hero-content">
-            <div class="hero-title">GALLERY<br>WISATA</div>
-            <div class="hero-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-            <a href="#gallery-grid" class="hero-btn">More info</a>
+            <div class="hero-title">GALERI<br>WISATA</div>
+            <div class="hero-desc"> Nikmati keindahan alam yang menakjubkan di salah satu destinasi wisata alam terbaik di Sumatera Barat.</div>
+            <a href="#gallery-grid" class="hero-btn">Lihat Galeri</a>
         </div>
     </section>
 
@@ -21,8 +21,8 @@
         <!-- 2. MAIN GALLERY GRID (with Modals) -->
         <div id="gallery-grid" class="gallery-container">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="section-heading">Explore Our Gallery</h2>
-                <p class="section-subheading">Click on any item to view more details and see the full picture.</p>
+                <h2 class="section-heading">Jelajahi Galeri Kami</h2>
+                <p class="section-subheading">Klik salah satu foto untuk melihat detail dan tampilan penuh.</p>
             </div>
 
             <div class="row">
@@ -48,7 +48,7 @@
                                 <div class="mt-auto">
                                     <button type="button" class="btn btn-custom w-100" id="btn-view-details"
                                         onclick="showGalleryModal({{ $gallery->id }})">
-                                        View Details
+                                        Lihat Detail
                                     </button>
                                 </div>
                             </div>
@@ -56,8 +56,8 @@
                     </div>
                 @empty
                     <div class="col-12 text-center py-5" data-aos="fade-up">
-                        <h3>No gallery items available at the moment.</h3>
-                        <p class="text-muted">Please check back later.</p>
+                        <h3>Belum Ada Item Galeri Saat Ini</h3>
+                        <p class="text-muted">Silakan kembali lagi nanti.</p>
                     </div>
                 @endforelse
             </div>
@@ -68,14 +68,11 @@
             <div class="row align-items-center g-5">
                 <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
                     <div class="hero-tour-text">
-                        <h3>Experience Adventure with<br>Our Best Tour Guides</h3>
+                        <h3>Rasakan Petualangan Bersama<br>Pemandu Wisata Terbaik Kami</h3>
                         <p>
-                            From painting sessions to outdoor escapades, our experiences promise unforgettable moments of
-                            inspiration and rejuvenation. Venture into nature's embrace on our thrilling hiking adventures
-                            or chase the thundering roar of cascading waterfalls.
+                             Dari sesi melukis hingga petualangan luar ruangan, setiap pengalaman kami menjanjikan momen tak terlupakan yang penuh inspirasi dan penyegaran. Jelajahi alam melalui pendakian seru atau kejar gemuruh derasnya air terjun yang menakjubkan.
                         </p>
-                        <a href="{{ route('tourguides.index') }}" class="btn btn-custom w-70" id="btn-view-details">Find a
-                            Guide</a>
+                        <a href="{{ route('tourguides.index') }}" class="btn btn-custom w-70" id="btn-view-details"> Temukan Pemandu</a>
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
@@ -90,8 +87,8 @@
         @if ($galleries->count() > 0)
             <div class="scrolling-gallery-section" data-aos="fade-up">
                 <div class="text-center mb-5">
-                    <h2 class="section-heading">More Visuals</h2>
-                    <p class="section-subheading">A glimpse into the stunning scenery awaiting you.</p>
+                    <h2 class="section-heading">Potret Keindahan Lainnya</h2>
+                    <p class="section-subheading">Sekilas keindahan alam yang menanti untuk Anda jelajahi.</p>
                 </div>
                 <div class="scroll-gallery">
                     <div class="scroll-track">
