@@ -3,10 +3,11 @@
 @section('content')
     <div class="container-fluid">
         <!-- Page Heading -->
+        
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Tour Guides Management</h1>
+            <h1 class="h3 mb-0 text-gray-800">Kelola Pemandu Wisata</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTourGuideModal">
-                <i class="fas fa-plus fa-sm"></i> Add New Tour Guide
+                <i class="fas fa-plus fa-sm"></i> Tambah Pemandu Wisata Baru
             </button>
         </div>
 
@@ -21,7 +22,7 @@
         <!-- Tour Guides DataTable -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Tour Guides</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Pemandu Wisata</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

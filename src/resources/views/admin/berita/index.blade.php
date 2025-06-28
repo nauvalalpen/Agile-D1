@@ -3,9 +3,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Manage News</h1>
+        <h1 class="h3 mb-0 text-gray-800">Kelola Berita</h1>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createNewsModal">
-            <i class="fas fa-plus"></i> Add New News
+            <i class="fas fa-plus"></i> Tambah Berita Baru
         </button>
     </div>
 
@@ -18,7 +18,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">News List</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Daftar Berita</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -42,7 +42,7 @@
                                 <img src="{{ asset('storage/' . $item->foto) }}" alt="{{ $item->judul }}" width="60"
                                     height="60" class="img-thumbnail">
                                 @else
-                                <span class="badge bg-secondary">No Image</span>
+                                <span class="badge bg-secondary">Tidak Ada Gambar</span>
                                 @endif
                             </td>
                             <td>{{ $item->judul }}</td>

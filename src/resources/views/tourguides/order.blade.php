@@ -6,8 +6,8 @@
             <div class="col-md-10 col-lg-8">
                 <div class="card shadow-lg border-0" style="border-radius: 15px;">
                     <div class="card-header text-center p-4" id="btn-header-tourguide">
-                        <h3 class="mb-0 fw-bold">Booking Confirmation</h3>
-                        <p class="mb-0">You are booking a tour with</p>
+                        <h3 class="mb-0 fw-bold">Konfirmasi Pemesanan</h3>
+                        <p class="mb-0">Anda sedang memesan tur dengan</p>
                     </div>
 
                     <div class="card-body p-4 p-md-5">
@@ -49,7 +49,7 @@
                         </div>
 
                         <!-- Order Form -->
-                        <h4 class="mb-4 text-center fw-bold">Enter Your Booking Details</h4>
+                        <h4 class="mb-4 text-center fw-bold">Masukkan Detail Pemesanan Anda</h4>
                         <form method="POST" action="{{ route('tourguides.orderSubmit', $tourguide->id) }}">
                             @csrf
 
