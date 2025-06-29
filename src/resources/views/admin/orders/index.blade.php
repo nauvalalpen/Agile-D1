@@ -49,11 +49,11 @@
                                     <td>{{ $order->price_range }}</td>
                                     <td>
                                         @if ($order->status == 'pending')
-                                            <span class="badge bg-warning text-dark">Pending</span>
+                                            <span class="badge bg-warning text-dark">Menunggu</span>
                                         @elseif($order->status == 'accepted')
-                                            <span class="badge bg-success">Accepted</span>
+                                            <span class="badge bg-success">Diterima</span>
                                         @elseif($order->status == 'rejected')
-                                            <span class="badge bg-danger">Rejected</span>
+                                            <span class="badge bg-danger">Ditolak</span>
                                         @endif
                                     </td>
                                     <td>
@@ -181,15 +181,15 @@
                                     <span class="fw-semibold text-muted">Status Saat Ini:</span>
                                     @if ($order->status == 'pending')
                                         <span class="badge bg-warning text-dark fs-6">
-                                            <i class="fas fa-clock me-1"></i>Pending
+                                            <i class="fas fa-clock me-1"></i>Menunggu
                                         </span>
                                     @elseif ($order->status == 'accepted')
                                         <span class="badge bg-success fs-6">
-                                            <i class="fas fa-check-circle me-1"></i>Accepted
+                                            <i class="fas fa-check-circle me-1"></i>Diterima
                                         </span>
                                     @elseif ($order->status == 'rejected')
                                         <span class="badge bg-danger fs-6">
-                                            <i class="fas fa-times-circle me-1"></i>Rejected
+                                            <i class="fas fa-times-circle me-1"></i>Ditolak
                                         </span>
                                     @endif
                                 </div>
@@ -235,7 +235,7 @@
                                                 for="pending{{ $order->id }}">
                                                 <div class="text-center">
                                                     <i class="fas fa-clock fs-2 mb-2"></i>
-                                                    <div class="fw-bold">Pending</div>
+                                                    <div class="fw-bold">Menunggu</div>
                                                     <small class="text-muted">Dalam proses review</small>
                                                 </div>
                                             </label>
@@ -250,7 +250,7 @@
                                                 for="accepted{{ $order->id }}">
                                                 <div class="text-center">
                                                     <i class="fas fa-check-circle fs-2 mb-2"></i>
-                                                    <div class="fw-bold">Accepted</div>
+                                                    <div class="fw-bold">Diterima</div>
                                                     <small class="text-muted">Pesanan disetujui</small>
                                                 </div>
                                             </label>
@@ -265,7 +265,7 @@
                                                 for="rejected{{ $order->id }}">
                                                 <div class="text-center">
                                                     <i class="fas fa-times-circle fs-2 mb-2"></i>
-                                                    <div class="fw-bold">Rejected</div>
+                                                    <div class="fw-bold">Ditolak</div>
                                                     <small class="text-muted">Pesanan ditolak</small>
                                                 </div>
                                             </label>

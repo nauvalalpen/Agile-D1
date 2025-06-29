@@ -235,7 +235,7 @@
                                                 <div class="text-center">
                                                     <i class="fas fa-times-circle fs-2 mb-2"></i>
                                                     <div class="fw-bold">Ditolak</div>
-                                                    <small class="text-muted">Pesanan tidak dapat diproses</small>
+                                                    <small class="text-muted">Pesanan ditolak</small>
                                                 </div>
                                             </label>
                                         </div>
