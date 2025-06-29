@@ -673,18 +673,18 @@
         }
 
         /* .hero-image-overlay {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    opacity: 0;
-                    transition: var(--transition-smooth);
-                } */
+                                                position: absolute;
+                                                top: 0;
+                                                left: 0;
+                                                right: 0;
+                                                bottom: 0;
+                                                background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                opacity: 0;
+                                                transition: var(--transition-smooth);
+                                            } */
 
         .hero-image-container:hover .hero-image-overlay {
             opacity: 1;
@@ -1747,7 +1747,7 @@
             <div class="glass-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
                 <div class="glass-card scroll-reveal text-center">
                     <div style="font-size: 3.5rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #228B22, #90EE90); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"
-                        data-count="{{ $totalFacilities }}">0</div>
+                        data-count="{{ $totalTourGuides }}">0</div>
                     <div
                         style="font-size: 1.1rem; color: #1a3d2e; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">
                         Pemandu Wisata Terbaik</div>
@@ -2049,9 +2049,10 @@
                                         <p style="color: #64748b; line-height: 1.6; margin-bottom: 1.5rem;">
                                             {{ Str::limit($madu->deskripsi ?? 'Pure natural honey from local beekeepers', 80) }}
                                         </p>
-                                        <a href="{{ route('madu.order', $madu->id)  }}" class="btn-glass btn-glass-primary"
-                                        style="width: 100%; justify-content: center;">
-                                        Pesan Sekarang
+                                        <a href="{{ route('madu.order', $madu->id) }}"
+                                            class="btn-glass btn-glass-primary"
+                                            style="width: 100%; justify-content: center;">
+                                            Pesan Sekarang
                                         </a>
                                     </div>
                                 @endforeach
@@ -2081,21 +2082,20 @@
                                 style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
                                 @foreach ($produkUMKMs as $produk)
                                     <div class="glass-card scroll-reveal" style="overflow: hidden;">
-                                        @if ($produk->gambar)
+                                        @if ($produk->foto)
                                             <div
                                                 style="margin-bottom: 1.5rem; border-radius: 15px; overflow: hidden; height: 200px;">
-                                                <img src="{{ asset('storage/' . $produk->gambar) }}"
+                                                <img src="{{ asset('storage/' . $produk->foto) }}"
                                                     alt="{{ $produk->nama_produk }}"
                                                     style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
                                             </div>
-                                            @
                                         @else
                                             <div
                                                 style="height: 200px; background: linear-gradient(135deg, #228B22, #90EE90); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; margin-bottom: 1.5rem; border-radius: 15px;">
                                                 UMKM
                                             </div>
                                         @endif
-                                        <h4 class="card-title-glass">{{ $produk->nama_produk }}</h4>
+                                        <h4 class="card-title-glass">{{ $produk->nama }}</h4>
                                         <div
                                             style="font-size: 1.2rem; font-weight: 700; background: linear-gradient(135deg, #228B22, #90EE90); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem;">
                                             Rp {{ number_format($produk->harga, 0, ',', '.') }}

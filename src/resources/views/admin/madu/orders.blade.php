@@ -27,7 +27,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                 <th>ID Pesanan</th>
+                                <th>NO</th>
                                 <th>Pengguna</th>
                                 <th>Produk Madu</th>
                                 <th>Jumlah</th>
@@ -40,7 +40,8 @@
                         <tbody>
                             @forelse ($orders as $order)
                                 <tr>
-                                    <td>{{ $order->id }}</td>
+                                    {{-- <td>{{ $order->id }}</td> --}}
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $order->user_name }}</td>
                                     <td>{{ $order->nama_madu }}</td>
                                     <td>{{ $order->jumlah }}</td>
@@ -134,11 +135,13 @@
                             @method('PUT')
 
                             <div class="form-group row mb-3">
-                                <label for="status{{ $order->id }}" class="col-md-4 col-form-label text-md-right">Perbarui
+                                <label for="status{{ $order->id }}"
+                                    class="col-md-4 col-form-label text-md-right">Perbarui
                                     Status</label>
                                 <div class="col-md-6">
                                     <select class="form-select" id="status{{ $order->id }}" name="status" required>
-                                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Menunggu
+                                        <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>
+                                            Menunggu
                                         </option>
                                         <option value="accepted" {{ $order->status == 'accepted' ? 'selected' : '' }}>
                                             Diterima</option>

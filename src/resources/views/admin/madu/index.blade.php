@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="h3 mb-0 text-gray-800">Kelola Produk Madu</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createMaduModal">
-                <i class="fas fa-plus"></i> Tambah Produk Madu 
+                <i class="fas fa-plus"></i> Tambah Produk Madu
             </button>
         </div>
 
@@ -25,7 +25,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>NO</th>
                                 <th>Gambar</th>
                                 <th>Nama</th>
                                 <th>Ukuran</th>
@@ -38,7 +38,8 @@
                         <tbody>
                             @forelse ($madus as $madu)
                                 <tr class="{{ $madu->deleted_at ? 'table-danger' : '' }}">
-                                    <td>{{ $madu->id }}</td>
+                                    {{-- <td>{{ $madu->id }}</td> --}}
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
                                         @if ($madu->gambar)
                                             <img src="{{ asset('storage/' . $madu->gambar) }}" alt="{{ $madu->nama_madu }}"
@@ -91,7 +92,8 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel{{ $madu->id }}">Edit Produk Madu</h5>
+                                                <h5 class="modal-title" id="editModalLabel{{ $madu->id }}">Edit Produk
+                                                    Madu</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -102,7 +104,8 @@
                                                     @method('PUT')
 
                                                     <div class="mb-3">
-                                                        <label for="nama_madu{{ $madu->id }}" class="form-label">Nama Madu</label>
+                                                        <label for="nama_madu{{ $madu->id }}" class="form-label">Nama
+                                                            Madu</label>
                                                         <input type="text"
                                                             class="form-control @error('nama_madu') is-invalid @enderror"
                                                             id="nama_madu{{ $madu->id }}" name="nama_madu"
@@ -168,7 +171,9 @@
                                                             class="form-control @error('gambar') is-invalid @enderror"
                                                             id="gambar{{ $madu->id }}" name="gambar"
                                                             accept="image/*">
-                                                        <small class="form-text text-muted">Unggah gambar baru jika ingin mengganti gambar saat ini. Biarkan kosong untuk mempertahankan gambar lama.</small>
+                                                        <small class="form-text text-muted">Unggah gambar baru jika ingin
+                                                            mengganti gambar saat ini. Biarkan kosong untuk mempertahankan
+                                                            gambar lama.</small>
                                                         @error('gambar')
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                         @enderror
@@ -194,7 +199,8 @@
                                                     <div class="modal-footer px-0 pb-0">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn btn-primary">Perbarui Produk Madu</button>
+                                                        <button type="submit" class="btn btn-primary">Perbarui Produk
+                                                            Madu</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -208,7 +214,8 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel{{ $madu->id }}">Konfirmasi Hapus</h5>
+                                                <h5 class="modal-title" id="deleteModalLabel{{ $madu->id }}">
+                                                    Konfirmasi Hapus</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -216,7 +223,8 @@
                                                 <p>Apakah Anda yakin ingin menghapus produk madu:
                                                     <strong>{{ $madu->nama_madu }}</strong>?
                                                 </p>
-                                                <p class="text-muted">Produk akan dipindahkan ke sampah dan dapat dipulihkan kembali nanti.</p>
+                                                <p class="text-muted">Produk akan dipindahkan ke sampah dan dapat
+                                                    dipulihkan kembali nanti.</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
@@ -336,7 +344,8 @@
                             <label for="gambar" class="form-label">Gambar</label>
                             <input type="file" class="form-control @error('gambar') is-invalid @enderror"
                                 id="gambar" name="gambar" accept="image/*">
-                            <small class="form-text text-muted">Unggah gambar (JPEG, PNG, JPG, GIF). Maksimal ukuran: 2MB</small>
+                            <small class="form-text text-muted">Unggah gambar (JPEG, PNG, JPG, GIF). Maksimal ukuran:
+                                2MB</small>
                             @error('gambar')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

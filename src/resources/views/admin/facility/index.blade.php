@@ -25,7 +25,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>NO</th>
                                 <th>Gambar</th>
                                 <th>Nama</th>
                                 <th>Lokasi</th>
@@ -37,7 +37,8 @@
                         <tbody>
                             @forelse ($facilities as $facility)
                                 <tr class="{{ $facility->deleted_at ? 'table-danger' : '' }}">
-                                    <td>{{ $facility->id }}</td>
+                                    {{-- <td>{{ $facility->id }}</td> --}}
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
                                         @if ($facility->foto)
                                             <img src="{{ asset('storage/' . $facility->foto) }}"
@@ -143,7 +144,8 @@
                                                             class="form-control @error('foto') is-invalid @enderror"
                                                             id="foto{{ $facility->id }}" name="foto"
                                                             accept="image/*">
-                                                        <small class="form-text text-muted">Unggah gambar baru untuk mengganti
+                                                        <small class="form-text text-muted">Unggah gambar baru untuk
+                                                            mengganti
                                                             yang lama. Kosongkan jika tidak ingin mengubah gambar.</small>
                                                         @error('foto')
                                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -170,7 +172,8 @@
                                                     <div class="modal-footer px-0 pb-0">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn btn-primary">Perbarui Fasilitas</button>
+                                                        <button type="submit" class="btn btn-primary">Perbarui
+                                                            Fasilitas</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -184,7 +187,8 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel{{ $facility->id }}">Konfirmasi Hapus</h5>
+                                                <h5 class="modal-title" id="deleteModalLabel{{ $facility->id }}">
+                                                    Konfirmasi Hapus</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -192,7 +196,8 @@
                                                 <p>Apakah kamu yakin ingin menghapus fasilitas:
                                                     <strong>{{ $facility->nama_fasilitas }}</strong>?
                                                 </p>
-                                                <p class="text-muted">Fasilitas akan dipindahkan ke tempat sampah dan dapat dipulihkan nanti.</p>
+                                                <p class="text-muted">Fasilitas akan dipindahkan ke tempat sampah dan dapat
+                                                    dipulihkan nanti.</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"

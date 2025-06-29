@@ -23,7 +23,13 @@ class LaporanPenjualanController extends Controller
 
         // Initialize queries
         $tourGuideQuery = OrderTourGuide::query();
+        $tourGuideQuery->join('users', 'order_tour_guides.user_id', '=', 'users.id');
+        $tourGuideQuery->join('tourguides', 'order_tour_guides.tourguide_id', '=', 'tourguides.id');
+        $tourGuideQuery->selectRaw('users.name as user_name, order_tour_guides.tanggal_order, order_tour_guides.status, order_tour_guides.final_price, order_tour_guides.jumlah_orang, order_tour_guides.price_range, tourguides.nama as tourguide_name');
         $maduQuery = OrderMadu::query();
+        $maduQuery->join('users', 'order_madus.user_id', '=', 'users.id');
+        $maduQuery->join('madus', 'order_madus.user_id', '=', 'madus.id');
+        $maduQuery->selectRaw('users.name as user_name, order_madus.nama_madu, madus.ukuran, order_madus.jumlah, madus.harga, order_madus.total_harga, order_madus.tanggal, order_madus.status'); 
 
         // Apply date filters
         if ($period !== 'all') {
@@ -38,11 +44,11 @@ class LaporanPenjualanController extends Controller
         $maduOrders = collect();
 
         if ($type === 'all' || $type === 'tourguide') {
-            $tourGuideOrders = $tourGuideQuery->orderBy('created_at', 'desc')->get();
+            $tourGuideOrders = $tourGuideQuery->orderBy('order_tour_guides.created_at', 'desc')->get();
         }
 
         if ($type === 'all' || $type === 'madu') {
-            $maduOrders = $maduQuery->orderBy('created_at', 'desc')->get();
+            $maduOrders = $maduQuery->orderBy('order_madus.created_at', 'desc')->get();
         }
 
         // Calculate totals

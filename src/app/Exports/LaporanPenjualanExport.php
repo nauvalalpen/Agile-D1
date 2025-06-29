@@ -202,6 +202,8 @@ class SummarySheet implements FromCollection, WithHeadings, WithTitle
     {
         // Calculate summary data
         $tourGuideQuery = OrderTourGuide::query();
+        $tourGuideQuery->join('users', 'order_tour_guide.user_id', '=', 'users.id');
+        $tourGuideQuery->selectRaw('users.name as user_name, COUNT(*) as total_orders, SUM(final_price) as total_revenue');
         $maduQuery = OrderMadu::query();
 
         if (isset($this->filters['period']) && $this->filters['period'] !== 'all') {
@@ -213,6 +215,7 @@ class SummarySheet implements FromCollection, WithHeadings, WithTitle
 
         $tourGuideOrders = $tourGuideQuery->get();
         $maduOrders = $maduQuery->get();
+        dd($tourGuideOrders);
 
         return collect([
             ['Category', 'Tour Guide Orders', 'Honey Orders', 'Total'],

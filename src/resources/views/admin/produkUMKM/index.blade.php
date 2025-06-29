@@ -25,6 +25,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>NO</th>
                                 <th>Gambar</th>
                                 <th>Nama</th>
                                 <th>Harga</th>
@@ -36,6 +37,7 @@
                         <tbody>
                             @forelse ($produkUMKM as $produk)
                                 <tr>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
                                         @if ($produk->foto)
                                             <img src="{{ asset('storage/' . $produk->foto) }}" alt="{{ $produk->nama }}"
@@ -215,7 +217,8 @@
                             <label for="edit_foto" class="form-label">Gambar</label>
                             <input type="file" class="form-control @error('foto') is-invalid @enderror" id="edit_foto"
                                 name="foto" accept="image/*">
-                            <small class="form-text text-muted">Unggah gambar baru untuk menggantikan gambar saat ini. Biarkan kosong jika ingin mempertahankan gambar yang ada.</small>
+                            <small class="form-text text-muted">Unggah gambar baru untuk menggantikan gambar saat ini.
+                                Biarkan kosong jika ingin mempertahankan gambar yang ada.</small>
                             @error('foto')
                                 <div class="invalid-feedback">
                                     {{ $message }}

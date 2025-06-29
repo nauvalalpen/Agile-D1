@@ -1,9 +1,9 @@
 @extends('admin.layouts.admin')
 
 @section('content')
- <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Kelola Pesanan Pemandu Wisata</h1>
- </div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Kelola Pesanan Pemandu Wisata</h1>
+    </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">{{ __('Daftar Pesanan Pemandu Wisata') }}</h6>
@@ -27,7 +27,7 @@
                     <table class="table table-bordered" id="ordersTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>NO</th>
                                 <th>Pengguna</th>
                                 <th>Pemandu Wisata</th>
                                 <th>Tanggal Pesan</th>
@@ -41,7 +41,8 @@
                         <tbody>
                             @foreach ($orders as $order)
                                 <tr>
-                                    <td>{{ $order->id }}</td>
+                                    {{-- <td>{{ $order->id }}</td> --}}
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $order->user_name }}</td>
                                     <td>{{ $order->tourguide_name }}</td>
                                     <td>{{ date('d M Y', strtotime($order->tanggal_order)) }}</td>
@@ -74,7 +75,7 @@
                 </div>
             @else
                 <div class="alert alert-info">
-                     Belum ada pesanan pemandu wisata.
+                    Belum ada pesanan pemandu wisata.
                 </div>
             @endif
         </div>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <!-- Page Heading -->
-        
+
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Kelola Pemandu Wisata</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTourGuideModal">
@@ -42,7 +42,9 @@
                         <tbody>
                             @forelse ($tourguides as $tourguide)
                                 <tr>
-                                    <td>{{ $tourguide->id }}</td>
+                                    {{-- Make No++ for the number column --}}
+                                    <td>{{ $loop->iteration }}</td>
+                                    {{-- <td>{{ $tourguide->id }}</td> --}}
                                     <td>{{ $tourguide->nama }}</td>
                                     <td>{{ $tourguide->nohp }}</td>
                                     <td>{{ $tourguide->alamat }}</td>

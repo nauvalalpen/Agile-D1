@@ -149,7 +149,7 @@
                         <table class="table table-bordered" id="tourGuideTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>NO</th>
                                     <th>Nama Pelanggan</th>
                                     <th>Nama Pemandu</th>
                                     <th>Tanggal Pesan</th>
@@ -162,7 +162,8 @@
                             <tbody>
                                 @foreach ($tourGuideOrders as $order)
                                     <tr>
-                                        <td>{{ $order->id }}</td>
+                                        {{-- <td>{{ $order->id }}</td> --}}
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $order->user_name }}</td>
                                         <td>{{ $order->tourguide_name }}</td>
                                         <td>{{ date('d M Y', strtotime($order->tanggal_order)) }}</td>
@@ -211,26 +212,29 @@
                         <table class="table table-bordered" id="maduTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                     <th>ID</th>
+                                    <th>NO</th>
+                                    <th>Nama Pelanggan</th>
                                     <th>Produk</th>
                                     <th>Ukuran</th>
                                     <th>Jumlah</th>
                                     <th>Harga per Item</th>
-                                    <th>Total Harga</th>
                                     <th>Tanggal Ambil</th>
+                                    <th>Total Harga</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($maduOrders as $order)
                                     <tr>
-                                        <td>{{ $order->id }}</td>
+                                        {{-- <td>{{ $order->id }}</td> --}}
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $order->user_name }}</td>
                                         <td>{{ $order->nama_madu }}</td>
                                         <td>{{ $order->ukuran }}</td>
                                         <td>{{ $order->jumlah }}</td>
                                         <td>Rp {{ number_format($order->harga, 0, ',', '.') }}</td>
-                                        <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                                         <td>{{ date('d M Y', strtotime($order->tanggal)) }}</td>
+                                        <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                                         <td>
                                             @if ($order->status == 'pending')
                                                 <span class="badge bg-warning text-dark">Menunggu</span>
@@ -245,8 +249,9 @@
                             </tbody>
                             <tfoot>
                                 <tr class="table-info">
-                                    <th colspan="5">Total Pesanan Madu</th>
+                                    <th colspan="7">Total Pesanan Madu</th>
                                     <th>Rp {{ number_format($totals['madu']['revenue'], 0, ',', '.') }}</th>
+                                    {{-- <th></th> --}}
                                     <th colspan="2">{{ $totals['madu']['count'] }} pesanan</th>
                                 </tr>
                             </tfoot>

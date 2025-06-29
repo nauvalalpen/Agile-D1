@@ -44,7 +44,8 @@
                         <tbody>
                             @forelse ($galleries as $index => $gallery)
                                 <tr class="{{ $gallery->deleted_at ? 'table-danger' : '' }}">
-                                    <td>{{ $index + 1 }}</td>
+                                    {{-- <td>{{ $index + 1 }}</td> --}}
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $gallery->judul }}</td>
                                     <td>{{ Str::limit($gallery->deskripsi, 50) }}</td>
                                     <td>
@@ -471,9 +472,9 @@
                         <p><span class="badge ${gallery.status === 'Active' ? 'bg-success' : 'bg-danger'}">${gallery.status}</span></p>
                         
                         ${gallery.deleted_at ? `
-                            <h6 class="fw-bold">Tanggal Dihapus:</h6>
-                            <p>${gallery.deleted_at}</p>
-                            ` : ''}
+                                    <h6 class="fw-bold">Tanggal Dihapus:</h6>
+                                    <p>${gallery.deleted_at}</p>
+                                    ` : ''}
                     </div>
                     <div class="col-md-6">
                         <h6 class="fw-bold">Foto:</h6>
