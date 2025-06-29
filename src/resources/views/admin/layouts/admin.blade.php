@@ -30,6 +30,7 @@
             --info-color: #4299e1;
             --dark-color: #2d3748;
             --light-color: #f7fafc;
+            --abu-color: grey;
             --sidebar-width: 280px;
             --sidebar-collapsed-width: 80px;
             --topbar-height: 70px;
@@ -57,7 +58,7 @@
             left: 0;
             height: 100vh;
             width: var(--sidebar-width);
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background: white;
             backdrop-filter: blur(20px);
             border-right: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -89,13 +90,13 @@
             align-items: center;
             padding: 1.5rem;
             text-decoration: none;
-            color: white;
+            color: var(--dark-color);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
 
         .sidebar-brand:hover {
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--primary-color);
             transform: translateX(5px);
         }
 
@@ -139,7 +140,7 @@
             display: flex;
             align-items: center;
             padding: 0.875rem 1rem;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--dark-color);
             text-decoration: none;
             border-radius: var(--border-radius);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -164,7 +165,7 @@
 
         .nav-link:hover,
         .nav-link.active {
-            color: white;
+            color: var(--primary-color);
             background: rgba(255, 255, 255, 0.15);
             transform: translateX(5px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -191,7 +192,7 @@
         }
 
         .sidebar-heading {
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--dark-color);
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -587,8 +588,8 @@
         }
     </style>
 
-    <!-- Custom CSS -->
-    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+    <!-- Custom CSS - REMOVED TO PREVENT CONFLICT WITH INLINE STYLES -->
+    {{-- <link href="{{ asset('css/admin.css') }}" rel="stylesheet"> --}}
 </head>
 
 <body>
@@ -775,82 +776,13 @@
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ms-auto">
-                <!-- Notifications -->
-                <li class="nav-item dropdown no-arrow mx-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-bell fa-fw"></i>
-                        <span class="badge bg-danger badge-counter">3+</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
-                        aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header bg-primary text-white">
-                            <i class="fas fa-bell me-2"></i>
-                            Notifikasi
-                        </h6>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="me-3">
-                                <div class="icon-circle bg-primary">
-                                    <i class="fas fa-file-alt text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">Hari Ini</div>
-                                <span class="fw-bold">Pendaftaran wisatawan baru!</span>
-                            </div>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="me-3">
-                                <div class="icon-circle bg-success">
-                                    <i class="fas fa-donate text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">2 jam yang lalu</div>
-                                <span class="fw-bold">Pesanan madu baru diterima!</span>
-                            </div>
-                        </a>
-                        <a class="dropdown-item text-center small text-gray-500" href="#">
-                            Lihat Semua Notifikasi
-                        </a>
-                    </div>
-                </li>
-
-                <!-- Messages -->
-                <li class="nav-item dropdown no-arrow mx-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-envelope fa-fw"></i>
-                        <span class="badge bg-success badge-counter">2</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="messagesDropdown">
-                        <h6 class="dropdown-header bg-success text-white">
-                            <i class="fas fa-envelope me-2"></i>
-                            Pesan
-                        </h6>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="dropdown-list-image me-3">
-                                <img class="rounded-circle" src="https://via.placeholder.com/40" alt="User">
-                                <div class="status-indicator bg-success"></div>
-                            </div>
-                            <div>
-                                <div class="text-truncate">Hai! Aku ingin tahu apakah kamu bisa membantuku dengan sebuah masalah yang sedang kuhadapi.</div>
-                                <div class="small text-gray-500">Emily Fowler · 58 menit yang lalu</div>
-                            </div>
-                        </a>
-                        <a class="dropdown-item text-center small text-gray-500" href="#">
-                           Baca Pesan Lainnya
-                        </a>
-                    </div>
-                </li>
-
                 <div class="topbar-divider d-none d-sm-block"></div>
 
                 <!-- User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown"
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="me-2 d-none d-lg-inline text-gray-600 small">
+                        <span class="me-2 d-none d-lg-inline text-gray-600 small" style="color: black;">
                             {{ Auth::user()->name ?? 'Admin User' }}
                         </span>
                         @if (Auth::user() && Auth::user()->photo)
@@ -962,7 +894,7 @@
                             <div class="mt-3">
                                 <a href="{{ route('admin.orders.index') }}" class="btn btn-success btn-sm">
                                     <i class="fas fa-arrow-right me-1"></i>
-                                   Kelola Pemandu
+                                    Kelola Pemandu
                                 </a>
                             </div>
                         </div>
@@ -1086,7 +1018,7 @@
                                         <a href="{{ route('admin.madu.index') }}"
                                             class="btn btn-outline-warning w-100 py-3">
                                             <i class="fas fa-jar mb-2 d-block"></i>
-                                           Kelola Produk Madu
+                                            Kelola Produk Madu
                                         </a>
                                     </div>
                                     <div class="col-md-3 col-sm-6 mb-3">
@@ -1213,7 +1145,7 @@
             <div class="container-fluid">
                 <div class="d-sm-flex align-items-center justify-content-between">
                     <div class="copyright text-center text-sm-start">
-                        <span>&copy; {{ date('Y') }} OneVision. Semua hak dilindungi.</span>
+                        <span>© {{ date('Y') }} OneVision. Semua hak dilindungi.</span>
                     </div>
                     <div class="footer-links text-center text-sm-end mt-2 mt-sm-0">
                         <a href="#" class="text-decoration-none me-3">Kebijakan Privasi</a>
@@ -1286,19 +1218,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<<<<<<< HEAD
-    @push('script')
-=======
-
-
-    <!-- Custom JavaScript -->
-    <script src="{{ asset('js/admin.js') }}"></script>
+    <!-- Custom JavaScript - REMOVED TO PREVENT CONFLICTS WITH INLINE SCRIPT -->
+    {{-- <script src="{{ asset('js/admin.js') }}"></script> --}}
 
     <!-- Page specific scripts -->
     @stack('scripts')
-</body>
-@push('script')
->>>>>>> cdcc9756b4dde8d7a3f6d0a7ff29f5fe7aca157d
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Sidebar Toggle
@@ -1316,21 +1241,31 @@
                 });
             }
 
-            // Restore sidebar state
+            // Restore sidebar state on page load
             if (localStorage.getItem('sidebarCollapsed') === 'true') {
                 sidebar.classList.add('collapsed');
                 mainContent.classList.add('expanded');
             }
 
-            // Mobile sidebar toggle
+            // Mobile sidebar toggle (handling for small screens)
             if (window.innerWidth <= 768) {
-                sidebar.classList.add('show');
+                // When on mobile, we might want to ensure the sidebar is not collapsed but hidden
+                // The CSS already handles this with transform: translateX(-100%);
+                // This logic is for showing/hiding it
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('show');
+                });
+
+                // Optional: Close sidebar when clicking outside of it on mobile
                 document.addEventListener('click', function(e) {
-                    if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+                    // Check if the sidebar is shown and the click is outside the sidebar and not on the toggle button
+                    if (sidebar.classList.contains('show') && !sidebar.contains(e.target) && !sidebarToggle
+                        .contains(e.target)) {
                         sidebar.classList.remove('show');
                     }
                 });
             }
+
 
             // Scroll to top button
             const scrollToTopBtn = document.querySelector('.scroll-to-top');
@@ -1352,7 +1287,6 @@
                 });
             }
 
-            // Initialize Chart (if on dashboard)
             // Initialize Chart (if on dashboard)
             @if (request()->routeIs('admin.dashboard'))
                 const ctx = document.getElementById('registrationChart');
@@ -1431,54 +1365,31 @@
                 card.classList.add('fade-in-up');
             });
 
-            // Enhanced dropdown functionality
-            const dropdowns = document.querySelectorAll('.dropdown-toggle');
-            dropdowns.forEach(dropdown => {
-                dropdown.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const menu = this.nextElementSibling;
-                    if (menu && menu.classList.contains('dropdown-menu')) {
-                        // Close other dropdowns
-                        document.querySelectorAll('.dropdown-menu.show').forEach(otherMenu => {
-                            if (otherMenu !== menu) {
-                                otherMenu.classList.remove('show');
-                            }
-                        });
-                        menu.classList.toggle('show');
-                    }
-                });
-            });
-
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.dropdown')) {
-                    document.querySelectorAll('.dropdown-menu.show').forEach(menu => {
-                        menu.classList.remove('show');
-                    });
-                }
-            });
-
             // Active nav link highlighting
             const currentPath = window.location.pathname;
-            const navLinks = document.querySelectorAll('.nav-link');
+            const navLinks = document.querySelectorAll('.sidebar-nav .nav-link'); // More specific selector
             navLinks.forEach(link => {
                 const href = link.getAttribute('href');
-                if (href && (currentPath === href || currentPath.startsWith(href + '/'))) {
-                    link.classList.add('active');
+                // Make sure href is not null and not just a placeholder '#'
+                if (href && href !== '#' && currentPath.startsWith(href)) {
+                    // A more robust check for active state, especially for index pages
+                    if (href === window.location.origin + '/' || href === '/') {
+                        if (currentPath === href) {
+                            link.classList.add('active');
+                        }
+                    } else {
+                        link.classList.add('active');
+                    }
                 }
             });
         });
 
-        // Responsive sidebar handling
+        // Responsive sidebar handling on resize
         window.addEventListener('resize', function() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
 
-            if (window.innerWidth <= 768) {
-                // Mobile view
-                sidebar.classList.remove('collapsed');
-                mainContent.classList.remove('expanded');
-            } else {
+            if (window.innerWidth > 768) {
                 // Desktop view - restore saved state
                 if (localStorage.getItem('sidebarCollapsed') === 'true') {
                     sidebar.classList.add('collapsed');
@@ -1487,115 +1398,14 @@
                     sidebar.classList.remove('collapsed');
                     mainContent.classList.remove('expanded');
                 }
-            }
-        });
-
-        // Toast notification system
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.className = `toast align-items-center text-white bg-${type} border-0`;
-            toast.setAttribute('role', 'alert');
-            toast.setAttribute('aria-live', 'assertive');
-            toast.setAttribute('aria-atomic', 'true');
-
-            toast.innerHTML = `
-                <div class="d-flex">
-                    <div class="toast-body">
-                        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'} me-2"></i>
-                        ${message}
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                </div>
-            `;
-
-            // Create toast container if it doesn't exist
-            let toastContainer = document.querySelector('.toast-container');
-            if (!toastContainer) {
-                toastContainer = document.createElement('div');
-                toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3';
-                toastContainer.style.zIndex = '9999';
-                document.body.appendChild(toastContainer);
-            }
-
-            toastContainer.appendChild(toast);
-            const bsToast = new bootstrap.Toast(toast);
-            bsToast.show();
-
-            // Remove toast element after it's hidden
-            toast.addEventListener('hidden.bs.toast', () => {
-                toast.remove();
-            });
-        }
-
-        // AJAX setup for CSRF token
-        if (typeof $ !== 'undefined') {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            // Show loading spinner for AJAX requests
-            $(document).ajaxStart(function() {
-                // You can add loading spinner here if needed
-            }).ajaxStop(function() {
-                // Hide loading spinner here
-            });
-
-            // Auto-hide alerts after 5 seconds
-            setTimeout(function() {
-                $('.alert').fadeOut('slow');
-            }, 5000);
-
-            // Confirm delete actions
-            $(document).on('click', '[data-confirm-delete]', function(e) {
-                e.preventDefault();
-                const form = $(this).closest('form');
-                const message = $(this).data('confirm-delete') || 'Are you sure you want to delete this item?';
-
-                if (confirm(message)) {
-                    form.submit();
-                }
-            });
-        }
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            // Ctrl/Cmd + / to toggle sidebar
-            if ((e.ctrlKey || e.metaKey) && e.key === '/') {
-                e.preventDefault();
-                const sidebarToggle = document.getElementById('sidebarToggle');
-                if (sidebarToggle) {
-                    sidebarToggle.click();
-                }
-            }
-
-            // Escape to close modals
-            if (e.key === 'Escape') {
-                const openModal = document.querySelector('.modal.show');
-                if (openModal) {
-                    const modalInstance = bootstrap.Modal.getInstance(openModal);
-                    if (modalInstance) {
-                        modalInstance.hide();
-                    }
-                }
-            }
-        });
-
-        // Page load animation
-        window.addEventListener('load', function() {
-            document.body.classList.add('loaded');
-
-            // Add page transition effect
-            const content = document.querySelector('.content-container');
-            if (content) {
-                content.classList.add('page-transition');
-                setTimeout(() => {
-                    content.classList.add('loaded');
-                }, 100);
+                sidebar.classList.remove('show'); // Ensure mobile class is removed
+            } else {
+                // Mobile view
+                sidebar.classList.remove('collapsed');
+                mainContent.classList.remove('expanded');
             }
         });
     </script>
-@endpush
+</body>
 
 </html>
