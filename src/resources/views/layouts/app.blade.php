@@ -301,7 +301,7 @@
         .notification-badge {
             position: absolute;
             top: 0px;
-            right: 0px;
+            right: 4px;
             background: linear-gradient(90deg, #228B22, #90EE90, #228B22);
             color: white;
             border-radius: 50%;
