@@ -371,7 +371,7 @@
         });
 
         function cancelOrder() {
-            if (confirm('Are you sure you want to cancel this order?')) {
+            if (confirm) {
                 window.location.href = '{{ route('madu.index') }}';
             }
         }
