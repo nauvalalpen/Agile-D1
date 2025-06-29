@@ -1100,13 +1100,13 @@
                                 @auth
                                     ${honey.stock > 0 ? 
                                         `<a href="{{ route('madu.order', $madu->id) }}" class="btn-order">
-                                                            <i class="fas fa-shopping-cart me-2"></i>
-                                                            Pesan Sekarang
-                                                        </a>` :
+                                                                            <i class="fas fa-shopping-cart me-2"></i>
+                                                                            Pesan Sekarang
+                                                                        </a>` :
                                         `<button class="btn btn-lg w-100" disabled style="opacity: 0.5; cursor: not-allowed;">
-                                                            <i class="fas fa-times-circle me-2"></i>
-                                                            Tidak Tersedia
-                                                        </button>`
+                                                                            <i class="fas fa-times-circle me-2"></i>
+                                                                            Tidak Tersedia
+                                                                        </button>`
                                     }
                                 @else
                                     <a href="{{ route('login') }}" class="btn btn-lg w-100">
