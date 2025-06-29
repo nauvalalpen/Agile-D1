@@ -60,13 +60,14 @@
                                     </td>
                                     <td>
                                         <div class="d-flex">
-                                            <button type="button" class="btn btn-sm btn-info me-2" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-sm btn-warning me-2"
+                                                data-bs-toggle="modal"
                                                 data-bs-target="#editTourGuideModal{{ $tourguide->id }}">
                                                 <i class="fas fa-edit fa-sm"></i> Edit
                                             </button>
                                             <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#deleteTourGuideModal{{ $tourguide->id }}">
-                                                <i class="fas fa-trash fa-sm"></i> Delete
+                                                <i class="fas fa-trash fa-sm"></i> Hapus
                                             </button>
                                         </div>
                                     </td>
@@ -155,9 +156,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-primary"
-                        onclick="document.getElementById('createTourGuideForm').submit()">Save</button>
+                        onclick="document.getElementById('createTourGuideForm').submit()">Simpan</button>
                 </div>
             </div>
         </div>
@@ -238,7 +239,8 @@
                                 @endif
                                 <input type="file" class="form-control @error('foto') is-invalid @enderror"
                                     id="foto{{ $tourguide->id }}" name="foto">
-                                <small class="form-text text-muted">Leave empty to keep the current photo</small>
+                                <small class="form-text text-muted">Biarkan kosong jika ingin tetap dengan foto
+                                    sekarang</small>
                                 @error('foto')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -248,9 +250,10 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-primary"
-                            onclick="document.getElementById('editTourGuideForm{{ $tourguide->id }}').submit()">Update</button>
+                            onclick="document.getElementById('editTourGuideForm{{ $tourguide->id }}').submit()">Perbarui
+                            Tourguide</button>
                     </div>
                 </div>
             </div>
@@ -264,12 +267,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteTourGuideModalLabel{{ $tourguide->id }}">Confirm Delete</h5>
+                        <h5 class="modal-title" id="deleteTourGuideModalLabel{{ $tourguide->id }}">Konfirmasi Hapus</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to delete the tour guide: <strong>{{ $tourguide->nama }}</strong>?</p>
-                        <p class="text-danger">This action cannot be undone.</p>
+                        <p>Apakah Anda yakin ingin menghapus Pemandu Wisata?: <strong>{{ $tourguide->nama }}</strong>?</p>
+                        <p class="text-danger">Tindakan ini tidak bisa dibatalkan</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

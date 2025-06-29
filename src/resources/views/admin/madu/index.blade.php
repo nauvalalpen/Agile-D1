@@ -74,7 +74,7 @@
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         @else
-                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#editModal{{ $madu->id }}" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </button>

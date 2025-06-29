@@ -766,7 +766,7 @@
             <!-- Topbar Search -->
             <form class="d-none d-sm-inline-block topbar-search mx-auto">
                 <div class="input-group">
-                    <input type="text" class="form-control search-input" placeholder="Search anything..."
+                    <input type="text" class="form-control search-input" placeholder="Cari apa saja..."
                         aria-label="Search">
                     <button class="btn btn-primary" type="button">
                         <i class="fas fa-search"></i>

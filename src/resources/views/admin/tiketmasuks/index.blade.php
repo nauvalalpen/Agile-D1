@@ -64,7 +64,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                             data-bs-target="#editTouristsModal{{ $tiket->id }}">
                                             <i class="fas fa-edit fa-sm"></i> Edit
                                         </button>

@@ -59,7 +59,7 @@
                                     <td>
                                         <div class="text-center">
                                             <!-- Edit Button -->
-                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#editModal{{ $user->id }}" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </button>

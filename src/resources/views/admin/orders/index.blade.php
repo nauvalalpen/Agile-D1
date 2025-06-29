@@ -66,7 +66,7 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('admin.orders.edit', $order->id) }}"
-                                            class="btn btn-sm btn-primary">Process Order</a>
+                                            class="btn btn-sm btn-primary">Proses Pesanan</a>
                                     </td>
                                 </tr>
                             @endforeach

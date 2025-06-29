@@ -66,7 +66,7 @@
                                             </button>
                                         @else
                                             <!-- Tombol Edit -->
-                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#editModal{{ $item->id }}" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </button>

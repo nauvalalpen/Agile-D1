@@ -86,7 +86,7 @@
                                                 <i class="fas fa-eye"></i>
                                             </button>
                                             <!-- Edit Button -->
-                                            <button type="button" class="btn btn-sm btn-primary me-1"
+                                            <button type="button" class="btn btn-sm btn-warning me-1"
                                                 onclick="showEditModal({{ $gallery->id }})" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </button>
@@ -472,9 +472,9 @@
                         <p><span class="badge ${gallery.status === 'Active' ? 'bg-success' : 'bg-danger'}">${gallery.status}</span></p>
                         
                         ${gallery.deleted_at ? `
-                                    <h6 class="fw-bold">Tanggal Dihapus:</h6>
-                                    <p>${gallery.deleted_at}</p>
-                                    ` : ''}
+                                        <h6 class="fw-bold">Tanggal Dihapus:</h6>
+                                        <p>${gallery.deleted_at}</p>
+                                        ` : ''}
                     </div>
                     <div class="col-md-6">
                         <h6 class="fw-bold">Foto:</h6>
