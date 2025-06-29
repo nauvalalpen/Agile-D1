@@ -47,24 +47,25 @@
             font-family: 'Inter', 'Nunito', sans-serif;
             line-height: 1.6;
         }
-                /* Responsive Content */
+
+        /* Responsive Content */
         .main-content {
             min-height: calc(100vh - 200px);
             padding: 2rem 0;
         }
-        
+
         /* Responsive Cards */
         .card {
             margin-bottom: 1.5rem;
             border: none;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-radius: 0.75rem;
         }
-        
+
         .card-body {
             padding: 1.5rem;
         }
-        
+
         /* Responsive Buttons */
         .btn {
             border-radius: 0.5rem;
@@ -72,56 +73,64 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
-        
+
         .btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-        
+
         /* Mobile Responsive Styles */
         @media (max-width: 576px) {
             .container {
                 padding: 0 1rem;
             }
-            
+
             .main-content {
                 padding: 1rem 0;
             }
-            
+
             .card-body {
                 padding: 1rem;
             }
-            
+
             .btn {
                 padding: 0.5rem 1rem;
                 font-size: 0.9rem;
             }
-            
+
             .navbar-brand {
                 font-size: 1.2rem;
             }
-            
-            h1 { font-size: 1.8rem; }
-            h2 { font-size: 1.5rem; }
-            h3 { font-size: 1.3rem; }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.3rem;
+            }
         }
-        
+
         /* Tablet Responsive Styles */
         @media (max-width: 768px) {
             .navbar-nav {
                 text-align: center;
                 margin-top: 1rem;
             }
-            
+
             .navbar-nav .nav-link {
                 padding: 0.5rem 1rem;
             }
-            
+
             .main-content {
                 padding: 1.5rem 0;
             }
         }
-        
+
         /* Large Tablet/Small Desktop */
         @media (max-width: 992px) {
             .container {
@@ -129,27 +138,27 @@
                 padding: 0 2rem;
             }
         }
-        
+
         /* Utility Classes for Responsive */
         .text-responsive {
             font-size: clamp(0.9rem, 2.5vw, 1.1rem);
         }
-        
+
         .title-responsive {
             font-size: clamp(1.5rem, 4vw, 2.5rem);
         }
-        
+
         /* Responsive Images */
         img {
             max-width: 100%;
             height: auto;
         }
-        
+
         /* Responsive Tables */
         .table-responsive {
             overflow-x: auto;
         }
-        
+
         @media (max-width: 768px) {
             .table-responsive table {
                 font-size: 0.8rem;
@@ -291,8 +300,8 @@
 
         .notification-badge {
             position: absolute;
-            top: -6px;
-            right: -6px;
+            top: 0px;
+            right: 0px;
             background: linear-gradient(90deg, #228B22, #90EE90, #228B22);
             color: white;
             border-radius: 50%;

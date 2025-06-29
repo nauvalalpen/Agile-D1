@@ -1442,8 +1442,8 @@
         /* === NOTIFICATION BADGES === */
         .notification-badge {
             position: absolute;
-            top: -8px;
-            right: -8px;
+            top: 0px;
+            right: 0px;
             background: #dc3545;
             color: white;
             border-radius: 50%;
