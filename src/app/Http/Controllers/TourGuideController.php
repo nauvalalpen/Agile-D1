@@ -172,7 +172,7 @@ class TourGuideController extends Controller
             'updated_at' => now(),
         ]);
         
-        return redirect()->route('tourguides.index')->with('success', 'Tour guide ordered successfully.');
+        return redirect()->route('order-history.index')->with('success', 'Pemandu berhasil dipesan. Tunggu konfirmasi selanjutnya.');
     }
     
     /**
