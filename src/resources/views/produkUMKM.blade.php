@@ -545,7 +545,7 @@
 
         /* === 2. MAIN PRODUCTS GRID === */
         .products-container {
-            margin-top: -80px;
+            margin-top: 0; /* Changed from -80px to 0 */
             position: relative;
             z-index: 2;
             background: #f8f9fa;
@@ -553,7 +553,6 @@
             border-radius: 20px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
         }
-
         .product-card {
             background: #fff;
             border-radius: 15px;

@@ -577,7 +577,7 @@
 
         /* === 2. MAIN TOUR GUIDES SECTION === */
         .tourguides-container {
-            margin-top: -80px;
+            margin-top: 0;
             position: relative;
             z-index: 2;
             background: #f8f9fa;
