@@ -253,7 +253,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-primary"
                             onclick="document.getElementById('editTourGuideForm{{ $tourguide->id }}').submit()">Perbarui
-                            Tourguide</button>
+                            Pemandu Wisata</button>
                     </div>
                 </div>
             </div>
