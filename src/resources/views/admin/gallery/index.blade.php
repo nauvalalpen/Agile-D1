@@ -261,7 +261,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <form id="restoreForm" method="POST" style="display: inline;">
                         @csrf
-                        <button type="submit" class="btn btn-success">Restore</button>
+                        <button type="submit" class="btn btn-success">Pulihkan</button>
                     </form>
                 </div>
             </div>
@@ -472,9 +472,9 @@
                         <p><span class="badge ${gallery.status === 'Active' ? 'bg-success' : 'bg-danger'}">${gallery.status}</span></p>
                         
                         ${gallery.deleted_at ? `
-                                                    <h6 class="fw-bold">Tanggal Dihapus:</h6>
-                                                    <p>${gallery.deleted_at}</p>
-                                                    ` : ''}
+                                                        <h6 class="fw-bold">Tanggal Dihapus:</h6>
+                                                        <p>${gallery.deleted_at}</p>
+                                                        ` : ''}
                     </div>
                     <div class="col-md-6">
                         <h6 class="fw-bold">Foto:</h6>

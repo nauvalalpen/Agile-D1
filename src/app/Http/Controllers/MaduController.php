@@ -181,6 +181,6 @@ class MaduController extends Controller
         ]);
 
         return redirect()->route('order-madu.index')
-            ->with('success', 'Your honey order has been submitted and is pending approval.');
+            ->with('success', 'Pesanan madu Anda telah dikirimkan dan sedang menunggu persetujuan.');
     }
 }

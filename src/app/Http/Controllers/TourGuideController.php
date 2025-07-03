@@ -77,7 +77,7 @@ class TourGuideController extends Controller
             'foto' => $fotoPath,
         ]);
     
-        return redirect()->route('tourguides.index')->with('success', 'Pemandu Wisata Berhasil Ditambahkan.');
+        return redirect()->route('tourguides.index')->with('success', 'Pemandu Wisata berhasil ditambahkan.');
     }
     
     /**
@@ -172,7 +172,7 @@ class TourGuideController extends Controller
             'updated_at' => now(),
         ]);
         
-        return redirect()->route('order-history.index')->with('success', 'Pemandu berhasil dipesan. Tunggu konfirmasi selanjutnya.');
+        return redirect()->route('order-history.index')->with('success', 'Pemandu Wisata berhasil dipesan. Tunggu konfirmasi selanjutnya.');
     }
     
     /**
@@ -189,6 +189,6 @@ class TourGuideController extends Controller
         
         $tourguide->delete();
         
-        return redirect()->route('tourguides.index')->with('success', 'Data Tour Guide berhasil dihapus');
+        return redirect()->route('tourguides.index')->with('success', 'Pemandu Wisata berhasil dihapus');
     }
 }
