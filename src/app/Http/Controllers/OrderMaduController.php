@@ -145,6 +145,6 @@ class OrderMaduController extends Controller
         $order->save();
         
         return redirect()->route('admin.orders-madu.index')
-            ->with('success', 'Order status updated successfully.');
+            ->with('success', 'Status Pemesanan Madu berhasil diperbarui.');
     }
 }
