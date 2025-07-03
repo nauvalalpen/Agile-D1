@@ -718,7 +718,7 @@
                             </div>
                         </div>
 
-                        <div class="minimap-legend">
+                        {{-- <div class="minimap-legend">
                             <h6 class="legend-title mb-3">
                                 <i class="fas fa-map-signs"></i>
                                 Keterangan Peta
@@ -745,7 +745,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- Additional Info --}}
                         <div class="row mt-4">
