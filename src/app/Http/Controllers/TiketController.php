@@ -50,7 +50,7 @@ class TiketController extends Controller
         tiketMasuk::create($validated);
 
         return redirect()->route('admin.tiketmasuks.index')
-            ->with('success', 'Tourists add successfully.');
+            ->with('success', 'Wisatawan berhasil ditambahkan.');
     }
 
     /**

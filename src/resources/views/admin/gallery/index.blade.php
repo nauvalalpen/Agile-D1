@@ -60,9 +60,9 @@
                                     <td>{{ $gallery->created_at->format('d-m-Y') }}</td>
                                     <td>
                                         @if ($gallery->deleted_at)
-                                            <span class="badge bg-danger">Deleted</span>
+                                            <span class="badge bg-danger">Dihapus</span>
                                         @else
-                                            <span class="badge bg-success">Active</span>
+                                            <span class="badge bg-success">Aktif</span>
                                         @endif
                                     </td>
                                     <td>
@@ -472,9 +472,9 @@
                         <p><span class="badge ${gallery.status === 'Active' ? 'bg-success' : 'bg-danger'}">${gallery.status}</span></p>
                         
                         ${gallery.deleted_at ? `
-                                        <h6 class="fw-bold">Tanggal Dihapus:</h6>
-                                        <p>${gallery.deleted_at}</p>
-                                        ` : ''}
+                                                    <h6 class="fw-bold">Tanggal Dihapus:</h6>
+                                                    <p>${gallery.deleted_at}</p>
+                                                    ` : ''}
                     </div>
                     <div class="col-md-6">
                         <h6 class="fw-bold">Foto:</h6>

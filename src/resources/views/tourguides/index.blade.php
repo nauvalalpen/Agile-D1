@@ -7,7 +7,7 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Kelola Pemandu Wisata</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTourGuideModal">
-                <i class="fas fa-plus fa-sm"></i> Tambah Pemandu Wisata Baru
+                <i class="fas fa-plus fa-sm"></i> Tambah Pemandu Wisata
             </button>
         </div>
 
@@ -63,11 +63,11 @@
                                             <button type="button" class="btn btn-sm btn-warning me-2"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#editTourGuideModal{{ $tourguide->id }}">
-                                                <i class="fas fa-edit fa-sm"></i> Edit
+                                                <i class="fas fa-edit fa-sm"></i>
                                             </button>
                                             <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#deleteTourGuideModal{{ $tourguide->id }}">
-                                                <i class="fas fa-trash fa-sm"></i> Hapus
+                                                <i class="fas fa-trash fa-sm"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -252,8 +252,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-primary"
-                            onclick="document.getElementById('editTourGuideForm{{ $tourguide->id }}').submit()">Perbarui
-                            Pemandu Wisata</button>
+                            onclick="document.getElementById('editTourGuideForm{{ $tourguide->id }}').submit()">Simpan
+                            Perubahan</button>
                     </div>
                 </div>
             </div>

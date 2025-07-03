@@ -135,9 +135,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-primary"
-                        onclick="document.getElementById('createTouristsForm').submit()">Save</button>
+                        onclick="document.getElementById('createTouristsForm').submit()">Simpan</button>
                 </div>
             </div>
         </div>
@@ -203,9 +203,10 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-primary"
-                            onclick="document.getElementById('editTouristsForm{{ $tiket->id }}').submit()">Update</button>
+                            onclick="document.getElementById('editTouristsForm{{ $tiket->id }}').submit()">Simpan
+                            Perubahan</button>
                     </div>
                 </div>
             </div>
