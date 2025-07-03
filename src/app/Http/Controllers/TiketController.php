@@ -6,25 +6,78 @@ use App\Models\TiketMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class TiketController extends Controller
 {
     /**
      * Display a listing of the tourists.
      */
-    public function adminindex()
+    public function adminindex(Request $request)
     {
-        $tikets = TiketMasuk::all();
-        return view('admin.tiketmasuks.index', compact('tikets'));
+        $query = TiketMasuk::query();
+        
+        // Apply date filter
+        $filter = $request->get('filter', 'all');
+        
+        switch ($filter) {
+            case 'today':
+                $query->whereDate('created_at', Carbon::today());
+                break;
+            case 'week':
+                $query->whereBetween('created_at', [
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ]);
+                break;
+            case 'month':
+                $query->whereMonth('created_at', Carbon::now()->month)
+                      ->whereYear('created_at', Carbon::now()->year);
+                break;
+            case 'all':
+            default:
+                // No filter applied
+                break;
+        }
+        
+        $tikets = $query->orderBy('created_at', 'desc')->get();
+        
+        return view('admin.tiketmasuks.index', compact('tikets', 'filter'));
     }
 
     /**
      * Display a listing of all tourists for admin.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tikets = TiketMasuk::withTrashed()->get();
-        return view('admin.tiketmasuks.index', compact('tikets'));
+        $query = TiketMasuk::withTrashed();
+        
+        // Apply date filter
+        $filter = $request->get('filter', 'all');
+        
+        switch ($filter) {
+            case 'today':
+                $query->whereDate('created_at', Carbon::today());
+                break;
+            case 'week':
+                $query->whereBetween('created_at', [
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ]);
+                break;
+            case 'month':
+                $query->whereMonth('created_at', Carbon::now()->month)
+                      ->whereYear('created_at', Carbon::now()->year);
+                break;
+            case 'all':
+            default:
+                // No filter applied
+                break;
+        }
+        
+        $tikets = $query->orderBy('created_at', 'desc')->get();
+        
+        return view('admin.tiketmasuks.index', compact('tikets', 'filter'));
     }
 
     /**
@@ -90,5 +143,4 @@ class TiketController extends Controller
 
         return redirect()->back()->with('success', 'Status berhasil diperbarui.');
     }
-
 }

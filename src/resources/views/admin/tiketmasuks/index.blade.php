@@ -16,6 +16,58 @@
             </div>
         @endif
 
+        <!-- Filter Buttons -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Filter Data Wisatawan</h6>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="btn-group" role="group" aria-label="Filter buttons">
+                            <a href="{{ route('admin.tiketmasuks.index', ['filter' => 'all']) }}"
+                                class="btn {{ !isset($filter) || $filter == 'all' ? 'btn-primary' : 'btn-outline-primary' }}">
+                                <i class="fas fa-list"></i> Semua Data
+                            </a>
+                            <a href="{{ route('admin.tiketmasuks.index', ['filter' => 'today']) }}"
+                                class="btn {{ isset($filter) && $filter == 'today' ? 'btn-primary' : 'btn-outline-primary' }}">
+                                <i class="fas fa-calendar-day"></i> Hari Ini
+                            </a>
+                            <a href="{{ route('admin.tiketmasuks.index', ['filter' => 'week']) }}"
+                                class="btn {{ isset($filter) && $filter == 'week' ? 'btn-primary' : 'btn-outline-primary' }}">
+                                <i class="fas fa-calendar-week"></i> Minggu Ini
+                            </a>
+                            <a href="{{ route('admin.tiketmasuks.index', ['filter' => 'month']) }}"
+                                class="btn {{ isset($filter) && $filter == 'month' ? 'btn-primary' : 'btn-outline-primary' }}">
+                                <i class="fas fa-calendar-alt"></i> Bulan Ini
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display current filter info -->
+                <div class="mt-3">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle"></i>
+                        @if (!isset($filter) || $filter == 'all')
+                            Menampilkan semua data wisatawan
+                        @elseif($filter == 'today')
+                            Menampilkan data wisatawan hari ini ({{ \Carbon\Carbon::today()->format('d M Y') }})
+                        @elseif($filter == 'week')
+                            Menampilkan data wisatawan minggu ini
+                            ({{ \Carbon\Carbon::now()->startOfWeek()->format('d M') }} -
+                            {{ \Carbon\Carbon::now()->endOfWeek()->format('d M Y') }})
+                        @elseif($filter == 'month')
+                            Menampilkan data wisatawan bulan ini ({{ \Carbon\Carbon::now()->format('F Y') }})
+                        @endif
+                        - Total: <strong>{{ $tikets->count() }}</strong> data
+                    </small>
+                </div>
+            </div>
+        </div>
+
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Daftar Wisatawan</h6>
@@ -38,7 +90,6 @@
                         <tbody>
                             @forelse ($tikets as $tiket)
                                 <tr class="{{ $tiket->deleted_at ? 'table-danger' : '' }}">
-                                    {{-- <td>{{ $tiket->id }}</td> --}}
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $tiket->nama_ketua }}</td>
                                     <td>{{ $tiket->jumlah_rombongan }}</td>
@@ -72,7 +123,13 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center">Data wisatawan tidak ditemukan.</td>
+                                    <td colspan="8" class="text-center">
+                                        @if (isset($filter) && $filter != 'all')
+                                            Tidak ada data wisatawan untuk filter yang dipilih.
+                                        @else
+                                            Data wisatawan tidak ditemukan.
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -125,9 +182,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="alamat" class="form-label">Alamat</label>
-                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat"
-                                name="alamat" value="{{ old('alamat') }}" required>
+                            <label for="alamat" class="form-label">Alamat Lengkap</label>
+                            <input type="text" class="form-control @error('alamat') is-invalid @enderror"
+                                id="alamat" name="alamat" value="{{ old('alamat') }}" required>
                             @error('alamat')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -219,7 +276,26 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize DataTable if it exists
             if ($.fn.DataTable) {
-                $('#dataTable').DataTable();
+                $('#dataTable').DataTable({
+                    "order": [
+                        [5, "desc"]
+                    ], // Sort by Waktu Masuk column (index 5) in descending order
+                    "pageLength": 25,
+                    "language": {
+                        "search": "Cari:",
+                        "lengthMenu": "Tampilkan _MENU_ data per halaman",
+                        "zeroRecords": "Data tidak ditemukan",
+                        "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
+                        "infoEmpty": "Tidak ada data tersedia",
+                        "infoFiltered": "(difilter dari _MAX_ total data)",
+                        "paginate": {
+                            "first": "Pertama",
+                            "last": "Terakhir",
+                            "next": "Selanjutnya",
+                            "previous": "Sebelumnya"
+                        }
+                    }
+                });
             }
 
             // Show validation errors in modal if they exist
@@ -266,6 +342,77 @@
                     document.body.style.paddingRight = '';
                 });
             });
+
+            // Add smooth transition for filter buttons
+            const filterButtons = document.querySelectorAll('.btn-group a');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // Add loading state
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                    this.classList.add('disabled');
+
+                    // Allow the navigation to proceed
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.classList.remove('disabled');
+                    }, 1000);
+                });
+            });
         });
     </script>
+@endpush
+
+@push('styles')
+    <style>
+        .btn-group .btn {
+            transition: all 0.3s ease;
+        }
+
+        .btn-group .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-info {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 4px solid #007bff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(0, 123, 255, 0.05);
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 2px solid #dee2e6;
+            border-radius: 15px 15px 0 0 !important;
+        }
+    </style>
 @endpush
