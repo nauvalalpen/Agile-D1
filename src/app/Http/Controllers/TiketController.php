@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tiketMasuk;
+use App\Models\TiketMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +14,7 @@ class TiketController extends Controller
      */
     public function adminindex()
     {
-        $tikets = tiketMasuk::all();
+        $tikets = TiketMasuk::all();
         return view('admin.tiketmasuks.index', compact('tikets'));
     }
 
@@ -23,7 +23,7 @@ class TiketController extends Controller
      */
     public function index()
     {
-        $tikets = tiketMasuk::withTrashed()->get();
+        $tikets = TiketMasuk::withTrashed()->get();
         return view('admin.tiketmasuks.index', compact('tikets'));
     }
 
@@ -47,7 +47,7 @@ class TiketController extends Controller
             'alamat' => 'required|string|max:100',
         ]);
 
-        tiketMasuk::create($validated);
+        TiketMasuk::create($validated);
 
         return redirect()->route('admin.tiketmasuks.index')
             ->with('success', 'Wisatawan berhasil ditambahkan.');
@@ -56,7 +56,7 @@ class TiketController extends Controller
     /**
      * Show the form for editing the specified tourist.
      */
-    public function edit(tiketMasuk $tiket)
+    public function edit(TiketMasuk $tiket)
     {
         return view('admin.tiketmasuks.edit', compact('tiket'));
     }
@@ -64,7 +64,7 @@ class TiketController extends Controller
     /**
      * Update the specified tourist in storage.
      */
-    public function update(Request $request, tiketMasuk $tiket)
+    public function update(Request $request, TiketMasuk $tiket)
     {
         $validated = $request->validate([
             'nama_ketua' => 'nullable|string|max:100',
@@ -81,7 +81,7 @@ class TiketController extends Controller
 
     public function updateStatus($id)
     {
-        $tiket = tiketMasuk::findOrFail($id);
+        $tiket = TiketMasuk::findOrFail($id);
 
         // Update status dan waktu selesai
         $tiket->status = 'selesai';
