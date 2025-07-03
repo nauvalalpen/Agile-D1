@@ -8,291 +8,296 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-    :root {
-        --emerald-green: #10b981;
-        --light-green: #34d399;
-        --forest-green: #065f46;
-        --dark-forest: #064e3b;
-        --deep-green: #047857;
-        --pure-white: #ffffff;
-    }
+        :root {
+            --emerald-green: #10b981;
+            --light-green: #34d399;
+            --forest-green: #065f46;
+            --dark-forest: #064e3b;
+            --deep-green: #047857;
+            --pure-white: #ffffff;
+        }
 
-    body {
-        background-image: url('{{ asset('images/hero.jpg') }}');
-        background-size: cover;
-        background-position: center;
-        min-height: 100vh;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
+        body {
+            background-image: url('{{ asset('images/hero.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
 
-    .bg-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: -1;
-    }
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
 
-    .auth-card {
-        background-color: #ffffff;
-        border-radius: 20px;
-        padding: 3rem 2.5rem;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
-        max-width: 500px;
-        width: 100%;
-    }
-
-    .auth-card h4 {
-        font-weight: bold;
-        color: var(--dark-forest);
-    }
-
-    .brand-icon {
-        color: var(--emerald-green) !important;
-        font-size: 3rem;
-    }
-
-    .form-control,
-    .form-select {
-        border-radius: 25px;
-        padding: 0.8rem 1rem;
-        font-size: 1.05rem;
-        border: 2px solid #e9ecef;
-        transition: all 0.3s ease;
-    }
-
-    .form-control:focus,
-    .form-select:focus {
-        border-color: var(--emerald-green);
-        box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.25);
-    }
-
-    .form-control.is-invalid:focus {
-        border-color: #dc3545;
-        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
-    }
-
-    .input-group .form-control {
-        border-radius: 25px 0 0 25px;
-    }
-
-    .input-group .btn {
-        border-radius: 0 25px 25px 0;
-        border: 2px solid #e9ecef;
-        border-left: none;
-    }
-
-    .input-group .btn:hover {
-        background-color: var(--emerald-green);
-        border-color: var(--emerald-green);
-        color: white;
-    }
-
-    .btn-custom {
-        border-radius: 25px;
-        padding: 0.8rem;
-        font-size: 1.1rem;
-        background: linear-gradient(135deg, var(--emerald-green), var(--forest-green));
-        color: white;
-        border: none;
-        transition: all 0.3s ease;
-        font-weight: 600;
-    }
-
-    .btn-custom:hover {
-        background: linear-gradient(135deg, var(--forest-green), var(--emerald-green));
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        color: white;
-    }
-
-    .btn-custom:active {
-        transform: translateY(0);
-    }
-
-    .btn-custom:disabled {
-        opacity: 0.7;
-        transform: none;
-        cursor: not-allowed;
-    }
-
-    .social-icons img {
-        width: 45px;
-        height: 45px;
-        margin: 0 10px;
-        cursor: pointer;
-    }
-
-    .login-text {
-        font-size: 0.95rem;
-        text-align: center;
-        margin-top: 1.2rem;
-    }
-
-    .login-text a,
-    .remember-forgot a {
-        color: var(--emerald-green);
-        text-decoration: none;
-        transition: color 0.3s ease;
-        font-weight: 500;
-    }
-
-    .login-text a:hover,
-    .remember-forgot a:hover {
-        color: var(--forest-green);
-        text-decoration: underline;
-    }
-
-    .text-muted a {
-        color: var(--emerald-green) !important;
-    }
-
-    .text-muted a:hover {
-        color: var(--forest-green) !important;
-    }
-
-    hr {
-        opacity: 0.3;
-    }
-
-    .social-login-section {
-        margin: 2rem 0;
-    }
-
-    .divider-container {
-        display: flex;
-        align-items: center;
-        margin: 1.5rem 0;
-    }
-
-    .divider-line {
-        flex: 1;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
-    }
-
-    .divider-text {
-        padding: 0 1rem;
-        color: #666;
-        font-size: 0.875rem;
-        background: white;
-        white-space: nowrap;
-    }
-
-    .btn-outline-secondary:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    .social-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .google-btn {
-        background: linear-gradient(135deg, var(--emerald-green), var(--light-green));
-        color: var(--pure-white);
-        border: none;
-    }
-
-    .google-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        color: var(--pure-white);
-    }
-
-    .facebook-btn {
-        background: linear-gradient(135deg, var(--forest-green), var(--emerald-green));
-        color: var(--pure-white);
-        border: none;
-    }
-
-    .facebook-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(6, 95, 70, 0.3);
-        color: var(--pure-white);
-    }
-
-    .apple-btn {
-        background: linear-gradient(135deg, var(--dark-forest), var(--deep-green));
-        color: var(--pure-white);
-        border: none;
-    }
-
-    .apple-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(6, 78, 59, 0.3);
-        color: var(--pure-white);
-    }
-
-    .social-btn.loading {
-        pointer-events: none;
-        opacity: 0.7;
-    }
-
-    .social-btn.loading i {
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    .remember-forgot {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 1rem 0;
-        font-size: 0.9rem;
-    }
-
-    .form-check-input:checked {
-        background-color: var(--emerald-green);
-        border-color: var(--emerald-green);
-    }
-
-    .form-check-input:focus {
-        border-color: var(--emerald-green);
-        box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.25);
-    }
-
-    .spinner-border {
-        color: var(--emerald-green);
-    }
-
-    .btn-custom .spinner-border {
-        color: white;
-    }
-
-    @media (max-width: 576px) {
         .auth-card {
-            padding: 2rem 1.5rem;
-            margin: 1rem;
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+            max-width: 500px;
+            width: 100%;
         }
-        
-        .brand-icon {
-            font-size: 2.5rem;
-        }
-        
+
         .auth-card h4 {
-            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark-forest);
         }
-    }
-</style>
+
+        .brand-icon {
+            color: var(--emerald-green) !important;
+            font-size: 3rem;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 25px;
+            padding: 0.8rem 1rem;
+            font-size: 1.05rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--emerald-green);
+            box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.25);
+        }
+
+        .form-control.is-invalid:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+
+        .input-group .form-control {
+            border-radius: 25px 0 0 25px;
+        }
+
+        .input-group .btn {
+            border-radius: 0 25px 25px 0;
+            border: 2px solid #e9ecef;
+            border-left: none;
+        }
+
+        .input-group .btn:hover {
+            background-color: var(--emerald-green);
+            border-color: var(--emerald-green);
+            color: white;
+        }
+
+        .btn-custom {
+            border-radius: 25px;
+            padding: 0.8rem;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, var(--emerald-green), var(--forest-green));
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-custom:hover {
+            background: linear-gradient(135deg, var(--forest-green), var(--emerald-green));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            color: white;
+        }
+
+        .btn-custom:active {
+            transform: translateY(0);
+        }
+
+        .btn-custom:disabled {
+            opacity: 0.7;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        .social-icons img {
+            width: 45px;
+            height: 45px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .login-text {
+            font-size: 0.95rem;
+            text-align: center;
+            margin-top: 1.2rem;
+        }
+
+        .login-text a,
+        .remember-forgot a {
+            color: var(--emerald-green);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .login-text a:hover,
+        .remember-forgot a:hover {
+            color: var(--forest-green);
+            text-decoration: underline;
+        }
+
+        .text-muted a {
+            color: var(--emerald-green) !important;
+        }
+
+        .text-muted a:hover {
+            color: var(--forest-green) !important;
+        }
+
+        hr {
+            opacity: 0.3;
+        }
+
+        .social-login-section {
+            margin: 2rem 0;
+        }
+
+        .divider-container {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+        }
+
+        .divider-text {
+            padding: 0 1rem;
+            color: #666;
+            font-size: 0.875rem;
+            background: white;
+            white-space: nowrap;
+        }
+
+        .btn-outline-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .google-btn {
+            background: linear-gradient(135deg, var(--emerald-green), var(--light-green));
+            color: var(--pure-white);
+            border: none;
+        }
+
+        .google-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            color: var(--pure-white);
+        }
+
+        .facebook-btn {
+            background: linear-gradient(135deg, var(--forest-green), var(--emerald-green));
+            color: var(--pure-white);
+            border: none;
+        }
+
+        .facebook-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(6, 95, 70, 0.3);
+            color: var(--pure-white);
+        }
+
+        .apple-btn {
+            background: linear-gradient(135deg, var(--dark-forest), var(--deep-green));
+            color: var(--pure-white);
+            border: none;
+        }
+
+        .apple-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.3);
+            color: var(--pure-white);
+        }
+
+        .social-btn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .social-btn.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--emerald-green);
+            border-color: var(--emerald-green);
+        }
+
+        .form-check-input:focus {
+            border-color: var(--emerald-green);
+            box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.25);
+        }
+
+        .spinner-border {
+            color: var(--emerald-green);
+        }
+
+        .btn-custom .spinner-border {
+            color: white;
+        }
+
+        @media (max-width: 576px) {
+            .auth-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .brand-icon {
+                font-size: 2.5rem;
+            }
+
+            .auth-card h4 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 
 </head>
 
@@ -303,7 +308,7 @@
     <div class="auth-card text-center">
         <!-- Logo/Brand -->
         <div class="mb-4">
-            <i class="fas fa-eye text-primary" style="font-size: 3rem;"></i>
+            {{-- <img src="{{ asset('images/logoMitra.jpg') }}" alt="OneVision Logo" style="height: 3rem; width: auto;"> --}}
         </div>
 
         <h4>Selamat Datang Kembali!</h4>
@@ -392,7 +397,7 @@
 
         <!-- Register Link -->
         <div class="login-text">
-           Belum punya akun?<a href="{{ route('register') }}"> Daftar di sini</a>
+            Belum punya akun?<a href="{{ route('register') }}"> Daftar di sini</a>
         </div>
 
         <!-- Additional Info -->

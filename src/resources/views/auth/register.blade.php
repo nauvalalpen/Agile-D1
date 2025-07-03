@@ -7,7 +7,7 @@
     <title>{{ $title ?? 'Register' }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-   <style>
+    <style>
         :root {
             --emerald-green: #10b981;
             --light-green: #34d399;
@@ -246,8 +246,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .spinner-border {
@@ -264,20 +269,28 @@
             font-size: 0.8rem;
         }
 
-        .strength-weak { color: #dc3545; }
-        .strength-medium { color: #ffc107; }
-        .strength-strong { color: var(--emerald-green); }
+        .strength-weak {
+            color: #dc3545;
+        }
+
+        .strength-medium {
+            color: #ffc107;
+        }
+
+        .strength-strong {
+            color: var(--emerald-green);
+        }
 
         @media (max-width: 576px) {
             .auth-card {
                 padding: 2rem 1.5rem;
                 margin: 1rem;
             }
-            
+
             .brand-icon {
                 font-size: 2.5rem;
             }
-            
+
             .auth-card h4 {
                 font-size: 1.5rem;
             }
@@ -321,8 +334,8 @@
             </div>
 
             <div class="mb-3">
-                <input type="password" class="form-control" name="password_confirmation" placeholder="Konfirmasi Kata Sandi"
-                    required>
+                <input type="password" class="form-control" name="password_confirmation"
+                    placeholder="Konfirmasi Kata Sandi" required>
             </div>
 
             {{-- <div class="mb-3">

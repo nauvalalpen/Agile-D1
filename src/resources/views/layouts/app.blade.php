@@ -831,7 +831,9 @@
             <div class="container">
                 <!-- Brand -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <i class="fas fa-eye"></i>
+                    {{-- <i class="fas fa-eye"></i> --}}
+                    {{-- <img src="{{ asset('images/logoMitra.jpg') }}" alt="OneVision Logo"
+                        style="height: 3rem; width: auto;"> --}}
                     {{ $title ?? 'Air Terjun Lubuk Hitam' }}
                 </a>
 
