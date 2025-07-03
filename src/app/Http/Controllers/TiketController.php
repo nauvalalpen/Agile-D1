@@ -76,7 +76,7 @@ class TiketController extends Controller
         $tiket->update($validated);
 
         return redirect()->route('admin.tiketmasuks.index')
-            ->with('success', 'Tourists updated successfully.');
+            ->with('success', 'Wisatawan berhasil diperbarui.');
     }
 
     public function updateStatus($id)

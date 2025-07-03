@@ -77,7 +77,7 @@ class TourGuideController extends Controller
             'foto' => $fotoPath,
         ]);
     
-        return redirect()->route('tourguides.index')->with('success', 'Tour guide created successfully.');
+        return redirect()->route('tourguides.index')->with('success', 'Pemandu Wisata Berhasil Ditambahkan.');
     }
     
     /**
@@ -136,7 +136,7 @@ class TourGuideController extends Controller
             'foto' => $fotoPath,
         ]);
         
-        return redirect()->route('tourguides.index')->with('success', 'Data Tour Guide berhasil diupdate');
+        return redirect()->route('tourguides.index')->with('success', 'Pemandu Wisata berhasil diperbarui');
     }
 
     public function order(Request $request, $id)
