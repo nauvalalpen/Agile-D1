@@ -879,9 +879,11 @@
                                         @php
                                             $activeGuides = 0;
                                             try {
-                                                $activeGuides = \App\Models\OrderTourGuide::where(
-                                                    'status',
-                                                    'accepted',
+                                                $activeGuides = \App\Models\OrderTourGuide::whereDate(
+                                                    // 'status',
+                                                    // 'accepted',
+                                                    'created_at',
+                                                    today(),
                                                 )->count();
                                             } catch (Exception $e) {
                                                 // Handle error silently
