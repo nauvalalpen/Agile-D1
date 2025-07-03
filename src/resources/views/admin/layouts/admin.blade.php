@@ -1066,7 +1066,7 @@
                                                 $recentActivities[] = [
                                                     'icon' => 'fas fa-user',
                                                     'color' => 'bg-primary',
-                                                    'title' => 'New tourist registered',
+                                                    'title' => 'Pendaftaran Wisatawan baru',
                                                     'time' => $tourist->created_at->diffForHumans(),
                                                 ];
                                             }
@@ -1077,7 +1077,7 @@
                                                 $recentActivities[] = [
                                                     'icon' => 'fas fa-shopping-cart',
                                                     'color' => 'bg-success',
-                                                    'title' => 'New honey order received',
+                                                    'title' => 'Pesanan madu baru diterima',
                                                     'time' => $order->created_at->diffForHumans(),
                                                 ];
                                             }
