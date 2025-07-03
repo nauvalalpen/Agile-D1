@@ -673,18 +673,18 @@
         }
 
         /* .hero-image-overlay {
-                                                position: absolute;
-                                                top: 0;
-                                                left: 0;
-                                                right: 0;
-                                                bottom: 0;
-                                                background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
-                                                display: flex;
-                                                align-items: center;
-                                                justify-content: center;
-                                                opacity: 0;
-                                                transition: var(--transition-smooth);
-                                            } */
+                                                            position: absolute;
+                                                            top: 0;
+                                                            left: 0;
+                                                            right: 0;
+                                                            bottom: 0;
+                                                            background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            opacity: 0;
+                                                            transition: var(--transition-smooth);
+                                                        } */
 
         .hero-image-container:hover .hero-image-overlay {
             opacity: 1;
@@ -1154,9 +1154,9 @@
         <div class="hero-content-grid">
             <!-- Left Content -->
             <div class="hero-text-section">
-                <div class="hero-badge">
+                {{-- <div class="hero-badge">
                     <span>Surga Tersembunyi di Indonesia</span>
-                </div>
+                </div> --}}
 
                 <h1 class="hero-title-modern">
                     Keindahan<br>
@@ -1179,7 +1179,7 @@
                     </a>
                 </div>
 
-                <div class="hero-stats">
+                {{-- <div class="hero-stats">
                     <div class="hero-stat-item">
                         <span class="hero-stat-number" data-count="{{ $totalTourGuides }}">0</span>
                         <span class="hero-stat-label">Tour Guides</span>
@@ -1196,7 +1196,7 @@
                         <span class="hero-stat-number" data-count="{{ $totalNews }}">0</span>
                         <span class="hero-stat-label">Berita</span>
                     </div>
-                </div>
+                </div> --}}
             </div>
 
             <!-- Right Content -->
@@ -1211,7 +1211,7 @@
 
         <!-- Scroll Indicator -->
         <div class="hero-scroll-indicator" id="scroll-indicator">
-            <div class="scroll-mouse"></div>
+            {{-- <div class="scroll-mouse"></div> --}}
         </div>
     </section>
 
