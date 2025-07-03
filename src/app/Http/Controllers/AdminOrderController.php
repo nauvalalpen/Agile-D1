@@ -86,6 +86,6 @@ class AdminOrderController extends Controller
             ->where('id', $id)
             ->update($updateData);
             
-        return redirect()->route('admin.orders.index')->with('success', 'Order has been ' . $request->status);
+        return redirect()->route('admin.orders.index')->with('success', 'Pesanan Kamu sudah ' . $request->status);
     }
-}
+}   
