@@ -9,10 +9,10 @@
     <!-- 1. HERO SECTION -->
     <section class="hero-section">
         <div class="hero-content">
-            <div class="hero-title">TOUR<br>GUIDES</div>
-            <div class="hero-desc">Discover amazing destinations with our professional and experienced tour guides who will
-                make your journey unforgettable.</div>
-            <a href="#tourguides-grid" class="hero-btn">Explore Guides</a>
+            <div class="hero-title">PEMANDU<br>WISATA</div>
+            <div class="hero-desc"> Jelajahi destinasi menakjubkan bersama pemandu wisata profesional dan berpengalaman yang
+                akan membuat perjalanan Anda tak terlupakan.</div>
+            <a href="#tourguides-grid" class="hero-btn">Lihat Pemandu</a>
         </div>
     </section>
 
@@ -22,34 +22,19 @@
         <!-- 2. MAIN TOUR GUIDES SECTION -->
         <div id="tourguides-grid" class="tourguides-container">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="section-heading">Meet Our Expert Tour Guides</h2>
-                <p class="section-subheading">Passionate locals ready to share their knowledge and create amazing
-                    experiences for you</p>
+                <h2 class="section-heading">Temui Pemandu Wisata Terbaik Kami</h2>
+                <p class="section-subheading">Pemandu lokal yang antusias dan siap berbagi pengetahuan serta menciptakan
+                    pengalaman tak terlupakan untuk Anda</p>
             </div>
 
             <!-- Filter and Search Section -->
             <div class="filter-search-section mb-5" data-aos="fade-up" data-aos-delay="200">
                 <div class="row align-items-center g-3">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="search-box">
                             <i class="fas fa-search"></i>
-                            <input type="text" id="searchGuides" placeholder="Search guides by name or location...">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="filter-buttons">
-                            <button class="filter-btn active" data-filter="all">
-                                <i class="fas fa-globe"></i>
-                                All Guides
-                            </button>
-                            <button class="filter-btn" data-filter="premium">
-                                <i class="fas fa-crown"></i>
-                                Premium
-                            </button>
-                            <button class="filter-btn" data-filter="available">
-                                <i class="fas fa-check-circle"></i>
-                                Available
-                            </button>
+                            <input type="text" id="searchGuides"
+                                placeholder="Cari pemandu berdasarkan nama atau lokasi... ">
                         </div>
                     </div>
                 </div>
@@ -82,13 +67,9 @@
                                     </div>
                                 @endif
                                 <div class="guide-overlay">
-                                    <div class="guide-rating">
-                                        <i class="fas fa-star"></i>
-                                        <span>4.8</span>
-                                    </div>
                                     <div class="guide-status online">
                                         <i class="fas fa-circle"></i>
-                                        <span>Online</span>
+                                        <span>Tersedia</span>
                                     </div>
                                 </div>
                             </div>
@@ -120,41 +101,25 @@
                                 <p>{{ Str::limit($tourguide->deskripsi, 100) }}</p>
                             </div>
 
-                            <!-- Skills/Specialties -->
-                            <div class="guide-skills">
-                                <span class="skill-tag">Nature Tours</span>
-                                <span class="skill-tag">Photography</span>
-                                <span class="skill-tag">History</span>
-                            </div>
                         </div>
 
                         <!-- Card Footer -->
                         <div class="guide-card-footer">
-                            <div class="guide-stats">
-                                <div class="stat">
-                                    <i class="fas fa-users"></i>
-                                    <span>127 Tours</span>
-                                </div>
-                                <div class="stat">
-                                    <i class="fas fa-language"></i>
-                                    <span>3 Languages</span>
-                                </div>
-                            </div>
-
                             <div class="guide-actions">
-                                <button class="btn-action btn-secondary" onclick="viewGuideProfile({{ $tourguide->id }})">
-                                    <i class="fas fa-eye"></i>
-                                    View Profile
+                                <button class="btn-action" id="btn-view-profile"
+                                    onclick="viewGuideProfile({{ $tourguide->id }})">
+                                    Selengkapnya
                                 </button>
                                 @auth
-                                    <a href="{{ route('tourguides.order', $tourguide->id) }}" class="btn-action btn-primary">
+                                    <a href="{{ route('tourguides.order', $tourguide->id) }}" class="btn-action"
+                                        id="btn-book-now">
                                         <i class="fas fa-calendar-check"></i>
-                                        Book Now
+                                        Pesan Sekarang
                                     </a>
                                 @else
-                                    <a href="{{ route('login') }}" class="btn-action btn-primary">
+                                    <a href="{{ route('login') }}" class="btn-action" id="btn-book-now">
                                         <i class="fas fa-sign-in-alt"></i>
-                                        Login to Book
+                                        Silakan Masuk untuk Memesan
                                     </a>
                                 @endauth
                             </div>
@@ -165,11 +130,11 @@
                         <div class="empty-icon">
                             <i class="fas fa-user-friends"></i>
                         </div>
-                        <h3>No Tour Guides Available</h3>
-                        <p>We're currently updating our guide roster. Please check back soon!</p>
+                        <h3>Belum Ada Pemandu Wisata Tersedia</h3>
+                        <p>Saat ini kami sedang memperbarui daftar pemandu. Silakan kembali lagi nanti!</p>
                         <a href="{{ url('/') }}" class="btn-action btn-primary">
                             <i class="fas fa-home"></i>
-                            Back to Home
+                            Kembali ke Beranda
                         </a>
                     </div>
                 @endforelse
@@ -186,50 +151,53 @@
         <!-- 3. FEATURES SECTION -->
         <div class="features-section my-5 py-5" data-aos="fade-up">
             <div class="text-center mb-5">
-                <h2 class="section-heading">Why Choose Our Guides?</h2>
-                <p class="section-subheading">Professional service with local expertise</p>
+                <h2 class="section-heading">Mengapa Memilih Pemandu Kami?</h2>
+                <p class="section-subheading">Layanan profesional dengan keahlian lokal</p>
             </div>
             <div class="row g-4">
                 <div class="col-lg-4" data-aos="fade-right" data-aos-delay="200">
                     <div class="feature-card">
-                        <div class="feature-icon">
+                        <div class="feature-icon" id="feature-icon">
                             <i class="fas fa-shield-alt"></i>
                         </div>
-                        <h3>Verified Guides</h3>
-                        <p>All our guides are professionally verified and certified with extensive local knowledge.</p>
+                        <h3>Pemandu Berpengalaman</h3>
+                        <p>Semua pemandu kami telah diverifikasi secara profesional dan memiliki pengetahuan lokal yang
+                            mendalam terkait lokasi.</p>
                     </div>
                 </div>
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
                     <div class="feature-card">
-                        <div class="feature-icon">
+                        <div class="feature-icon" id="feature-icon">
                             <i class="fas fa-clock"></i>
                         </div>
-                        <h3>24/7 Support</h3>
-                        <p>Round-the-clock customer support to ensure your tour experience is seamless.</p>
+                        <h3>Dukungan Penuh</h3>
+                        <p>Layanan pelanggan tersedia selama jam operasional untuk memastikan pengalaman tur Anda berjalan
+                            lancar.</p>
                     </div>
                 </div>
                 <div class="col-lg-4" data-aos="fade-left" data-aos-delay="600">
                     <div class="feature-card">
-                        <div class="feature-icon">
+                        <div class="feature-icon" id="feature-icon">
                             <i class="fas fa-money-bill-wave"></i>
                         </div>
-                        <h3>Best Prices</h3>
-                        <p>Competitive pricing with no hidden fees. Get the best value for your money.</p>
+                        <h3>Harga Terbaik</h3>
+                        <p>Harga bersaing tanpa biaya tersembunyi. Dapatkan nilai terbaik untuk setiap perjalanan Anda.</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- 4. CTA SECTION -->
-        <div class="cta-section my-5 py-5" data-aos="fade-up">
+        <div class="cta-section my-5 py-5" data-aos="fade-up" id="cta-section">
             <div class="cta-content text-center">
-                <h2 class="cta-title">Ready for Your Next Adventure?</h2>
+                <h2 class="cta-title">Siap untuk Petualangan Selanjutnya?</h2>
                 <p class="cta-description">
-                    Join thousands of satisfied travelers who have discovered amazing places with our guides.
+                    Bergabunglah bersama ribuan wisatawan puas yang telah menikmati air terjun menakjubkan bersama pemandu
+                    kami.
                 </p>
                 <a href="#tourguides-grid" class="btn-cta">
                     <i class="fas fa-rocket"></i>
-                    Start Exploring
+                    Mulai Jelajah
                 </a>
             </div>
         </div>
@@ -241,13 +209,13 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Guide Profile</h5>
+                    <h5 class="modal-title">Profil Pemandu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body" id="guideProfileContent">
                     <div class="loading-spinner">
                         <div class="spinner"></div>
-                        <p>Loading guide profile...</p>
+                        <p>Memuat profil pemandu...</p>
                     </div>
                 </div>
             </div>
@@ -309,52 +277,6 @@
                 });
             }
 
-            // Filter functionality
-            const filterButtons = document.querySelectorAll('.filter-btn');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const filter = this.dataset.filter;
-                    let visibleCount = 0;
-
-                    guideCards.forEach(card => {
-                        let isVisible = true;
-
-                        switch (filter) {
-                            case 'premium':
-                                const price = card.dataset.price || '';
-                                isVisible = price.includes('1000k') || price.includes(
-                                    '800k');
-                                break;
-                            case 'available':
-                                isVisible = true;
-                                break;
-                            case 'all':
-                            default:
-                                isVisible = true;
-                                break;
-                        }
-
-                        if (isVisible) {
-                            card.style.display = 'block';
-                            card.style.animation = 'fadeInUp 0.6s ease-out';
-                            visibleCount++;
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-
-                    if (searchInput) {
-                        searchInput.value = '';
-                    }
-
-                    toggleEmptyState(visibleCount === 0);
-                });
-            });
-
             // Smooth scrolling for hero button
             const heroBtn = document.querySelector('.hero-btn');
             if (heroBtn) {
@@ -372,20 +294,20 @@
 
             // Empty state toggle function
             function toggleEmptyState(show) {
-                let emptyState = document.querySelector('.empty-state');
+                let emptyState = document.querySelector('.empty-state.search-empty');
 
                 if (show && !emptyState) {
                     emptyState = document.createElement('div');
-                    emptyState.className = 'empty-state';
+                    emptyState.className = 'empty-state search-empty';
                     emptyState.innerHTML = `
                         <div class="empty-icon">
                             <i class="fas fa-search"></i>
                         </div>
-                        <h3>No Guides Found</h3>
-                        <p>Try adjusting your search or filter criteria.</p>
-                        <button class="btn-dark-custom" onclick="clearFilters()">
+                        <h3>Tidak Ada Pemandu Ditemukan</h3>
+                        <p>Coba sesuaikan kriteria pencarian Anda.</p>
+                        <button class="btn-dark-custom" onclick="clearSearch()">
                             <i class="fas fa-refresh"></i>
-                            Clear Filters
+                            Hapus Pencarian
                         </button>
                     `;
                     guidesGrid.appendChild(emptyState);
@@ -394,87 +316,170 @@
                 }
             }
 
-            // Clear filters function
-            window.clearFilters = function() {
+            // Clear search function
+            window.clearSearch = function() {
+                const searchInput = document.getElementById('searchGuides');
                 if (searchInput) {
                     searchInput.value = '';
+                    const guideCards = document.querySelectorAll('.guide-card');
+                    guideCards.forEach(card => {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeInUp 0.6s ease-out';
+                    });
+                    toggleEmptyState(false);
                 }
-
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
-
-                guideCards.forEach(card => {
-                    card.style.display = 'block';
-                    card.style.animation = 'fadeInUp 0.6s ease-out';
-                });
-
-                toggleEmptyState(false);
             };
 
             // Guide profile modal functionality
             window.viewGuideProfile = function(guideId) {
-                const modal = new bootstrap.Modal(document.getElementById('guideProfileModal'));
-                const modalContent = document.getElementById('guideProfileContent');
+                try {
+                    const modal = new bootstrap.Modal(document.getElementById('guideProfileModal'));
+                    const modalContent = document.getElementById('guideProfileContent');
 
-                modalContent.innerHTML = `
-                    <div class="loading-spinner">
+                    modalContent.innerHTML = `
                         <div class="spinner"></div>
-                        <p>Loading guide profile...</p>
-                    </div>
-                `;
+                    `;
 
-                modal.show();
+                    modal.show();
 
-                // Find guide data
-                const guide = tourguideData.find(g => g.id === guideId);
+                    // Find guide data
+                    const guide = tourguideData.find(g => g.id === guideId);
 
-                setTimeout(() => {
-                    if (guide) {
-                        modalContent.innerHTML = `
-                            <div class="guide-profile-content">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="profile-image-wrapper">
-                                            ${guide.foto ? 
-                                                `<img src="${guide.foto}" alt="${guide.nama}" class="img-fluid rounded">` :
-                                                `<div class="bg-light d-flex align-items-center justify-content-center rounded" style="height: 200px;">
-                                                                            <i class="fas fa-user fa-3x text-muted"></i>
-                                                                        </div>`
-                                            }
+                    setTimeout(() => {
+                        if (guide) {
+                            modalContent.innerHTML = `
+                                <div class="guide-profile-content">
+                                    <!-- Profile Header -->
+                                    <div class="profile-header">
+                                        <div class="profile-background-pattern"></div>
+                                        <div class="container">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-4 text-center">
+                                                    <div class="profile-image-container">
+                                                        ${guide.foto ? 
+                                                            `<img src="${guide.foto}" alt="${guide.nama}" class="profile-image">
+                                                                             <div class="profile-verified-badge">
+                                                                                 <i class="fas fa-check"></i>
+                                                                             </div>` :
+                                                            `<div class="profile-image-placeholder">
+                                                                                 <i class="fas fa-user"></i>
+                                                                             </div>
+                                                                             <div class="profile-verified-badge">
+                                                                                 <i class="fas fa-check"></i>
+                                                                             </div>`
+                                                        }
+                                                        <div class="profile-status-badge">
+                                                            <i class="fas fa-circle"></i>
+                                                            <span>Tersedia</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="profile-info">
+                                                        <h1 class="profile-name">${guide.nama}</h1>
+                                                        <p class="about-text">${guide.deskripsi}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
-                                        <h3>${guide.nama}</h3>
-                                        <div class="profile-details">
-                                            <p><strong>Phone:</strong> ${guide.nohp}</p>
-                                            <p><strong>Location:</strong> ${guide.alamat}</p>
-                                            <p><strong>Price Range:</strong> ${guide.price_range}</p>
-                                            <p><strong>Experience:</strong> 5+ years</p>
-                                            <p><strong>Languages:</strong> English, Indonesian</p>
-                                            <p><strong>Rating:</strong> ⭐⭐⭐⭐⭐ (4.8/5)</p>
-                                        </div>
-                                        <div class="profile-description">
-                                            <h5>About</h5>
-                                            <p>${guide.deskripsi}</p>
+
+                                    <!-- Profile Body -->
+                                    <div class="profile-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <!-- Contact Information -->
+                                                    <div class="info-card">
+                                                        <div class="info-card-header">
+                                                            <h3 class="info-card-title">
+                                                                <i class="fas fa-address-card"></i>
+                                                                Tentang Pemandu
+                                                            </h3>
+                                                        </div>
+                                                        <div class="info-card-body">
+                                                                <div class="contact-item">
+                                                                    <div class="contact-icon">
+                                                                        <i class="fas fa-phone"></i>
+                                                                    </div>
+                                                                    <div class="contact-details">
+                                                                        <span class="contact-label">Telepon</span>
+                                                                        <span class="contact-value">${guide.nohp}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="contact-item">
+                                                                    <div class="contact-icon">
+                                                                        <i class="fas fa-map-marker-alt"></i>
+                                                                    </div>
+                                                                    <div class="contact-details">
+                                                                        <span class="contact-label">Lokasi</span>
+                                                                        <span class="contact-value">${guide.alamat}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="contact-item">
+                                                                    <div class="contact-icon">
+                                                                        <i class="fas fa-tag"></i>
+                                                                    </div>
+                                                                    <div class="contact-details">
+                                                                        <span class="contact-label">Harga</span>
+                                                                        <span class="contact-value">${guide.price_range} <sub>/sesi</sub></span>
+                                                                    </div>  
+                                                                </div>
+                                                                <button class="price-book-btn" onclick="bookGuide(${guide.id})">
+                                                                    <i class="fas fa-calendar-check"></i>
+                                                                    Pesan Sekarang
+                                                                </button>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        `;
-                    }
-                }, 1000);
+                            `;
+                        } else {
+                            modalContent.innerHTML = `
+                                <div class="error-state">
+                                    <div class="error-icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <h3>Data Tidak Ditemukan</h3>
+                                    <p>Maaf, informasi pemandu tidak dapat dimuat saat ini.</p>
+                                    <button class="btn-retry" onclick="viewGuideProfile(${guideId})">
+                                        <i class="fas fa-refresh"></i>
+                                        Coba Lagi
+                                    </button>
+                                </div>
+                            `;
+                        }
+                    }, 1000);
+
+                } catch (error) {
+                    console.error('Error opening guide profile:', error);
+                }
             };
 
-            // Add hover effects to guide cards
-            document.querySelectorAll('.guide-card').forEach(function(card) {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                });
+            window.bookGuide = function(guideId) {
+                // Check if user is authenticated
+                @auth
+                window.location.href = `${window.location.origin}/tourguides/${guideId}/order`;
+            @else
+                alert('Silakan login terlebih dahulu untuk melakukan pemesanan');
+                window.location.href = `${window.location.origin}/login`;
+            @endauth
+        };
 
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
+        // Add hover effects to guide cards
+        document.querySelectorAll('.guide-card').forEach(function(card) {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
             });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
         });
     </script>
 
@@ -488,12 +493,12 @@
             background-color: #f8f9fa;
         }
 
-        /* === 1. HERO SECTION (MATCHING GALERI.BLADE.PHP) === */
+        /* === 1. HERO SECTION === */
         .hero-section {
             position: relative;
             background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
                 url('/images/hero.jpg') no-repeat center center/cover;
-            height: 80vh;
+            height: 95vh;
             color: white;
             display: flex;
             align-items: center;
@@ -570,9 +575,9 @@
             margin: 0 auto;
         }
 
-        /* === 2. MAIN TOUR GUIDES SECTION (MATCHING GALERI LAYOUT) === */
+        /* === 2. MAIN TOUR GUIDES SECTION === */
         .tourguides-container {
-            margin-top: -80px;
+            margin-top: 0px;
             position: relative;
             z-index: 2;
             background: #f8f9fa;
@@ -619,37 +624,6 @@
             border-color: #212529;
             box-shadow: 0 0 0 3px rgba(33, 37, 41, 0.1);
             background: white;
-        }
-
-        .filter-buttons {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-        }
-
-        .filter-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border: 2px solid #e9ecef;
-            background: white;
-            color: #6c757d;
-            border-radius: 50px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: #212529;
-            color: white;
-            border-color: #212529;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         /* === GUIDES GRID === */
@@ -830,47 +804,9 @@
             font-size: 0.95rem;
         }
 
-        .guide-skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .skill-tag {
-            background: #f8f9fa;
-            color: #212529;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            border: 1px solid #e9ec
-        }
-
         .guide-card-footer {
             padding: 0 1.5rem 1.5rem;
             margin-top: auto;
-        }
-
-        .guide-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-
-        .stat {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            color: #6c757d;
-        }
-
-        .stat i {
-            color: #212529;
         }
 
         .guide-actions {
@@ -920,7 +856,7 @@
             border-color: #212529;
         }
 
-        /* === UNIFIED BUTTON STYLES (MATCHING GALERI) === */
+        /* === UNIFIED BUTTON STYLES === */
         .btn-dark-custom {
             padding: 12px 35px;
             background-color: #212529;
@@ -1032,7 +968,7 @@
 
         /* === 4. CTA SECTION === */
         .cta-section {
-            background: linear-gradient(135deg, #212529, #495057);
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
             border-radius: 20px;
             color: white;
         }
@@ -1093,16 +1029,16 @@
 
         .modal-header {
             border-bottom: 1px solid #e9ecef;
-            padding: 1.5rem;
+            padding: 1.0rem;
         }
 
         .modal-body {
-            padding: 1.5rem;
+            padding: 0;
         }
 
         .loading-spinner {
             text-align: center;
-            padding: 3rem;
+            padding: 2rem;
         }
 
         .spinner {
@@ -1112,7 +1048,7 @@
             border-top: 4px solid #212529;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+            margin: 1rem auto 2rem;
         }
 
         @keyframes spin {
@@ -1125,15 +1061,280 @@
             }
         }
 
-        .guide-profile-content .profile-details p {
-            margin-bottom: 0.5rem;
-            color: #6c757d;
+        /* === MODAL PROFILE STYLES === */
+        .guide-profile-content {
+            color: white;
+            border-radius: 0px;
+            overflow: hidden;
+            padding: 0rem;
         }
 
-        .guide-profile-content .profile-description h5 {
-            color: #212529;
-            margin-bottom: 1rem;
-            margin-top: 1.5rem;
+        .profile-header {
+            background: linear-gradient(135deg, #084d08 0%, #386246 100%);
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        .profile-background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="50" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="30" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .profile-image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-image,
+        .profile-image-placeholder {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .profile-verified-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #28a745;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            border: 2px solid white;
+        }
+
+        .profile-status-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #28a745;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .profile-status-badge i {
+            animation: pulse-dot 2s infinite;
+        }
+
+        .profile-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .profile-title {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-body {
+            padding: 2rem 0;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 0rem !important;
+            margin: 1rem;
+            margin-bottom: 0rem !important;
+            color: black;
+        }
+
+        .info-card-header {
+            padding: 0rem 1.5rem 0;
+        }
+
+        .info-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: black;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0;
+        }
+
+        .info-card-body {
+            padding: 1rem;
+            margin-top: 0;
+        }
+
+        .about-text {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 0rem;
+        }
+
+        .price-book-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0rem !important;
+            margin-top: 1rem;
+        }
+
+        .price-book-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            color: #084d08;
+        }
+
+        .contact-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-size: 1.2rem;
+        }
+
+        .contact-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-label {
+            font-size: 0.875rem;
+            color: black(255, 255, 255, 0.7);
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-value {
+            font-weight: 600;
+            color: black;
+        }
+
+        .contact-action {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-action:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .profile-footer {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .action-buttons-container {
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-contact,
+        .btn-book-modal {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-contact {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-contact:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-book-modal {
+            background: rgba(255, 255, 255, 0.9);
+            color: #228B22;
+        }
+
+        .btn-book-modal:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         /* === ALERT STYLES === */
@@ -1152,6 +1353,73 @@
             background: linear-gradient(135deg, #d1fae5, #a7f3d0);
             color: #065f46;
             border-left: 4px solid #10b981;
+        }
+
+        /* === ERROR STATES === */
+        .error-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #dc3545;
+        }
+
+        .error-state .error-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(220, 53, 69, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: #dc3545;
+            font-size: 2rem;
+        }
+
+        .error-state h3 {
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+
+        .error-state p {
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+
+        .btn-retry {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-retry:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        /* === CUSTOM STYLES === */
+        #btn-book-now {
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+
+        #btn-view-profile {
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
+        }
+
+        #feature-icon {
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
         }
 
         /* === RESPONSIVE DESIGN === */
@@ -1179,19 +1447,6 @@
 
             .filter-search-section {
                 padding: 1.5rem;
-            }
-
-            .filter-buttons {
-                justify-content: center;
-                margin-top: 1rem;
-            }
-
-            .filter-btn {
-                flex: 1;
-                justify-content: center;
-                min-width: 100px;
-                font-size: 0.8rem;
-                padding: 0.6rem 1rem;
             }
 
             .guides-grid {
@@ -1239,6 +1494,31 @@
             .section-subheading {
                 font-size: 1rem;
             }
+
+            /* Modal responsive */
+            .profile-name {
+                font-size: 2rem;
+            }
+
+            .profile-quick-stats {
+                gap: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-contact,
+            .btn-whatsapp,
+            .btn-book-modal {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .profile-badges-container {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1280,15 +1560,6 @@
                 padding: 0.875rem 0.875rem 0.875rem 2.5rem;
             }
 
-            .filter-buttons {
-                gap: 0.25rem;
-            }
-
-            .filter-btn {
-                padding: 0.5rem 0.75rem;
-                font-size: 0.75rem;
-            }
-
             .section-heading {
                 font-size: 1.75rem;
             }
@@ -1319,6 +1590,45 @@
             .feature-card p {
                 font-size: 0.9rem;
             }
+
+            /* Modal mobile styles */
+            .modal-dialog {
+                margin: 0.5rem;
+            }
+
+            .profile-header {
+                padding: 2rem 0;
+            }
+
+            .profile-name {
+                font-size: 1.75rem;
+            }
+
+            .profile-image,
+            .profile-image-placeholder {
+                width: 120px;
+                height: 120px;
+            }
+
+            .profile-quick-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .specialties-grid {
+                justify-content: center;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+            }
+
+            .contact-details {
+                align-items: center;
+            }
         }
 
         /* === ANIMATION ENHANCEMENTS === */
@@ -1340,7 +1650,6 @@
 
         /* === ACCESSIBILITY IMPROVEMENTS === */
         .btn-action:focus,
-        .filter-btn:focus,
         .search-box input:focus,
         .btn-dark-custom:focus {
             outline: 2px solid #212529;
@@ -1354,290 +1663,6 @@
 
         .guide-card {
             will-change: transform, box-shadow;
-        }
-
-        /* === PRINT STYLES === */
-        @media print {
-
-            .hero-section,
-            .cta-section,
-            .filter-search-section {
-                display: none;
-            }
-
-            .guide-card {
-                break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid #ccc;
-            }
-        }
-
-        /* === SMOOTH TRANSITIONS === */
-        * {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-        }
-
-        /* === LOADING STATES === */
-        .btn-action.loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .btn-action.loading::after {
-            content: '';
-            width: 16px;
-            height: 16px;
-            border: 2px solid transparent;
-            border-top: 2px solid currentColor;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-left: 0.5rem;
-        }
-
-        /* === ADDITIONAL IMPROVEMENTS === */
-        .guide-card-body {
-            min-height: 200px;
-        }
-
-        .guide-name {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .guide-description p {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* === HOVER EFFECTS === */
-        .guide-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(33, 37, 41, 0.05), rgba(73, 80, 87, 0.05));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 15px;
-            z-index: 1;
-        }
-
-        .guide-card:hover::before {
-            opacity: 1;
-        }
-
-        .guide-card>* {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* === SKELETON LOADING === */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }
-
-        @keyframes loading {
-            0% {
-                background-position: 200% 0;
-            }
-
-            100% {
-                background-position: -200% 0;
-            }
-        }
-
-        .skeleton-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .skeleton-header {
-            height: 250px;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-        }
-
-        .skeleton-title {
-            height: 20px;
-            border-radius: 4px;
-            margin-bottom: 0.5rem;
-        }
-
-        .skeleton-text {
-            height: 16px;
-            border-radius: 4px;
-            margin-bottom: 0.5rem;
-        }
-
-        .skeleton-text.short {
-            width: 60%;
-        }
-
-        /* === NOTIFICATION STYLES === */
-        .notification {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            z-index: 1050;
-            min-width: 300px;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: slideInRight 0.3s ease-out;
-        }
-
-        .notification-success {
-            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-            color: #065f46;
-            border-left: 4px solid #10b981;
-        }
-
-        .notification-warning {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            color: #92400e;
-            border-left: 4px solid #f59e0b;
-        }
-
-        .notification-info {
-            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-            color: #1e40af;
-            border-left: 4px solid #3b82f6;
-        }
-
-        .notification-content {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .notification-close {
-            background: none;
-            border: none;
-            color: inherit;
-            cursor: pointer;
-            padding: 0.25rem;
-            margin-left: auto;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-
-        .notification-close:hover {
-            opacity: 1;
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideOutRight {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-
-        /* === SKIP LINK === */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 6px;
-            background: #212529;
-            color: white;
-            padding: 8px;
-            text-decoration: none;
-            border-radius: 4px;
-            z-index: 1000;
-            transition: top 0.3s;
-        }
-
-        .skip-link:focus {
-            top: 6px;
-        }
-
-        /* === MOBILE OPTIMIZATIONS === */
-        @media (max-width: 480px) {
-            .hero-content {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-
-            .hero-title {
-                font-size: 2rem;
-                letter-spacing: 0.1rem;
-            }
-
-            .tourguides-container {
-                margin-top: -30px;
-                padding: 1.5rem 0.5rem;
-            }
-
-            .filter-search-section {
-                padding: 1rem;
-                margin: 0 -0.5rem;
-            }
-
-            .search-box input {
-                font-size: 16px;
-                /* Prevents zoom on iOS */
-            }
-
-            .guide-card {
-                margin: 0 0.5rem;
-            }
-
-            .features-section,
-            .cta-section {
-                margin: 0 -0.5rem;
-                border-radius: 15px;
-            }
-
-            .btn-action {
-                min-height: 44px;
-                /* Touch target size */
-            }
-
-            .filter-btn {
-                min-height: 44px;
-            }
-        }
-
-        /* === HIGH CONTRAST MODE === */
-        @media (prefers-contrast: high) {
-            .guide-card {
-                border: 2px solid #000;
-            }
-
-            .btn-action.btn-primary {
-                background: #000;
-                border: 2px solid #000;
-            }
-
-            .btn-action.btn-secondary {
-                border: 2px solid #000;
-            }
         }
 
         /* === REDUCED MOTION === */
@@ -1662,29 +1687,9 @@
 
         /* === FOCUS VISIBLE === */
         .guide-card:focus-visible,
-        .btn-action:focus-visible,
-        .filter-btn:focus-visible {
+        .btn-action:focus-visible {
             outline: 3px solid #4285f4;
             outline-offset: 2px;
-        }
-
-        /* === CUSTOM SCROLLBAR === */
-        .tourguides-container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .tourguides-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .tourguides-container::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 4px;
-        }
-
-        .tourguides-container::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8;
         }
 
         /* === FINAL TOUCHES === */
@@ -1694,54 +1699,6 @@
 
         .guide-skills .skill-tag:last-child {
             margin-right: 0;
-        }
-
-        .filter-buttons .filter-btn:last-child {
-            margin-right: 0;
-        }
-
-        /* === ERROR STATES === */
-        .error-state {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: #dc3545;
-        }
-
-        .error-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .error-state h3 {
-            color: #dc3545;
-            margin-bottom: 1rem;
-        }
-
-        .error-state p {
-            color: #6c757d;
-            margin-bottom: 2rem;
-        }
-
-        /* === SUCCESS STATES === */
-        .success-state {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: #28a745;
-        }
-
-        .success-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .success-state h3 {
-            color: #28a745;
-            margin-bottom: 1rem;
-        }
-
-        .success-state p {
-            color: #6c757d;
-            margin-bottom: 2rem;
         }
     </style>
 @endsection
@@ -1763,40 +1720,31 @@
                 });
             }
 
-            // Service Worker registration (if available)
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                    navigator.serviceWorker.register('/sw.js')
-                        .then(function(registration) {
-                            console.log('SW registered: ', registration);
-                        })
-                        .catch(function(registrationError) {
-                            console.log('SW registration failed: ', registrationError);
-                        });
-                });
-            }
-
             // Network status monitoring
             window.addEventListener('online', function() {
-                showNotification('Connection restored', 'success');
+                showNotification('Koneksi dipulihkan', 'success');
             });
 
             window.addEventListener('offline', function() {
-                showNotification('You are offline. Some features may not work.', 'warning');
+                showNotification('Anda sedang offline. Beberapa fitur mungkin tidak berfungsi.', 'warning');
             });
 
             // Show notification function
             function showNotification(message, type = 'info') {
                 const notification = document.createElement('div');
-                notification.className = `notification notification-${type}`;
+                notification.className = `alert alert-${type === 'success' ? 'success' : 'warning'} alert-modern`;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 1050;
+                    min-width: 300px;
+                    animation: slideInRight 0.3s ease-out;
+                `;
                 notification.innerHTML = `
-                    <div class="notification-content">
-                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-                        <span>${message}</span>
-                        <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+                    <span>${message}</span>
+                    <button type="button" class="btn-close ms-auto" onclick="this.parentElement.remove()"></button>
                 `;
 
                 document.body.appendChild(notification);
@@ -1810,43 +1758,38 @@
                 }, 5000);
             }
 
-            // Initialize tooltips and popovers if Bootstrap is available
+            // Initialize tooltips if Bootstrap is available
             if (typeof bootstrap !== 'undefined') {
-                // Initialize tooltips
                 const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
                 tooltipTriggerList.map(function(tooltipTriggerEl) {
                     return new bootstrap.Tooltip(tooltipTriggerEl);
                 });
-
-                // Initialize popovers
-                const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-                popoverTriggerList.map(function(popoverTriggerEl) {
-                    return new bootstrap.Popover(popoverTriggerEl);
-                });
             }
 
             // Lazy loading for images
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        if (img.dataset.src) {
-                            img.src = img.dataset.src;
-                            img.classList.remove('lazy');
-                            observer.unobserve(img);
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            if (img.dataset.src) {
+                                img.src = img.dataset.src;
+                                img.classList.remove('lazy');
+                                observer.unobserve(img);
+                            }
                         }
-                    }
+                    });
                 });
-            });
 
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                imageObserver.observe(img);
-            });
+                document.querySelectorAll('img[data-src]').forEach(img => {
+                    imageObserver.observe(img);
+                });
 
-            // Memory cleanup on page unload
-            window.addEventListener('beforeunload', function() {
-                if (imageObserver) imageObserver.disconnect();
-            });
+                // Memory cleanup on page unload
+                window.addEventListener('beforeunload', function() {
+                    if (imageObserver) imageObserver.disconnect();
+                });
+            }
 
             console.log('Tour Guides page initialized successfully');
         });
@@ -1894,5 +1837,360 @@
                 }).format(new Date(date));
             }
         };
+
+        // Additional CSS animations
+        const additionalStyles = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+
+            .modal-dialog-centered {
+                display: flex;
+                align-items: center;
+                min-height: calc(100% - 1rem);
+            }
+
+            .modal-lg {
+                max-width: 900px;
+            }
+
+            @media (max-width: 768px) {
+                .modal-lg {
+                    max-width: 95%;
+                    margin: 1rem auto;
+                }
+            }
+
+            /* Custom scrollbar for modal */
+            .modal-body::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .modal-body::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 3px;
+            }
+
+            .modal-body::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 3px;
+            }
+
+            .modal-body::-webkit-scrollbar-thumb:hover {
+                background: rgba(255, 255, 255, 0.5);
+            }
+
+            /* Loading state improvements */
+            .loading-spinner p {
+                color: #6c757d;
+                margin-top: 1rem;
+                font-weight: 500;
+            }
+
+            /* Enhanced button hover effects */
+            .btn-action,
+            .btn-contact,
+            .btn-whatsapp,
+            .btn-book-modal {
+                position: relative;
+                overflow: hidden;
+            }
+
+            .btn-action::before,
+            .btn-contact::before,
+            .btn-whatsapp::before,
+            .btn-book-modal::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.5s;
+            }
+
+            .btn-action:hover::before,
+            .btn-contact:hover::before,
+            .btn-whatsapp:hover::before,
+            .btn-book-modal:hover::before {
+                left: 100%;
+            }
+
+            /* Improved focus states */
+            .btn-action:focus-visible,
+            .btn-contact:focus-visible,
+            .btn-whatsapp:focus-visible,
+            .btn-book-modal:focus-visible {
+                outline: 2px solid #fff;
+                outline-offset: 2px;
+            }
+
+            /* Enhanced card animations */
+            .guide-card {
+                transform-origin: center bottom;
+            }
+
+            .guide-card:hover {
+                animation: cardHover 0.3s ease-out forwards;
+            }
+
+            @keyframes cardHover {
+                0% {
+                    transform: translateY(0) scale(1);
+                }
+                50% {
+                    transform: translateY(-3px) scale(1.02);
+                }
+                100% {
+                    transform: translateY(-5px) scale(1);
+                }
+            }
+
+            /* Skeleton loading animation */
+            .skeleton-loading {
+                background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                background-size: 200% 100%;
+                animation: loading 1.5s infinite;
+            }
+
+            @keyframes loading {
+                0% {
+                    background-position: 200% 0;
+                }
+                100% {
+                    background-position: -200% 0;
+                }
+            }
+
+            /* Improved modal backdrop */
+            .modal-backdrop {
+                background-color: rgba(0, 0, 0, 0.7);
+                backdrop-filter: blur(5px);
+            }
+
+            /* Enhanced error state */
+            .error-state {
+                animation: errorShake 0.5s ease-in-out;
+            }
+
+            @keyframes errorShake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+
+            /* Improved success state */
+            .success-state {
+                animation: successPulse 0.6s ease-in-out;
+            }
+
+            @keyframes successPulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+
+            /* Enhanced rating stars */
+            .rating-stars i {
+                transition: all 0.2s ease;
+            }
+
+            .rating-stars:hover i {
+                transform: scale(1.1);
+            }
+
+            /* Improved badge animations */
+            .profile-badge {
+                transition: all 0.3s ease;
+            }
+
+            .profile-badge:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Enhanced contact item hover */
+            .contact-item {
+                transition: all 0.3s ease;
+            }
+
+            .contact-item:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateX(5px);
+            }
+
+            /* Improved specialty tag hover */
+            .specialty-tag {
+                transition: all 0.3s ease;
+            }
+
+            .specialty-tag:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(1.05);
+            }
+
+            /* Enhanced price features */
+            .price-feature {
+                transition: all 0.3s ease;
+            }
+
+            .price-feature:hover {
+                background: rgba(255, 255, 255, 0.1);
+                padding: 0.5rem;
+                border-radius: 5px;
+                margin: 0.25rem 0;
+            }
+
+            /* Improved quick stats hover */
+            .quick-stat {
+                transition: all 0.3s ease;
+                cursor: default;
+            }
+
+            .quick-stat:hover {
+                transform: scale(1.1);
+            }
+
+            /* Enhanced profile image hover */
+            .profile-image-container {
+                transition: all 0.3s ease;
+            }
+
+            .profile-image-container:hover {
+                transform: scale(1.05);
+            }
+
+            .profile-image-container:hover .profile-image,
+            .profile-image-container:hover .profile-image-placeholder {
+                border-color: rgba(255, 255, 255, 0.8);
+            }
+        `;
+
+        // Inject additional styles
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = additionalStyles;
+        document.head.appendChild(styleSheet);
+
+        // Enhanced search functionality with debouncing
+        if (document.getElementById('searchGuides')) {
+            const debouncedSearch = utils.debounce(function(searchTerm) {
+                const guideCards = document.querySelectorAll('.guide-card');
+                let visibleCount = 0;
+
+                guideCards.forEach(card => {
+                    const name = card.dataset.name || '';
+                    const location = card.dataset.location || '';
+                    const isVisible = name.includes(searchTerm.toLowerCase()) ||
+                        location.includes(searchTerm.toLowerCase());
+
+                    if (isVisible) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeInUp 0.6s ease-out';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Update empty state
+                const emptyState = document.querySelector('.empty-state');
+                if (visibleCount === 0 && searchTerm.trim() !== '') {
+                    if (!emptyState) {
+                        const guidesGrid = document.getElementById('guidesGrid');
+                        const newEmptyState = document.createElement('div');
+                        newEmptyState.className = 'empty-state';
+                        newEmptyState.innerHTML = `
+                            <div class="empty-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h3>Tidak Ada Pemandu Ditemukan</h3>
+                            <p>Coba sesuaikan kata kunci pencarian Anda.</p>
+                            <button class="btn-dark-custom" onclick="clearSearch()">
+                                <i class="fas fa-refresh"></i>
+                                Hapus Pencarian
+                            </button>
+                        `;
+                        guidesGrid.appendChild(newEmptyState);
+                    }
+                } else if (emptyState && (visibleCount > 0 || searchTerm.trim() === '')) {
+                    emptyState.remove();
+                }
+            }, 300);
+
+            document.getElementById('searchGuides').addEventListener('input', function() {
+                debouncedSearch(this.value);
+            });
+        }
+
+        // Enhanced modal functionality
+        document.addEventListener('show.bs.modal', function(event) {
+            if (event.target.id === 'guideProfileModal') {
+                document.body.style.overflow = 'hidden';
+            }
+        });
+
+        document.addEventListener('hidden.bs.modal', function(event) {
+            if (event.target.id === 'guideProfileModal') {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Keyboard navigation for modal
+        document.addEventListener('keydown', function(event) {
+            const modal = document.querySelector('.modal.show');
+            if (modal && event.key === 'Escape') {
+                const modalInstance = bootstrap.Modal.getInstance(modal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            }
+        });
+
+        // Enhanced error handling
+        window.addEventListener('error', function(event) {
+            console.error('JavaScript error:', event.error);
+            // Could show user-friendly error message here
+        });
+
+        // Progressive enhancement for older browsers
+        if (!window.IntersectionObserver) {
+            // Fallback for browsers without IntersectionObserver
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+            });
+        }
+
+        // Service Worker registration for PWA capabilities
+        if ('serviceWorker' in navigator && 'PushManager' in window) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
     </script>
 @endpush

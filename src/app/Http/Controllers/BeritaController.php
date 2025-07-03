@@ -127,7 +127,7 @@ class BeritaController extends Controller
         $berita->restore();
 
         return redirect()->route('admin.berita.index')
-            ->with('success', 'Berita berhasil dikembalikan.');
+            ->with('success', 'Berita berhasil dipulihkan.');
     }
 
     /**

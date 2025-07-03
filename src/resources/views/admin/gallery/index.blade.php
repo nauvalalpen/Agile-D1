@@ -3,9 +3,9 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Manage Gallery</h1>
+            <h1 class="h3 mb-0 text-gray-800">Kelola Galeri</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createGalleryModal">
-                <i class="fas fa-plus"></i> Add New Gallery
+                <i class="fas fa-plus"></i> Tambah Galeri Baru
             </button>
         </div>
 
@@ -25,7 +25,7 @@
 
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                <h6 class="m-0 font-weight-bold text-primary">Gallery List</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Daftar Galeri</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -44,7 +44,8 @@
                         <tbody>
                             @forelse ($galleries as $index => $gallery)
                                 <tr class="{{ $gallery->deleted_at ? 'table-danger' : '' }}">
-                                    <td>{{ $index + 1 }}</td>
+                                    {{-- <td>{{ $index + 1 }}</td> --}}
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $gallery->judul }}</td>
                                     <td>{{ Str::limit($gallery->deskripsi, 50) }}</td>
                                     <td>
@@ -59,9 +60,9 @@
                                     <td>{{ $gallery->created_at->format('d-m-Y') }}</td>
                                     <td>
                                         @if ($gallery->deleted_at)
-                                            <span class="badge bg-danger">Deleted</span>
+                                            <span class="badge bg-danger">Dihapus</span>
                                         @else
-                                            <span class="badge bg-success">Active</span>
+                                            <span class="badge bg-success">Aktif</span>
                                         @endif
                                     </td>
                                     <td>
@@ -85,7 +86,7 @@
                                                 <i class="fas fa-eye"></i>
                                             </button>
                                             <!-- Edit Button -->
-                                            <button type="button" class="btn btn-sm btn-primary me-1"
+                                            <button type="button" class="btn btn-sm btn-warning me-1"
                                                 onclick="showEditModal({{ $gallery->id }})" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </button>
@@ -260,7 +261,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <form id="restoreForm" method="POST" style="display: inline;">
                         @csrf
-                        <button type="submit" class="btn btn-success">Restore</button>
+                        <button type="submit" class="btn btn-success">Pulihkan</button>
                     </form>
                 </div>
             </div>
@@ -471,9 +472,9 @@
                         <p><span class="badge ${gallery.status === 'Active' ? 'bg-success' : 'bg-danger'}">${gallery.status}</span></p>
                         
                         ${gallery.deleted_at ? `
-                            <h6 class="fw-bold">Tanggal Dihapus:</h6>
-                            <p>${gallery.deleted_at}</p>
-                            ` : ''}
+                                                        <h6 class="fw-bold">Tanggal Dihapus:</h6>
+                                                        <p>${gallery.deleted_at}</p>
+                                                        ` : ''}
                     </div>
                     <div class="col-md-6">
                         <h6 class="fw-bold">Foto:</h6>

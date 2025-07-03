@@ -9,9 +9,10 @@
     <!-- 1. HERO SECTION -->
     <section class="hero-section">
         <div class="hero-content">
-            <div class="hero-title">GALLERY<br>WISATA</div>
-            <div class="hero-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-            <a href="#gallery-grid" class="hero-btn">More info</a>
+            <div class="hero-title">GALERI<br>WISATA</div>
+            <div class="hero-desc"> Nikmati keindahan alam yang menakjubkan di salah satu destinasi wisata alam terbaik di
+                Sumatera Barat.</div>
+            <a href="#gallery-grid" class="hero-btn">Lihat Galeri</a>
         </div>
     </section>
 
@@ -21,8 +22,8 @@
         <!-- 2. MAIN GALLERY GRID (with Modals) -->
         <div id="gallery-grid" class="gallery-container">
             <div class="text-center mb-5" data-aos="fade-up">
-                <h2 class="section-heading">Explore Our Gallery</h2>
-                <p class="section-subheading">Click on any item to view more details and see the full picture.</p>
+                <h2 class="section-heading">Jelajahi Galeri Kami</h2>
+                <p class="section-subheading">Klik salah satu foto untuk melihat detail dan tampilan penuh.</p>
             </div>
 
             <div class="row">
@@ -46,9 +47,9 @@
                                 </h6>
                                 <p class="card-text">{{ Str::limit($gallery->deskripsi, 100) }}</p>
                                 <div class="mt-auto">
-                                    <button type="button" class="btn btn-dark-custom w-100"
+                                    <button type="button" class="btn btn-custom w-100" id="btn-view-details"
                                         onclick="showGalleryModal({{ $gallery->id }})">
-                                        View Details
+                                        Lihat Detail
                                     </button>
                                 </div>
                             </div>
@@ -56,8 +57,8 @@
                     </div>
                 @empty
                     <div class="col-12 text-center py-5" data-aos="fade-up">
-                        <h3>No gallery items available at the moment.</h3>
-                        <p class="text-muted">Please check back later.</p>
+                        <h3>Belum Ada Item Galeri Saat Ini</h3>
+                        <p class="text-muted">Silakan kembali lagi nanti.</p>
                     </div>
                 @endforelse
             </div>
@@ -68,13 +69,14 @@
             <div class="row align-items-center g-5">
                 <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
                     <div class="hero-tour-text">
-                        <h3>Experience Adventure with<br>Our Best Tour Guides</h3>
+                        <h3>Rasakan Petualangan Bersama<br>Pemandu Wisata Terbaik Kami</h3>
                         <p>
-                            From painting sessions to outdoor escapades, our experiences promise unforgettable moments of
-                            inspiration and rejuvenation. Venture into nature's embrace on our thrilling hiking adventures
-                            or chase the thundering roar of cascading waterfalls.
+                            Dari sesi melukis hingga petualangan luar ruangan, setiap pengalaman kami menjanjikan momen tak
+                            terlupakan yang penuh inspirasi dan penyegaran. Jelajahi alam melalui pendakian seru atau kejar
+                            gemuruh derasnya air terjun yang menakjubkan.
                         </p>
-                        <a href="{{ route('tourguides.index') }}" class="btn btn-dark-custom">Find a Guide</a>
+                        <a href="{{ route('tourguides.index') }}" class="btn btn-custom w-70" id="btn-view-details"> Temukan
+                            Pemandu</a>
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
@@ -89,8 +91,8 @@
         @if ($galleries->count() > 0)
             <div class="scrolling-gallery-section" data-aos="fade-up">
                 <div class="text-center mb-5">
-                    <h2 class="section-heading">More Visuals</h2>
-                    <p class="section-subheading">A glimpse into the stunning scenery awaiting you.</p>
+                    <h2 class="section-heading">Potret Keindahan Lainnya</h2>
+                    <p class="section-subheading">Sekilas keindahan alam yang menanti untuk Anda jelajahi.</p>
                 </div>
                 <div class="scroll-gallery">
                     <div class="scroll-track">
@@ -426,7 +428,7 @@
             position: relative;
             background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
                 url('/images/hero.jpg') no-repeat center center/cover;
-            height: 80vh;
+            height: 95vh;
             color: white;
             display: flex;
             align-items: center;
@@ -505,7 +507,7 @@
 
         /* === 2. MAIN GALLERY GRID === */
         .gallery-container {
-            margin-top: -80px;
+            margin-top: 0px;
             position: relative;
             z-index: 2;
             background: #f8f9fa;
@@ -874,6 +876,86 @@
         .btn-secondary:hover {
             transform: translateY(-1px);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        #btn-view-details {
+            border-radius: 50px;
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+
+        @media (max-width: 1200px) {
+            .hero-content {
+                /* Start reducing the large padding earlier */
+                padding: 0 3rem 0 10rem;
+            }
+        }
+
+        /* For tablets */
+        @media (max-width: 992px) {
+            .hero-section {
+                justify-content: center;
+                /* Center the content block */
+                text-align: center;
+                /* Center the text inside the block */
+                height: 75vh;
+            }
+
+            .hero-content {
+                /* Remove fixed padding, use responsive padding */
+                padding: 0 2rem;
+            }
+
+            .hero-title {
+                font-size: 60px;
+                letter-spacing: 15px;
+            }
+
+            .hero-desc {
+                /* Allow description to center properly */
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        /* For small tablets and large phones */
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 70vh;
+            }
+
+            .hero-title {
+                font-size: 48px;
+                letter-spacing: 10px;
+                line-height: 1.2;
+            }
+
+            .hero-desc {
+                font-size: 15px;
+            }
+
+            .hero-btn {
+                padding: 10px 25px;
+                font-size: 13px;
+            }
+        }
+
+        /* For mobile phones */
+        @media (max-width: 576px) {
+            .hero-section {
+                height: 65vh;
+                /* Reduce height for small screens */
+            }
+
+            .hero-content {
+                padding: 0 1rem;
+            }
+
+            .hero-title {
+                font-size: 36px;
+                letter-spacing: 5px;
+            }
         }
     </style>
 @endsection

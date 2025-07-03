@@ -74,7 +74,7 @@ class SettingsTest extends TestCase
         ];
 
         $response = $this->actingAs($this->user)
-                         ->                         ->post(route('settings.notifications.update'), $preferences);
+                         ->                         post(route('settings.notifications.update'), $preferences);
 
         $response->assertRedirect();
         $response->assertSessionHas('success');

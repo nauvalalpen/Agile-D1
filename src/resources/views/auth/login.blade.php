@@ -8,8 +8,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        :root {
+            --emerald-green: #10b981;
+            --light-green: #34d399;
+            --forest-green: #065f46;
+            --dark-forest: #064e3b;
+            --deep-green: #047857;
+            --pure-white: #ffffff;
+        }
+
         body {
-            background-image: url('{{ asset('images/bg.png') }}');
+            background-image: url('{{ asset('images/hero.jpg') }}');
             background-size: cover;
             background-position: center;
             min-height: 100vh;
@@ -41,6 +50,12 @@
 
         .auth-card h4 {
             font-weight: bold;
+            color: var(--dark-forest);
+        }
+
+        .brand-icon {
+            color: var(--emerald-green) !important;
+            font-size: 3rem;
         }
 
         .form-control,
@@ -48,6 +63,19 @@
             border-radius: 25px;
             padding: 0.8rem 1rem;
             font-size: 1.05rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--emerald-green);
+            box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.25);
+        }
+
+        .form-control.is-invalid:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
         }
 
         .input-group .form-control {
@@ -56,18 +84,42 @@
 
         .input-group .btn {
             border-radius: 0 25px 25px 0;
+            border: 2px solid #e9ecef;
+            border-left: none;
+        }
+
+        .input-group .btn:hover {
+            background-color: var(--emerald-green);
+            border-color: var(--emerald-green);
+            color: white;
         }
 
         .btn-custom {
             border-radius: 25px;
             padding: 0.8rem;
             font-size: 1.1rem;
-            background-color: black;
+            background: linear-gradient(135deg, var(--emerald-green), var(--forest-green));
             color: white;
+            border: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
 
         .btn-custom:hover {
-            background-color: #a79f9f;
+            background: linear-gradient(135deg, var(--forest-green), var(--emerald-green));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            color: white;
+        }
+
+        .btn-custom:active {
+            transform: translateY(0);
+        }
+
+        .btn-custom:disabled {
+            opacity: 0.7;
+            transform: none;
+            cursor: not-allowed;
         }
 
         .social-icons img {
@@ -83,8 +135,26 @@
             margin-top: 1.2rem;
         }
 
-        .login-text a {
+        .login-text a,
+        .remember-forgot a {
+            color: var(--emerald-green);
             text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .login-text a:hover,
+        .remember-forgot a:hover {
+            color: var(--forest-green);
+            text-decoration: underline;
+        }
+
+        .text-muted a {
+            color: var(--emerald-green) !important;
+        }
+
+        .text-muted a:hover {
+            color: var(--forest-green) !important;
         }
 
         hr {
@@ -133,36 +203,39 @@
         }
 
         .google-btn {
-            background: linear-gradient(135deg, #4285f4, #34a853);
-            color: white;
+            background: linear-gradient(135deg, var(--emerald-green), var(--light-green));
+            color: var(--pure-white);
+            border: none;
         }
 
         .google-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
-            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            color: var(--pure-white);
         }
 
         .facebook-btn {
-            background: linear-gradient(135deg, #1877f2, #42a5f5);
-            color: white;
+            background: linear-gradient(135deg, var(--forest-green), var(--emerald-green));
+            color: var(--pure-white);
+            border: none;
         }
 
         .facebook-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
-            color: white;
+            box-shadow: 0 4px 12px rgba(6, 95, 70, 0.3);
+            color: var(--pure-white);
         }
 
         .apple-btn {
-            background: linear-gradient(135deg, #000000, #333333);
-            color: white;
+            background: linear-gradient(135deg, var(--dark-forest), var(--deep-green));
+            color: var(--pure-white);
+            border: none;
         }
 
         .apple-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            color: white;
+            box-shadow: 0 4px 12px rgba(6, 78, 59, 0.3);
+            color: var(--pure-white);
         }
 
         .social-btn.loading {
@@ -192,13 +265,22 @@
             font-size: 0.9rem;
         }
 
-        .remember-forgot a {
-            text-decoration: none;
-            color: #666;
+        .form-check-input:checked {
+            background-color: var(--emerald-green);
+            border-color: var(--emerald-green);
         }
 
-        .remember-forgot a:hover {
-            color: #000;
+        .form-check-input:focus {
+            border-color: var(--emerald-green);
+            box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.25);
+        }
+
+        .spinner-border {
+            color: var(--emerald-green);
+        }
+
+        .btn-custom .spinner-border {
+            color: white;
         }
 
         @media (max-width: 576px) {
@@ -206,8 +288,17 @@
                 padding: 2rem 1.5rem;
                 margin: 1rem;
             }
+
+            .brand-icon {
+                font-size: 2.5rem;
+            }
+
+            .auth-card h4 {
+                font-size: 1.5rem;
+            }
         }
     </style>
+
 </head>
 
 <body>
@@ -217,11 +308,11 @@
     <div class="auth-card text-center">
         <!-- Logo/Brand -->
         <div class="mb-4">
-            <i class="fas fa-eye text-primary" style="font-size: 3rem;"></i>
+            {{-- <img src="{{ asset('images/logoMitra.jpg') }}" alt="OneVision Logo" style="height: 3rem; width: auto;"> --}}
         </div>
 
-        <h4>Welcome Back!</h4>
-        <p class="text-muted">Sign in to your OneVision account</p>
+        <h4>Selamat Datang Kembali!</h4>
+        <p class="text-muted">Masuk ke akun Air Terjun Lubuk Hitam Anda</p>
 
         <!-- Social Login Section -->
         <div class="social-login-section mb-4">
@@ -244,7 +335,7 @@
         <!-- Divider -->
         <div class="divider-container mb-4">
             <div class="divider-line"></div>
-            <span class="divider-text">or continue with email</span>
+            <span class="divider-text">Atau lanjutkan dengan email Anda</span>
             <div class="divider-line"></div>
         </div>
 
@@ -256,7 +347,7 @@
             <div class="mb-3">
                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                     name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
-                    placeholder="Enter your email">
+                    placeholder="Email">
                 @error('email')
                     <div class="invalid-feedback d-block">
                         <strong>{{ $message }}</strong>
@@ -268,7 +359,7 @@
             <div class="mb-3">
                 <div class="input-group">
                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                        name="password" required autocomplete="current-password" placeholder="Enter your password">
+                        name="password" required autocomplete="current-password" placeholder="Kata Sandi">
                     <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                         <i class="fas fa-eye" id="togglePasswordIcon"></i>
                     </button>
@@ -286,12 +377,12 @@
                     <input class="form-check-input" type="checkbox" name="remember" id="remember"
                         {{ old('remember') ? 'checked' : '' }}>
                     <label class="form-check-label" for="remember">
-                        {{ __('Remember Me') }}
+                        {{ __('Ingat Saya') }}
                     </label>
                 </div>
                 @if (Route::has('password.request'))
                     <a href="{{ route('password.request') }}">
-                        {{ __('Forgot Password?') }}
+                        {{ __('Lupa Kata Sandi?') }}
                     </a>
                 @endif
             </div>
@@ -299,22 +390,22 @@
             <!-- Submit Button -->
             <div class="d-grid">
                 <button type="submit" class="btn btn-custom" id="loginBtn">
-                    SIGN IN
+                    MASUK
                 </button>
             </div>
         </form>
 
         <!-- Register Link -->
         <div class="login-text">
-            Don't have an account? <a href="{{ route('register') }}">Create one here</a>
+            Belum punya akun?<a href="{{ route('register') }}"> Daftar di sini</a>
         </div>
 
         <!-- Additional Info -->
         <div class="text-center mt-4">
             <small class="text-muted">
-                By signing in, you agree to our
-                <a href="#" class="text-muted">Terms of Service</a> and
-                <a href="#" class="text-muted">Privacy Policy</a>
+                Dengan masuk, Anda menyetujui
+                <a href="#" class="text-muted">Syarat & Ketentuan</a> dan
+                <a href="#" class="text-muted">Kebijakan Privasi</a> kami.
             </small>
         </div>
     </div>

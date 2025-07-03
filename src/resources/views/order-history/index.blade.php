@@ -9,7 +9,7 @@
     <!-- 1. HERO SECTION -->
     <section class="hero-section">
         <div class="hero-content">
-            <div class="hero-title">ORDER<br>HISTORY</div>
+            <div class="hero-title">RIWAYAT<br>PESANAN</div>
             <div class="hero-desc">Pantau dan kelola semua pesanan Anda dengan mudah. Lihat status, detail, dan riwayat
                 transaksi lengkap.</div>
             <a href="#orders-grid" class="hero-btn">Lihat Pesanan</a>
@@ -27,7 +27,7 @@
             </div>
 
             <!-- Order Statistics -->
-            <div class="order-stats-section mb-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="order-stats-section mb-5" data-aos="fade-up" data-aos-delay="100" id="order-stats">
                 <div class="row g-4">
                     <div class="col-md-3 col-6">
                         <div class="stat-card">
@@ -72,16 +72,16 @@
             <div class="order-tabs-section mb-4" data-aos="fade-up" data-aos-delay="200">
                 <div class="custom-tabs">
                     <div class="tab-buttons">
-                        <button class="tab-btn {{ $activeTab == 'all' ? 'active' : '' }}" onclick="filterOrders('all')"
-                            data-tab="all">
+                        <button class="tab-btn {{ $activeTab == 'all' ? 'active' : '' }}" id="tab-btn-navbar"
+                            onclick="filterOrders('all')" data-tab="all">
                             <i class="fas fa-list me-2"></i>Semua Pesanan
                         </button>
-                        <button class="tab-btn {{ $activeTab == 'tour_guide' ? 'active' : '' }}"
+                        <button class="tab-btn {{ $activeTab == 'tour_guide' ? 'active' : '' }}" id="tab-btn-tourguide"
                             onclick="filterOrders('tour_guide')" data-tab="tour_guide">
                             <i class="fas fa-user-tie me-2"></i>Tour Guide
                         </button>
-                        <button class="tab-btn {{ $activeTab == 'honey' ? 'active' : '' }}" onclick="filterOrders('honey')"
-                            data-tab="honey">
+                        <button class="tab-btn {{ $activeTab == 'honey' ? 'active' : '' }}" id="tab-btn-navbar"
+                            onclick="filterOrders('honey')" data-tab="honey">
                             <i class="fas fa-jar me-2"></i>Produk Madu
                         </button>
                     </div>
@@ -116,9 +116,9 @@
                                 <i class="fas fa-hashtag me-1"></i>
                                 <span>{{ $order->id }}</span>
                             </div>
-                            <div class="order-type-badge">
+                            <div class="order-type-badge" id="tab-btn-navbar">
                                 @if ($order->order_type == 'tour_guide')
-                                    <span class="badge badge-tour-guide">
+                                    <span class="badge badge-tour-guide" id="tab-btn-navbar">
                                         <i class="fas fa-user-tie me-1"></i>Tour Guide
                                     </span>
                                 @elseif ($order->order_type == 'honey')
@@ -162,18 +162,18 @@
                                 </div>
                             </div>
 
-                            <div class="order-status-section">
-                                <div class="status-badge">
+                            <div class="order-status-section" id="validasi-hasil-pesanan">
+                                <div class="status-badge" id="validasi-hasil-pesanan">
                                     @if ($order->status == 'pending')
-                                        <span class="status-pending">
+                                        <span class="status-pending" id="validasi-hasil-pesanan">
                                             <i class="fas fa-clock me-1"></i>Menunggu
                                         </span>
                                     @elseif ($order->status == 'accepted')
-                                        <span class="status-accepted">
+                                        <span class="status-accepted" id="validasi-hasil-pesanan">
                                             <i class="fas fa-check-circle me-1"></i>Diterima
                                         </span>
                                     @elseif ($order->status == 'rejected')
-                                        <span class="status-rejected">
+                                        <span class="status-rejected" id="validasi-hasil-pesanan">
                                             <i class="fas fa-times-circle me-1"></i>Ditolak
                                         </span>
                                     @endif
@@ -181,9 +181,9 @@
                             </div>
                         </div>
 
-                        <div class="order-card-footer">
-                            <button type="button" class="btn btn-dark-custom"
-                                onclick="showOrderModal({{ $order->id }}, '{{ $order->order_type }}')">
+                        <div class="order-card-footer btn btn-custom w-100">
+                            <button type="button" class="btn btn-custom w-70" id="tab-btn-lihatDetail"
+                                onclick="window.location.href='{{ route('order-history.show', ['id' => $order->id]) }}?type={{ $order->order_type }}'">
                                 <i class="fas fa-eye me-2"></i>Lihat Detail
                             </button>
                         </div>
@@ -216,10 +216,10 @@
                             </p>
                             <div class="action-buttons">
                                 <a href="https://wa.me/6283199877326?text=Halloo ... ,saya ingin bertanya terkait pesanan saya"
-                                    class="btn btn-dark-custom me-3">
+                                    class="btn btn-custom me-3" id="btn-hubungi-CS">
                                     <i class="fab fa-whatsapp me-2"></i>Hubungi CS
                                 </a>
-                                <a href="#" class="btn btn-outline-dark">
+                                <a href="#" class="btn btn-outline" id="btn-FAQ">
                                     <i class="fas fa-question-circle me-2"></i>FAQ
                                 </a>
                             </div>
@@ -234,30 +234,6 @@
             </div>
         @endif
 
-    </div>
-
-    <!-- Order Detail Modal -->
-    <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="orderDetailModalLabel">Detail Pesanan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="orderDetailModalBody">
-                    <div class="text-center">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                        <p class="mt-2">Memuat detail pesanan...</p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- AOS Script -->
@@ -284,174 +260,6 @@
                 ];
             }),
         ) !!};
-
-        // Modal management
-        let currentModal = null;
-
-        // Function to clean up modals
-        function cleanupModals() {
-            document.querySelectorAll('.modal-backdrop').forEach(function(backdrop) {
-                backdrop.remove();
-            });
-
-            document.body.classList.remove('modal-open');
-            document.body.style.overflow = '';
-            document.body.style.paddingRight = '';
-
-            document.querySelectorAll('.modal').forEach(function(modal) {
-                modal.classList.remove('show');
-                modal.style.display = 'none';
-                modal.setAttribute('aria-hidden', 'true');
-            });
-
-            currentModal = null;
-        }
-
-        // Show order modal with details
-        function showOrderModal(orderId, orderType) {
-            console.log('Opening order modal for ID:', orderId);
-
-            const order = orderData.find(function(o) {
-                return o.id === orderId;
-            });
-
-            if (!order) {
-                console.error('Order not found:', orderId);
-                alert('Pesanan tidak ditemukan!');
-                return;
-            }
-
-            const modal = document.getElementById('orderDetailModal');
-            const modalBody = document.getElementById('orderDetailModalBody');
-            const modalLabel = document.getElementById('orderDetailModalLabel');
-
-            if (!modal || !modalBody || !modalLabel) {
-                console.error('Modal elements not found');
-                alert('Modal elements not found!');
-                return;
-            }
-
-            // Set modal title
-            modalLabel.textContent = 'Detail Pesanan #' + order.id;
-
-            // Create status badge HTML
-            let statusBadgeHtml = '';
-            if (order.status === 'pending') {
-                statusBadgeHtml =
-                    '<span class="status-pending"><i class="fas fa-clock me-1"></i>Menunggu Konfirmasi</span>';
-            } else if (order.status === 'accepted') {
-                statusBadgeHtml =
-                    '<span class="status-accepted"><i class="fas fa-check-circle me-1"></i>Pesanan Diterima</span>';
-            } else if (order.status === 'rejected') {
-                statusBadgeHtml =
-                    '<span class="status-rejected"><i class="fas fa-times-circle me-1"></i>Pesanan Ditolak</span>';
-            }
-
-            // Create order type badge HTML
-            let typeBadgeHtml = '';
-            if (order.order_type === 'tour_guide') {
-                typeBadgeHtml =
-                    '<span class="badge badge-tour-guide"><i class="fas fa-user-tie me-1"></i>Tour Guide</span>';
-            } else if (order.order_type === 'honey') {
-                typeBadgeHtml = '<span class="badge badge-honey"><i class="fas fa-jar me-1"></i>Produk Madu</span>';
-            }
-
-            // Create modal content
-            modalBody.innerHTML =
-                '<div class="order-detail-content">' +
-                '<div class="row mb-4">' +
-                '<div class="col-md-6">' +
-                '<div class="detail-section">' +
-                '<h6 class="detail-section-title">' +
-                '<i class="fas fa-info-circle text-primary me-2"></i>' +
-                'Informasi Pesanan' +
-                '</h6>' +
-                '<div class="detail-grid">' +
-                '<div class="detail-row">' +
-                '<span class="detail-label">ID Pesanan:</span>' +
-                '<span class="detail-value">#' + order.id + '</span>' +
-                '</div>' +
-                '<div class="detail-row">' +
-                '<span class="detail-label">Jenis:</span>' +
-                '<span class="detail-value">' + typeBadgeHtml + '</span>' +
-                '</div>' +
-                '<div class="detail-row">' +
-                '<span class="detail-label">Item:</span>' +
-                '<span class="detail-value">' + order.item_name + '</span>' +
-                '</div>' +
-                (order.jumlah ?
-                    '<div class="detail-row">' +
-                    '<span class="detail-label">Jumlah:</span>' +
-                    '<span class="detail-value">' + order.jumlah + '</span>' +
-                    '</div>' : '') +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="col-md-6">' +
-                '<div class="detail-section">' +
-                '<h6 class="detail-section-title">' +
-                '<i class="fas fa-calendar-alt text-primary me-2"></i>' +
-                'Informasi Waktu' +
-                '</h6>' +
-                '<div class="detail-grid">' +
-                '<div class="detail-row">' +
-                '<span class="detail-label">Tanggal Pesanan:</span>' +
-                '<span class="detail-value">' + (order.tanggal ? new Date(order.tanggal).toLocaleDateString('id-ID', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                }) : '-') + '</span>' +
-                '</div>' +
-                '<div class="detail-row">' +
-                '<span class="detail-label">Dibuat Pada:</span>' +
-                '<span class="detail-value">' + order.created_at + '</span>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="row">' +
-                '<div class="col-12">' +
-                '<div class="detail-section">' +
-                '<h6 class="detail-section-title">' +
-                '<i class="fas fa-flag text-primary me-2"></i>' +
-                'Status Pesanan' +
-                '</h6>' +
-                '<div class="status-timeline">' +
-                '<div class="status-current">' +
-                statusBadgeHtml +
-                '</div>' +
-                '<div class="status-description">' +
-                (order.status === 'pending' ?
-                    '<p class="text-muted mb-0">Pesanan Anda sedang menunggu konfirmasi dari penyedia layanan. Kami akan segera menghubungi Anda.</p>' :
-                    order.status === 'accepted' ?
-                    '<p class="text-success mb-0">Selamat! Pesanan Anda telah diterima. Silakan tunggu informasi lebih lanjut dari penyedia layanan.</p>' :
-                    '<p class="text-danger mb-0">Maaf, pesanan Anda tidak dapat diproses saat ini. Silakan hubungi customer service untuk informasi lebih lanjut.</p>'
-                ) +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
-
-            // Show modal
-            try {
-                cleanupModals();
-
-                currentModal = new bootstrap.Modal(modal, {
-                    backdrop: true,
-                    keyboard: true,
-                    focus: true
-                });
-
-                currentModal.show();
-                console.log('Modal shown successfully');
-            } catch (error) {
-                console.error('Error showing modal:', error);
-                alert('Error membuka detail pesanan. Silakan coba lagi.');
-            }
-        }
 
         // Filter orders function
         function filterOrders(type) {
@@ -511,28 +319,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Order history page loaded with', orderData.length, 'orders');
 
-            // Add event listeners for modal cleanup
-            document.querySelectorAll('.modal').forEach(function(modal) {
-                modal.addEventListener('hidden.bs.modal', function() {
-                    setTimeout(cleanupModals, 100);
-                });
-
-                modal.addEventListener('show.bs.modal', function() {
-                    console.log('Modal showing:', this.id);
-                });
-
-                modal.addEventListener('shown.bs.modal', function() {
-                    console.log('Modal shown:', this.id);
-                });
-            });
-
-            // Handle ESC key
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape' && currentModal) {
-                    currentModal.hide();
-                }
-            });
-
             // Smooth scrolling for hero button
             const heroBtn = document.querySelector('.hero-btn');
             if (heroBtn) {
@@ -591,7 +377,6 @@
         });
 
         // Make functions globally available
-        window.showOrderModal = showOrderModal;
         window.filterOrders = filterOrders;
     </script>
 
@@ -610,7 +395,7 @@
             position: relative;
             background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
                 url('/images/hero.jpg') no-repeat center center/cover;
-            height: 80vh;
+            height: 95vh;
             color: white;
             display: flex;
             align-items: center;
@@ -689,7 +474,7 @@
 
         /* === 2. MAIN ORDERS SECTION === */
         .orders-container {
-            margin-top: -80px;
+            margin-top: 0px;
             position: relative;
             z-index: 2;
             background: #f8f9fa;
@@ -740,6 +525,7 @@
         }
 
         .stat-label {
+            /* background: rgba(255, 255, 255, 0.1); */
             font-size: 1rem;
             color: rgba(255, 255, 255, 0.9);
             margin-bottom: 0;
@@ -1072,92 +858,6 @@
             transform: scale(1.02);
         }
 
-        /* === MODAL STYLES === */
-        .modal-content {
-            border-radius: 15px;
-            border: none;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal-header {
-            border-bottom: 1px solid #dee2e6;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 15px 15px 0 0;
-        }
-
-        .modal-header .modal-title {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: #212529;
-        }
-
-        .modal-body {
-            padding: 2rem;
-        }
-
-        .order-detail-content {
-            font-size: 0.95rem;
-        }
-
-        .detail-section {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .detail-section-title {
-            font-weight: 700;
-            color: #495057;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .detail-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-
-        .detail-row .detail-label {
-            font-weight: 600;
-            color: #6c757d;
-        }
-
-        .detail-row .detail-value {
-            font-weight: 500;
-            color: #495057;
-        }
-
-        .status-timeline {
-            background: #fff;
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 1px solid #e9ecef;
-        }
-
-        .status-current {
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .status-description {
-            text-align: center;
-        }
-
         /* === ANIMATIONS === */
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
@@ -1173,19 +873,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* === MODAL Z-INDEX FIXES === */
-        .modal-backdrop {
-            z-index: 1040 !important;
-        }
-
-        .modal {
-            z-index: 1050 !important;
-        }
-
-        .modal.show {
-            display: block !important;
         }
 
         /* === RESPONSIVE DESIGN === */
@@ -1232,10 +919,6 @@
 
             .section-heading {
                 font-size: 2rem;
-            }
-
-            .modal-dialog {
-                margin: 1rem;
             }
 
             .btn-dark-custom,
@@ -1315,10 +998,6 @@
                 font-size: 2.5rem;
             }
 
-            .modal-body {
-                padding: 1rem;
-            }
-
             .detail-section {
                 padding: 1rem;
             }
@@ -1348,17 +1027,6 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* === FIX FOR MODAL BACKDROP ISSUES === */
-        body.modal-open {
-            overflow: hidden !important;
-            padding-right: 0 !important;
-        }
-
-        .modal-open .modal {
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-
         /* === BUTTON CONSISTENCY === */
         .btn-secondary {
             padding: 8px 20px;
@@ -1370,6 +1038,24 @@
         .btn-secondary:hover {
             transform: translateY(-1px);
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        #validasi-hasil-pesanan {
+            background: rgba(244, 245, 244, 0.1);
+            /* color: #006400; */
+        }
+
+        #btn-hubungi-CS {
+            border-radius: 50px;
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+
+        #btn-FAQ {
+            border-radius: 50px;
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
         }
 
         /* === ADDITIONAL ANIMATIONS === */
@@ -1462,6 +1148,28 @@
             animation: spin 1s linear infinite;
         }
 
+        #order-stats {
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+
+        #tab-btn-navbar {
+            background: rgba(255, 255, 255, 0.1);
+            color: #006400;
+        }
+
+        #tab-btn-lihatDetail {
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
+            border-radius: 50px;
+        }
+
+        #tab-btn-tourguide {
+            background: rgb(255, 255, 255);
+            color: #006400;
+        }
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -1469,32 +1177,6 @@
 
             100% {
                 transform: rotate(360deg);
-            }
-        }
-
-        /* === PRINT STYLES === */
-        @media print {
-
-            .hero-section,
-            .modal,
-            .btn,
-            .quick-actions-section {
-                display: none !important;
-            }
-
-            .order-card {
-                break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid #ddd;
-            }
-
-            .orders-container {
-                margin-top: 0;
-                box-shadow: none;
-            }
-
-            .orders-grid {
-                grid-template-columns: 1fr;
             }
         }
 
@@ -1760,8 +1442,8 @@
         /* === NOTIFICATION BADGES === */
         .notification-badge {
             position: absolute;
-            top: -8px;
-            right: -8px;
+            top: 0px;
+            right: 0px;
             background: #dc3545;
             color: white;
             border-radius: 50%;
@@ -1834,10 +1516,6 @@
             }
 
             .detail-section {
-                padding: 0.75rem;
-            }
-
-            .modal-body {
                 padding: 0.75rem;
             }
         }

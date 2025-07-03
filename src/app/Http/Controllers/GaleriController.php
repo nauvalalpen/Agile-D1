@@ -37,7 +37,7 @@ class GaleriController extends Controller
         Gallery::create($validated);
 
         return redirect()->route('admin.gallery.index')
-            ->with('success', 'Gallery berhasil dibuat.');
+            ->with('success', 'Galeri berhasil dibuat.');
     }
 
     public function update(Request $request, Gallery $gallery)
@@ -70,7 +70,7 @@ class GaleriController extends Controller
         $gallery->update($validated);
 
         return redirect()->route('admin.gallery.index')
-            ->with('success', 'Gallery berhasil diperbarui.');
+            ->with('success', 'Galeri berhasil diperbarui.');
     }
 
     public function editModal($gallery)
@@ -89,7 +89,7 @@ class GaleriController extends Controller
         $gallery->delete();
 
         return redirect()->route('admin.gallery.index')
-            ->with('success', 'Gallery berhasil dihapus.');
+            ->with('success', 'Galeri berhasil dihapus.');
     }
 
     public function restore($id)
@@ -98,7 +98,7 @@ class GaleriController extends Controller
         $gallery->restore();
 
         return redirect()->route('admin.gallery.index')
-            ->with('success', 'Gallery berhasil dikembalikan.');
+            ->with('success', 'Galeri berhasil dipulihkan.');
     }
 
     public function forceDelete($id)
@@ -112,7 +112,7 @@ class GaleriController extends Controller
         $gallery->forceDelete();
 
         return redirect()->route('admin.gallery.index')
-            ->with('success', 'Gallery berhasil dihapus permanen.');
+            ->with('success', 'Galeri berhasil dihapus permanen.');
     }
 
 public function showDetails($id)
@@ -136,7 +136,7 @@ public function showDetails($id)
     } catch (\Exception $e) {
         return response()->json([
             'success' => false,
-            'message' => 'Gallery not found'
+            'message' => 'Galeri not found'
         ], 404);
     }
 }

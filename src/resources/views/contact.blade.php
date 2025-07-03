@@ -16,422 +16,519 @@
     @section('content')
         <section class="hero-section">
             <div class="hero-content">
-                <div class="hero-title">CONTACT<br>US</div>
-                <div class="hero-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-                <a href="/contact" class="hero-btn">More info</a>
+                <div class="hero-title">HUBUNGI<br>KAMI</div>
+                <div class="hero-desc">Ada pertanyaan, kritik, atau saran tentang Wisata Air Terjun Lubuk Hitam?
+                    Jangan ragu untuk menghubungi kami. Kami siap membantu Anda!</div>
+                <a href="#contact-grid" class="hero-btn">Hubungi Sekarang</a>
             </div>
         </section>
-        <div class="container py-5">
-            <h1 class="mb-4">Contact Us</h1>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Send us a Message</h5>
-                            <form action="{{ route('contact.submit') }}" method="POST">
+        <!-- Contact Section - Fixed styling to match index.blade.php -->
+        <div id="contact-grid" class="beritas-container">
+            <section style="padding: 6rem 0; background: #ffffff;">
+
+                <div class="container">
+                    <!-- Section Header -->
+                    <div class="text-center mb-5 scroll-reveal">
+                        <h2
+                            style="font-size: 3rem; font-weight: 800; color: #1a202c; margin-bottom: 1rem; background: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                            Hubungi Kami
+                        </h2>
+                        <p style="font-size: 1.2rem; color: #64748b; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                            Kami siap membantu merencanakan kunjungan terbaik Anda ke Air Terjun Lubuk Hitam
+                        </p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 4rem;">
+                        <!-- Contact Form -->
+                        <div class="glass-card scroll-reveal" id="contact-form">
+                            <div style="text-align: center; margin-bottom: 2rem;">
+                                <h3
+                                    style="font-size: 1.8rem; font-weight: 800; color: #1a202c; margin-bottom: 0.5rem; background: linear-gradient(135deg, #0a1f0f 0%, #228B22 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                                    Kirim Pesan
+                                </h3>
+                                <p style="color: #64748b; line-height: 1.6;">
+                                    Bagikan pertanyaan atau saran Anda kepada kami
+                                </p>
+                            </div>
+
+                            <form id="contactForm">
                                 @csrf
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Your Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" required>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                    <div>
+                                        <input type="text" name="name" required
+                                            style="width: 100%; padding: 15px 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 15px; color: #1a202c; font-size: 1rem; transition: all 0.3s ease; font-family: inherit;"
+                                            placeholder="Nama Lengkap">
+                                    </div>
+                                    <div>
+                                        <input type="email" name="email" required
+                                            style="width: 100%; padding: 15px 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 15px; color: #1a202c; font-size: 1rem; transition: all 0.3s ease; font-family: inherit;"
+                                            placeholder="Email">
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <select name="subject" required
+                                        style="width: 100%; padding: 15px 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 15px; color: #1a202c; font-size: 1rem; transition: all 0.3s ease; font-family: inherit;">
+                                        <option value="">Pilih subjek pesan</option>
+                                        <option value="informasi">Informasi Umum</option>
+                                        <option value="reservasi">Reservasi & Booking</option>
+                                        <option value="fasilitas">Fasilitas & Layanan</option>
+                                        <option value="keluhan">Keluhan</option>
+                                        <option value="saran">Saran & Masukan</option>
+                                    </select>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="subject" class="form-label">Subject</label>
-                                    <input type="text" class="form-control" id="subject" name="subject" required>
+
+                                <div style="margin-bottom: 1.5rem;">
+                                    <textarea name="message" rows="4" required
+                                        style="width: 100%; padding: 15px 20px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 15px; color: #1a202c; font-size: 1rem; transition: all 0.3s ease; font-family: inherit; resize: vertical;"
+                                        placeholder="Tulis pesan Anda di sini..."></textarea>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="message" class="form-label">Message</label>
-                                    <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Send Message</button>
+
+                                <button type="submit"
+                                    style="width: 100%; padding: 15px 30px; background: linear-gradient(135deg, #0a1f0f 0%, #1a3d2e 30%, #2d5a3d 70%, #228B22 100%); color: white; border: none; border-radius: 50px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(34, 139, 34, 0.3); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Kirim Pesan
+                                </button>
                             </form>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Contact Information</h5>
-                            <p><i class="fas fa-map-marker-alt me-2"></i> Jl. PNP Tercinta</p>
-                            <p><i class="fas fa-phone me-2"></i> +62 123 4567 890</p>
-                            <p><i class="fas fa-envelope me-2"></i> info@agile-d1.com</p>
-                            <p><i class="fas fa-clock me-2"></i> Open daily: 08:00 - 17:00</p>
 
-                            <h5 class="mt-4">Follow Us</h5>
-                            <div class="social-links">
-                                <a href="#" class="btn btn-outline-primary me-2"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#" class="btn btn-outline-info me-2"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="btn btn-outline-danger me-2"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="btn btn-outline-success"><i class="fab fa-whatsapp"></i></a>
+                        <!-- Contact Info -->
+                        <div class="glass-card scroll-reveal" id="contact-info">
+                            <div style="text-align: center; margin-bottom: 2rem;">
+
+                                <h3
+                                    style="font-size: 1.8rem; font-weight: 800; color: #1a202c; margin-bottom: 0.5rem; background: linear-gradient(135deg, #0a1f0f 0%, #228B22 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                                    Informasi Kontak
+                                </h3>
+                                <p style="color: #64748b; line-height: 1.6;">
+                                    Hubungi kami melalui berbagai cara
+                                </p>
+                            </div>
+
+                            <div style="display: grid; gap: 1.5rem;">
+                                <div
+                                    style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: #f8fafc; border-radius: 15px; border-left: 4px solid #228B22;">
+                                    <div
+                                        style="width: 50px; height: 50px; background: linear-gradient(135deg, #0a1f0f 0%, #228B22 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h4 style="margin: 0; font-size: 1.1rem; font-weight: 600; color: #1a202c;">Lokasi
+                                        </h4>
+                                        <p style="margin: 0; color: #64748b; font-size: 0.95rem;">Air Terjun Lubuk
+                                            Hitam<br>Padang Panjang, Sumatera Barat</p>
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: #f8fafc; border-radius: 15px; border-left: 4px solid #228B22;">
+                                    <div
+                                        style="width: 50px; height: 50px; background: linear-gradient(135deg, #0a1f0f 0%, #228B22 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <h4 style="margin: 0; font-size: 1.1rem; font-weight: 600; color: #1a202c;">Telepon
+                                        </h4>
+                                        <p style="margin: 0; color: #64748b; font-size: 0.95rem;">+62
+                                            812-3456-7890<br>0751-123-4567</p>
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: #f8fafc; border-radius: 15px; border-left: 4px solid #228B22;">
+                                    <div
+                                        style="width: 50px; height: 50px; background: linear-gradient(135deg, #0a1f0f 0%, #228B22 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <h4 style="margin: 0; font-size: 1.1rem; font-weight: 600; color: #1a202c;">Email
+                                        </h4>
+                                        <p style="margin: 0; color: #64748b; font-size: 0.95rem;">
+                                            info@lubukhitam.com<br>admin@lubukhitam.com</p>
+                                    </div>
+                                </div>
+
+                                <div
+                                    style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: #f8fafc; border-radius: 15px; border-left: 4px solid #228B22;">
+                                    <div
+                                        style="width: 50px; height: 50px; background: linear-gradient(135deg, #0a1f0f 0%, #228B22 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <h4 style="margin: 0; font-size: 1.1rem; font-weight: 600; color: #1a202c;">Jam
+                                            Operasional</h4>
+                                        <p style="margin: 0; color: #64748b; font-size: 0.95rem;">Senin - Minggu<br>08:00 -
+                                            17:00 WIB</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Social Media -->
+                            <div style="margin-top: 2rem; text-align: center;">
+                                <h4 style="margin-bottom: 1rem; font-size: 1.1rem; font-weight: 600; color: #1a202c;">Ikuti
+                                    Kami</h4>
+                                <div style="display: flex; justify-content: center; gap: 1rem;">
+                                    <a href="#"
+                                        style="width: 45px; height: 45px; background: linear-gradient(135deg, #3b5998, #8b9dc3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(59, 89, 152, 0.3);">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#"
+                                        style="width: 45px; height: 45px; background: linear-gradient(135deg, #e1306c, #fd1d1d); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(225, 48, 108, 0.3);">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a href="#"
+                                        style="width: 45px; height: 45px; background: linear-gradient(135deg, #1da1f2, #0e71c8); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(29, 161, 242, 0.3);">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="#"
+                                        style="width: 45px; height: 45px; background: linear-gradient(135deg, #ff0000, #cc0000); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);">
+                                        <i class="fab fa-youtube"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="mt-5">
-                <h2 class="mb-4">Our Location</h2>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="ratio ratio-16x9">
-                            <!-- Replace with your actual Google Maps embed code -->
+                    <!-- Map Section -->
+                    <div class="glass-card scroll-reveal">
+                        <div style="text-align: center; margin-bottom: 2rem;">
+
+                            <h3
+                                style="font-size: 1.8rem; font-weight: 800; color: #1a202c; margin-bottom: 0.5rem; background: linear-gradient(135deg, #0a1f0f 0%, #228B22 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                                Lokasi Kami
+                            </h3>
+                            <p style="color: #64748b; line-height: 1.6;">
+                                Temukan kami di peta dan rencanakan kunjungan Anda
+                            </p>
+                        </div>
+
+                        <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);">
                             <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.309681576033!2d100.4237422!3d-1.0524651!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4a594047f51ff%3A0xf851098b76ef9461!2sWisata%20Air%20Terjun%20Lubuk%20Hitam%20Lestari!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid"
-                                allowfullscreen="" loading="lazy"></iframe>
+                                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+            @include('layouts.footer')
+            <!-- CSS Styles matching index.blade.php -->
+            <style>
+                body {
+                    font-family: 'Poppins', sans-serif;
+                    background-color: #f8f9fa;
+                }
 
-            <div class="mt-5">
-                <h2 class="mb-4">Frequently Asked Questions</h2>
-                <div class="accordion" id="faqAccordion">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                What are your operating hours?
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                            data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                We are open daily from 8:00 AM to 5:00 PM. However, some specific attractions or services
-                                might
-                                have different operating hours. Please check the specific service page for more details.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Do I need to book a tour guide in advance?
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                            data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                Yes, we recommend booking a tour guide at least 2-3 days in advance, especially during peak
-                                seasons. This ensures availability and allows us to match you with the most suitable guide
-                                for
-                                your needs.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                How can I purchase honey and UMKM products?
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                            data-bs-parent="#faqAccordion">
-                            <div class="accordion-body">
-                                You can purchase our honey and UMKM products directly from our website by visiting the
-                                respective product pages. We also have a physical store at our location where you can buy
-                                these
-                                products during your visit.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                /* === 1. HERO SECTION === */
+                .hero-section {
+                    position: relative;
+                    background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)),
+                        url('/images/hero.jpg') no-repeat center center/cover;
+                    height: 95vh;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    overflow: hidden;
+                }
 
-        @include('layouts.footer')
-    @endsection
+                .hero-content {
+                    width: 100%;
+                    max-width: 1140px;
+                    padding-left: 350px;
+                    padding-right: 30px;
+                    opacity: 0;
+                    transform: translateY(30px);
+                    animation: fadeInUp 1.2s ease forwards;
+                    animation-delay: 0.3s;
+                }
 
-    @section('scripts')
-        <script>
-            // Additional contact page specific scripts can go here
-            document.addEventListener('DOMContentLoaded', function() {
-                console.log('Contact page loaded');
-            });
-        </script>
-    @endsection
+                @keyframes fadeInUp {
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
 
-</body>
-<style>
-    /* Fonts */
-    h2.section-title,
-    h3.section-title,
-    h4.hot-topic-title,
-    h6.news-title {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 700;
-        letter-spacing: 0.02em;
-    }
+                .hero-title {
+                    font-size: 80px;
+                    font-weight: 900;
+                    line-height: 1.1;
+                    margin-bottom: 20px;
+                    letter-spacing: 30px;
+                    text-transform: uppercase;
+                    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+                }
 
-    p.hot-topic-desc,
-    small,
-    a.read-more-link {
-        font-family: 'Poppins', sans-serif;
-    }
+                .hero-desc {
+                    font-size: 16px;
+                    margin-bottom: 28px;
+                    line-height: 1.6;
+                    color: #ddd;
+                    max-width: 500px;
+                }
 
-    /* HOT TOPIC */
-    .hot-topic-img-wrapper {
-        height: 500px;
-        /* diperbesar dari 400px */
-        position: relative;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
+                .hero-btn {
+                    display: inline-block;
+                    padding: 12px 30px;
+                    background-color: transparent;
+                    border: 2px solid white;
+                    color: white;
+                    text-decoration: none;
+                    font-weight: 600;
+                    border-radius: 25px;
+                    transition: all 0.3s ease-in-out;
+                    font-size: 14px;
+                    letter-spacing: 1.5px;
+                }
 
-    .hot-topic-img-wrapper:hover {
-        transform: scale(1.03);
-        box-shadow: 0 20px 35px rgba(0, 0, 0, 0.35);
-    }
+                .hero-btn:hover {
+                    background-color: white;
+                    color: black;
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+                }
 
-    .hot-topic-img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        border-radius: 1.25rem;
-        transition: transform 0.3s ease;
-    }
+                /* For mobile phones */
+                @media (max-width: 576px) {
+                    .hero-section {
+                        height: 65vh;
+                        /* Reduce height for small screens */
+                    }
 
-    .hot-topic-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        padding: 2rem;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.75), transparent);
-        border-bottom-left-radius: 1.25rem;
-        border-bottom-right-radius: 1.25rem;
-    }
+                    .hero-content {
+                        padding: 0 1rem;
+                    }
 
-    .hot-topic-title {
-        font-size: 2rem;
-        /* lebih besar */
-        margin-bottom: 0.5rem;
-        color: #fff;
-    }
-
-    .hot-topic-meta {
-        font-size: 1rem;
-        color: #ddd;
-    }
-
-    .hot-topic-desc {
-        font-size: 1.2rem;
-        line-height: 1.6;
-        color: #eee;
-        margin-top: 0.5rem;
-    }
-
-    .btn-read-more {
-        margin-top: 1rem;
-        font-size: 1.1rem;
-        padding: 0.75rem 1.75rem;
-    }
-
-    /* LATEST NEWS */
-    .card {
-        border-radius: 1rem;
-        transition: box-shadow 0.3s ease;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-    }
-
-    .news-img {
-        height: 250px;
-        /* diperbesar */
-        width: 100%;
-        object-fit: cover;
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 1rem;
-        transition: transform 0.3s ease;
-    }
-
-    .hover-shadow:hover .news-img {
-        transform: scale(1.05);
-    }
-
-    .card-body {
-        padding: 1.25rem;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
-
-    .news-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        color: #222;
-        flex-grow: 1;
-    }
-
-    .news-meta {
-        font-size: 0.95rem;
-        color: #777;
-        margin-top: auto;
-        font-style: italic;
-    }
-
-    /* RESPONSIVE - Skala turun bertahap */
-    @media (max-width: 992px) {
-        .hot-topic-img-wrapper {
-            height: 400px;
-        }
-
-        .news-img {
-            height: 200px;
-        }
-
-        .news-title {
-            font-size: 1.1rem;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .hot-topic-img-wrapper {
-            height: 300px;
-        }
-
-        .news-img {
-            height: 160px;
-        }
-
-        .hot-topic-title {
-            font-size: 1.5rem;
-        }
-
-        .hot-topic-desc {
-            font-size: 1rem;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .news-img {
-            height: 140px;
-        }
-
-        .news-title {
-            font-size: 1rem;
-        }
-    }
-
-    /* ==== BUTTON "READ MORE" ==== */
-    .btn-read-more {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 30px;
-        background: linear-gradient(135deg, #0d6efd, #0056b3);
-        color: #fff;
-        font-weight: 600;
-        font-size: 1.05rem;
-        border: none;
-        border-radius: 50px;
-        text-decoration: none;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
-        gap: 0.5rem;
-    }
-
-    .btn-read-more:hover {
-        background: linear-gradient(135deg, #0046b3, #003580);
-        transform: translateY(-3px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-arrow {
-        transition: transform 0.3s ease;
-        font-weight: bold;
-        font-size: 1.2rem;
-    }
-
-    .btn-read-more:hover .btn-arrow {
-        transform: translateX(6px);
-    }
+                    .hero-title {
+                        font-size: 36px;
+                        letter-spacing: 5px;
+                    }
+                }
 
 
-    /* content   */
-    body,
-    html {
-        margin: 0;
-        padding: 0;
-        font-family: 'Helvetica Neue', sans-serif;
-    }
 
-    .hero-section {
-        position: relative;
-        background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
-            url('/images/hero.jpg') no-repeat center center/cover;
-        height: 80vh;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        overflow: hidden;
-    }
+                /* Glass Card - exact match from index.blade.php */
+                .glass-card {
+                    background: rgba(255, 255, 255, 0.95);
+                    backdrop-filter: blur(20px);
+                    -webkit-backdrop-filter: blur(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    border-radius: 25px;
+                    padding: 2.5rem;
+                    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.1);
+                    transition: all 0.3s ease;
+                }
 
-    .hero-content {
-        width: 100%;
-        max-width: 1140px;
-        padding-left: 350px;
-        padding-right: 30px;
-        opacity: 0;
-        transform: translateY(30px);
-        animation: fadeInUp 1.2s ease forwards;
-        animation-delay: 0.3s;
-    }
+                .glass-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 35px 100px rgba(0, 0, 0, 0.15);
+                }
 
-    @keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+                /* Button Glass - exact match from index.blade.php */
+                .btn-glass {
+                    padding: 15px 30px;
+                    border: none;
+                    border-radius: 50px;
+                    font-weight: 600;
+                    text-decoration: none;
+                    transition: all 0.3s ease;
+                    backdrop-filter: blur(20px);
+                    -webkit-backdrop-filter: blur(20px);
+                    position: relative;
+                    overflow: hidden;
+                    cursor: pointer;
+                }
 
+                .btn-glass-primary {
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+                    border: 1px solid rgba(255, 255, 255, 0.3);
+                    color: white;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                }
 
-    .hero-title {
-        font-size: 80px;
-        /* besar dan dominan */
-        font-weight: 900;
-        line-height: 1.1;
-        margin-bottom: 20px;
-        letter-spacing: 30px;
-        /* jarak antar huruf */
-        text-transform: uppercase;
-    }
+                .btn-glass-primary:hover {
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+                    transform: translateY(-2px);
+                    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+                    color: white;
+                }
 
-    .hero-desc {
-        font-size: 16px;
-        margin-bottom: 28px;
-        line-height: 1.6;
-        color: #ddd;
-        max-width: 500px;
-    }
+                .btn-glass-secondary {
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    color: rgba(255, 255, 255, 0.9);
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                }
 
-    .hero-btn {
-        display: inline-block;
-        padding: 12px 30px;
-        background-color: transparent;
-        border: 2px solid white;
-        color: white;
-        text-decoration: none;
-        font-weight: 600;
-        border-radius: 25px;
-        transition: all 0.3s ease-in-out;
-        font-size: 14px;
-        letter-spacing: 1.5px;
-    }
+                .btn-glass-secondary:hover {
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+                    transform: translateY(-2px);
+                    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+                    color: white;
+                }
 
-    .hero-btn:hover {
-        background-color: white;
-        color: black;
-    }
-</style>
+                /* Animations - exact match from index.blade.php */
+                @keyframes float {
 
-</html>
+                    0%,
+                    100% {
+                        transform: translateY(0px) rotate(0deg);
+                    }
+
+                    50% {
+                        transform: translateY(-20px) rotate(5deg);
+                    }
+                }
+
+                @keyframes floatUpDown {
+
+                    0%,
+                    100% {
+                        transform: translateY(0px);
+                    }
+
+                    50% {
+                        transform: translateY(-15px);
+                    }
+                }
+
+                /* Scroll Reveal - exact match from index.blade.php */
+                .scroll-reveal {
+                    opacity: 0;
+                    transform: translateY(50px);
+                    transition: all 0.8s ease;
+                }
+
+                .scroll-reveal.revealed {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                /* Form Styles */
+                input:focus,
+                select:focus,
+                textarea:focus {
+                    outline: none;
+                    border-color: #228B22 !important;
+                    box-shadow: 0 0 0 3px rgba(34, 139, 34, 0.1) !important;
+                }
+
+                button:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 15px 40px rgba(34, 139, 34, 0.4) !important;
+                }
+
+                /* Social Media Hover Effects */
+                a[href="#"]:hover {
+                    transform: translateY(-3px) scale(1.05);
+                }
+
+                /* Responsive Design */
+                @media (max-width: 768px) {
+                    div[style*="grid-template-columns: 1fr 1fr"] {
+                        display: block !important;
+                    }
+
+                    .glass-card {
+                        margin-bottom: 2rem;
+                        padding: 1.5rem;
+                    }
+
+                    div[style*="grid-template-columns: 1fr 1fr"]:first-child>div {
+                        margin-bottom: 1rem;
+                    }
+
+                    h2[style*="font-size: 3rem"] {
+                        font-size: 2rem !important;
+                    }
+
+                    h3[style*="font-size: 1.8rem"] {
+                        font-size: 1.5rem !important;
+                    }
+                }
+
+                @media (max-width: 576px) {
+                    .glass-card {
+                        padding: 1rem;
+                    }
+
+                    div[style*="font-size: 4rem"] {
+                        font-size: 3rem !important;
+                    }
+
+                    div[style*="display: flex; justify-content: center; gap: 1rem;"] {
+                        gap: 0.5rem !important;
+                    }
+                }
+            </style>
+
+            <!-- JavaScript -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Scroll Reveal Animation - matching index.blade.php
+                    const observerOptions = {
+                        threshold: 0.1,
+                        rootMargin: '0px 0px -50px 0px'
+                    };
+
+                    const observer = new IntersectionObserver(function(entries) {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('revealed');
+                            }
+                        });
+                    }, observerOptions);
+
+                    document.querySelectorAll('.scroll-reveal').forEach(el => {
+                        observer.observe(el);
+                    });
+
+                    // Contact Form Submission
+                    const contactForm = document.getElementById('contactForm');
+                    if (contactForm) {
+                        contactForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+
+                            const submitBtn = this.querySelector('button[type="submit"]');
+                            const originalHTML = submitBtn.innerHTML;
+
+                            // Loading state
+                            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+                            submitBtn.disabled = true;
+
+                            // Simulate form submission
+                            setTimeout(() => {
+                                this.reset();
+                                submitBtn.innerHTML = '<i class="fas fa-check"></i> Terkirim!';
+                                submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+
+                                setTimeout(() => {
+                                    submitBtn.innerHTML = originalHTML;
+                                    submitBtn.disabled = false;
+                                    submitBtn.style.background = '';
+                                }, 3000);
+
+                                alert('Pesan Anda telah terkirim! Kami akan segera menghubungi Anda.');
+                            }, 2000);
+                        });
+                    }
+
+                    // Smooth scrolling for anchor links
+                    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                        anchor.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const target = document.querySelector(this.getAttribute('href'));
+                            if (target) {
+                                target.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }
+                        });
+                    });
+                });
+            </script>
+        @endsection

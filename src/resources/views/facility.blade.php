@@ -5,6 +5,27 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     {{-- Include Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        #btn-lihat {
+            border-radius: 50px;
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
+        }
+
+        #btn-hubungi-kami {
+            border-radius: 50px;
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+
+
+        #order-stats {
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+    </style>
 
     <!-- 1. HERO SECTION -->
     <section class="hero-section">
@@ -53,8 +74,8 @@
                                     <i class="fas fa-map-marker-alt me-2"></i>{{ $facility->lokasi }}
                                 </h6>
                                 <p class="card-text">{{ Str::limit($facility->deskripsi, 100) }}</p>
-                                <div class="mt-auto">
-                                    <button type="button" class="btn btn-dark-custom w-100"
+                                <div class="mt-auto" id="btn-lihat-detail">
+                                    <button type="button" class="btn btn-custom w-100" id="btn-lihat"
                                         onclick="showFacilityModal({{ $facility->id }})">
                                         Lihat Detail
                                     </button>
@@ -76,7 +97,7 @@
 
         <!-- 3. FACILITIES STATS SECTION -->
         @if ($facilities->count() > 0)
-            <div class="facilities-stats-section my-5 py-5" data-aos="fade-up">
+            <div class="facilities-stats-section my-5 py-5" data-aos="fade-up" id="order-stats">
                 <div class="row text-center g-4">
                     <div class="col-md-3 col-6">
                         <div class="stat-card">
@@ -129,7 +150,7 @@
                             Hubungi kami untuk konsultasi gratis dan dapatkan rekomendasi fasilitas yang sesuai dengan
                             kebutuhan Anda.
                         </p>
-                        <a href="contact" class="btn btn-dark-custom">Hubungi Kami</a>
+                        <a href="contact" class="btn btn-custom" id="btn-hubungi-kami">Hubungi Kami</a>
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
@@ -501,7 +522,7 @@
             position: relative;
             background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)),
                 url('/images/hero.jpg') no-repeat center center/cover;
-            height: 80vh;
+            height: 95vh;
             color: white;
             display: flex;
             align-items: center;
@@ -583,7 +604,7 @@
 
         /* === 2. MAIN FACILITIES GRID === */
         .facilities-container {
-            margin-top: -80px;
+            margin-top: 0px;
             position: relative;
             z-index: 2;
             background: #f8f9fa;
@@ -961,211 +982,285 @@
             .stat-card {
                 padding: 1rem;
             }
-        }
 
-        @media (max-width: 576px) {
-            .hero-section {
-                height: 70vh;
-                min-height: 400px;
+            #btn-lihat {}
+
+            @media (max-width: 576px) {
+                .hero-section {
+                    height: 70vh;
+                    min-height: 400px;
+                }
+
+                .hero-title {
+                    font-size: 2.5rem;
+                }
+
+                .facility-card-img-wrapper {
+                    height: 180px;
+                }
+
+                .btn-dark-custom {
+                    padding: 8px 20px;
+                    font-size: 0.85rem;
+                }
+
+                .stat-number {
+                    font-size: 1.8rem;
+                }
+
+                .facilities-stats-section {
+                    padding: 1.5rem 1rem;
+                }
+
+                .cta-section {
+                    padding: 1.5rem;
+                }
             }
 
-            .hero-title {
-                font-size: 2.5rem;
+            /* === ACCESSIBILITY IMPROVEMENTS === */
+            .btn:focus,
+            .btn-close:focus {
+                box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
             }
 
-            .facility-card-img-wrapper {
-                height: 180px;
+            /* === SMOOTH TRANSITIONS === */
+            * {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
 
-            .btn-dark-custom {
+            /* === FIX FOR MODAL BACKDROP ISSUES === */
+            body.modal-open {
+                overflow: hidden !important;
+                padding-right: 0 !important;
+            }
+
+            .modal-open .modal {
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            /* === BUTTON CONSISTENCY === */
+            .btn-secondary {
                 padding: 8px 20px;
-                font-size: 0.85rem;
+                border-radius: 25px;
+                font-weight: 500;
+                transition: all 0.3s ease;
             }
 
-            .stat-number {
-                font-size: 1.8rem;
+            .btn-secondary:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
             }
 
-            .facilities-stats-section {
-                padding: 1.5rem 1rem;
+            /* === ADDITIONAL ANIMATIONS === */
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(1.05);
+                }
+
+                100% {
+                    transform: scale(1);
+                }
             }
 
-            .cta-section {
-                padding: 1.5rem;
-            }
-        }
-
-        /* === ACCESSIBILITY IMPROVEMENTS === */
-        .btn:focus,
-        .btn-close:focus {
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-        }
-
-        /* === SMOOTH TRANSITIONS === */
-        * {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        /* === FIX FOR MODAL BACKDROP ISSUES === */
-        body.modal-open {
-            overflow: hidden !important;
-            padding-right: 0 !important;
-        }
-
-        .modal-open .modal {
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-
-        /* === BUTTON CONSISTENCY === */
-        .btn-secondary {
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-        }
-
-        /* === ADDITIONAL ANIMATIONS === */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
+            .stat-icon:hover {
+                animation: pulse 1s infinite;
             }
 
-            50% {
-                transform: scale(1.05);
+            /* === GRADIENT BACKGROUNDS === */
+            .gradient-bg-1 {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             }
 
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .stat-icon:hover {
-            animation: pulse 1s infinite;
-        }
-
-        /* === GRADIENT BACKGROUNDS === */
-        .gradient-bg-1 {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .gradient-bg-2 {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-
-        .gradient-bg-3 {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-
-        /* === CUSTOM SCROLLBAR === */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        /* === HOVER EFFECTS === */
-        .facility-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
-            z-index: 1;
-        }
-
-        .facility-card:hover::before {
-            transform: translateX(100%);
-        }
-
-        /* === LOADING STATES === */
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            margin: -10px 0 0 -10px;
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
+            .gradient-bg-2 {
+                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             }
 
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* === PRINT STYLES === */
-        @media print {
-
-            .hero-section,
-            .modal,
-            .btn {
-                display: none !important;
+            .gradient-bg-3 {
+                background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             }
 
-            .facility-card {
-                break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid #ddd;
-            }
-        }
-
-        /* === HIGH CONTRAST MODE === */
-        @media (prefers-contrast: high) {
-            .facility-card {
-                border: 2px solid #000;
+            /* === CUSTOM SCROLLBAR === */
+            ::-webkit-scrollbar {
+                width: 8px;
             }
 
-            .btn-dark-custom {
-                border: 3px solid #000;
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
             }
-        }
 
-        /* === REDUCED MOTION === */
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            ::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 10px;
             }
-        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+            /* === HOVER EFFECTS === */
+            .facility-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+                transform: translateX(-100%);
+                transition: transform 0.6s;
+                z-index: 1;
+            }
+
+            .facility-card:hover::before {
+                transform: translateX(100%);
+            }
+
+            /* === LOADING STATES === */
+            .loading {
+                opacity: 0.7;
+                pointer-events: none;
+            }
+
+            .loading::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 20px;
+                height: 20px;
+                margin: -10px 0 0 -10px;
+                border: 2px solid #f3f3f3;
+                border-top: 2px solid #3498db;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* === PRINT STYLES === */
+            @media print {
+
+                .hero-section,
+                .modal,
+                .btn {
+                    display: none !important;
+                }
+
+                .facility-card {
+                    break-inside: avoid;
+                    box-shadow: none;
+                    border: 1px solid #ddd;
+                }
+            }
+
+            /* === HIGH CONTRAST MODE === */
+            @media (prefers-contrast: high) {
+                .facility-card {
+                    border: 2px solid #000;
+                }
+
+                .btn-dark-custom {
+                    border: 3px solid #000;
+                }
+            }
+
+            /* === REDUCED MOTION === */
+            @media (prefers-reduced-motion: reduce) {
+
+                *,
+                *::before,
+                *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                }
+            }
+
+            @media (max-width: 1200px) {
+                .hero-content {
+                    /* Start reducing the large padding earlier */
+                    padding: 0 3rem 0 10rem;
+                }
+            }
+
+            /* For tablets */
+            @media (max-width: 992px) {
+                .hero-section {
+                    justify-content: center;
+                    /* Center the content block */
+                    text-align: center;
+                    /* Center the text inside the block */
+                    height: 75vh;
+                }
+
+                .hero-content {
+                    /* Remove fixed padding, use responsive padding */
+                    padding: 0 2rem;
+                }
+
+                .hero-title {
+                    font-size: 60px;
+                    letter-spacing: 15px;
+                }
+
+                .hero-desc {
+                    /* Allow description to center properly */
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
+
+            /* For small tablets and large phones */
+            @media (max-width: 768px) {
+                .hero-section {
+                    height: 70vh;
+                }
+
+                .hero-title {
+                    font-size: 48px;
+                    letter-spacing: 10px;
+                    line-height: 1.2;
+                }
+
+                .hero-desc {
+                    font-size: 15px;
+                }
+
+                .hero-btn {
+                    padding: 10px 25px;
+                    font-size: 13px;
+                }
+            }
+
+            /* For mobile phones */
+            @media (max-width: 576px) {
+                .hero-section {
+                    height: 65vh;
+                    /* Reduce height for small screens */
+                }
+
+                .hero-content {
+                    padding: 0 1rem;
+                }
+
+                .hero-title {
+                    font-size: 36px;
+                    letter-spacing: 5px;
+                }
+            }
     </style>
 @endsection

@@ -50,7 +50,7 @@ class TiketController extends Controller
         tiketMasuk::create($validated);
 
         return redirect()->route('admin.tiketmasuks.index')
-            ->with('success', 'Tourists add successfully.');
+            ->with('success', 'Wisatawan berhasil ditambahkan.');
     }
 
     /**
@@ -75,8 +75,8 @@ class TiketController extends Controller
 
         $tiket->update($validated);
 
-        return redirect()->route('tiketmasuks.index')
-            ->with('success', 'Tourists updated successfully.');
+        return redirect()->route('admin.tiketmasuks.index')
+            ->with('success', 'Wisatawan berhasil diperbarui.');
     }
 
     public function updateStatus($id)

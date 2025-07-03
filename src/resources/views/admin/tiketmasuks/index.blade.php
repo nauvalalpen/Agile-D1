@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Manage Tourists</h1>
+            <h1 class="h3 mb-0 text-gray-800">Kelola Wisatawan</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTouristsModal">
                 <i class="fas fa-plus"></i> Tambah Tiket Masuk
             </button>
@@ -25,7 +25,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>NO</th>
                                 <th>Nama Ketua</th>
                                 <th>Jumlah Rombongan</th>
                                 <th>Nomor HP</th>
@@ -38,37 +38,39 @@
                         <tbody>
                             @forelse ($tikets as $tiket)
                                 <tr class="{{ $tiket->deleted_at ? 'table-danger' : '' }}">
-                                    <td>{{ $tiket->id }}</td>
+                                    {{-- <td>{{ $tiket->id }}</td> --}}
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $tiket->nama_ketua }}</td>
                                     <td>{{ $tiket->jumlah_rombongan }}</td>
                                     <td>{{ $tiket->nohp }}</td>
                                     <td>{{ $tiket->alamat }}</td>
                                     <td>{{ $tiket->created_at->format('d M Y H:i') }}</td>
                                     <td class="text-center">
-                                        <form action="{{ route('admin.tiketmasuks.updateStatus', $tiket->id) }}" method="POST">
+                                        <form action="{{ route('admin.tiketmasuks.updateStatus', $tiket->id) }}"
+                                            method="POST">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" 
-                                                    class="btn btn-sm {{ $tiket->status === 'selesai' ? 'btn-secondary' : 'btn-success' }}" 
-                                                    {{ $tiket->status === 'selesai' ? 'disabled' : '' }}>
+                                            <button type="submit"
+                                                class="btn btn-sm {{ $tiket->status === 'selesai' ? 'btn-secondary' : 'btn-success' }}"
+                                                {{ $tiket->status === 'selesai' ? 'disabled' : '' }}>
                                                 Selesai
                                             </button>
                                         </form>
 
-                                        @if($tiket->status === 'selesai' && $tiket->waktu_selesai)
+                                        @if ($tiket->status === 'selesai' && $tiket->waktu_selesai)
                                             <div class="mt-1 text-muted" style="font-size: 0.85rem;">
                                                 {{ $tiket->waktu_selesai->format('d M Y H:i') }}
                                             </div>
                                         @endif
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
-                                                data-bs-target="#editTouristsModal{{ $tiket->id }}">
-                                                <i class="fas fa-edit fa-sm"></i> Edit
+                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#editTouristsModal{{ $tiket->id }}">
+                                            <i class="fas fa-edit fa-sm"></i> Edit
                                         </button>
                                     </td>
                                 </tr>
-                                @empty
+                            @empty
                                 <tr>
                                     <td colspan="8" class="text-center">Data wisatawan tidak ditemukan.</td>
                                 </tr>
@@ -96,8 +98,8 @@
 
                         <div class="mb-3">
                             <label for="nama_ketua" class="form-label">Nama Ketua Rombongan</label>
-                            <input type="text" class="form-control @error('nama_ketua') is-invalid @enderror" id="nama_ketua"
-                                name="nama_ketua" value="{{ old('nama_ketua') }}" required>
+                            <input type="text" class="form-control @error('nama_ketua') is-invalid @enderror"
+                                id="nama_ketua" name="nama_ketua" value="{{ old('nama_ketua') }}" required>
                             @error('nama_ketua')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -105,8 +107,9 @@
 
                         <div class="mb-3">
                             <label for="jumlah_rombongan" class="form-label">Jumlah Rombongan</label>
-                            <input type="number" class="form-control @error('jumlah_rombongan') is-invalid @enderror" id="jumlah_rombongan"
-                                name="jumlah_rombongan" value="{{ old('jumlah_rombongan') }}" required>
+                            <input type="number" class="form-control @error('jumlah_rombongan') is-invalid @enderror"
+                                id="jumlah_rombongan" name="jumlah_rombongan" value="{{ old('jumlah_rombongan') }}"
+                                required>
                             @error('jumlah_rombongan')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -132,9 +135,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-primary"
-                        onclick="document.getElementById('createTouristsForm').submit()">Save</button>
+                        onclick="document.getElementById('createTouristsForm').submit()">Simpan</button>
                 </div>
             </div>
         </div>
@@ -157,7 +160,8 @@
                             @method('PUT')
 
                             <div class="mb-3">
-                                <label for="nama_ketua{{ $tiket->id }}" class="form-label">Nama Ketua Rombongan</label>
+                                <label for="nama_ketua{{ $tiket->id }}" class="form-label">Nama Ketua
+                                    Rombongan</label>
                                 <input type="text" class="form-control @error('nama_ketua') is-invalid @enderror"
                                     id="nama_ketua{{ $tiket->id }}" name="nama_ketua"
                                     value="{{ old('nama_ketua', $tiket->nama_ketua) }}">
@@ -167,7 +171,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="jumlah_rombongan{{ $tiket->id }}" class="form-label">Jumlah Rombongan</label>
+                                <label for="jumlah_rombongan{{ $tiket->id }}" class="form-label">Jumlah
+                                    Rombongan</label>
                                 <input type="number" class="form-control @error('jumlah_rombongan') is-invalid @enderror"
                                     id="jumlah_rombongan{{ $tiket->id }}" name="jumlah_rombongan"
                                     value="{{ old('jumlah_rombongan', $tiket->jumlah_rombongan) }}">
@@ -198,9 +203,10 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-primary"
-                            onclick="document.getElementById('editTouristsForm{{ $tiket->id }}').submit()">Update</button>
+                            onclick="document.getElementById('editTouristsForm{{ $tiket->id }}').submit()">Simpan
+                            Perubahan</button>
                     </div>
                 </div>
             </div>

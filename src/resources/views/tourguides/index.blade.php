@@ -3,10 +3,11 @@
 @section('content')
     <div class="container-fluid">
         <!-- Page Heading -->
+
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Tour Guides Management</h1>
+            <h1 class="h3 mb-0 text-gray-800">Kelola Pemandu Wisata</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTourGuideModal">
-                <i class="fas fa-plus fa-sm"></i> Add New Tour Guide
+                <i class="fas fa-plus fa-sm"></i> Tambah Pemandu Wisata
             </button>
         </div>
 
@@ -21,7 +22,7 @@
         <!-- Tour Guides DataTable -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Tour Guides</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Pemandu Wisata</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -41,7 +42,9 @@
                         <tbody>
                             @forelse ($tourguides as $tourguide)
                                 <tr>
-                                    <td>{{ $tourguide->id }}</td>
+                                    {{-- Make No++ for the number column --}}
+                                    <td>{{ $loop->iteration }}</td>
+                                    {{-- <td>{{ $tourguide->id }}</td> --}}
                                     <td>{{ $tourguide->nama }}</td>
                                     <td>{{ $tourguide->nohp }}</td>
                                     <td>{{ $tourguide->alamat }}</td>
@@ -57,13 +60,14 @@
                                     </td>
                                     <td>
                                         <div class="d-flex">
-                                            <button type="button" class="btn btn-sm btn-info me-2" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-sm btn-warning me-2"
+                                                data-bs-toggle="modal"
                                                 data-bs-target="#editTourGuideModal{{ $tourguide->id }}">
-                                                <i class="fas fa-edit fa-sm"></i> Edit
+                                                <i class="fas fa-edit fa-sm"></i>
                                             </button>
                                             <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#deleteTourGuideModal{{ $tourguide->id }}">
-                                                <i class="fas fa-trash fa-sm"></i> Delete
+                                                <i class="fas fa-trash fa-sm"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -152,9 +156,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-primary"
-                        onclick="document.getElementById('createTourGuideForm').submit()">Save</button>
+                        onclick="document.getElementById('createTourGuideForm').submit()">Simpan</button>
                 </div>
             </div>
         </div>
@@ -235,7 +239,8 @@
                                 @endif
                                 <input type="file" class="form-control @error('foto') is-invalid @enderror"
                                     id="foto{{ $tourguide->id }}" name="foto">
-                                <small class="form-text text-muted">Leave empty to keep the current photo</small>
+                                <small class="form-text text-muted">Biarkan kosong jika ingin tetap dengan foto
+                                    sekarang</small>
                                 @error('foto')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -245,9 +250,10 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="button" class="btn btn-primary"
-                            onclick="document.getElementById('editTourGuideForm{{ $tourguide->id }}').submit()">Update</button>
+                            onclick="document.getElementById('editTourGuideForm{{ $tourguide->id }}').submit()">Simpan
+                            Perubahan</button>
                     </div>
                 </div>
             </div>
@@ -261,12 +267,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="deleteTourGuideModalLabel{{ $tourguide->id }}">Confirm Delete</h5>
+                        <h5 class="modal-title" id="deleteTourGuideModalLabel{{ $tourguide->id }}">Konfirmasi Hapus</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to delete the tour guide: <strong>{{ $tourguide->nama }}</strong>?</p>
-                        <p class="text-danger">This action cannot be undone.</p>
+                        <p>Apakah Anda yakin ingin menghapus Pemandu Wisata?: <strong>{{ $tourguide->nama }}</strong>?</p>
+                        <p class="text-danger">Tindakan ini tidak bisa dibatalkan</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

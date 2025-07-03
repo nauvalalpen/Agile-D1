@@ -73,7 +73,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Total Orders</div>
+                                    Total Pesanan</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totals['total']['count'] }}</div>
                             </div>
                             <div class="col-auto">
@@ -90,7 +90,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Total Revenue</div>
+                                    Total Pendapatan</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Rp
                                     {{ number_format($totals['total']['revenue'], 0, ',', '.') }}</div>
                             </div>
@@ -108,7 +108,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                    Tour Guide Orders</div>
+                                    Pesanan Pemandu Wisata</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totals['tourguide']['count'] }}
                                 </div>
                             </div>
@@ -126,7 +126,7 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Honey Orders</div>
+                                    Pesanan Madu</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totals['madu']['count'] }}</div>
                             </div>
                             <div class="col-auto">
@@ -142,27 +142,28 @@
         @if ($type == 'all' || $type == 'tourguide')
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Tour Guide Orders</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Pesanan Pemandu Wisata</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="tourGuideTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Customer</th>
-                                    <th>Tour Guide</th>
-                                    <th>Tanggal Order</th>
+                                    <th>NO</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>Nama Pemandu</th>
+                                    <th>Tanggal Pesan</th>
                                     <th>Jumlah Orang</th>
-                                    <th>Price Range</th>
-                                    <th>Final Price</th>
+                                    <th>Rentang Harga</th>
+                                    <th>Harga Final</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($tourGuideOrders as $order)
                                     <tr>
-                                        <td>{{ $order->id }}</td>
+                                        {{-- <td>{{ $order->id }}</td> --}}
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>{{ $order->user_name }}</td>
                                         <td>{{ $order->tourguide_name }}</td>
                                         <td>{{ date('d M Y', strtotime($order->tanggal_order)) }}</td>
@@ -177,11 +178,11 @@
                                         </td>
                                         <td>
                                             @if ($order->status == 'pending')
-                                                <span class="badge bg-warning text-dark">Pending</span>
+                                                <span class="badge bg-warning text-dark">Menunggu</span>
                                             @elseif($order->status == 'accepted')
-                                                <span class="badge bg-success">Accepted</span>
+                                                <span class="badge bg-success">Diterima</span>
                                             @elseif($order->status == 'rejected')
-                                                <span class="badge bg-danger">Rejected</span>
+                                                <span class="badge bg-danger">Ditolak</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -189,9 +190,9 @@
                             </tbody>
                             <tfoot>
                                 <tr class="table-info">
-                                    <th colspan="6">Total Tour Guide Orders</th>
+                                    <th colspan="6">Total Pendapatan Pemandu Wisata</th>
                                     <th>Rp {{ number_format($totals['tourguide']['revenue'], 0, ',', '.') }}</th>
-                                    <th>{{ $totals['tourguide']['count'] }} orders</th>
+                                    <th>{{ $totals['tourguide']['count'] }} pesanan</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -204,40 +205,43 @@
         @if ($type == 'all' || $type == 'madu')
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Honey Orders</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Pesanan Madu</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="maduTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Product</th>
-                                    <th>Size</th>
-                                    <th>Quantity</th>
-                                    <th>Price per Item</th>
-                                    <th>Total Price</th>
-                                    <th>Pickup Date</th>
+                                    <th>NO</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>Produk</th>
+                                    <th>Ukuran</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga per Item</th>
+                                    <th>Tanggal Ambil</th>
+                                    <th>Total Harga</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($maduOrders as $order)
                                     <tr>
-                                        <td>{{ $order->id }}</td>
+                                        {{-- <td>{{ $order->id }}</td> --}}
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $order->user_name }}</td>
                                         <td>{{ $order->nama_madu }}</td>
                                         <td>{{ $order->ukuran }}</td>
                                         <td>{{ $order->jumlah }}</td>
                                         <td>Rp {{ number_format($order->harga, 0, ',', '.') }}</td>
-                                        <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                                         <td>{{ date('d M Y', strtotime($order->tanggal)) }}</td>
+                                        <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                                         <td>
                                             @if ($order->status == 'pending')
-                                                <span class="badge bg-warning text-dark">Pending</span>
+                                                <span class="badge bg-warning text-dark">Menunggu</span>
                                             @elseif($order->status == 'accepted')
-                                                <span class="badge bg-success">Accepted</span>
+                                                <span class="badge bg-success">Diterima</span>
                                             @elseif($order->status == 'rejected')
-                                                <span class="badge bg-danger">Rejected</span>
+                                                <span class="badge bg-danger">Ditolak</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -245,9 +249,10 @@
                             </tbody>
                             <tfoot>
                                 <tr class="table-info">
-                                    <th colspan="5">Total Honey Orders</th>
+                                    <th colspan="7">Total Pesanan Madu</th>
                                     <th>Rp {{ number_format($totals['madu']['revenue'], 0, ',', '.') }}</th>
-                                    <th colspan="2">{{ $totals['madu']['count'] }} orders</th>
+                                    {{-- <th></th> --}}
+                                    <th colspan="2">{{ $totals['madu']['count'] }} pesanan</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -264,43 +269,43 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <h6>Tour Guide Orders</h6>
+                        <h6>Pesanan Pemandu Wisata</h6>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Pending
+                                Menunggu
                                 <span class="badge bg-warning rounded-pill">{{ $totals['tourguide']['pending'] }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Accepted
+                                Diterima
                                 <span class="badge bg-success rounded-pill">{{ $totals['tourguide']['accepted'] }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Rejected
+                                Ditolak
                                 <span class="badge bg-danger rounded-pill">{{ $totals['tourguide']['rejected'] }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <strong>Total Revenue</strong>
+                                <strong>Total Pendapatan</strong>
                                 <strong>Rp {{ number_format($totals['tourguide']['revenue'], 0, ',', '.') }}</strong>
                             </li>
                         </ul>
                     </div>
                     <div class="col-md-6">
-                        <h6>Honey Orders</h6>
+                        <h6>Pesanan Produk Madu</h6>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Pending
+                                Menunggu
                                 <span class="badge bg-warning rounded-pill">{{ $totals['madu']['pending'] }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Accepted
+                                Diterima
                                 <span class="badge bg-success rounded-pill">{{ $totals['madu']['accepted'] }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Rejected
+                                Ditolak
                                 <span class="badge bg-danger rounded-pill">{{ $totals['madu']['rejected'] }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <strong>Total Revenue</strong>
+                                <strong>Total Pendapatan</strong>
                                 <strong>Rp {{ number_format($totals['madu']['revenue'], 0, ',', '.') }}</strong>
                             </li>
                         </ul>
