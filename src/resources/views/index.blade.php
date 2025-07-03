@@ -673,18 +673,18 @@
         }
 
         /* .hero-image-overlay {
-                                                            position: absolute;
-                                                            top: 0;
-                                                            left: 0;
-                                                            right: 0;
-                                                            bottom: 0;
-                                                            background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
-                                                            display: flex;
-                                                            align-items: center;
-                                                            justify-content: center;
-                                                            opacity: 0;
-                                                            transition: var(--transition-smooth);
-                                                        } */
+                                                                    position: absolute;
+                                                                    top: 0;
+                                                                    left: 0;
+                                                                    right: 0;
+                                                                    bottom: 0;
+                                                                    background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    justify-content: center;
+                                                                    opacity: 0;
+                                                                    transition: var(--transition-smooth);
+                                                                } */
 
         .hero-image-container:hover .hero-image-overlay {
             opacity: 1;
@@ -1167,7 +1167,7 @@
 
                 <p class="hero-subtitle">
                     Rasakan keindahan menakjubkan dari air terjun yang mengalir deras, alam yang masih asli,
-                    dan petualangan tak terlupakan di salah satu destinasi alam paling spektakuler di Indonesia.
+                    dan petualangan tak terlupakan di salah satu destinasi alam paling spektakuler di Sumatera Barat.
                 </p>
 
                 <div class="hero-actions">
@@ -2199,96 +2199,222 @@
                 </p>
             </div>
 
-            <div class="glass-grid">
-                <div class="glass-card scroll-reveal text-center" style="position: relative; overflow: hidden;">
-                    <div
-                        style="font-size: 4rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, #3b82f6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
-                        Cuaca
+            <div class="glass-grid" style="grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+                <!-- Weather Card -->
+                <div class="glass-card scroll-reveal text-center"
+                    style="position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 500px;">
+                    <div style="flex-shrink: 0;">
+                        <div
+                            style="font-size: 4rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, #3b82f6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
+                            Cuaca
+                        </div>
+                        <h3 class="card-title-glass">Info Cuaca Terbaru</h3>
+                        <p class="card-description-glass">
+                            Cek update cuaca secara langsung, termasuk suhu, kelembapan, dan kondisi angin untuk persiapan
+                            kunjungan Anda.
+                        </p>
                     </div>
-                    <h3 class="card-title-glass">Info Cuaca Terbaru</h3>
-                    <p class="card-description-glass">
-                        Cek update cuaca secara langsung, termasuk suhu, kelembapan, dan kondisi angin untuk persiapan
-                        kunjungan Anda.
-                    </p>
-                    <div class="row mt-3 mb-4">
-                        <div class="col-4">
-                            <div style="font-size: 1.2rem; font-weight: 600; color: #3b82f6;">Suhu</div>
-                            <small style="color: #64748b;">Terbaru</small>
+
+                    <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="row mt-3 mb-4">
+                            <div class="col-4">
+                                <div style="font-size: 1.2rem; font-weight: 600; color: #3b82f6;">Suhu</div>
+                                <small style="color: #64748b;">Terbaru</small>
+                            </div>
+                            <div class="col-4">
+                                <div style="font-size: 1.2rem; font-weight: 600; color: #06b6d4;">Kelembapan</div>
+                                <small style="color: #64748b;">Tingkat Kenyamanan</small>
+                            </div>
+                            <div class="col-4">
+                                <div style="font-size: 1.2rem; font-weight: 600; color: #10b981;">Angin</div>
+                                <small style="color: #64748b;">Kondisi Terkini</small>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <div style="font-size: 1.2rem; font-weight: 600; color: #06b6d4;">Kelembapan</div>
-                            <small style="color: #64748b;">Tingkat Kenyamanan</small>
-                        </div>
-                        <div class="col-4">
-                            <div style="font-size: 1.2rem; font-weight: 600; color: #10b981;">Angin</div>
-                            <small style="color: #64748b;">Kondisi Terkini</small>
+
+                        <div style="margin-top: auto;">
+                            <a href="{{ url('weather') }}" class="btn-glass btn-glass-primary"
+                                style="width: 100%; justify-content: center; padding: 1rem 1.5rem; font-size: 1rem;">
+                                <i class="fas fa-cloud-sun me-2"></i>
+                                Cek Cuaca
+                            </a>
                         </div>
                     </div>
-                    <a href="{{ url('weather') }}" class="btn-glass btn-glass-primary"
-                        style="width: 100%; justify-content: center;">
-                        Cek Cuaca
-                    </a>
                 </div>
 
-                <div class="glass-card scroll-reveal text-center" style="position: relative; overflow: hidden;">
-                    <div
-                        style="font-size: 4rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, #228B22, #90EE90); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
-                        Peta
+                <!-- Entrance Ticket Rates Card -->
+                <div class="glass-card scroll-reveal text-center"
+                    style="position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 500px;">
+                    <div style="flex-shrink: 0;">
+                        <div
+                            style="font-size: 4rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, #f59e0b, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
+                            💳
+                        </div>
+                        <h3 class="card-title-glass">Tiket Masuk</h3>
+                        <p class="card-description-glass">
+                            Informasi harga tiket masuk ke kawasan wisata Air Terjun Lubuk Hitam yang terjangkau untuk semua
+                            kalangan.
+                        </p>
                     </div>
-                    <h3 class="card-title-glass">Peta Interaktif</h3>
-                    <p class="card-description-glass">
-                        Temukan jalur, tempat menarik, dan fasilitas penting dengan mudah lewat peta interaktif ini.
-                    </p>
-                    <div class="row mt-3 mb-4">
-                        <div class="col-3">
-                            <div style="font-size: 1rem; font-weight: 600;">Jalur</div>
-                            <small style="color: #64748b;">Rute Perjalanan</small>
+
+                    <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                        <!-- Price Display -->
+                        <div class="mt-3 mb-3"
+                            style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.1)); border-radius: 15px; padding: 1.5rem; border: 2px solid rgba(245, 158, 11, 0.2);">
+                            <div
+                                style="font-size: 2.2rem; font-weight: 800; background: linear-gradient(135deg, #f59e0b, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem;">
+                                Rp 8.000,-
+                            </div>
+                            <div style="font-size: 1.1rem; color: #92400e; font-weight: 600;">
+                                Per Orang
+                            </div>
+                            <div style="font-size: 0.9rem; color: #a16207; margin-top: 0.5rem;">
+                                Berlaku untuk semua usia
+                            </div>
                         </div>
-                        <div class="col-3">
-                            <div style="font-size: 1rem; font-weight: 600;">Tempat</div>
-                            <small style="color: #64748b;">Spot Menarik</small>
+
+                        <!-- Additional Info -->
+                        <div class="row mt-2 mb-3">
+                            <div class="col-4">
+                                <div style="font-size: 1rem; font-weight: 600; color: #f59e0b;">Terjangkau</div>
+                                <small style="color: #64748b;">Harga Ramah</small>
+                            </div>
+                            <div class="col-4">
+                                <div style="font-size: 1rem; font-weight: 600; color: #fbbf24;">Semua Usia</div>
+                                <small style="color: #64748b;">Keluarga</small>
+                            </div>
+                            <div class="col-4">
+                                <div style="font-size: 1rem; font-weight: 600; color: #d97706;">Akses Penuh</div>
+                                <small style="color: #64748b;">Fasilitas</small>
+                            </div>
                         </div>
-                        <div class="col-3">
-                            <div style="font-size: 1rem; font-weight: 600;">Fasilitas</div>
-                            <small style="color: #64748b;">Layanan</small>
+
+                        <!-- Important Notes -->
+                        <div
+                            style="background: rgba(34, 139, 34, 0.1); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; border-left: 4px solid #228B22;">
+                            <div style="font-size: 0.9rem; color: #1a5f1a; font-weight: 500;">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Tiket sudah termasuk akses ke area air terjun dan fasilitas umum
+                            </div>
                         </div>
-                        <div class="col-3">
-                            <div style="font-size: 1rem; font-weight: 600;">Pemandangan</div>
-                            <small style="color: #64748b;">Galeri</small>
+
+                        <div style="margin-top: auto;">
+                            <a href="{{ route('minimap.index') }}" class="btn-glass btn-glass-primary"
+                                style="width: 100%; justify-content: center; padding: 1rem 1.5rem; font-size: 1rem;">
+                                <i class="fas fa-ticket-alt me-2"></i>
+                                Rencanakan Kunjungan
+                            </a>
                         </div>
                     </div>
-                    <a href="{{ route('minimap.index') }}" class="btn-glass btn-glass-primary"
-                        style="width: 100%; justify-content: center;">
-                        Buka Peta
-                    </a>
                 </div>
 
-                <div class="glass-card scroll-reveal text-center" style="position: relative; overflow: hidden;">
-                    <div
-                        style="font-size: 4rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, #f59e0b, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
-                        Bantuan
+                <!-- Interactive Map Card -->
+                <div class="glass-card scroll-reveal text-center"
+                    style="position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 500px;">
+                    <div style="flex-shrink: 0;">
+                        <div
+                            style="font-size: 4rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, #228B22, #90EE90); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
+                            Peta
+                        </div>
+                        <h3 class="card-title-glass">Peta Interaktif</h3>
+                        <p class="card-description-glass">
+                            Temukan jalur, tempat menarik, dan fasilitas penting dengan mudah lewat peta interaktif ini.
+                        </p>
                     </div>
-                    <h3 class="card-title-glass">Kontak & Dukungan</h3>
-                    <p class="card-description-glass">
-                        Hubungi kami kapan saja untuk bantuan, reservasi, atau info seputar kunjungan Anda.
-                    </p>
-                    <div class="mt-3 mb-4">
-                        <div style="margin-bottom: 0.5rem;">
-                            <strong>24/7 Layanan</strong>
+
+                    <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="row mt-3 mb-4">
+                            <div class="col-3">
+                                <div style="font-size: 1rem; font-weight: 600;">Jalur</div>
+                                <small style="color: #64748b;">Rute Perjalanan</small>
+                            </div>
+                            <div class="col-3">
+                                <div style="font-size: 1rem; font-weight: 600;">Tempat</div>
+                                <small style="color: #64748b;">Spot Menarik</small>
+                            </div>
+                            <div class="col-3">
+                                <div style="font-size: 1rem; font-weight: 600;">Fasilitas</div>
+                                <small style="color: #64748b;">Layanan</small>
+                            </div>
+                            <div class="col-3">
+                                <div style="font-size: 1rem; font-weight: 600;">Pemandangan</div>
+                                <small style="color: #64748b;">Galeri</small>
+                            </div>
                         </div>
-                        <div style="margin-bottom: 0.5rem;">
-                            <strong>Bantuan Reservasi</strong>
-                        </div>
-                        <div>
-                            <strong>Informasi Lokal</strong>
+
+                        <div style="margin-top: auto;">
+                            <a href="{{ route('minimap.index') }}" class="btn-glass btn-glass-primary"
+                                style="width: 100%; justify-content: center; padding: 1rem 1.5rem; font-size: 1rem;">
+                                <i class="fas fa-map-marked-alt me-2"></i>
+                                Buka Peta
+                            </a>
                         </div>
                     </div>
-                    <a href="{{ url('contact') }}" class="btn-glass btn-glass-primary"
-                        style="width: 100%; justify-content: center;">
-                        Hubungi Kami
-                    </a>
+                </div>
+
+                <!-- Contact & Support Card -->
+                <div class="glass-card scroll-reveal text-center"
+                    style="position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 500px;">
+                    <div style="flex-shrink: 0;">
+                        <div
+                            style="font-size: 4rem; margin-bottom: 1.5rem; background: linear-gradient(135deg, #f59e0b, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
+                            Bantuan
+                        </div>
+                        <h3 class="card-title-glass">Kontak & Dukungan</h3>
+                        <p class="card-description-glass">
+                            Hubungi kami kapan saja untuk bantuan, reservasi, atau info seputar kunjungan Anda.
+                        </p>
+                    </div>
+
+                    <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="mt-3 mb-4">
+                            <div
+                                style="margin-bottom: 1rem; padding: 0.75rem; background: rgba(245, 158, 11, 0.1); border-radius: 10px; border-left: 3px solid #f59e0b;">
+                                <div style="font-size: 1rem; font-weight: 600; color: #f59e0b;">
+                                    <i class="fas fa-clock me-2"></i>
+                                    24/7 Layanan
+                                </div>
+                            </div>
+                            <div
+                                style="margin-bottom: 1rem; padding: 0.75rem; background: rgba(245, 158, 11, 0.1); border-radius: 10px; border-left: 3px solid #fbbf24;">
+                                <div style="font-size: 1rem; font-weight: 600; color: #fbbf24;">
+                                    <i class="fas fa-calendar-check me-2"></i>
+                                    Bantuan Reservasi
+                                </div>
+                            </div>
+                            <div
+                                style="padding: 0.75rem; background: rgba(245, 158, 11, 0.1); border-radius: 10px; border-left: 3px solid #d97706;">
+                                <div style="font-size: 1rem; font-weight: 600; color: #d97706;">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    Informasi Lokal
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: auto;">
+                            <a href="{{ url('contact') }}" class="btn-glass btn-glass-primary"
+                                style="width: 100%; justify-content: center; padding: 1rem 1.5rem; font-size: 1rem;">
+                                <i class="fas fa-phone me-2"></i>
+                                Hubungi Kami
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Responsive Adjustments -->
+            <style>
+                @media (max-width: 768px) {
+                    .glass-grid[style*="repeat(2, 1fr)"] {
+                        grid-template-columns: 1fr !important;
+                        gap: 1.5rem !important;
+                    }
+
+                    .glass-card[style*="min-height: 500px"] {
+                        min-height: auto !important;
+                    }
+                }
+            </style>
+
         </div>
     </section>
 
