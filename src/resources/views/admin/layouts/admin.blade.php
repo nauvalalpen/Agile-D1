@@ -631,7 +631,7 @@
                 <a class="nav-link {{ request()->routeIs('tourguides.*') ? 'active' : '' }}"
                     href="{{ route('tourguides.index') }}">
                     <i class="fas fa-user-tie"></i>
-                    <span>Pemandu Wisata</span>
+                    <span>Tour Guide</span>
                 </a>
             </li>
 
@@ -640,7 +640,7 @@
                 <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}"
                     href="{{ route('admin.orders.index') }}">
                     <i class="fas fa-calendar-check"></i>
-                    <span>Pemesanan Pemandu</span>
+                    <span>Pemesanan Tour Guide</span>
                 </a>
             </li>
 
@@ -873,7 +873,7 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="text-xs fw-bold text-success text-uppercase mb-1">
-                                        Pemandu Aktif
+                                        Tour Guide Aktif
                                     </div>
                                     <div class="h4 mb-0 fw-bold text-gray-800">
                                         @php
@@ -896,7 +896,7 @@
                             <div class="mt-3">
                                 <a href="{{ route('admin.orders.index') }}" class="btn btn-success btn-sm">
                                     <i class="fas fa-arrow-right me-1"></i>
-                                    Kelola Pemandu
+                                    Kelola Tour Guide
                                 </a>
                             </div>
                         </div>
