@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Kelola Pesanan Pemandu Wisata</h1>
+        <h1 class="h3 mb-4 text-gray-800">Kelola Pesanan Tour Guide</h1>
 
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -20,7 +20,7 @@
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Daftar Pesanan Pemandu Wisata</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Daftar Pesanan Tour Guide</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -29,7 +29,7 @@
                             <tr>
                                 <th>NO</th>
                                 <th>Pengguna</th>
-                                <th>Pemandu Wisata</th>
+                                <th>Tour Guide</th>
                                 <th>Tanggal Pesan</th>
                                 <th>Jumlah Orang</th>
                                 <th>Rentang Harga</th>
@@ -97,7 +97,7 @@
                             </div>
                             <div>
                                 <h5 class="modal-title mb-0" id="editOrderModalLabel{{ $order->id }}">
-                                    Proses Pesanan Pemandu Wisata
+                                    Proses Pesanan Tour Guide
                                 </h5>
                                 <small class="opacity-75">ID: #{{ str_pad($order->id, 4, '0', STR_PAD_LEFT) }}</small>
                             </div>

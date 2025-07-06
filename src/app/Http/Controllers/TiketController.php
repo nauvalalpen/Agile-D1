@@ -103,7 +103,7 @@ class TiketController extends Controller
         TiketMasuk::create($validated);
 
         return redirect()->route('admin.tiketmasuks.index')
-            ->with('success', 'Wisatawan berhasil ditambahkan.');
+            ->with('success', 'Tiket Masuk berhasil ditambahkan.');
     }
 
     /**
@@ -129,7 +129,7 @@ class TiketController extends Controller
         $tiket->update($validated);
 
         return redirect()->route('admin.tiketmasuks.index')
-            ->with('success', 'Wisatawan berhasil diperbarui.');
+            ->with('success', 'Tiket Masuk berhasil diperbarui.');
     }
 
     public function updateStatus($id)
@@ -141,6 +141,6 @@ class TiketController extends Controller
         $tiket->waktu_selesai = now();
         $tiket->save();
 
-        return redirect()->back()->with('success', 'Status berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Status Tiket Masuk berhasil diperbarui.');
     }
 }
