@@ -1195,13 +1195,14 @@
                 </div>
                 <div class="modal-body text-center py-4">
                     <i class="fas fa-question-circle fa-3x text-warning mb-3"></i>
-                    <h6>Are you sure you want to logout?</h6>
-                    <p class="text-muted">You will need to login again to access the admin panel.</p>
+                    <h6>Apakah kamu yakin ingin Logout?</h6>
+                    <p class="text-muted">Kamu diharuskan untuk Login jika ingin mengakses Admin Panel lagi.
+                    </p>
                 </div>
                 <div class="modal-footer border-0 justify-content-center">
                     <button class="btn btn-secondary px-4" type="button" data-bs-dismiss="modal">
                         <i class="fas fa-times me-1"></i>
-                        Cancel
+                        Batal
                     </button>
                     <form action="{{ route('logout') }}" method="POST" class="d-inline">
                         @csrf
