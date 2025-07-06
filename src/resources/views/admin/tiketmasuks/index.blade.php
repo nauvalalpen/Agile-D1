@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Kelola Wisatawan</h1>
+            <h1 class="h3 mb-0 text-gray-800">Kelola Tiket Masuk</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTouristsModal">
                 <i class="fas fa-plus"></i> Tambah Tiket Masuk
             </button>
@@ -20,7 +20,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary">Filter Data Wisatawan</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Filter Data Tiket Masuk</h6>
                 </div>
             </div>
             <div class="card-body">
@@ -52,15 +52,15 @@
                     <small class="text-muted">
                         <i class="fas fa-info-circle"></i>
                         @if (!isset($filter) || $filter == 'all')
-                            Menampilkan semua data wisatawan
+                            Menampilkan semua data Tiket Masuk
                         @elseif($filter == 'today')
-                            Menampilkan data wisatawan hari ini ({{ \Carbon\Carbon::today()->format('d M Y') }})
+                            Menampilkan data Tiket Masuk hari ini ({{ \Carbon\Carbon::today()->format('d M Y') }})
                         @elseif($filter == 'week')
-                            Menampilkan data wisatawan minggu ini
+                            Menampilkan data Tiket Masuk minggu ini
                             ({{ \Carbon\Carbon::now()->startOfWeek()->format('d M') }} -
                             {{ \Carbon\Carbon::now()->endOfWeek()->format('d M Y') }})
                         @elseif($filter == 'month')
-                            Menampilkan data wisatawan bulan ini ({{ \Carbon\Carbon::now()->format('F Y') }})
+                            Menampilkan data Tiket Masuk bulan ini ({{ \Carbon\Carbon::now()->format('F Y') }})
                         @endif
                         - Total: <strong>{{ $tikets->count() }}</strong> data
                     </small>
@@ -70,7 +70,7 @@
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Daftar Wisatawan</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Daftar Tiket Masuk</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

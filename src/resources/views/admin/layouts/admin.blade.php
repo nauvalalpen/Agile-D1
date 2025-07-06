@@ -622,7 +622,7 @@
                 <a class="nav-link {{ request()->routeIs('admin.tiketmasuks.*') ? 'active' : '' }}"
                     href="{{ route('admin.tiketmasuks.index') }}">
                     <i class="fas fa-users"></i>
-                    <span>Wisatawan</span>
+                    <span>Tiket Masuk</span>
                 </a>
             </li>
 
