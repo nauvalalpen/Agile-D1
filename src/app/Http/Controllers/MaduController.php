@@ -58,7 +58,7 @@ class MaduController extends Controller
         Madu::create($validated);
 
         return redirect()->route('admin.madu.index')
-            ->with('success', 'Honey product created successfully.');
+            ->with('success', 'Produk Madu berhasil ditambahkan.');
     }
 
     /**
@@ -96,7 +96,7 @@ class MaduController extends Controller
         $madu->update($validated);
 
         return redirect()->route('admin.madu.index')
-            ->with('success', 'Honey product updated successfully.');
+            ->with('success', 'Produk Madu berhasil diperbarui.');
     }
 
     /**
@@ -107,7 +107,7 @@ class MaduController extends Controller
         $madu->delete();
 
         return redirect()->route('admin.madu.index')
-            ->with('success', 'Honey product deleted successfully.');
+            ->with('success', 'Produk Madu berhasil dihapus.');
     }
 
     /**
@@ -119,7 +119,7 @@ class MaduController extends Controller
         $madu->restore();
 
         return redirect()->route('admin.madu.index')
-            ->with('success', 'Honey product restored successfully.');
+            ->with('success', 'Produk Madu berhasil dipulihkan.');
     }
 
     /**
@@ -137,7 +137,7 @@ class MaduController extends Controller
         $madu->forceDelete();
 
         return redirect()->route('admin.madu.index')
-            ->with('success', 'Honey product permanently deleted.');
+            ->with('success', 'Produk Madu berhasil dihapus secara permanen.');
     }
 
     /**
@@ -181,6 +181,6 @@ class MaduController extends Controller
         ]);
 
         return redirect()->route('order-madu.index')
-            ->with('success', 'Your honey order has been submitted and is pending approval.');
+            ->with('success', 'Pesanan madu Anda telah dikirimkan dan sedang menunggu persetujuan.');
     }
 }

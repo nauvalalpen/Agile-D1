@@ -117,7 +117,7 @@
                 position: relative;
                 background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3)),
                     url('/images/hero.jpg') no-repeat center center/cover;
-                height: 80vh;
+                height: 95vh;
                 color: white;
                 display: flex;
                 align-items: center;

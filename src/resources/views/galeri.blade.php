@@ -10,7 +10,8 @@
     <section class="hero-section">
         <div class="hero-content">
             <div class="hero-title">GALERI<br>WISATA</div>
-            <div class="hero-desc"> Nikmati keindahan alam yang menakjubkan di salah satu destinasi wisata alam terbaik di Sumatera Barat.</div>
+            <div class="hero-desc"> Nikmati keindahan alam yang menakjubkan di salah satu destinasi wisata alam terbaik di
+                Sumatera Barat.</div>
             <a href="#gallery-grid" class="hero-btn">Lihat Galeri</a>
         </div>
     </section>
@@ -70,9 +71,12 @@
                     <div class="hero-tour-text">
                         <h3>Rasakan Petualangan Bersama<br>Pemandu Wisata Terbaik Kami</h3>
                         <p>
-                             Dari sesi melukis hingga petualangan luar ruangan, setiap pengalaman kami menjanjikan momen tak terlupakan yang penuh inspirasi dan penyegaran. Jelajahi alam melalui pendakian seru atau kejar gemuruh derasnya air terjun yang menakjubkan.
+                            Dari sesi melukis hingga petualangan luar ruangan, setiap pengalaman kami menjanjikan momen tak
+                            terlupakan yang penuh inspirasi dan penyegaran. Jelajahi alam melalui pendakian seru atau kejar
+                            gemuruh derasnya air terjun yang menakjubkan.
                         </p>
-                        <a href="{{ route('tourguides.index') }}" class="btn btn-custom w-70" id="btn-view-details"> Temukan Pemandu</a>
+                        <a href="{{ route('tourguides.index') }}" class="btn btn-custom w-70" id="btn-view-details"> Temukan
+                            Pemandu</a>
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
@@ -424,7 +428,7 @@
             position: relative;
             background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
                 url('/images/hero.jpg') no-repeat center center/cover;
-            height: 80vh;
+            height: 95vh;
             color: white;
             display: flex;
             align-items: center;
@@ -503,7 +507,7 @@
 
         /* === 2. MAIN GALLERY GRID === */
         .gallery-container {
-            margin-top: 0;
+            margin-top: 0px;
             position: relative;
             z-index: 2;
             background: #f8f9fa;

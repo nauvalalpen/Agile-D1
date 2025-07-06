@@ -358,15 +358,15 @@
                                                     <div class="profile-image-container">
                                                         ${guide.foto ? 
                                                             `<img src="${guide.foto}" alt="${guide.nama}" class="profile-image">
-                                                                 <div class="profile-verified-badge">
-                                                                     <i class="fas fa-check"></i>
-                                                                 </div>` :
+                                                                             <div class="profile-verified-badge">
+                                                                                 <i class="fas fa-check"></i>
+                                                                             </div>` :
                                                             `<div class="profile-image-placeholder">
-                                                                     <i class="fas fa-user"></i>
-                                                                 </div>
-                                                                 <div class="profile-verified-badge">
-                                                                     <i class="fas fa-check"></i>
-                                                                 </div>`
+                                                                                 <i class="fas fa-user"></i>
+                                                                             </div>
+                                                                             <div class="profile-verified-badge">
+                                                                                 <i class="fas fa-check"></i>
+                                                                             </div>`
                                                         }
                                                         <div class="profile-status-badge">
                                                             <i class="fas fa-circle"></i>
@@ -498,7 +498,7 @@
             position: relative;
             background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
                 url('/images/hero.jpg') no-repeat center center/cover;
-            height: 80vh;
+            height: 95vh;
             color: white;
             display: flex;
             align-items: center;
@@ -577,7 +577,7 @@
 
         /* === 2. MAIN TOUR GUIDES SECTION === */
         .tourguides-container {
-            margin-top: 0;
+            margin-top: 0px;
             position: relative;
             z-index: 2;
             background: #f8f9fa;

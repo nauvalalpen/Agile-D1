@@ -395,7 +395,7 @@
             position: relative;
             background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
                 url('/images/hero.jpg') no-repeat center center/cover;
-            height: 80vh;
+            height: 95vh;
             color: white;
             display: flex;
             align-items: center;
@@ -474,7 +474,7 @@
 
         /* === 2. MAIN ORDERS SECTION === */
         .orders-container {
-            margin-top: -80px;
+            margin-top: 0px;
             position: relative;
             z-index: 2;
             background: #f8f9fa;

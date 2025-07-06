@@ -55,7 +55,7 @@ class FacilityController extends Controller
         Facility::create($validated);
 
         return redirect()->route('admin.facilities.index')
-            ->with('success', 'Facility created successfully.');
+            ->with('success', 'Fasilitas berhasil ditambahkan.');
     }
 
     /**
@@ -83,7 +83,7 @@ class FacilityController extends Controller
         $facility->update($validated);
 
         return redirect()->route('admin.facilities.index')
-            ->with('success', 'Facility updated successfully.');
+            ->with('success', 'fasilitas berhasil diperbarui.');
     }
 
     /**
@@ -94,7 +94,7 @@ class FacilityController extends Controller
         $facility->delete();
 
         return redirect()->route('admin.facilities.index')
-            ->with('success', 'Facility deleted successfully.');
+            ->with('success', 'Fasilitas berhasil dihapus.');
     }
 
     /**
@@ -124,6 +124,6 @@ class FacilityController extends Controller
         $facility->forceDelete();
 
         return redirect()->route('admin.facilities.index')
-            ->with('success', 'Facility permanently deleted.');
+            ->with('success', 'Fasilitas berhasil dihapus secara permanen.');
     }
 }

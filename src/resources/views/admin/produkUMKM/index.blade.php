@@ -58,38 +58,29 @@
                                     </td>
                                     <td>
                                         @if ($produk->deleted_at)
-                                            <form action="{{ route('admin.produkUMKM.restore', $produk->id) }}"
-                                                method="POST" class="d-inline">
-                                                @csrf
-                                                <button type="submit" class="btn btn-success btn-sm"
-                                                    onclick="return confirm('Apakah Anda yakin ingin mengembalikan produk ini')">
-                                                    <i class="fas fa-undo"></i> Pulihkan
-                                                </button>
-                                            </form>
-                                            <form action="{{ route('admin.produkUMKM.force-delete', $produk->id) }}"
-                                                method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus permanen produk ini?')">
-                                                    <i class="fas fa-trash"></i> Hapus Permanen
-                                                </button>
-                                            </form>
-                                        @else
-                                            <button type="button" class="btn btn-warning btn-sm edit-btn"
-                                                data-id="{{ $produk->id }}" data-bs-toggle="modal"
-                                                data-bs-target="#editProdukUMKMModal">
-                                                <i class="fas fa-edit"></i> Edit
+                                            <!-- Restore Button -->
+                                            <button type="button" class="btn btn-sm btn-success me-1"
+                                                onclick="showRestoreModal({{ $produk->id }}, '{{ addslashes($produk->nama) }}')"
+                                                title="Restore">
+                                                <i class="fas fa-trash-restore"></i>
                                             </button>
-                                            <form action="{{ route('admin.produkUMKM.destroy', $produk->id) }}"
-                                                method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">
-                                                    <i class="fas fa-trash"></i> Hapus
-                                                </button>
-                                            </form>
+                                            <!-- Force Delete Button -->
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                onclick="showForceDeleteModal({{ $produk->id }}, '{{ addslashes($produk->nama) }}')"
+                                                title="Permanently Delete">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        @else
+                                            <button type="button" class="btn btn-warning btn-sm edit-btn me-1"
+                                                data-id="{{ $produk->id }}" data-bs-toggle="modal"
+                                                data-bs-target="#editProdukUMKMModal" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                onclick="showDeleteModal({{ $produk->id }}, '{{ addslashes($produk->nama) }}')"
+                                                title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         @endif
                                     </td>
                                 </tr>
@@ -240,7 +231,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Perbarui Produk UMKM
+                                Simpan Perubahan
                             </button>
                         </div>
                     </form>
@@ -248,6 +239,188 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal for restore and force delete --}}
+
+    <!-- Restore Confirmation Modal -->
+    <div class="modal fade" id="restoreModal" tabindex="-1" aria-labelledby="restoreModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="restoreModalLabel">Konfirmasi Restore</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin mengembalikan produk "<span id="restoreProductName"></span>"?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <form id="restoreForm" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-success">Ya, Kembalikan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Force Delete Confirmation Modal -->
+    <div class="modal fade" id="forceDeleteModal" tabindex="-1" aria-labelledby="forceDeleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forceDeleteModalLabel">Konfirmasi Hapus Permanen</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-danger"><strong>Peringatan!</strong> Tindakan ini tidak dapat dibatalkan.</p>
+                    <p>Apakah Anda yakin ingin menghapus permanen produk "<span id="forceDeleteProductName"></span>"?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <form id="forceDeleteForm" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Ya, Hapus Permanen</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this modal with the other modals -->
+
+    <!-- Soft Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Apakah Anda yakin ingin menghapus produk "<span id="deleteProductName"></span>"?</p>
+                    <p class="text-muted"><small><i class="fas fa-info-circle"></i> Produk yang dihapus masih dapat
+                            dikembalikan.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <form id="deleteForm" method="POST" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle edit button clicks (existing code)
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const produkId = this.getAttribute('data-id');
+
+                    // Fetch produk data
+                    fetch(`/admin/produkUMKM/${produkId}/edit-modal`)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Populate the edit form
+                            document.getElementById('edit_nama').value = data.nama;
+                            document.getElementById('edit_harga').value = data.harga;
+                            document.getElementById('edit_deskripsi').value = data.deskripsi;
+
+                            // Update form action
+                            document.getElementById('editProdukUMKMForm').action =
+                                `/admin/produkUMKM/${data.id}`;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Error loading product data');
+                        });
+                });
+            });
+        });
+
+        // Show restore modal
+        function showRestoreModal(produkId, produkName) {
+            document.getElementById('restoreProductName').textContent = produkName;
+            document.getElementById('restoreForm').action = `/admin/produkUMKM/${produkId}/restore`;
+
+            const restoreModal = new bootstrap.Modal(document.getElementById('restoreModal'));
+            restoreModal.show();
+        }
+
+        // Show force delete modal
+        function showForceDeleteModal(produkId, produkName) {
+            document.getElementById('forceDeleteProductName').textContent = produkName;
+            document.getElementById('forceDeleteForm').action = `/admin/produkUMKM/${produkId}/force-delete`;
+
+            const forceDeleteModal = new bootstrap.Modal(document.getElementById('forceDeleteModal'));
+            forceDeleteModal.show();
+        }
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle edit button clicks (existing code)
+            document.querySelectorAll('.edit-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const produkId = this.getAttribute('data-id');
+
+                    // Fetch produk data
+                    fetch(`/admin/produkUMKM/${produkId}/edit-modal`)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Populate the edit form
+                            document.getElementById('edit_nama').value = data.nama;
+                            document.getElementById('edit_harga').value = data.harga;
+                            document.getElementById('edit_deskripsi').value = data.deskripsi;
+
+                            // Update form action
+                            document.getElementById('editProdukUMKMForm').action =
+                                `/admin/produkUMKM/${data.id}`;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Error loading product data');
+                        });
+                });
+            });
+        });
+
+        // Show soft delete modal
+        function showDeleteModal(produkId, produkName) {
+            document.getElementById('deleteProductName').textContent = produkName;
+            document.getElementById('deleteForm').action = `/admin/produkUMKM/${produkId}`;
+
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            deleteModal.show();
+        }
+
+        // Show restore modal
+        function showRestoreModal(produkId, produkName) {
+            document.getElementById('restoreProductName').textContent = produkName;
+            document.getElementById('restoreForm').action = `/admin/produkUMKM/${produkId}/restore`;
+
+            const restoreModal = new bootstrap.Modal(document.getElementById('restoreModal'));
+            restoreModal.show();
+        }
+
+        // Show force delete modal
+        function showForceDeleteModal(produkId, produkName) {
+            document.getElementById('forceDeleteProductName').textContent = produkName;
+            document.getElementById('forceDeleteForm').action = `/admin/produkUMKM/${produkId}/force-delete`;
+
+            const forceDeleteModal = new bootstrap.Modal(document.getElementById('forceDeleteModal'));
+            forceDeleteModal.show();
+        }
+    </script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
