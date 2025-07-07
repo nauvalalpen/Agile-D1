@@ -7,7 +7,12 @@
     {{-- Main Content --}}
     <main class="detail-main-content">
         {{-- Back Button --}}
-
+        <div class="detail-back-container">
+            <a href="{{ url('/beritas') }}" class="detail-btn-back">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to News</span>
+            </a>
+        </div>
 
         {{-- Article Container --}}
         <div class="detail-article-container">
@@ -16,10 +21,6 @@
                 {{-- Article Image --}}
                 <div class="detail-article-image-wrapper">
                     <img src="{{ asset('storage/' . $berita->foto) }}" alt="{{ $berita->judul }}" class="detail-article-image">
-                    {{-- <div class="detail-article-badge">
-                        <i class="fas fa-newspaper me-1"></i>
-                        News
-                    </div> --}}
                 </div>
 
                 {{-- Article Content --}}
@@ -57,7 +58,6 @@
         /* Main Content Container */
         .detail-main-content {
             padding-top: 100px;
-            /* Ensure enough space from navbar */
             min-height: 100vh;
             background: linear-gradient(135deg, rgba(240, 253, 244, 0.3) 0%, rgba(220, 252, 231, 0.2) 100%);
         }
@@ -155,23 +155,27 @@
             box-shadow: 0 35px 90px rgba(10, 31, 15, 0.2);
         }
 
-        /* Article Image */
+        /* Article Image - Fixed to show full image without cropping */
         .detail-article-image-wrapper {
             position: relative;
-            height: 450px;
+            width: 100%;
+            /* Remove fixed height to allow natural image proportions */
+            min-height: 300px;
+            max-height: 500px;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
         }
 
         .detail-article-image {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            /* Changed from object-fit: cover to contain to show full image */
+            object-fit: contain;
             object-position: center;
-            transition: transform 0.6s ease;
-        }
-
-        .detail-article-card:hover .detail-article-image {
-            transform: scale(1.05);
+            max-height: 500px;
         }
 
         .detail-article-badge {
@@ -302,7 +306,12 @@
             }
 
             .detail-article-image-wrapper {
-                height: 300px;
+                min-height: 200px;
+                max-height: 350px;
+            }
+
+            .detail-article-image {
+                max-height: 350px;
             }
 
             .detail-article-content {
@@ -353,7 +362,12 @@
             }
 
             .detail-article-image-wrapper {
-                height: 220px;
+                min-height: 180px;
+                max-height: 280px;
+            }
+
+            .detail-article-image {
+                max-height: 280px;
             }
 
             .detail-article-content {
@@ -450,7 +464,7 @@
                 passive: true
             });
 
-            // Keyboard shortcuts
+                      // Keyboard shortcuts
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     window.location.href = '/beritas';
@@ -463,3 +477,4 @@
         });
     </script>
 @endsection
+
