@@ -1943,7 +1943,7 @@
             @else
                 <div class="text-center">
                     <div class="glass-card mx-auto" style="max-width: 500px;">
-                        <h3 class="card-title-glass">FFasilitas Akan Segera Tersedia</h3>
+                        <h3 class="card-title-glass">Fasilitas Akan Segera Tersedia</h3>
                         <p class="card-description-glass">Kami sedang menyiapkan berbagai fasilitas menarik untuk mendukung
                             pengalaman Anda di Lubuk Hitam.</p>
                     </div>

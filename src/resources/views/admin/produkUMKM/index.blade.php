@@ -157,7 +157,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save"></i> Simpan Produk UMKM
                             </button>
@@ -229,7 +229,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">btn-lihat-detail</button>
                             <button type="submit" class="btn btn-primary">
                                 Simpan Perubahan
                             </button>

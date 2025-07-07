@@ -117,7 +117,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createGalleryModalLabel">Tambah Gallery Baru</h5>
+                    <h5 class="modal-title" id="createGalleryModalLabel">Tambah Galeri Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('admin.gallery.store') }}" method="POST" enctype="multipart/form-data">
@@ -158,7 +158,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Tambah Gallery</button>
+                        <button type="submit" class="btn btn-primary">Tambah Galeri</button>
                     </div>
                 </form>
             </div>
@@ -170,7 +170,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="detailsModalLabel">Gallery Details</h5>
+                    <h5 class="modal-title" id="detailsModalLabel">Detail Galeri</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="detailsModalBody">
@@ -192,7 +192,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Gallery</h5>
+                    <h5 class="modal-title" id="editModalLabel">Edit Galeri</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="editModalBody">
@@ -230,7 +230,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Apakah Anda yakin ingin menghapus gallery <strong id="deleteItemName"></strong>?</p>
+                    <p>Apakah Anda yakin ingin menghapus galeri <strong id="deleteItemName"></strong>?</p>
                     <p class="text-muted">Data akan dipindahkan ke trash dan dapat dikembalikan.</p>
                 </div>
                 <div class="modal-footer">
@@ -254,8 +254,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Apakah Anda yakin ingin mengembalikan gallery <strong id="restoreItemName"></strong>?</p>
-                    <p class="text-success">Gallery akan dipulihkan dan kembali aktif.</p>
+                    <p>Apakah Anda yakin ingin mengembalikan galeri <strong id="restoreItemName"></strong>?</p>
+                    <p class="text-success">Galeri akan dipulihkan dan kembali aktif.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -278,7 +278,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Anda akan menghapus secara permanen gallery <strong id="forceDeleteItemName"></strong>.</p>
+                    <p>Anda akan menghapus secara permanen galeri <strong id="forceDeleteItemName"></strong>.</p>
                     <p class="text-danger fw-bold">Tindakan ini tidak dapat dibatalkan!</p>
                 </div>
                 <div class="modal-footer">
