@@ -673,18 +673,18 @@
         }
 
         /* .hero-image-overlay {
-                                                                    position: absolute;
-                                                                    top: 0;
-                                                                    left: 0;
-                                                                    right: 0;
-                                                                    bottom: 0;
-                                                                    background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
-                                                                    display: flex;
-                                                                    align-items: center;
-                                                                    justify-content: center;
-                                                                    opacity: 0;
-                                                                    transition: var(--transition-smooth);
-                                                                } */
+                                                                            position: absolute;
+                                                                            top: 0;
+                                                                            left: 0;
+                                                                            right: 0;
+                                                                            bottom: 0;
+                                                                            background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
+                                                                            display: flex;
+                                                                            align-items: center;
+                                                                            justify-content: center;
+                                                                            opacity: 0;
+                                                                            transition: var(--transition-smooth);
+                                                                        } */
 
         .hero-image-container:hover .hero-image-overlay {
             opacity: 1;
@@ -2175,8 +2175,9 @@
                 <div class="text-center">
                     <div class="glass-card mx-auto" style="max-width: 500px;">
                         <h3 class="card-title-glass">Berita Segera Hadir</h3>
-                        <p class="card-description-glass">Latest updates about Lubuk Hitam will be available soonInformasi
-                            terbaru tentang Lubuk Hitam akan kami bagikan segera.</p>
+                        <p class="card-description-glass">Informasi terbaru tentang Air Terjun Lubuk Hitam akan kami
+                            bagikan segera, ditunggu ya!
+                        </p>
                     </div>
                 </div>
             @endif
