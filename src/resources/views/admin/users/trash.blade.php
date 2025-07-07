@@ -22,19 +22,20 @@
         </div>
         <div class="card-body">
             @if($users->isEmpty())
-                <p class="text-center text-muted">No deleted users found.</p>
+                <p class="text-center text-muted">Tidak ada pengguna yang dihapus.</p>
             @else
             <div class="table-responsive">
                 <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead class="table-danger">
                         <tr>
                             <th>No</th>
-                            <th>Photo</th>
-                            <th>Name</th>
+                            <th>Foto</th>
+                            <th>Nama</th>
                             <th>Email</th>
-                            <th>Role</th>
-                            <th>Deleted At</th>
-                            <th>Actions</th>
+                            <th>Peran</th>
+                            <th>Dihapus Pada</th>
+                            <th>Aksi</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -57,12 +58,12 @@
                                 <form action="{{ route('admin.users.restore', $user->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     <button type="submit" class="btn btn-success btn-sm" title="Restore">
-                                        <i class="fas fa-trash-restore"></i> Restore
+                                        <i class="fas fa-trash-restore"></i> Pulihkan
                                     </button>
                                 </form>
                                 <!-- Force Delete Button trigger modal -->
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#forceDeleteModal{{ $user->id }}" title="Delete Permanently">
-                                    <i class="fas fa-trash-alt"></i> Delete Permanently
+                                    <i class="fas fa-trash-alt"></i> Hapus Permanen
                                 </button>
                             </td>
                         </tr>
@@ -75,15 +76,15 @@
                                     @method('DELETE')
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="forceDeleteModalLabel{{ $user->id }}">Delete User Permanently</h5>
+                                            <h5 class="modal-title" id="forceDeleteModalLabel{{ $user->id }}">Hapus Pengguna Secara Permanen</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             User <strong>{{ $user->name }}</strong> akan dihapus permanen. Apakah kamu yakin?
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-danger">Delete Permanently</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-danger">Hapus Permanen</button>
                                         </div>
                                     </div>
                                 </form>
