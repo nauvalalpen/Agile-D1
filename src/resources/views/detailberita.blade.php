@@ -10,7 +10,7 @@
         <div class="detail-back-container">
             <a href="{{ url('/beritas') }}" class="detail-btn-back">
                 <i class="fas fa-arrow-left"></i>
-                <span>Back to News</span>
+                <span>Kembali</span>
             </a>
         </div>
 
