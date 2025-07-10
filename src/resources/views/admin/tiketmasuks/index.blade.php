@@ -221,7 +221,7 @@
                                     Rombongan</label>
                                 <input type="text" class="form-control @error('nama_ketua') is-invalid @enderror"
                                     id="nama_ketua{{ $tiket->id }}" name="nama_ketua"
-                                    value="{{ old('nama_ketua', $tiket->nama_ketua) }}">
+                                    value="{{ old('nama_ketua', $tiket->nama_ketua) }}" required>
                                 @error('nama_ketua')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -232,7 +232,7 @@
                                     Rombongan</label>
                                 <input type="number" class="form-control @error('jumlah_rombongan') is-invalid @enderror"
                                     id="jumlah_rombongan{{ $tiket->id }}" name="jumlah_rombongan"
-                                    value="{{ old('jumlah_rombongan', $tiket->jumlah_rombongan) }}">
+                                    value="{{ old('jumlah_rombongan', $tiket->jumlah_rombongan) }}" required>
                                 @error('jumlah_rombongan')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -241,8 +241,8 @@
                             <div class="mb-3">
                                 <label for="nohp{{ $tiket->id }}" class="form-label">No HP</label>
                                 <input type="number" class="form-control @error('nohp') is-invalid @enderror"
-                                    id="nohp{{ $tiket->id }}" name="nohp"
-                                    value="{{ old('nohp', $tiket->nohp) }}">
+                                    id="nohp{{ $tiket->id }}" name="nohp" value="{{ old('nohp', $tiket->nohp) }}"
+                                    required>
                                 @error('nohp')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -252,7 +252,7 @@
                                 <label for="alamat{{ $tiket->id }}" class="form-label">Alamat</label>
                                 <input type="text" class="form-control @error('alamat') is-invalid @enderror"
                                     id="alamat{{ $tiket->id }}" name="alamat"
-                                    value="{{ old('alamat', $tiket->alamat) }}">
+                                    value="{{ old('alamat', $tiket->alamat) }}" required>
                                 @error('alamat')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

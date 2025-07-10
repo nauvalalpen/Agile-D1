@@ -120,10 +120,10 @@ class TiketController extends Controller
     public function update(Request $request, TiketMasuk $tiket)
     {
         $validated = $request->validate([
-            'nama_ketua' => 'nullable|string|max:100',
-            'jumlah_rombongan' => 'nullable|integer',
-            'nohp' => 'nullable|string|regex:/^[0-9]+$/|max:13',
-            'alamat' => 'nullable|string|max:100',
+            'nama_ketua' => 'required|string|max:100',
+            'jumlah_rombongan' => 'required|integer',
+            'nohp' => 'required|string|regex:/^[0-9]+$/|max:13',
+            'alamat' => 'required|string|max:100',
         ]);
 
         $tiket->update($validated);
