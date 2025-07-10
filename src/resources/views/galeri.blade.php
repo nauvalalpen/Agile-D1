@@ -23,32 +23,29 @@
         <div id="gallery-grid" class="modern-gallery-section">
             <div class="gallery-header" data-aos="fade-up">
                 <h2 class="gallery-title">Keindahan Alam</h2>
-                <p class="gallery-subtitle">Temukan pesona alam melalui koleksi foto menakjubkan yang memukau mata dan menyentuh jiwa</p>
+                <p class="gallery-subtitle">Temukan pesona alam melalui koleksi foto menakjubkan yang memukau mata dan
+                    menyentuh jiwa</p>
             </div>
 
             <div class="modern-gallery-grid">
                 @forelse ($galleries as $gallery)
-                    <div class="gallery-card" 
-                         data-aos="fade-up" 
-                         data-aos-delay="{{ ($loop->index % 6) * 100 }}">
-                        
+                    <div class="gallery-card" data-aos="fade-up" data-aos-delay="{{ ($loop->index % 6) * 100 }}">
+
                         <div class="card-image-container">
                             @if ($gallery->foto)
-                                <img src="{{ asset('storage/' . $gallery->foto) }}" 
-                                     class="card-image" 
-                                     alt="{{ $gallery->judul }}"
-                                     loading="lazy">
+                                <img src="{{ asset('storage/' . $gallery->foto) }}" class="card-image"
+                                    alt="{{ $gallery->judul }}" loading="lazy">
                             @else
                                 <div class="image-placeholder">
                                     <i class="fas fa-mountain-sun"></i>
                                     <span>Coming Soon</span>
                                 </div>
                             @endif
-                            
+
                             <!-- Overlay with Details -->
                             <div class="card-overlay">
                                 <div class="overlay-background"></div>
-                                
+
                                 <div class="overlay-content">
                                     <!-- Top Section - Category & Date -->
                                     <div class="overlay-header">
@@ -71,16 +68,16 @@
                                     <!-- Bottom Section - Actions -->
                                     <div class="overlay-actions">
 
-                                        <button class="overlay-btn secondary" 
-                                                onclick="showImageViewer('{{ asset('storage/' . $gallery->foto) }}', '{{ $gallery->judul }}')"
-                                                title="View Full Size">
+                                        <button class="overlay-btn secondary"
+                                            onclick="showImageViewer('{{ asset('storage/' . $gallery->foto) }}', '{{ $gallery->judul }}')"
+                                            title="View Full Size">
                                             <i class="fas fa-expand"></i>
                                             <span>Perbesar</span>
                                         </button>
                                     </div>
                                 </div>
 
-                               
+
                             </div>
                         </div>
                     </div>
@@ -160,7 +157,7 @@
                         <div class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
-                       
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -171,7 +168,8 @@
     </div>
 
     <!-- Image Viewer Modal -->
-    <div class="modal fade" id="imageViewerModal" tabindex="-1" aria-labelledby="imageViewerModalLabel" aria-hidden="true">
+    <div class="modal fade" id="imageViewerModal" tabindex="-1" aria-labelledby="imageViewerModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content bg-transparent border-0">
                 <div class="modal-header border-0 pb-0">
@@ -306,7 +304,7 @@
                 '</div>' +
                 '</div>';
 
-                        try {
+            try {
                 cleanupModals();
                 currentModal = new bootstrap.Modal(modal, {
                     backdrop: true,
@@ -476,7 +474,7 @@
             right: 0;
             bottom: 0;
             background: radial-gradient(circle at 20% 80%, rgba(34, 139, 34, 0.03) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(34, 139, 34, 0.03) 0%, transparent 50%);
+                radial-gradient(circle at 80% 20%, rgba(34, 139, 34, 0.03) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -623,12 +621,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(
-                135deg,
-                rgba(0, 0, 0, 0.7) 0%,
-                rgba(34, 139, 34, 0.8) 50%,
-                rgba(0, 0, 0, 0.9) 100%
-            );
+            background: linear-gradient(135deg,
+                    rgba(0, 0, 0, 0.7) 0%,
+                    rgba(34, 139, 34, 0.8) 50%,
+                    rgba(0, 0, 0, 0.9) 100%);
             backdrop-filter: blur(2px);
             z-index: -1;
         }
@@ -771,8 +767,15 @@
         }
 
         @keyframes fadeInOut {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
 
         @keyframes ripple {
@@ -780,13 +783,14 @@
                 transform: scale(1);
                 opacity: 1;
             }
+
             100% {
                 transform: scale(2);
                 opacity: 0;
             }
         }
 
-             /* Empty State */
+        /* Empty State */
         .empty-gallery-state {
             grid-column: 1 / -1;
             text-align: center;
@@ -940,6 +944,7 @@
             0% {
                 transform: translateX(0);
             }
+
             100% {
                 transform: translateX(-50%);
             }
@@ -1202,18 +1207,36 @@
             animation: fadeInUp 0.6s ease forwards;
         }
 
-        .gallery-card:nth-child(1) { animation-delay: 0.1s; }
-        .gallery-card:nth-child(2) { animation-delay: 0.2s; }
-        .gallery-card:nth-child(3) { animation-delay: 0.3s; }
-        .gallery-card:nth-child(4) { animation-delay: 0.4s; }
-        .gallery-card:nth-child(5) { animation-delay: 0.5s; }
-        .gallery-card:nth-child(6) { animation-delay: 0.6s; }
+        .gallery-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .gallery-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .gallery-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .gallery-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .gallery-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .gallery-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1291,6 +1314,7 @@
 
         /* === REDUCED MOTION SUPPORT === */
         @media (prefers-reduced-motion: reduce) {
+
             .gallery-card,
             .overlay-btn,
             .card-image,
@@ -1298,7 +1322,7 @@
                 animation: none !important;
                 transition: none !important;
             }
-            
+
             .gallery-card:hover {
                 transform: none;
             }
@@ -1329,7 +1353,7 @@
             opacity: 1;
         }
 
-               /* === OVERLAY ENTRANCE ANIMATIONS === */
+        /* === OVERLAY ENTRANCE ANIMATIONS === */
         .overlay-header {
             transform: translateY(-20px);
             opacity: 0;
@@ -1368,12 +1392,10 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.2),
-                transparent
-            );
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.2),
+                    transparent);
             transition: left 0.6s ease;
             pointer-events: none;
             z-index: 5;
@@ -1389,9 +1411,12 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 opacity: 1;
             }
+
             50% {
                 opacity: 0.7;
             }
@@ -1434,12 +1459,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(
-                45deg,
-                transparent 30%,
-                rgba(34, 139, 34, 0.05) 50%,
-                transparent 70%
-            );
+            background: linear-gradient(45deg,
+                    transparent 30%,
+                    rgba(34, 139, 34, 0.05) 50%,
+                    transparent 70%);
             animation: shimmer 3s ease-in-out infinite;
         }
 
@@ -1447,6 +1470,7 @@
             0% {
                 transform: translateX(-100%);
             }
+
             100% {
                 transform: translateX(100%);
             }
@@ -1464,11 +1488,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(
-                to bottom,
-                transparent 60%,
-                rgba(0, 0, 0, 0.8) 100%
-            );
+            background: linear-gradient(to bottom,
+                    transparent 60%,
+                    rgba(0, 0, 0, 0.8) 100%);
             opacity: 0;
             transition: opacity 0.3s ease;
             border-radius: 14px;
@@ -1538,6 +1560,7 @@
 
         /* === PRINT STYLES === */
         @media print {
+
             .hero-section,
             .hero-tour-section,
             .scrolling-gallery-section {
@@ -1578,7 +1601,7 @@
         /* === DARK MODE SUPPORT === */
         @media (prefers-color-scheme: dark) {
             .modern-gallery-section {
-                background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+                background: linear-gradient(135deg, #fefffe 0%, #fdfffd 50%, #fcfffc 100%);
             }
 
             .gallery-card {
@@ -1587,11 +1610,11 @@
             }
 
             .gallery-title {
-                color: #fff;
+                color: #212529;
             }
 
             .gallery-subtitle {
-                color: #ccc;
+                color: #6c757d;
             }
 
             .header-badge {
