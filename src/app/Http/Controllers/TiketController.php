@@ -2,29 +2,82 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\tiketMasuk;
+use App\Models\TiketMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class TiketController extends Controller
 {
     /**
      * Display a listing of the tourists.
      */
-    public function adminindex()
+    public function adminindex(Request $request)
     {
-        $tikets = tiketMasuk::all();
-        return view('admin.tiketmasuks.index', compact('tikets'));
+        $query = TiketMasuk::query();
+        
+        // Apply date filter
+        $filter = $request->get('filter', 'all');
+        
+        switch ($filter) {
+            case 'today':
+                $query->whereDate('created_at', Carbon::today());
+                break;
+            case 'week':
+                $query->whereBetween('created_at', [
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ]);
+                break;
+            case 'month':
+                $query->whereMonth('created_at', Carbon::now()->month)
+                      ->whereYear('created_at', Carbon::now()->year);
+                break;
+            case 'all':
+            default:
+                // No filter applied
+                break;
+        }
+        
+        $tikets = $query->orderBy('created_at', 'desc')->get();
+        
+        return view('admin.tiketmasuks.index', compact('tikets', 'filter'));
     }
 
     /**
      * Display a listing of all tourists for admin.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tikets = tiketMasuk::withTrashed()->get();
-        return view('admin.tiketmasuks.index', compact('tikets'));
+        $query = TiketMasuk::withTrashed();
+        
+        // Apply date filter
+        $filter = $request->get('filter', 'all');
+        
+        switch ($filter) {
+            case 'today':
+                $query->whereDate('created_at', Carbon::today());
+                break;
+            case 'week':
+                $query->whereBetween('created_at', [
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ]);
+                break;
+            case 'month':
+                $query->whereMonth('created_at', Carbon::now()->month)
+                      ->whereYear('created_at', Carbon::now()->year);
+                break;
+            case 'all':
+            default:
+                // No filter applied
+                break;
+        }
+        
+        $tikets = $query->orderBy('created_at', 'desc')->get();
+        
+        return view('admin.tiketmasuks.index', compact('tikets', 'filter'));
     }
 
     /**
@@ -47,16 +100,16 @@ class TiketController extends Controller
             'alamat' => 'required|string|max:100',
         ]);
 
-        tiketMasuk::create($validated);
+        TiketMasuk::create($validated);
 
         return redirect()->route('admin.tiketmasuks.index')
-            ->with('success', 'Wisatawan berhasil ditambahkan.');
+            ->with('success', 'Tiket Masuk berhasil ditambahkan.');
     }
 
     /**
      * Show the form for editing the specified tourist.
      */
-    public function edit(tiketMasuk $tiket)
+    public function edit(TiketMasuk $tiket)
     {
         return view('admin.tiketmasuks.edit', compact('tiket'));
     }
@@ -64,7 +117,7 @@ class TiketController extends Controller
     /**
      * Update the specified tourist in storage.
      */
-    public function update(Request $request, tiketMasuk $tiket)
+    public function update(Request $request, TiketMasuk $tiket)
     {
         $validated = $request->validate([
             'nama_ketua' => 'nullable|string|max:100',
@@ -76,19 +129,18 @@ class TiketController extends Controller
         $tiket->update($validated);
 
         return redirect()->route('admin.tiketmasuks.index')
-            ->with('success', 'Wisatawan berhasil diperbarui.');
+            ->with('success', 'Tiket Masuk berhasil diperbarui.');
     }
 
     public function updateStatus($id)
     {
-        $tiket = tiketMasuk::findOrFail($id);
+        $tiket = TiketMasuk::findOrFail($id);
 
         // Update status dan waktu selesai
         $tiket->status = 'selesai';
         $tiket->waktu_selesai = now();
         $tiket->save();
 
-        return redirect()->back()->with('success', 'Status berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Status Tiket Masuk berhasil diperbarui.');
     }
-
 }

@@ -5,9 +5,9 @@
         <!-- Page Heading -->
 
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Kelola Pemandu Wisata</h1>
+            <h1 class="h3 mb-0 text-gray-800">Kelola Tour Guide</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTourGuideModal">
-                <i class="fas fa-plus fa-sm"></i> Tambah Pemandu Wisata
+                <i class="fas fa-plus fa-sm"></i> Tambah Tour Guide
             </button>
         </div>
 
@@ -22,7 +22,7 @@
         <!-- Tour Guides DataTable -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Pemandu Wisata</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Tour Guide</h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -33,7 +33,7 @@
                                 <th>Nama</th>
                                 <th>No HP</th>
                                 <th>Alamat</th>
-                                <th>Price Range</th>
+                                <th>Rentang Harga</th>
                                 <th>Deskripsi</th>
                                 <th>Foto</th>
                                 <th>Actions</th>
@@ -90,7 +90,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createTourGuideModalLabel">Add New Tour Guide</h5>
+                    <h5 class="modal-title" id="createTourGuideModalLabel">Tambah Tour Guide Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -126,7 +126,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="pricerange" class="form-label">Price Range</label>
+                            <label for="pricerange" class="form-label">Rentang Harga</label>
                             <input type="text" class="form-control @error('pricerange') is-invalid @enderror"
                                 id="pricerange" name="pricerange" value="{{ old('pricerange') }}" required>
                             @error('pricerange')
@@ -271,7 +271,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Apakah Anda yakin ingin menghapus Pemandu Wisata?: <strong>{{ $tourguide->nama }}</strong>?</p>
+                        <p>Apakah Anda yakin ingin menghapus Tour Guide?: <strong>{{ $tourguide->nama }}</strong>?</p>
                         <p class="text-danger">Tindakan ini tidak bisa dibatalkan</p>
                     </div>
                     <div class="modal-footer">

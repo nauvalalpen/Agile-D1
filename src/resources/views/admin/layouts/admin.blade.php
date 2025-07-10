@@ -622,7 +622,7 @@
                 <a class="nav-link {{ request()->routeIs('admin.tiketmasuks.*') ? 'active' : '' }}"
                     href="{{ route('admin.tiketmasuks.index') }}">
                     <i class="fas fa-users"></i>
-                    <span>Wisatawan</span>
+                    <span>Tiket Masuk</span>
                 </a>
             </li>
 
@@ -631,7 +631,7 @@
                 <a class="nav-link {{ request()->routeIs('tourguides.*') ? 'active' : '' }}"
                     href="{{ route('tourguides.index') }}">
                     <i class="fas fa-user-tie"></i>
-                    <span>Pemandu Wisata</span>
+                    <span>Tour Guide</span>
                 </a>
             </li>
 
@@ -640,7 +640,7 @@
                 <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}"
                     href="{{ route('admin.orders.index') }}">
                     <i class="fas fa-calendar-check"></i>
-                    <span>Pemesanan Pemandu</span>
+                    <span>Pemesanan Tour Guide</span>
                 </a>
             </li>
 
@@ -764,7 +764,7 @@
             </div>
 
             <!-- Topbar Search -->
-            <form class="d-none d-sm-inline-block topbar-search mx-auto">
+            {{-- <form class="d-none d-sm-inline-block topbar-search mx-auto">
                 <div class="input-group">
                     <input type="text" class="form-control search-input" placeholder="Cari apa saja..."
                         aria-label="Search">
@@ -772,7 +772,7 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
-            </form>
+            </form> --}}
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ms-auto">
@@ -873,15 +873,17 @@
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="text-xs fw-bold text-success text-uppercase mb-1">
-                                        Pemandu Aktif
+                                        Tour Guide Aktif
                                     </div>
                                     <div class="h4 mb-0 fw-bold text-gray-800">
                                         @php
                                             $activeGuides = 0;
                                             try {
-                                                $activeGuides = \App\Models\OrderTourGuide::where(
-                                                    'status',
-                                                    'accepted',
+                                                $activeGuides = \App\Models\OrderTourGuide::whereDate(
+                                                    // 'status',
+                                                    // 'accepted',
+                                                    'created_at',
+                                                    today(),
                                                 )->count();
                                             } catch (Exception $e) {
                                                 // Handle error silently
@@ -894,7 +896,7 @@
                             <div class="mt-3">
                                 <a href="{{ route('admin.orders.index') }}" class="btn btn-success btn-sm">
                                     <i class="fas fa-arrow-right me-1"></i>
-                                    Kelola Pemandu
+                                    Kelola Tour Guide
                                 </a>
                             </div>
                         </div>
@@ -1193,13 +1195,14 @@
                 </div>
                 <div class="modal-body text-center py-4">
                     <i class="fas fa-question-circle fa-3x text-warning mb-3"></i>
-                    <h6>Are you sure you want to logout?</h6>
-                    <p class="text-muted">You will need to login again to access the admin panel.</p>
+                    <h6>Apakah kamu yakin ingin Logout?</h6>
+                    <p class="text-muted">Kamu diharuskan untuk Login jika ingin mengakses Admin Panel lagi.
+                    </p>
                 </div>
                 <div class="modal-footer border-0 justify-content-center">
                     <button class="btn btn-secondary px-4" type="button" data-bs-dismiss="modal">
                         <i class="fas fa-times me-1"></i>
-                        Cancel
+                        Batal
                     </button>
                     <form action="{{ route('logout') }}" method="POST" class="d-inline">
                         @csrf
