@@ -31,6 +31,7 @@
                                 <th>Ukuran</th>
                                 <th>Harga</th>
                                 <th>Stok</th>
+                                <th>Deskripsi</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -52,6 +53,7 @@
                                     <td>{{ $madu->ukuran }}</td>
                                     <td>Rp {{ number_format($madu->harga, 0, ',', '.') }}</td>
                                     <td>{{ $madu->stock }}</td>
+                                    <td>{{ $madu->deskripsi }}</td>
                                     <td>
                                         @if ($madu->deleted_at)
                                             <span class="badge bg-danger">Dihapus</span>
