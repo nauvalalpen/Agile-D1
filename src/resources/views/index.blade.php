@@ -673,18 +673,18 @@
         }
 
         /* .hero-image-overlay {
-                                                                            position: absolute;
-                                                                            top: 0;
-                                                                            left: 0;
-                                                                            right: 0;
-                                                                            bottom: 0;
-                                                                            background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
-                                                                            display: flex;
-                                                                            align-items: center;
-                                                                            justify-content: center;
-                                                                            opacity: 0;
-                                                                            transition: var(--transition-smooth);
-                                                                        } */
+                                                                                        position: absolute;
+                                                                                        top: 0;
+                                                                                        left: 0;
+                                                                                        right: 0;
+                                                                                        bottom: 0;
+                                                                                        background: linear-gradient(135deg, rgba(10, 31, 15, 0.3), rgba(34, 139, 34, 0.2));
+                                                                                        display: flex;
+                                                                                        align-items: center;
+                                                                                        justify-content: center;
+                                                                                        opacity: 0;
+                                                                                        transition: var(--transition-smooth);
+                                                                                    } */
 
         .hero-image-container:hover .hero-image-overlay {
             opacity: 1;
@@ -1856,12 +1856,12 @@
 
                             <!-- Action Buttons -->
                             <div class="card-actions">
-                                <a href="{{ route('tourguides.order', $guide->id) }}" class="btn-glass btn-details">
+                                {{-- <a href="{{ route('tourguides.order', $guide->id) }}" class="btn-glass btn-details">
                                     <i class="fas fa-eye me-1"></i>
                                     Lihat Detail
-                                </a>
+                                </a> --}}
                                 <a href="{{ route('tourguides.order', $guide->id) }}" class="btn-glass btn-glass-primary">
-                                    <i class="fas fa-calendar-check me-1"></i>
+                                    {{-- <i class="fas fa-calendar-check me-1"></i> --}}
                                     Pesan Sekarang
                                 </a>
                             </div>
@@ -1882,7 +1882,7 @@
 
             <div class="text-center mt-5">
                 <a href="{{ route('tourguides.index') }}" class="btn-glass btn-glass-primary">
-                    <i class="fas fa-users me-2"></i>
+                    {{-- <i class="fas fa-users me-2"></i> --}}
                     Lihat Semua Pemandu
                 </a>
             </div>
