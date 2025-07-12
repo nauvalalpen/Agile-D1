@@ -138,7 +138,7 @@ class TiketController extends Controller
 
         // Update status dan waktu selesai
         $tiket->status = 'selesai';
-        $tiket->waktu_selesai = now();
+        $tiket->waktu_selesai = now('Asia/Jakarta');
         $tiket->save();
 
         return redirect()->back()->with('success', 'Status Tiket Masuk berhasil diperbarui.');
