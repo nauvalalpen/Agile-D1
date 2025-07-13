@@ -253,7 +253,7 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                       <th>Nama Pengguna</th>
+                                        <th>Nama Pengguna</th>
                                         <th>Aktivitas</th>
                                         <th>Waktu</th>
                                         <th>Status</th>
@@ -466,7 +466,7 @@
                         hideLoadingState();
 
                         // Show error message
-                        alert('Failed to update dashboard data. Please try again.');
+                        // alert('Failed to update dashboard data. Please try again.');
                     });
             });
         });
