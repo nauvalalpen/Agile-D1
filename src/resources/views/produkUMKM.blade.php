@@ -1,0 +1,1198 @@
+@extends('layouts.app')
+
+@section('content')
+    {{-- Include AOS (Animate on Scroll) Library --}}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    {{-- Include Font Awesome --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- 1. HERO SECTION -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-title">PRODUK<br>UMKM</div>
+            <div class="hero-desc">Temukan produk-produk berkualitas dari UMKM lokal yang mendukung ekonomi kreatif dan
+                pemberdayaan masyarakat.</div>
+            <a href="#products-grid" class="hero-btn">Jelajahi Produk</a>
+        </div>
+    </section>
+
+    <!-- CONTAINER FOR THE REST OF THE PAGE CONTENT -->
+    <div class="container py-5">
+
+        <!-- 2. MAIN PRODUCTS GRID -->
+        <div id="products-grid" class="products-container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="section-heading">Produk UMKM Unggulan</h2>
+                <p class="section-subheading">Dukung produk lokal berkualitas tinggi dari mitra UMKM terpercaya kami.</p>
+            </div>
+
+            @if ($produkUMKM->isNotEmpty())
+                <div class="row g-4">
+                    @foreach ($produkUMKM as $produk)
+                        <div class="col-lg-6 col-md-6 mb-4 d-flex align-items-stretch">
+                            <div class="product-card w-100" data-aos="zoom-in"
+                                data-aos-delay="{{ ($loop->index % 2) * 150 }}">
+                                <div class="product-card-img-wrapper">
+                                    <div class="price-tag">Rp {{ number_format($produk->harga, 0, ',', '.') }}</div>
+                                    @if ($produk->foto)
+                                        <img src="{{ asset('storage/' . $produk->foto) }}" class="product-card-img"
+                                            alt="{{ $produk->nama }}">
+                                    @else
+                                        <div class="bg-light d-flex align-items-center justify-content-center h-100">
+                                            <i class="fas fa-store fa-3x text-muted"></i>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">{{ $produk->nama }}</h5>
+                                    <p class="card-text">{{ Str::limit($produk->deskripsi, 100) }}</p>
+                                    <div class="mt-auto">
+                                        <button type="button" class="btn btn-custom w-100" id="btn-lihat-detail"
+                                            onclick="showProductModal({{ $produk->id }})">
+                                            Lihat Detail
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <!-- Pagination -->
+                @if ($produkUMKM->hasPages())
+                    <div class="d-flex justify-content-center mt-5" data-aos="fade-up">
+                        {{ $produkUMKM->links() }}
+                    </div>
+                @endif
+            @else
+                <div class="col-12 text-center py-5" data-aos="fade-up">
+                    <h3>Belum ada produk UMKM tersedia saat ini.</h3>
+                    <p class="text-muted">Silakan periksa kembali nanti.</p>
+                </div>
+            @endif
+        </div>
+
+        <!-- 3. UMKM SUPPORT SECTION -->
+        <div class="umkm-support-section my-5 py-5" data-aos="fade-up">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+                    <div class="support-content">
+                        <h3>Dukung UMKM Lokal Bersama Kami</h3>
+                        <p>
+                            Setiap pembelian Anda berkontribusi langsung pada pemberdayaan ekonomi masyarakat lokal.
+                            Kami berkomitmen untuk terus mendukung UMKM dalam mengembangkan produk berkualitas
+                            dan meningkatkan kesejahteraan pengrajin lokal.
+                        </p>
+                        <div class="support-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Produk Original & Berkualitas</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Harga Langsung dari Produsen</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Mendukung Ekonomi Lokal</span>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/6283199877326?text=Halloo..., Apakah saya dapat mengajukan diri untuk bergabung sebagai mitra UMKM?"
+                            class="btn btn-custom mt-3" id="btn-lihat-detail">Bergabung Sebagai Mitra</a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                    <div class="support-image">
+                        <img src="{{ asset('images/hero.jpg') }}" alt="UMKM Support" class="img-fluid rounded">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. FEATURED CATEGORIES SECTION -->
+        <div class="featured-categories-section my-5 py-5" data-aos="fade-up">
+            <div class="text-center mb-5">
+                <h2 class="section-heading">Kategori Produk Unggulan</h2>
+                <p class="section-subheading">Jelajahi berbagai kategori produk UMKM pilihan terbaik.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-cookie-bite"></i>
+                        </div>
+                        <h4>Makanan & Minuman</h4>
+                        <p>Produk kuliner tradisional dan modern dari UMKM lokal</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <h4>Fashion & Aksesoris</h4>
+                        <p>Pakaian dan aksesoris unik hasil karya pengrajin lokal</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h4>Kerajinan Tangan</h4>
+                        <p>Produk kerajinan artistik dengan nilai budaya tinggi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productDetailModalLabel">Detail Produk</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="productDetailModalBody">
+                    <div class="text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Memuat detail produk...</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <a href="https://wa.me/6283199877326?text=Halloo..., Apakah saya bisa melihat produk UMKM yang tersedia?"
+                        id="contactSellerBtn" class="btn btn-success">
+                        <i class="fab fa-whatsapp me-2"></i>Hubungi Penjual
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Viewer Modal -->
+    <div class="modal fade" id="imageViewerModal" tabindex="-1" aria-labelledby="imageViewerModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title text-white" id="imageViewerModalLabel">Lihat Gambar</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center p-0">
+                    <img src="" alt="" id="imageViewerImg" class="img-fluid rounded">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AOS Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50,
+        });
+
+        // Product data for JavaScript
+        const productData = {!! json_encode(
+            $produkUMKM->map(function ($produk) {
+                return [
+                    'id' => $produk->id,
+                    'nama' => $produk->nama,
+                    'deskripsi' => $produk->deskripsi,
+                    'harga' => $produk->harga,
+                    'foto' => $produk->foto ? asset('storage/' . $produk->foto) : null,
+                    'created_at' => $produk->created_at->format('F j, Y \a\t g:i A'),
+                ];
+            }),
+        ) !!};
+
+        // Modal management
+        let currentModal = null;
+
+        // Function to clean up modals
+        function cleanupModals() {
+            document.querySelectorAll('.modal-backdrop').forEach(function(backdrop) {
+                backdrop.remove();
+            });
+
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+
+            document.querySelectorAll('.modal').forEach(function(modal) {
+                modal.classList.remove('show');
+                modal.style.display = 'none';
+                modal.setAttribute('aria-hidden', 'true');
+            });
+
+            currentModal = null;
+        }
+
+        // Show product modal with details
+        function showProductModal(productId) {
+            console.log('Opening product modal for ID:', productId);
+
+            const product = productData.find(function(p) {
+                return p.id === productId;
+            });
+
+            if (!product) {
+                console.error('Product not found:', productId);
+                alert('Produk tidak ditemukan!');
+                return;
+            }
+
+            const modal = document.getElementById('productDetailModal');
+            const modalBody = document.getElementById('productDetailModalBody');
+            const modalLabel = document.getElementById('productDetailModalLabel');
+            const contactBtn = document.getElementById('contactSellerBtn');
+
+            if (!modal || !modalBody || !modalLabel) {
+                console.error('Modal elements not found');
+                alert('Modal elements not found!');
+                return;
+            }
+
+            // Set modal title
+            modalLabel.textContent = product.nama;
+
+            // Create modal content
+            const imageSection = product.foto ?
+                '<div class="position-relative">' +
+                '<img src="' + product.foto + '" ' +
+                'class="img-fluid rounded product-modal-img" ' +
+                'alt="' + product.nama + '"' +
+                'onclick="showImageViewer(\'' + product.foto + '\', \'' + product.nama + '\')"' +
+                'style="cursor: pointer; transition: transform 0.3s ease;"' +
+                'onmouseover="this.style.transform=\'scale(1.02)\'"' +
+                'onmouseout="this.style.transform=\'scale(1)\'">' +
+                '<div class="position-absolute top-0 end-0 m-2">' +
+                '<button class="btn btn-sm btn-light rounded-circle" ' +
+                'onclick="showImageViewer(\'' + product.foto + '\', \'' + product.nama + '\')"' +
+                'title="Lihat ukuran penuh">' +
+                '<i class="fas fa-expand"></i>' +
+                '</button>' +
+                '</div>' +
+                '</div>' :
+                '<div class="bg-light d-flex align-items-center justify-content-center rounded" style="height: 300px;">' +
+                '<div class="text-center text-muted">' +
+                '<i class="fas fa-store fa-3x mb-2"></i>' +
+                '<p>Tidak ada gambar tersedia</p>' +
+                '</div>' +
+                '</div>';
+
+            modalBody.innerHTML =
+                '<div class="row">' +
+                '<div class="col-md-7">' +
+                imageSection +
+                '</div>' +
+                '<div class="col-md-5">' +
+                '<div class="product-details">' +
+                '<h5 class="mb-3">' +
+                '<i class="fas fa-info-circle text-primary me-2"></i>' +
+                'Detail Produk' +
+                '</h5>' +
+
+                '<div class="detail-item mb-3">' +
+                '<h6 class="fw-bold mb-1">' +
+                '<i class="fas fa-tag text-secondary me-2"></i>' +
+                'Nama Produk' +
+                '</h6>' +
+                '<p class="mb-0">' + product.nama + '</p>' +
+                '</div>' +
+
+                '<div class="detail-item mb-3">' +
+                '<h6 class="fw-bold mb-1">' +
+                '<i class="fas fa-money-bill-wave text-secondary me-2"></i>' +
+                'Harga' +
+                '</h6>' +
+                '<p class="mb-0 text-primary fw-bold fs-5">Rp ' + new Intl.NumberFormat('id-ID').format(product.harga) +
+                '</p>' +
+                '</div>' +
+
+                '<div class="detail-item mb-3">' +
+                '<h6 class="fw-bold mb-1">' +
+                '<i class="fas fa-clock text-secondary me-2"></i>' +
+                'Ditambahkan' +
+                '</h6>' +
+                '<p class="mb-0">' + product.created_at + '</p>' +
+                '</div>' +
+
+                '<div class="detail-item">' +
+                '<h6 class="fw-bold mb-1">' +
+                '<i class="fas fa-align-left text-secondary me-2"></i>' +
+                'Deskripsi' +
+                '</h6>' +
+                '<p class="mb-0 text-justify">' + product.deskripsi.replace(/\n/g, '<br>') + '</p>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+
+            // Show modal
+            try {
+                cleanupModals();
+
+                currentModal = new bootstrap.Modal(modal, {
+                    backdrop: true,
+                    keyboard: true,
+                    focus: true
+                });
+
+                currentModal.show();
+                console.log('Modal shown successfully');
+            } catch (error) {
+                console.error('Error showing modal:', error);
+                alert('Error membuka detail produk. Silakan coba lagi.');
+            }
+        }
+
+        // Show image viewer modal
+        function showImageViewer(imageSrc, imageTitle) {
+            console.log('Opening image viewer for:', imageTitle);
+
+            const modal = document.getElementById('imageViewerModal');
+            const modalImg = document.getElementById('imageViewerImg');
+            const modalLabel = document.getElementById('imageViewerModalLabel');
+
+            if (!modal || !modalImg || !modalLabel) {
+                console.error('Image viewer modal elements not found');
+                return;
+            }
+
+            modalImg.src = imageSrc;
+            modalImg.alt = imageTitle;
+            modalLabel.textContent = imageTitle;
+
+            try {
+                const imageModal = new bootstrap.Modal(modal, {
+                    backdrop: true,
+                    keyboard: true,
+                    focus: true
+                });
+
+                imageModal.show();
+            } catch (error) {
+                console.error('Error showing image viewer:', error);
+            }
+        }
+
+        // Document ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Product page loaded with', productData.length, 'products');
+
+            // Add event listeners for modal cleanup
+            document.querySelectorAll('.modal').forEach(function(modal) {
+                modal.addEventListener('hidden.bs.modal', function() {
+                    setTimeout(cleanupModals, 100);
+                });
+
+                modal.addEventListener('show.bs.modal', function() {
+                    console.log('Modal showing:', this.id);
+                });
+
+                modal.addEventListener('shown.bs.modal', function() {
+                    console.log('Modal shown:', this.id);
+                });
+            });
+
+            // Handle ESC key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && currentModal) {
+                    currentModal.hide();
+                }
+            });
+
+            // Smooth scrolling for hero button
+            const heroBtn = document.querySelector('.hero-btn');
+            if (heroBtn) {
+                heroBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector('#products-grid');
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            }
+
+            // Add hover effects to product cards
+            document.querySelectorAll('.product-card').forEach(function(card) {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+
+        // Global error handler
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript error:', e.error);
+        });
+
+        // Make functions globally available
+        window.showProductModal = showProductModal;
+        window.showImageViewer = showImageViewer;
+    </script>
+
+    @include('layouts.footer')
+@endsection
+
+@section('styles')
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* === 1. HERO SECTION (MATCHING GALERI PAGE) === */
+        .hero-section {
+            position: relative;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+                url('/images/hero.jpg') no-repeat center center/cover;
+            height: 95vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 1140px;
+            padding-left: 350px;
+            padding-right: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.2s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 80px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: 30px;
+            text-transform: uppercase;
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            margin-bottom: 28px;
+            line-height: 1.6;
+            color: #ddd;
+            max-width: 500px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 25px;
+            transition: all 0.3s ease-in-out;
+            font-size: 14px;
+            letter-spacing: 1.5px;
+        }
+
+        .hero-btn:hover {
+            background-color: white;
+            color: black;
+        }
+
+        /* === UTILITY & HEADINGS === */
+        .section-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #212529;
+        }
+
+        .section-subheading {
+            font-size: 1.1rem;
+            color: #6c757d;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* === 2. MAIN PRODUCTS GRID === */
+        .products-container {
+            margin-top: 0px;
+            position: relative;
+            z-index: 2;
+            background: #f8f9fa;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: none;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-card-img-wrapper {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-card-img {
+            transform: scale(1.1);
+        }
+
+        .price-tag {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: rgba(0, 0, 0, 0.65);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            backdrop-filter: blur(4px);
+            z-index: 2;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            color: #495057;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        /* === UNIFIED BUTTON STYLES === */
+        .btn-dark-custom {
+            padding: 12px 35px;
+            background-color: #212529;
+            color: #fff;
+            border: 2px solid #212529;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .btn-dark-custom:hover {
+            background-color: #fff;
+            color: #212529;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-dark-custom:active {
+            background-color: #e9ecef;
+            color: #212529;
+            transform: scale(0.98);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-dark-custom:focus {
+            box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.25);
+            outline: none;
+        }
+
+        /* === 3. UMKM SUPPORT SECTION === */
+        .umkm-support-section {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .support-content h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+            color: #212529;
+        }
+
+        .support-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .support-features {
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+            color: #212529;
+        }
+
+        .support-image img {
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .support-image img:hover {
+            transform: scale(1.02);
+        }
+
+        /* === 4. FEATURED CATEGORIES SECTION === */
+        .featured-categories-section {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #f1f3f4;
+            height: 100%;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 100, 0, 0.1);
+            color: #006400;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+
+        .category-card h4 {
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 1rem;
+        }
+
+        .category-card p {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+
+        /* === MODAL STYLES === */
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #dee2e6;
+            padding: 1.5rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #dee2e6;
+            padding: 1rem 1.5rem;
+        }
+
+        /* Product modal specific styles */
+        .product-modal-img {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-height: 400px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            padding-left: 1rem;
+        }
+
+        .detail-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-item h6 {
+            color: #495057;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-item p {
+            color: #6c757d;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Image viewer modal styles */
+        #imageViewerModal .modal-content {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        #imageViewerModal .modal-body {
+            padding: 1rem;
+        }
+
+        #imageViewerModal img {
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* === MODAL Z-INDEX FIXES === */
+        .modal-backdrop {
+            z-index: 1040 !important;
+        }
+
+        .modal {
+            z-index: 1050 !important;
+        }
+
+        .modal.show {
+            display: block !important;
+        }
+
+        /* === PAGINATION STYLING === */
+        .pagination .page-link {
+            color: #0d6efd;
+            border-radius: 50px !important;
+            margin: 0 4px;
+            border: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #e9ecef;
+            color: #0d6efd;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+        }
+
+        .pagination .page-item.disabled .page-link {
+            color: #adb5bd;
+        }
+
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+                letter-spacing: 0.2rem;
+            }
+
+            .hero-content {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .products-container {
+                margin-top: -40px;
+                padding: 2rem 1rem;
+            }
+
+            .umkm-support-section,
+            .featured-categories-section {
+                padding: 2rem;
+            }
+
+            .support-content h3 {
+                font-size: 1.5rem;
+            }
+
+            .section-heading {
+                font-size: 2rem;
+            }
+
+            .modal-dialog {
+                margin: 1rem;
+            }
+
+            .product-details {
+                padding-left: 0;
+                margin-top: 1rem;
+            }
+
+            .btn-dark-custom {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section {
+                height: 70vh;
+                min-height: 400px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .product-card-img-wrapper {
+                height: 180px;
+            }
+
+            .btn-dark-custom {
+                padding: 8px 20px;
+                font-size: 0.85rem;
+            }
+
+            .category-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .umkm-support-section,
+            .featured-categories-section {
+                padding: 1.5rem;
+            }
+        }
+
+        /* === LOADING SPINNER === */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        /* === ACCESSIBILITY IMPROVEMENTS === */
+        .btn:focus,
+        .btn-close:focus {
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        /* === SMOOTH TRANSITIONS === */
+        * {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* === FIX FOR MODAL BACKDROP ISSUES === */
+        body.modal-open {
+            overflow: hidden !important;
+            padding-right: 0 !important;
+        }
+
+        .modal-open .modal {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* === BUTTON CONSISTENCY === */
+        .btn-secondary {
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-success {
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(25, 135, 84, 0.3);
+        }
+
+        /* === HOVER EFFECTS FOR CARDS === */
+        .product-card {
+            cursor: pointer;
+        }
+
+        .category-card {
+            cursor: pointer;
+        }
+
+        /* === ADDITIONAL ANIMATIONS === */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .products-container {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        /* === PRICE TAG ENHANCEMENT === */
+        .price-tag {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+            }
+        }
+
+        /* === ENHANCED FOCUS STATES === */
+        .product-card:focus-within {
+            outline: 2px solid #0d6efd;
+            outline-offset: 2px;
+        }
+
+        .category-card:focus-within {
+            outline: 2px solid #0d6efd;
+            outline-offset: 2px;
+        }
+
+        /* === PRINT STYLES === */
+        @media print {
+
+            .hero-section,
+            .modal,
+            .btn,
+            .pagination {
+                display: none !important;
+            }
+
+            .product-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            .products-container {
+                margin-top: 0;
+                box-shadow: none;
+            }
+        }
+
+        /* === HIGH CONTRAST MODE === */
+        @media (prefers-contrast: high) {
+            .product-card {
+                border: 2px solid #000;
+            }
+
+            .btn-dark-custom {
+                border: 3px solid #000;
+            }
+
+            .category-card {
+                border: 2px solid #000;
+            }
+        }
+
+        /* === REDUCED MOTION === */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* === DARK MODE SUPPORT === */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #eee8e8;
+                color: #ffffff;
+            }
+
+            .products-container,
+            .product-card,
+            .category-card,
+            .umkm-support-section,
+            .featured-categories-section {
+                background-color: #f5f5f5;
+                color: #ffffff;
+            }
+
+            .section-heading {
+                color: #0b0b0b;
+            }
+
+            .section-subheading,
+            .card-text {
+                color: #b0b0b0;
+            }
+        }
+
+        /* === TOUCH DEVICE OPTIMIZATIONS === */
+        @media (hover: none) and (pointer: coarse) {
+            .product-card:hover {
+                transform: none;
+            }
+
+            .btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
+
+        /* === PERFORMANCE OPTIMIZATIONS === */
+        .product-card-img,
+        .support-image img {
+            will-change: transform;
+        }
+
+        .product-card {
+            will-change: transform, box-shadow;
+        }
+
+        /* === CUSTOM SCROLLBAR === */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* === SKELETON LOADING === */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .skeleton-text {
+            height: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .skeleton-title {
+            height: 1.5rem;
+            width: 70%;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+
+        .skeleton-image {
+            height: 220px;
+            border-radius: 15px;
+        }
+
+        #btn-lihat-detail {
+            border-radius: 50px;
+            color: white;
+            background: linear-gradient(135deg, #228B22 0%, #2d5a3d 100%);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.4);
+        }
+    </style>
+@endsection
