@@ -1,66 +1,169 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem Pengelolaan Objek Wisata Air Terjun Lubuk Hitam
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> Sebuah sistem web terintegrasi yang dirancang untuk mengelola seluruh aspek operasional objek wisata Air Terjun Lubuk Hitam.
 
-## About Laravel
+Proyek ini dikembangkan oleh **OneVision - Kelompok 1 (TRPL 2D)**.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 👥 Anggota Kelompok
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Nama                          | NIM          |
+| :---------------------------- | :----------- |
+| Nauval Alpen Perdana          | `2311083024` |
+| Atika Naira                   | `2311081006` |
+| Meilashinta Putri Yuliantoni  | `2311081024` |
+| Dimas Ghazial Ghifari         | `2311082012` |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📖 Deskripsi Proyek
 
-## Learning Laravel
+Sistem Pengelolaan Objek Wisata Air Terjun Lubuk Hitam adalah sebuah web terintegrasi yang dirancang untuk menggantikan sistem manual yang ada saat ini. Produk ini menyediakan platform tunggal bagi pengelola untuk mengatur semua aspek operasional, mulai dari pendaftaran pengunjung, penjualan tiket, manajemen fasilitas, pengelolaan jasa tour guide, promosi produk UMKM, hingga pelaporan keuangan.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Bagi wisatawan, sistem ini berfungsi sebagai portal informasi dan layanan, yang memungkinkan mereka untuk merencanakan kunjungan, melakukan pemesanan, dan berinteraksi dengan ekosistem wisata secara digital.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## ✨ Fitur Utama
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+*   **Manajemen Pengunjung**: Pendaftaran digital untuk semua pengunjung.
+*   **Tiket Online**: Pembelian tiket online yang aman dan mudah.
+*   **Manajemen Fasilitas**: Pemesanan dan pengelolaan fasilitas yang tersedia.
+*   **Layanan Pemandu Wisata**: Pemesanan dan penjadwalan pemandu wisata lokal.
+*   **Pasar UMKM**: Platform untuk mempromosikan dan menjual produk dari UMKM lokal.
+*   **Laporan Keuangan**: Laporan keuangan otomatis untuk manajemen yang transparan.
+*   **Portal Informasi**: Menyediakan informasi terkini, termasuk ramalan cuaca.
 
-## Laravel Sponsors
+## 🛠️ Teknologi & Library yang Digunakan
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Backend
+*   **Laravel Framework 11** (`laravel/framework`)
+*   **Bacon QR Code** (`bacon/bacon-qr-code`): Untuk membuat kode QR.
+*   **Laravel DOMPDF** (`barryvdh/laravel-dompdf`): Untuk membuat file PDF dari HTML.
+*   **Laravel Socialite** (`laravel/socialite`): Untuk otentikasi OAuth (Google).
+*   **Pragmarx Google2FA** (`pragmarx/google2fa-laravel`): Untuk Otentikasi Dua Faktor.
+*   **Maatwebsite/Laravel-Excel**: Untuk mengelola impor dan ekspor file Excel.
 
-### Premium Partners
+### Frontend
+*   **Bootstrap**
+*   **Tailwind CSS**
+*   **Vite**
+*   **JavaScript**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### API & Layanan Pihak Ketiga
+*   **Google OAuth**: Untuk otentikasi pengguna melalui akun Google.
+*   **Google Verification**: Untuk verifikasi kepemilikan situs.
+*   **Open-Meteo API**: Untuk data ramalan cuaca.
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🚀 Panduan Instalasi & Menjalankan Proyek
 
-## Code of Conduct
+Ikuti langkah-langkah berikut untuk menjalankan proyek ini di mesin lokal Anda.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Kebutuhan Sistem
+Pastikan perangkat lunak berikut sudah terpasang di sistem Anda:
+*   **PHP**: versi `8.1` atau lebih tinggi
+*   **Composer**: [Download & Install](https://getcomposer.org/download/)
+*   **Node.js & npm**: versi `18.x` atau lebih tinggi
+*   **Git**: [Download & Install](https://git-scm.com/)
+*   **Database Server**: MySQL atau MariaDB
 
-## Security Vulnerabilities
+### Langkah-langkah Instalasi
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1.  **Clone repositori ini:**
+    ```bash
+    git clone https://github.com/nauvalalpen/Agile-D.git
+    ```
 
-## License
+2.  **Masuk ke direktori proyek:**
+    ```bash
+    cd Agile-D/src
+    ```
+    *(Catatan: Proyek Laravel berada di dalam folder `src`)*.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+3.  **Install dependensi PHP:**
+    ```bash
+    composer install
+    ```
+
+4.  **Install dependensi JavaScript:**
+    ```bash
+    npm install
+    ```
+
+5.  **Buat file environment Anda:**
+    ```bash
+    cp .env.example .env
+    ```
+
+6.  **Generate kunci aplikasi:**
+    ```bash
+    php artisan key:generate
+    ```
+
+7.  **Konfigurasi file `.env`:**
+    Buka file `.env` dan atur koneksi database Anda.
+    ```ini
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=nama_database_anda # <-- Ganti ini
+    DB_USERNAME=username_anda     # <-- Ganti ini
+    DB_PASSWORD=password_anda     # <-- Ganti ini (bisa dikosongkan)
+    ```
+
+8.  **Buat database baru:**
+    Masuk ke klien MySQL Anda dan buat database baru dengan nama yang sama seperti yang Anda tentukan di file `.env`.
+    ```sql
+    -- Contoh menggunakan command line MySQL
+    mysql -u root -p
+    CREATE DATABASE nama_database_anda;
+    EXIT;
+    ```
+
+9.  **Jalankan migrasi dan seeder database:**
+    Perintah ini akan membuat semua tabel yang dibutuhkan dan mengisinya dengan data awal (termasuk akun sampel).
+    ```bash
+    php artisan migrate --seed
+    ```
+
+10. **Buat symbolic link untuk storage:**
+    ```bash
+    php artisan storage:link
+    ```
+
+### Menjalankan Aplikasi
+
+Anda perlu menjalankan dua proses di dua terminal terpisah:
+
+1.  **Jalankan server development PHP:**
+    ```bash
+    php artisan serve
+    ```
+
+2.  **Jalankan server development Vite (untuk aset frontend):**
+    ```bash
+    npm run dev
+    ```
+
+Sekarang, aplikasi dapat diakses melalui **`http://127.0.0.1:8000`**.
+
+---
+
+## 🔐 Akun untuk Akses Login
+
+Anda dapat menggunakan akun berikut yang sudah tersedia di database untuk login.
+
+| Role        | Username          | Password |
+| :---------- | :---------------- | :------- |
+| 👑 **Admin** | `admin@gmail.com` | `admin`  |
+| 👤 **User**  | `user@gmail.com`  | `user`   |
+
+### ⚠️ Catatan Penting: Verifikasi Email Manual
+
+Untuk pengembangan lokal, pengiriman email mungkin tidak dikonfigurasi. Agar bisa login, Anda harus **memverifikasi akun pengguna secara manual** di database setelah menjalankan seeder.
+
+1.  Buka aplikasi manajemen database Anda (misalnya: phpMyAdmin, TablePlus, DBeaver).
+2.  Buka tabel `users`.
+3.  Cari baris untuk `admin@gmail.com` dan `user@gmail.com`.
+4.  Untuk setiap pengguna, ubah kolom berikut:
+    *   Isi kolom `email_verified_at` dengan tanggal dan waktu saat ini (contoh: `2024-05-22 10:00:00`).
+    *   Isi kolom `is_verified` dengan nilai `1`.
+
+Setelah langkah ini selesai, Anda akan dapat login menggunakan akun di atas.
